@@ -1,0 +1,67 @@
+package com.sdk;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
+public class Country {
+
+	@Id
+	@Column(length = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int countryId;
+
+	@Column(length = 20, nullable = false, unique = true)
+	private String countryName;
+
+	@OneToMany(mappedBy = "country")
+	private List<State> states;
+
+	public Country() {
+		super();
+
+	}
+
+	public Country(int countryId, String countryName, List<State> states) {
+		super();
+		this.countryId = countryId;
+		this.countryName = countryName;
+		this.states = states;
+	}
+
+	public int getCountryId() {
+		return countryId;
+	}
+
+	public void setCountryId(int countryId) {
+		this.countryId = countryId;
+	}
+
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+
+	public List<State> getStates() {
+		return states;
+	}
+
+	public void setStates(List<State> states) {
+		this.states = states;
+	}
+
+	@Override
+	public String toString() {
+		return "Country [countryId=" + countryId + ", countryName=" + countryName + ", states=" + states + "]";
+	}
+
+}
