@@ -23,11 +23,9 @@ public class Volunteacher {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(length=8)
 	private int volunteacherId;
+
 	//school
-	//village
-	
-	//district
-	
+
 	@NotNull
 	@Column(length = 20, nullable = false)
 	private String employerName;
@@ -66,7 +64,6 @@ public class Volunteacher {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Session> sessions;
-	
 	
 	//Does cascading required?
 	@ManyToMany
