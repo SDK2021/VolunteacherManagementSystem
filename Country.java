@@ -22,12 +22,11 @@ public class Country {
 	@Column(length = 20, nullable = false, unique = true)
 	private String countryName;
 
-	@OneToMany(mappedBy = "country")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
 	private List<State> states;
 
 	public Country() {
 		super();
-
 	}
 
 	public Country(int countryId, String countryName, List<State> states) {
@@ -39,10 +38,6 @@ public class Country {
 
 	public int getCountryId() {
 		return countryId;
-	}
-
-	public void setCountryId(int countryId) {
-		this.countryId = countryId;
 	}
 
 	public String getCountryName() {
