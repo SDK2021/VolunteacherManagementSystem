@@ -17,7 +17,7 @@ public class Village {
 	private int villageId;
 
 	@NotNull
-	@Column(length = 20, nullable = false, unique = true)
+	@Column(length = 20, nullable = false)
 	private String villageName;
 
 	@OneToOne
@@ -37,10 +37,6 @@ public class Village {
 
 	public int getVillageId() {
 		return villageId;
-	}
-
-	public void setVillageId(int villageId) {
-		this.villageId = villageId;
 	}
 
 	public String getVillageName() {
