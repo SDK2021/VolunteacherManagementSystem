@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class State {
 
 	@Id
-	@Column(length = 2)
+	@Column(length = 2, columnDefinition = "TINYINT")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int stateId;
 
@@ -26,12 +26,11 @@ public class State {
 	@OneToOne
 	private Country country;
 
-	@OneToMany(mappedBy = "state")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "state")
 	private List<District> districts;
 
 	public State() {
 		super();
-
 	}
 
 	public State(int stateId, String stateName, Country country, List<District> districts) {
@@ -44,10 +43,6 @@ public class State {
 
 	public int getStateId() {
 		return stateId;
-	}
-
-	public void setStateId(int stateId) {
-		this.stateId = stateId;
 	}
 
 	public String getStateName() {
