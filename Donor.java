@@ -24,7 +24,7 @@ public class Donor {
 
 	@NotNull
 	@Column(length = 10, nullable = false, unique = true)
-	private int donorPhone;
+	private String donorPhone;
 
 	@NotNull
 	@Column(length = 40, nullable = false, unique = true)
@@ -50,11 +50,7 @@ public class Donor {
 	public int getDonorId() {
 		return donorId;
 	}
-
-	public void setDonorId(int donorId) {
-		this.donorId = donorId;
-	}
-
+	
 	public String getDonorName() {
 		return donorName;
 	}
