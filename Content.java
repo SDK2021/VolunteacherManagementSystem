@@ -21,14 +21,14 @@ public class Content {
 	private String contentData;
 
 	@OneToOne
-	private kidsGroup group;
+	private KidsGroup group;
 
 	public Content() {
 		super();
 
 	}
 
-	public Content(int contentId, String contentData, kidsGroup group) {
+	public Content(int contentId, String contentData, KidsGroup group) {
 		super();
 		this.contentId = contentId;
 		this.contentData = contentData;
@@ -47,11 +47,11 @@ public class Content {
 		this.contentData = contentData;
 	}
 
-	public kidsGroup getGroup() {
+	public KidsGroup getGroup() {
 		return group;
 	}
 
-	public void setGroup(kidsGroup group) {
+	public void setGroup(KidsGroup group) {
 		this.group = group;
 	}
 
