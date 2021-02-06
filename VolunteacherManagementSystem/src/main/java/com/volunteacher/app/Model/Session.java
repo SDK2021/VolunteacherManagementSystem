@@ -30,8 +30,6 @@ public class Session {
 	@Column(length=8)
 	private int sessionId;
 	
-	//village
-	
 	//attendance	
 	
 	@NotNull
