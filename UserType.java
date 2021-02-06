@@ -15,15 +15,12 @@ public class UserType {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(length = 1)
+	@Column(length = 1,columnDefinition = "TINYINT")
 	private int typeId;
 
 	@NotNull
 	@Column(length = 20, nullable = false, unique = true)
 	private String type;
-
-	@OneToMany(mappedBy = "usertype")
-	private List<Donor> donors;
 
 	public UserType() {
 		super();
@@ -40,10 +37,6 @@ public class UserType {
 		return typeId;
 	}
 
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
-	}
-
 	public String getType() {
 		return type;
 	}
@@ -52,17 +45,9 @@ public class UserType {
 		this.type = type;
 	}
 
-	public List<Donor> getDonors() {
-		return donors;
-	}
-
-	public void setDonors(List<Donor> donors) {
-		this.donors = donors;
-	}
-
 	@Override
 	public String toString() {
-		return "UserType [typeId=" + typeId + ", type=" + type + ", donors=" + donors + "]";
+		return "UserType [typeId=" + typeId + ", type=" + type + "]";
 	}
 
 }
