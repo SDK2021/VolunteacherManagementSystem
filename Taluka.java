@@ -26,7 +26,7 @@ public class Taluka {
 	@OneToOne
 	private District district;
 
-	@OneToMany(mappedBy = "taluka")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "taluka")
 	private List<Village> villages;
 
 	public Taluka() {
@@ -44,11 +44,7 @@ public class Taluka {
 	public int getTalukaId() {
 		return talukaId;
 	}
-
-	public void setTalukaId(int talukaId) {
-		this.talukaId = talukaId;
-	}
-
+	
 	public String getTalukaName() {
 		return talukaName;
 	}
