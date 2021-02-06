@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class kidsGroup {
@@ -14,9 +15,11 @@ public class kidsGroup {
 	@Column(length = 5)
 	private int groupId;
 
+	@NotNull
 	@Column(length = 20, nullable = false)
 	private String groupName;
 
+	@NotNull
 	@Column(length = 255, nullable = false)
 	private String criteria;
 

@@ -1,14 +1,14 @@
 package com.sdk;
 
-import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Donor {
@@ -18,12 +18,15 @@ public class Donor {
 	@Column(length = 5)
 	private int donorId;
 
+	@NotNull
 	@Column(length = 20, nullable = false)
 	private String donorName;
 
+	@NotNull
 	@Column(length = 10, nullable = false, unique = true)
 	private int donorPhone;
 
+	@NotNull
 	@Column(length = 40, nullable = false, unique = true)
 	private String donorEmail;
 

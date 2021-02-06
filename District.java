@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class District {
@@ -18,6 +19,7 @@ public class District {
 	@Column(length = 3)
 	private int districtId;
 
+	@NotNull
 	@Column(length = 20, unique = true, nullable = false)
 	private String districtName;
 

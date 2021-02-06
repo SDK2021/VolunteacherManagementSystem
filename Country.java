@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Country {
@@ -17,6 +18,7 @@ public class Country {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int countryId;
 
+	@NotNull
 	@Column(length = 20, nullable = false, unique = true)
 	private String countryName;
 

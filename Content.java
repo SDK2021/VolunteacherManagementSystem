@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Content {
@@ -15,6 +16,7 @@ public class Content {
 	@Column(length = 5)
 	private int contentId;
 
+	@NotNull
 	@Column(length = 255, nullable = false)
 	private String contentData;
 

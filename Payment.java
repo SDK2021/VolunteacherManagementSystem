@@ -3,8 +3,6 @@ package com.sdk;
 import javax.persistence.Entity;
 
 import java.util.Date;
-import java.util.TimeZone;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Payment {
@@ -21,20 +20,25 @@ public class Payment {
 	@Column(length = 5)
 	private int paymentId;
 
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	private Date paymentDate;
 
+	@NotNull
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIME)
 	private Date paymentTime;
 
+	@NotNull
 	@Column(nullable = false)
 	private String paymentMode;
 
+	@NotNull
 	@Column(nullable = false, length = 10)
 	private int amount;
 
+	@NotNull
 	@Column(nullable = false, length = 25)
 	private String transactionId;
 
