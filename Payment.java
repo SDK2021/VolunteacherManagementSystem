@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Payment {
 
 	@Id
@@ -21,11 +22,14 @@ public class Payment {
 	private int paymentId;
 
 	@NotNull
+	//for storing time at first time--upadateOp???
+	@CreatedDate
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	private Date paymentDate;
 
 	@NotNull
+	//Search to store time at first time
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIME)
 	private Date paymentTime;
@@ -35,8 +39,9 @@ public class Payment {
 	private String paymentMode;
 
 	@NotNull
+	//Check in the table , type should be number of the database column
 	@Column(nullable = false, length = 10)
-	private int amount;
+	private double amount;
 
 	@NotNull
 	@Column(nullable = false, length = 25)
@@ -64,10 +69,6 @@ public class Payment {
 
 	public int getPaymentId() {
 		return paymentId;
-	}
-
-	public void setPaymentId(int paymentId) {
-		this.paymentId = paymentId;
 	}
 
 	public Date getPaymentDate() {
