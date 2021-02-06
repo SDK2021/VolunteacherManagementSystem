@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class Country {
 
 	@Id
-	@Column(length = 1)
+	@Column(length = 1, columnDefinition = "TINYINT")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int countryId;
 
