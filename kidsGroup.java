@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class kidsGroup {
+public class KidsGroup {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,15 +20,15 @@ public class kidsGroup {
 	private String groupName;
 
 	@NotNull
-	@Column(length = 255, nullable = false)
+	@Column(length = 20, nullable = false)
 	private String criteria;
 
-	public kidsGroup() {
+	public KidsGroup() {
 		super();
 
 	}
 
-	public kidsGroup(int groupId, String groupName, String criteria) {
+	public KidsGroup(int groupId, String groupName, String criteria) {
 		super();
 		this.groupId = groupId;
 		this.groupName = groupName;
@@ -37,10 +37,6 @@ public class kidsGroup {
 
 	public int getGroupId() {
 		return groupId;
-	}
-
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
 	}
 
 	public String getGroupName() {
