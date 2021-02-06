@@ -26,7 +26,7 @@ public class District {
 	@OneToOne
 	private State state;
 
-	@OneToMany(mappedBy = "district")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "district")
 	private List<Taluka> talukas;
 
 	public District() {
@@ -43,10 +43,6 @@ public class District {
 
 	public int getDistrictId() {
 		return districtId;
-	}
-
-	public void setDistrictId(int districtId) {
-		this.districtId = districtId;
 	}
 
 	public String getDistrictName() {
