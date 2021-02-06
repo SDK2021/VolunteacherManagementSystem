@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class UserType {
@@ -17,6 +18,7 @@ public class UserType {
 	@Column(length = 1)
 	private int typeId;
 
+	@NotNull
 	@Column(length = 20, nullable = false, unique = true)
 	private String type;
 

@@ -1,6 +1,7 @@
 package com.sdk;
 
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ public class Taluka {
 	@Column(length = 5)
 	private int talukaId;
 
+	@NotNull
 	@Column(length = 20, nullable = false, unique = true)
 	private String talukaName;
 
