@@ -17,7 +17,7 @@ public class Content {
 	private int contentId;
 
 	@NotNull
-	@Column(length = 255, nullable = false)
+	@Column(nullable = false)
 	private String contentData;
 
 	@OneToOne
@@ -37,10 +37,6 @@ public class Content {
 
 	public int getContentId() {
 		return contentId;
-	}
-
-	public void setContentId(int contentId) {
-		this.contentId = contentId;
 	}
 
 	public String getContentData() {
