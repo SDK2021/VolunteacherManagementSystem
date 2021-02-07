@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Event {
