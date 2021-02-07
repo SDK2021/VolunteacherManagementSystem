@@ -2,6 +2,8 @@ package com.sdk;
 
 import javax.persistence.Entity;
 
+import javax.persistence.EntityListeners;
+
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
