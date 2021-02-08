@@ -15,8 +15,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-
-
 @Entity
 public class User {
 	
@@ -26,11 +24,11 @@ public class User {
 	private int userId;
 	
 	@NotNull
-	@Column(length=20, nullable = false)
+	@Column(length=20, nullable = false, columnDefinition = "Char")
 	private String userName;
 	
 	@NotNull
-	@Column(length=50, unique=true, nullable = false)
+	@Column(length=40, unique=true, nullable = false)
 	private String email;
 	
 	@NotNull
@@ -51,6 +49,7 @@ public class User {
 	private String password;
 	
 	//One User On Type
+	@NotNull
 	@OneToOne
 	private UserType type;
 	
@@ -61,5 +60,8 @@ public class User {
 	//One password of one user
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
 	private Volunteacher volunteacher;
+	
+	@OneToMany(cascade = CascadeType.ALL , mappedBy = "craetedBy")
+	private List<TimelinePost> posts;
 	
 }

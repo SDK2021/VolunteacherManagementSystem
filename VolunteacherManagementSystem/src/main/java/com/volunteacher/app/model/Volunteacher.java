@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +17,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Volunteacher {
 	
 	@Id
@@ -38,6 +43,7 @@ public class Volunteacher {
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
+	@CreatedDate
 	@Column(nullable = false)
 	private Date joiningDate;
 	
@@ -58,9 +64,11 @@ public class Volunteacher {
 	@OneToOne
 	private User user;
 	
+	@NotNull
 	@ManyToOne
 	private Village village;
 	
+	@NotNull
 	@ManyToOne
 	private District district;
 	

@@ -17,9 +17,10 @@ public class Village {
 	private int villageId;
 
 	@NotNull
-	@Column(length = 20, nullable = false)
+	@Column(length = 20, nullable = false , columnDefinition = "Char")
 	private String villageName;
 
+	@NotNull
 	@OneToOne
 	private Taluka taluka;
 

@@ -24,6 +24,7 @@ public class Taluka {
 	@Column(length = 20, nullable = false, unique = true)
 	private String talukaName;
 
+	@NotNull
 	@OneToOne
 	private District district;
 

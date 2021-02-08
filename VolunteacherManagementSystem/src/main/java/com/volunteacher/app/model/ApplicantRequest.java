@@ -18,7 +18,7 @@ public class ApplicantRequest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(length = 4)
-	int RequestId;
+	int requestId;
 	
 	@NotNull
 	@Email
@@ -27,7 +27,7 @@ public class ApplicantRequest {
 	
 	@NotNull
 	@Size(min = 3 , max = 20)
-	@Column(nullable = false , columnDefinition = "Char")
+	@Column(nullable = false , columnDefinition = "Char" , length = 20)
 	String name;
 	
 	@NotNull

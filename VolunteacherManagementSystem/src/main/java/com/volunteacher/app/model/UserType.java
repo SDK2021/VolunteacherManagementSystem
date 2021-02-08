@@ -12,11 +12,11 @@ public class UserType {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="type_id" , length=1 , columnDefinition = "TinyInt")
-	private int typeid;
+	@Column(length=1 , columnDefinition = "TinyInt")
+	private int typeId;
 		
 	@NotNull
-	@Column(name="type",length=20,unique=true)
+	@Column(name="type",length=20, unique=true)
 	private String type;
 
 }

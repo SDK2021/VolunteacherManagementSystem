@@ -20,7 +20,7 @@ public class Country {
 	private int countryId;
 
 	@NotNull
-	@Column(length = 20, nullable = false, unique = true)
+	@Column(length = 20, nullable = false, unique = true , columnDefinition = "Char")
 	private String countryName;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "country")

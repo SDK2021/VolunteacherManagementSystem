@@ -21,9 +21,10 @@ public class State {
 	private int stateId;
 
 	@NotNull
-	@Column(length = 20, unique = true, nullable = false)
+	@Column(length = 20, unique = true, nullable = false , columnDefinition = "Char")
 	private String stateName;
 
+	@NotNull
 	@OneToOne
 	private Country country;
 

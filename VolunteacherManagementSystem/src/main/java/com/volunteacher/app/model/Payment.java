@@ -40,7 +40,7 @@ public class Payment {
 	private Date paymentTime;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(nullable = false , length = 20)
 	private String paymentMode;
 
 	@NotNull
@@ -52,6 +52,7 @@ public class Payment {
 	@Column(nullable = false, length = 25)
 	private String transactionId;
 
+	@NotNull
 	@OneToOne
 	private Donor donor;
 }

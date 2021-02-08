@@ -54,6 +54,7 @@ public class Session {
 	private Date creationDate;
 	
 	//Many session belongs to one project
+	@NotNull
 	@ManyToOne
 	private Project project;
 			
@@ -61,6 +62,7 @@ public class Session {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "session")
 	private List<SessionReport> sessionReports;
 	
+	@NotNull
 	@ManyToOne
 	private Village village;
 	

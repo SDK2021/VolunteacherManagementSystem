@@ -4,28 +4,30 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.sun.istack.NotNull;
 
 @Entity
-@Table(name = "KIDS_REPORT")
+@EntityListeners(AuditingEntityListener.class)
 public class KidsReport {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "kidrepoId" , length = 6)
+	@Column(name = "kidreportId" , length = 6)
 	private int id;
 	
+	@NotNull
 	@OneToOne
 	private Kid kid;
 	
@@ -75,16 +77,15 @@ public class KidsReport {
 	@Column(columnDefinition = "Text")
 	private String remarks;
 	
-	//Change column name
 	@NotNull
 	@Column(nullable = false , length = 3)
-	private int subject1Marks;
+	private int maths;
 	
 	@NotNull
 	@Column(nullable = false , length = 3)
-	private int subject2Marks;
+	private int gujarati;
 	
 	@NotNull
 	@Column(nullable = false , length = 3)
-	private int subject3Marks;
+	private int english;
 }

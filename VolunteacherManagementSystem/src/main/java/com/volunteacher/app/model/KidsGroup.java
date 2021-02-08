@@ -12,7 +12,7 @@ public class KidsGroup {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(length = 5)
+	@Column(length = 2)
 	private int groupId;
 
 	@NotNull

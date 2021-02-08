@@ -20,6 +20,7 @@ public class Content {
 	@Column(nullable = false)
 	private String contentData;
 
+	@NotNull
 	@OneToOne
 	private KidsGroup group;
 

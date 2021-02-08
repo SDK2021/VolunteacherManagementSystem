@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "REQUIREMENT")
 public class Requirement {
 	
 	@Id

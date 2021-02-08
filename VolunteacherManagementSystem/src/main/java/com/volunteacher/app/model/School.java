@@ -10,14 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "SCHOOL")
 public class School {
 	
 	@Id
@@ -27,17 +25,17 @@ public class School {
 	
 	@NotNull
 	@Size(min = 2 , max = 30)
-	@Column(name = "name" , nullable = false)
+	@Column(nullable = false , length = 30)
 	private String name;
 	
-	@Column(name = "pincode" , length = 6)
+	@Column(length = 6)
 	private int pincode;
 	
-	@Column(name = "total_labs" , length = 5)
+	@Column(length = 5)
 	private int totalLabs;
 	
 	@NotNull
-	@Column(name = "phone_number" , nullable = false , length = 10 , unique = true)
+	@Column(nullable = false , length = 10 , unique = true)
 	private String phoneNumber;
 	
 	@Temporal(TemporalType.DATE)
@@ -45,15 +43,15 @@ public class School {
 	
 	@NotNull
 	@Size(min = 2 , max = 20)
-	@Column(name = "Stream" , nullable = false)
+	@Column(nullable = false , length = 20)
 	private String stream;
 	
 	@NotNull
-	@Column(	nullable = false , length = 4)
+	@Column(nullable = false , length = 4)
 	private int totalStudent;
 	
 	@NotNull
-	@Column(name = "status" , nullable = false , length = 1 , columnDefinition = "TinyInt") 
+	@Column(nullable = false , length = 1 , columnDefinition = "TinyInt") 
 	private int status;
 	
 	@ManyToMany(mappedBy = "schools")

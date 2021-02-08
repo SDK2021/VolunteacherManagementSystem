@@ -23,15 +23,15 @@ public class Event {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(length=6)
+	@Column(length = 6)
 	private int eventId;
 	
 	@NotNull
-	@Column(length = 50, nullable = false , columnDefinition = "Char")
+	@Column(length = 50, nullable = false, columnDefinition = "Char")
 	private String title;
 	
 	@NotNull
-	@Column(nullable = false , columnDefinition = "TEXT")
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String eventData;
 	
 	@NotNull
@@ -45,17 +45,20 @@ public class Event {
 	private Date eventTime;
 	
 	//Many events belongs to one project
+	@NotNull
 	@ManyToOne
 	private Project project;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
 	private List<Participant> participants;
 	
+	@NotNull
 	@ManyToOne
 	private Village village;
 	
 	@ManyToMany
 	private List<Kid> kids;
 	
-	//Kids Event participants activity kids?	
+	//Kids Event participants activity kids?
+	//New table or not
 }

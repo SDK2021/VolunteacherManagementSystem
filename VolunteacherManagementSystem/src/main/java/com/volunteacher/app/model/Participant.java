@@ -15,8 +15,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-
-
 @Entity
 public class Participant {
 	
@@ -30,7 +28,7 @@ public class Participant {
 	private String name;
 	
 	@NotNull
-	@Column(length=50, unique=true, nullable = false)
+	@Column(length=40, unique=true, nullable = false)
 	private String email;
 	
 	@NotNull
@@ -46,9 +44,11 @@ public class Participant {
 	@Column(nullable = false)
 	private Date dob;
 	
+	@NotNull
 	@OneToOne
 	private UserType type;
 	
+	@NotNull
 	@ManyToOne
 	private Event event;
 	
@@ -56,6 +56,7 @@ public class Participant {
 	private List<Activity> activities;
 	
 	//participant can be user, if we delete user, though user is not there, but we can see who participated
+	@NotNull
 	@OneToOne
 	private User user;
 	

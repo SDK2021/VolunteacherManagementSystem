@@ -3,11 +3,19 @@ package com.volunteacher.app.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "KID")
 public class Kid {
 	
 	@Id
@@ -17,7 +25,7 @@ public class Kid {
 	
 	@NotNull
 	@Size(min = 3 , max = 20)
-	@Column(nullable = false , columnDefinition = "Char")
+	@Column(nullable = false , columnDefinition = "Char" , length = 20)
 	private String name;
 	
 	@NotNull
@@ -35,20 +43,22 @@ public class Kid {
 	
 	@NotNull
 	@Size(min = 2 , max = 20)
-	@Column(nullable = false)
+	@Column(nullable = false , length = 20)
 	private String area;
 	
-	@Max(255)
+	
 	private String photo;
 	
 	@OneToOne
 	private School school;
 	
+	@NotNull
 	@OneToOne
 	private Village village;
 	
+	@NotNull
 	@OneToOne
-	private KidsGroup grp;
+	private KidsGroup group;
 	
 	@ManyToMany(mappedBy = "kids")
 	private List<Project> projects;
@@ -56,6 +66,7 @@ public class Kid {
 	@ManyToMany(mappedBy = "kids")
 	private List<Session> sessions;
 	
+//	?think....
 	@ManyToMany(mappedBy = "kids")
 	private List<Event> events;
 }

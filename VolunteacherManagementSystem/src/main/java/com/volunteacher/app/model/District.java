@@ -21,7 +21,7 @@ public class District {
 	private int districtId;
 
 	@NotNull
-	@Column(length = 20, unique = true, nullable = false)
+	@Column(length = 20, unique = true, nullable = false , columnDefinition = "Char")
 	private String districtName;
 
 	@OneToOne

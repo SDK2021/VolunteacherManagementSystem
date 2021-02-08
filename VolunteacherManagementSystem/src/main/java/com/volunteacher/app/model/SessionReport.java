@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-
-
 @Entity
 public class SessionReport {
 	
@@ -34,12 +32,11 @@ public class SessionReport {
 	@Column(nullable = false , columnDefinition = "TEXT")
 	private String requirements;
 	
-	//Think...../////
-	//One report will have One session
+	@NotNull
 	@ManyToOne
 	private Session session;
 		
-	//Many reports belongs to one user
+	@NotNull
 	@ManyToOne
 	private User user;
 }

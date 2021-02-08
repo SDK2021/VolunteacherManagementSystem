@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -19,8 +18,8 @@ public class Donor {
 	private int donorId;
 
 	@NotNull
-	@Max(20)
-	@Column(columnDefinition = "Char" , length = 200, nullable = false )
+	@Size(min = 3 , max = 20)
+	@Column(columnDefinition = "Char", length = 20, nullable = false)
 	private String donorName;
 
 	@NotNull
@@ -31,6 +30,7 @@ public class Donor {
 	@Column(length = 40, nullable = false, unique = true)
 	private String donorEmail;
 
+	@NotNull
 	@OneToOne
 	private UserType usertype;
 

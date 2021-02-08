@@ -28,8 +28,6 @@ public class Project {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(length = 3)
 	private int projectId;
-	
-	//districtId??
 
 	@NotNull
 	@Column(length=50, unique=true, nullable = false , columnDefinition = "Char")
