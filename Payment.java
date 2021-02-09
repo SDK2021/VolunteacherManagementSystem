@@ -1,7 +1,6 @@
-package com.sdk;
+package com.volunteacher.app.model;
 
 import javax.persistence.Entity;
-
 import javax.persistence.EntityListeners;
 
 import java.util.Date;
@@ -14,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
@@ -40,7 +40,7 @@ public class Payment {
 	private Date paymentTime;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(nullable = false, length = 20)
 	private String paymentMode;
 
 	@NotNull
@@ -52,18 +52,18 @@ public class Payment {
 	@Column(nullable = false, length = 25)
 	private String transactionId;
 
+	@NotNull
 	@OneToOne
 	private Donor donor;
 
 	public Payment() {
 		super();
-
+		
 	}
 
-	public Payment(int paymentId, Date paymentDate, Date paymentTime, String paymentMode, int amount,
-			String transactionId, Donor donor) {
+	public Payment(@NotNull Date paymentDate, @NotNull Date paymentTime, @NotNull String paymentMode,
+			@NotNull double amount, @NotNull String transactionId, @NotNull Donor donor) {
 		super();
-		this.paymentId = paymentId;
 		this.paymentDate = paymentDate;
 		this.paymentTime = paymentTime;
 		this.paymentMode = paymentMode;
@@ -74,6 +74,10 @@ public class Payment {
 
 	public int getPaymentId() {
 		return paymentId;
+	}
+
+	public void setPaymentId(int paymentId) {
+		this.paymentId = paymentId;
 	}
 
 	public Date getPaymentDate() {
@@ -100,11 +104,11 @@ public class Payment {
 		this.paymentMode = paymentMode;
 	}
 
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 
@@ -130,5 +134,6 @@ public class Payment {
 				+ ", paymentMode=" + paymentMode + ", amount=" + amount + ", transactionId=" + transactionId
 				+ ", donor=" + donor + "]";
 	}
-
+	
+	
 }
