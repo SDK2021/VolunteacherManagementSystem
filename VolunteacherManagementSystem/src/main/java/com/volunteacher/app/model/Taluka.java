@@ -31,4 +31,50 @@ public class Taluka {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "taluka")
 	private List<Village> villages;
 
+	
+	public Taluka() {
+		super();	
+	}
+
+	public Taluka(@NotNull String talukaName, @NotNull District district, List<Village> villages) {
+		super();
+		this.talukaName = talukaName;
+		this.district = district;
+		this.villages = villages;
+	}
+
+	public int getTalukaId() {
+		return talukaId;
+	}
+
+	public String getTalukaName() {
+		return talukaName;
+	}
+
+	public void setTalukaName(String talukaName) {
+		this.talukaName = talukaName;
+	}
+
+	public District getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District district) {
+		this.district = district;
+	}
+
+	public List<Village> getVillages() {
+		return villages;
+	}
+
+	public void setVillages(List<Village> villages) {
+		this.villages = villages;
+	}
+
+	@Override
+	public String toString() {
+		return "Taluka [talukaId=" + talukaId + ", talukaName=" + talukaName + ", district=" + district + ", villages="
+				+ villages + "]";
+	}
+
 }
