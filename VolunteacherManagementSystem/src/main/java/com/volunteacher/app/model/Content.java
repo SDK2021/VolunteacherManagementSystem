@@ -24,4 +24,40 @@ public class Content {
 	@OneToOne
 	private KidsGroup group;
 
+	
+	public Content() {
+		super();
+	}
+	
+	public Content(@NotNull String contentData, @NotNull KidsGroup group) {
+		super();
+		this.contentData = contentData;
+		this.group = group;
+	}
+
+	public int getContentId() {
+		return contentId;
+	}
+
+	public String getContentData() {
+		return contentData;
+	}
+
+	public void setContentData(String contentData) {
+		this.contentData = contentData;
+	}
+
+	public KidsGroup getGroup() {
+		return group;
+	}
+
+	public void setGroup(KidsGroup group) {
+		this.group = group;
+	}
+
+	@Override
+	public String toString() {
+		return "Content [contentId=" + contentId + ", contentData=" + contentData + ", group=" + group + "]";
+	}
+	
 }
