@@ -1,4 +1,4 @@
-package com.sdk;
+package com.volunteacher.app.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,20 +17,20 @@ public class Village {
 	private int villageId;
 
 	@NotNull
-	@Column(length = 20, nullable = false)
+	@Column(length = 20, nullable = false, columnDefinition = "Char")
 	private String villageName;
 
+	@NotNull
 	@OneToOne
 	private Taluka taluka;
 
 	public Village() {
 		super();
-
+		
 	}
 
-	public Village(int villageId, String villageName, Taluka taluka) {
+	public Village(@NotNull String villageName, @NotNull Taluka taluka) {
 		super();
-		this.villageId = villageId;
 		this.villageName = villageName;
 		this.taluka = taluka;
 	}
@@ -60,4 +60,5 @@ public class Village {
 		return "Village [villageId=" + villageId + ", villageName=" + villageName + ", taluka=" + taluka + "]";
 	}
 
+	
 }
