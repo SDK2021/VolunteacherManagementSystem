@@ -1,4 +1,4 @@
-package com.sdk;
+package com.volunteacher.app.model;
 
 import java.util.List;
 import javax.validation.constraints.NotNull;
@@ -24,6 +24,7 @@ public class Taluka {
 	@Column(length = 20, nullable = false, unique = true)
 	private String talukaName;
 
+	@NotNull
 	@OneToOne
 	private District district;
 
@@ -32,11 +33,11 @@ public class Taluka {
 
 	public Taluka() {
 		super();
+		
 	}
 
-	public Taluka(int talukaId, String talukaName, District district, List<Village> villages) {
+	public Taluka(@NotNull String talukaName, @NotNull District district, List<Village> villages) {
 		super();
-		this.talukaId = talukaId;
 		this.talukaName = talukaName;
 		this.district = district;
 		this.villages = villages;
@@ -45,7 +46,7 @@ public class Taluka {
 	public int getTalukaId() {
 		return talukaId;
 	}
-	
+
 	public String getTalukaName() {
 		return talukaName;
 	}
@@ -75,5 +76,7 @@ public class Taluka {
 		return "Taluka [talukaId=" + talukaId + ", talukaName=" + talukaName + ", district=" + district + ", villages="
 				+ villages + "]";
 	}
+	
+	
 
 }

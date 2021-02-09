@@ -1,4 +1,4 @@
-package com.sdk;
+package com.volunteacher.app.model;
 
 import java.util.List;
 
@@ -21,9 +21,10 @@ public class State {
 	private int stateId;
 
 	@NotNull
-	@Column(length = 20, unique = true, nullable = false)
+	@Column(length = 20, unique = true, nullable = false, columnDefinition = "Char")
 	private String stateName;
 
+	@NotNull
 	@OneToOne
 	private Country country;
 
@@ -32,11 +33,11 @@ public class State {
 
 	public State() {
 		super();
+		
 	}
 
-	public State(int stateId, String stateName, Country country, List<District> districts) {
+	public State(@NotNull String stateName, @NotNull Country country, List<District> districts) {
 		super();
-		this.stateId = stateId;
 		this.stateName = stateName;
 		this.country = country;
 		this.districts = districts;
@@ -75,5 +76,6 @@ public class State {
 		return "State [stateId=" + stateId + ", stateName=" + stateName + ", country=" + country + ", districts="
 				+ districts + "]";
 	}
-
+	
+	
 }
