@@ -1,4 +1,4 @@
-package com.sdk;
+package com.volunteacher.app.model;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class District {
 	private int districtId;
 
 	@NotNull
-	@Column(length = 20, unique = true, nullable = false)
+	@Column(length = 20, unique = true, nullable = false, columnDefinition = "Char")
 	private String districtName;
 
 	@OneToOne
@@ -32,11 +32,11 @@ public class District {
 
 	public District() {
 		super();
+		
 	}
 
-	public District(int districtId, String districtName, State state, List<Taluka> talukas) {
+	public District(@NotNull String districtName, State state, List<Taluka> talukas) {
 		super();
-		this.districtId = districtId;
 		this.districtName = districtName;
 		this.state = state;
 		this.talukas = talukas;
@@ -46,6 +46,7 @@ public class District {
 		return districtId;
 	}
 
+	
 	public String getDistrictName() {
 		return districtName;
 	}
@@ -75,5 +76,7 @@ public class District {
 		return "District [districtId=" + districtId + ", districtName=" + districtName + ", state=" + state
 				+ ", talukas=" + talukas + "]";
 	}
+	
+	
 
 }

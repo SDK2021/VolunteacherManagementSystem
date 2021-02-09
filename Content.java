@@ -1,4 +1,4 @@
-package com.sdk;
+package com.volunteacher.app.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,17 +20,17 @@ public class Content {
 	@Column(nullable = false)
 	private String contentData;
 
+	@NotNull
 	@OneToOne
 	private KidsGroup group;
 
 	public Content() {
 		super();
-
+		
 	}
-
-	public Content(int contentId, String contentData, KidsGroup group) {
+	
+	public Content(@NotNull String contentData, @NotNull KidsGroup group) {
 		super();
-		this.contentId = contentId;
 		this.contentData = contentData;
 		this.group = group;
 	}
@@ -59,4 +59,6 @@ public class Content {
 	public String toString() {
 		return "Content [contentId=" + contentId + ", contentData=" + contentData + ", group=" + group + "]";
 	}
+	
+
 }

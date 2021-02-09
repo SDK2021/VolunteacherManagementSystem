@@ -1,4 +1,4 @@
-package com.sdk;
+package com.volunteacher.app.model;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class Country {
 	private int countryId;
 
 	@NotNull
-	@Column(length = 20, nullable = false, unique = true)
+	@Column(length = 20, nullable = false, unique = true, columnDefinition = "Char")
 	private String countryName;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
@@ -28,11 +28,11 @@ public class Country {
 
 	public Country() {
 		super();
+		
 	}
 
-	public Country(int countryId, String countryName, List<State> states) {
+	public Country(@NotNull String countryName, List<State> states) {
 		super();
-		this.countryId = countryId;
 		this.countryName = countryName;
 		this.states = states;
 	}
@@ -61,5 +61,6 @@ public class Country {
 	public String toString() {
 		return "Country [countryId=" + countryId + ", countryName=" + countryName + ", states=" + states + "]";
 	}
-
+	
+	
 }

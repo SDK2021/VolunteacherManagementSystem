@@ -1,6 +1,4 @@
-package com.sdk;
-
-
+package com.volunteacher.app.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Donor {
@@ -19,7 +18,8 @@ public class Donor {
 	private int donorId;
 
 	@NotNull
-	@Column(length = 20, nullable = false)
+	@Size(min = 3, max = 20)
+	@Column(columnDefinition = "Char", length = 20, nullable = false)
 	private String donorName;
 
 	@NotNull
@@ -30,17 +30,18 @@ public class Donor {
 	@Column(length = 40, nullable = false, unique = true)
 	private String donorEmail;
 
+	@NotNull
 	@OneToOne
 	private UserType usertype;
 
 	public Donor() {
 		super();
-
+		
 	}
 
-	public Donor(int donorId, String donorName, int donorPhone, String donorEmail, UserType usertype) {
+	public Donor(@NotNull @Size(min = 3, max = 20) String donorName, @NotNull String donorPhone,
+			@NotNull String donorEmail, @NotNull UserType usertype) {
 		super();
-		this.donorId = donorId;
 		this.donorName = donorName;
 		this.donorPhone = donorPhone;
 		this.donorEmail = donorEmail;
@@ -50,7 +51,7 @@ public class Donor {
 	public int getDonorId() {
 		return donorId;
 	}
-	
+
 	public String getDonorName() {
 		return donorName;
 	}
@@ -59,11 +60,11 @@ public class Donor {
 		this.donorName = donorName;
 	}
 
-	public int getDonorPhone() {
+	public String getDonorPhone() {
 		return donorPhone;
 	}
 
-	public void setDonorPhone(int donorPhone) {
+	public void setDonorPhone(String donorPhone) {
 		this.donorPhone = donorPhone;
 	}
 
@@ -88,5 +89,7 @@ public class Donor {
 		return "Donor [donorId=" + donorId + ", donorName=" + donorName + ", donorPhone=" + donorPhone + ", donorEmail="
 				+ donorEmail + ", usertype=" + usertype + "]";
 	}
+	
+	
 
 }
