@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 
@@ -16,14 +15,46 @@ import javax.validation.constraints.NotNull;
 public class Requirement {
 	
 	@Id
-	@Column(name = "requirement_id" , length = 3)
+	@Column(length = 3)
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private int requirementId;
 	
 	@NotNull
-	@Column(name = "requirement" , columnDefinition = "Text")
+	@Column(name = "requirement", columnDefinition = "Text")
 	private String requirement;
 	
 	@ManyToMany
 	private List<School> schools;
+
+	
+	public Requirement() {
+		super();
+	}
+
+	public Requirement(@NotNull String requirement, List<School> schools) {
+		super();
+		this.requirement = requirement;
+		this.schools = schools;
+	}
+
+	public String getRequirement() {
+		return requirement;
+	}
+
+	public void setRequirement(String requirement) {
+		this.requirement = requirement;
+	}
+
+	public List<School> getSchools() {
+		return schools;
+	}
+
+	public void setSchools(List<School> schools) {
+		this.schools = schools;
+	}
+
+	@Override
+	public String toString() {
+		return "Requirement [id=" + requirementId + ", requirement=" + requirement + ", schools=" + schools + "]";
+	}
 }

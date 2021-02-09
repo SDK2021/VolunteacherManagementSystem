@@ -23,8 +23,8 @@ public class TimelinePost {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "postId" , length = 10	)
-	private int id;
+	@Column(length = 10	)
+	private int postId;
 	
 	@NotNull
 	@ManyToOne
@@ -36,11 +36,11 @@ public class TimelinePost {
 	private String postPhoto;
 	
 	@NotNull
-	@Column(nullable = false , length = 100)
+	@Column(nullable = false, length = 100)
 	private String postTitle;
 	
 	@NotNull
-	@Column(nullable = false , columnDefinition = "Text")
+	@Column(nullable = false, columnDefinition = "Text")
 	private String postDescription;
 	
 	@NotNull
@@ -48,4 +48,65 @@ public class TimelinePost {
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	private Date creationDate;
+	
+
+	public TimelinePost() {
+		super();
+	}
+
+	public TimelinePost(@NotNull User craetedBy, @NotNull String postPhoto, @NotNull String postTitle,
+			@NotNull String postDescription, @NotNull Date creationDate) {
+		super();
+		this.craetedBy = craetedBy;
+		this.postPhoto = postPhoto;
+		this.postTitle = postTitle;
+		this.postDescription = postDescription;
+		this.creationDate = creationDate;
+	}
+
+	public User getCraetedBy() {
+		return craetedBy;
+	}
+
+	public void setCraetedBy(User craetedBy) {
+		this.craetedBy = craetedBy;
+	}
+
+	public String getPostPhoto() {
+		return postPhoto;
+	}
+
+	public void setPostPhoto(String postPhoto) {
+		this.postPhoto = postPhoto;
+	}
+
+	public String getPostTitle() {
+		return postTitle;
+	}
+
+	public void setPostTitle(String postTitle) {
+		this.postTitle = postTitle;
+	}
+
+	public String getPostDescription() {
+		return postDescription;
+	}
+
+	public void setPostDescription(String postDescription) {
+		this.postDescription = postDescription;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	@Override
+	public String toString() {
+		return "TimelinePost [id=" + postId + ", craetedBy=" + craetedBy + ", postPhoto=" + postPhoto + ", postTitle="
+				+ postTitle + ", postDescription=" + postDescription + ", creationDate=" + creationDate + "]";
+	}
 }

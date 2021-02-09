@@ -26,4 +26,5 @@ public class Activity {
 	
 	@ManyToMany(mappedBy = "activities")
 	private List<Participant> participants;
+	
 }

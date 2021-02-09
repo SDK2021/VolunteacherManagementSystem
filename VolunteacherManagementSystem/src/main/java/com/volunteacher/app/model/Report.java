@@ -25,15 +25,15 @@ public class Report {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "reportId" , length = 6)
-	private int id;
+	@Column(length = 6)
+	private int reportId;
 	
 	@NotNull
-	@Column(nullable = false , length = 50 , columnDefinition = "Char")
+	@Column(nullable = false, length = 50, columnDefinition = "Char")
 	private String title;
 	
 	@NotNull
-	@Column(nullable = false , columnDefinition = "Text")
+	@Column(nullable = false, columnDefinition = "Text")
 	private String description;
 	
 	@NotNull
@@ -46,5 +46,59 @@ public class Report {
 	@OneToOne
 	@CreatedBy
 	private User craetedBy;
+
+	
+	public Report() {
+		super();
+	}
+
+	public Report(@NotNull String title, @NotNull String description, @NotNull Date creationDate,
+			@NotNull User craetedBy) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.creationDate = creationDate;
+		this.craetedBy = craetedBy;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public User getCraetedBy() {
+		return craetedBy;
+	}
+
+	public void setCraetedBy(User craetedBy) {
+		this.craetedBy = craetedBy;
+	}
+
+	@Override
+	public String toString() {
+		return "Report [id=" + reportId + ", title=" + title + ", description=" + description + ", creationDate="
+				+ creationDate + ", craetedBy=" + craetedBy + "]";
+	}
+	
+	
 	
 }
