@@ -54,8 +54,8 @@ public class TimelinePost {
 		super();
 	}
 
-	public TimelinePost(@NotNull User craetedBy, @NotNull String postPhoto, @NotNull String postTitle,
-			@NotNull String postDescription, @NotNull Date creationDate) {
+	public TimelinePost( User craetedBy, String postPhoto, String postTitle,
+			 String postDescription, Date creationDate) {
 		super();
 		this.createdBy = craetedBy;
 		this.postPhoto = postPhoto;
