@@ -46,8 +46,8 @@ public class SessionReport {
 	private User user;
 	
 
-	public SessionReport(@NotNull String description, @NotNull String suggestions,
-			@NotNull String experience, @NotNull String requirements, @NotNull Session session, @NotNull User user) {
+	public SessionReport(String description, String suggestions,
+			 String experience, String requirements, Session session, User user) {
 		super();
 		this.description = description;
 		this.suggestions = suggestions;
