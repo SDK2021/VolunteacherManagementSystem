@@ -40,7 +40,7 @@ public class Payment {
 	private Date paymentTime;
 
 	@NotNull
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false , length = 20)
 	private String paymentMode;
 
 	@NotNull
@@ -55,84 +55,4 @@ public class Payment {
 	@NotNull
 	@OneToOne
 	private Donor donor;
-
-	
-	public Payment() {
-		super();
-	}
-
-	public Payment(@NotNull Date paymentDate, @NotNull Date paymentTime, @NotNull String paymentMode,
-			@NotNull double amount, @NotNull String transactionId, @NotNull Donor donor) {
-		super();
-		this.paymentDate = paymentDate;
-		this.paymentTime = paymentTime;
-		this.paymentMode = paymentMode;
-		this.amount = amount;
-		this.transactionId = transactionId;
-		this.donor = donor;
-	}
-
-	public int getPaymentId() {
-		return paymentId;
-	}
-
-	public void setPaymentId(int paymentId) {
-		this.paymentId = paymentId;
-	}
-
-	public Date getPaymentDate() {
-		return paymentDate;
-	}
-
-	public void setPaymentDate(Date paymentDate) {
-		this.paymentDate = paymentDate;
-	}
-
-	public Date getPaymentTime() {
-		return paymentTime;
-	}
-
-	public void setPaymentTime(Date paymentTime) {
-		this.paymentTime = paymentTime;
-	}
-
-	public String getPaymentMode() {
-		return paymentMode;
-	}
-
-	public void setPaymentMode(String paymentMode) {
-		this.paymentMode = paymentMode;
-	}
-
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-
-	public String getTransactionId() {
-		return transactionId;
-	}
-
-	public void setTransactionId(String transactionId) {
-		this.transactionId = transactionId;
-	}
-
-	public Donor getDonor() {
-		return donor;
-	}
-
-	public void setDonor(Donor donor) {
-		this.donor = donor;
-	}
-
-	@Override
-	public String toString() {
-		return "Payment [paymentId=" + paymentId + ", paymentDate=" + paymentDate + ", paymentTime=" + paymentTime
-				+ ", paymentMode=" + paymentMode + ", amount=" + amount + ", transactionId=" + transactionId
-				+ ", donor=" + donor + "]";
-	}
-	
 }
