@@ -28,7 +28,7 @@ public class KidsGroup {
 		super();
 	}
 
-	public KidsGroup(@NotNull String groupName, @NotNull String criteria) {
+	public KidsGroup(String groupName, String criteria) {
 		super();
 		this.groupName = groupName;
 		this.criteria = criteria;
