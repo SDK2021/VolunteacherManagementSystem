@@ -65,9 +65,9 @@ public class Participant {
 		super();
 	}
 
-	public Participant(@NotNull String name, @NotNull String email, @NotNull int gender,
-			@NotNull String phoneNumber, @NotNull Date dob, @NotNull UserType type, @NotNull Event event,
-			List<Activity> activities, @NotNull User user) {
+	public Participant( String name, String email, int gender,
+			 String phoneNumber, Date dob, UserType type, Event event,
+			List<Activity> activities, User user) {
 		super();
 		this.name = name;
 		this.email = email;
