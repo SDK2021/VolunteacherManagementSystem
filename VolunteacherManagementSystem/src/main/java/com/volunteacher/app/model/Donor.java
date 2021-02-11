@@ -50,7 +50,7 @@ public class Donor {
 		this.donorName = donorName;
 		this.donorPhone = donorPhone;
 		this.donorEmail = donorEmail;
-		this.usertype = usertype;
+		this.userType = usertype;
 		this.payment = payment;
 	}
 
