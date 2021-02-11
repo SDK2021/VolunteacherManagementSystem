@@ -74,6 +74,7 @@ public class Kid {
 	@OneToOne(cascade = CascadeType.ALL , mappedBy = "kid")
 	private KidsReport kidReport;
 	
+	
 	public Kid() {
 		super();
 	}

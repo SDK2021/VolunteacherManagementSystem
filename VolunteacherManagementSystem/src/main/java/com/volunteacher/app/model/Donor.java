@@ -45,12 +45,12 @@ public class Donor {
 	}
 
 	public Donor(@NotNull @Size(min = 3, max = 20) String donorName, @NotNull String donorPhone,
-			@NotNull String donorEmail, @NotNull UserType usertype, Payment payment) {
+			@NotNull String donorEmail, @NotNull UserType userType, Payment payment) {
 		super();
 		this.donorName = donorName;
 		this.donorPhone = donorPhone;
 		this.donorEmail = donorEmail;
-		this.userType = usertype;
+		this.userType = userType;
 		this.payment = payment;
 	}
 

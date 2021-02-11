@@ -75,8 +75,8 @@ public class Event {
 		super();
 	}
 	
-	public Event(@NotNull String title, @NotNull String eventData, @NotNull Date eventDate,
-			@NotNull Date eventTime, @NotNull Project project, List<Participant> participants, @NotNull Village village,
+	public Event(String title, String eventData, Date eventDate,
+		        Date eventTime, Project project, List<Participant> participants, Village village,
 			List<Kid> kids, Notification notification, List<Activity> activities) {
 		super();
 		this.title = title;
