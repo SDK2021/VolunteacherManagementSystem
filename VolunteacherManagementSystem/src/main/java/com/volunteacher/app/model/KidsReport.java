@@ -94,11 +94,11 @@ public class KidsReport {
 		super();
 	}
 
-	public KidsReport(@NotNull Kid kid, @NotNull Date createdDate, @NotNull User createdBy,
-			@NotNull String discipline, @NotNull String prayer, @NotNull String goshthi, @NotNull String abhivyakti,
-			@NotNull String volunteaching, @NotNull String nationConnection, @NotNull String games,
-			@NotNull String futureExpectation, String remarks, @NotNull int maths, @NotNull int gujarati,
-			@NotNull int english) {
+	public KidsReport( Kid kid, Date createdDate, User createdBy,
+			 String discipline, String prayer, String goshthi, String abhivyakti,
+			 String volunteaching, String nationConnection, String games,
+			 String futureExpectation, String remarks, int maths, int gujarati,
+			 int english) {
 		super();
 		this.kid = kid;
 		this.createdDate = createdDate;
