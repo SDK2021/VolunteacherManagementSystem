@@ -44,11 +44,9 @@ public class Donor {
 		super();
 	}
 
-
-	public Donor(int donorId, @NotNull @Size(min = 3, max = 20) String donorName, @NotNull String donorPhone,
-			@NotNull String donorEmail, @NotNull UserType userType, Payment payment) {
+	public Donor(String donorName, String donorPhone,
+			String donorEmail, UserType userType, Payment payment) {
 		super();
-		this.donorId = donorId;
 		this.donorName = donorName;
 		this.donorPhone = donorPhone;
 		this.donorEmail = donorEmail;
@@ -58,10 +56,6 @@ public class Donor {
 
 	public int getDonorId() {
 		return donorId;
-	}
-
-	public void setDonorId(int donorId) {
-		this.donorId = donorId;
 	}
 
 	public String getDonorName() {
