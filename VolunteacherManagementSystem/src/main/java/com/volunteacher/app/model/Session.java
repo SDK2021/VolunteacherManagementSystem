@@ -81,9 +81,9 @@ public class Session {
 		super();
 	}
 
-	public Session(@NotNull Date sessionDate, @NotNull Date startingTime, @NotNull Date endingTime,
-			@NotNull Date creationDate, @NotNull Project project, List<SessionReport> sessionReports,
-			@NotNull Village village, List<Volunteacher> volunteachers, List<Kid> kids, Notification notification) {
+	public Session( Date sessionDate, Date startingTime, Date endingTime,
+			 Date creationDate,  Project project, List<SessionReport> sessionReports,
+			 Village village, List<Volunteacher> volunteachers, List<Kid> kids, Notification notification) {
 		super();
 		this.sessionDate = sessionDate;
 		this.startingTime = startingTime;
