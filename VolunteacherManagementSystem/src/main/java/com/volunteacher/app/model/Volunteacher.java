@@ -84,9 +84,9 @@ public class Volunteacher {
 		super();
 	}
 
-	public Volunteacher(@NotNull School school, @NotNull String employerName, @NotNull int status,
-			@NotNull Date joiningDate, @NotNull Date endingDate, @NotNull int pincode, @NotNull String education,
-			User user, @NotNull Village village, @NotNull District district, List<Session> sessions,
+	public Volunteacher( School school, String employerName, int status,
+			Date joiningDate, Date endingDate, int pincode, String education,
+			User user, Village village, District district, List<Session> sessions,
 			List<Project> projects) {
 		super();
 		this.school = school;
