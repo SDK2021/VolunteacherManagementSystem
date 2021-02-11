@@ -65,9 +65,9 @@ public class School {
 		super();
 	}
 
-	public School(@NotNull @Size(min = 2, max = 30) String name, int pincode, int totalLabs,
-			@NotNull String phoneNumber, Date startingDate, @NotNull @Size(min = 2, max = 20) String stream,
-			@NotNull int totalStudent, @NotNull int status, List<Requirement> requirements, Village village) {
+	public School( String name, int pincode, int totalLabs,
+			 String phoneNumber, Date startingDate, String stream,
+			 int totalStudent, int status, List<Requirement> requirements, Village village) {
 		super();
 		this.name = name;
 		this.pincode = pincode;
