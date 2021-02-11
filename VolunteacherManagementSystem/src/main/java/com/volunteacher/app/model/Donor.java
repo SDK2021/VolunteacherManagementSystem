@@ -19,7 +19,7 @@ public class Donor {
 	private int donorId;
 
 	@NotNull
-	@Size(min = 3 , max = 20)
+	@Size(min = 3, max = 20)
 	@Column(columnDefinition = "Char", length = 20, nullable = false)
 	private String donorName;
 
@@ -105,4 +105,60 @@ public class Donor {
 		this.payment = payment;
 	} 
 
+	
+	public Donor() {
+		super();
+	}
+
+	public Donor(@NotNull @Size(min = 3, max = 20) String donorName, @NotNull String donorPhone,
+			@NotNull String donorEmail, @NotNull UserType usertype) {
+		super();
+		this.donorName = donorName;
+		this.donorPhone = donorPhone;
+		this.donorEmail = donorEmail;
+		this.usertype = usertype;
+	}
+
+	public int getDonorId() {
+		return donorId;
+	}
+
+	public String getDonorName() {
+		return donorName;
+	}
+
+	public void setDonorName(String donorName) {
+		this.donorName = donorName;
+	}
+
+	public String getDonorPhone() {
+		return donorPhone;
+	}
+
+	public void setDonorPhone(String donorPhone) {
+		this.donorPhone = donorPhone;
+	}
+
+	public String getDonorEmail() {
+		return donorEmail;
+	}
+
+	public void setDonorEmail(String donorEmail) {
+		this.donorEmail = donorEmail;
+	}
+
+	public UserType getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(UserType usertype) {
+		this.usertype = usertype;
+	}
+
+	@Override
+	public String toString() {
+		return "Donor [donorId=" + donorId + ", donorName=" + donorName + ", donorPhone=" + donorPhone + ", donorEmail="
+				+ donorEmail + ", usertype=" + usertype + "]";
+	}
+	
 }
