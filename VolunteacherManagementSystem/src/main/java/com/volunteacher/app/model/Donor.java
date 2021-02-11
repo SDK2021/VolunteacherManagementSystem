@@ -33,7 +33,7 @@ public class Donor {
 
 	@NotNull
 	@OneToOne
-	private UserType usertype;
+	private UserType userType;
 	
 	//add
 	@OneToOne(cascade = CascadeType.ALL , mappedBy = "donor")
