@@ -73,8 +73,8 @@ public class Project {
 		super();
 	}
 
-	public Project(@NotNull String projectName, @NotNull Date startingDate, @NotNull Date endingDate,
-			@NotNull String projectData, @NotNull Date creationDate, List<Session> sessions, List<Event> events,
+	public Project( String projectName, Date startingDate, Date endingDate,
+			 String projectData, Date creationDate, List<Session> sessions, List<Event> events,
 			List<Volunteacher> volunteachers, List<Kid> kids) {
 		super();
 		this.projectName = projectName;
