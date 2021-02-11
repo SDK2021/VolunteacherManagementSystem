@@ -18,5 +18,4 @@ public class UserType {
 	@NotNull
 	@Column(length = 20, unique = true)
 	private String type;
-
 }
