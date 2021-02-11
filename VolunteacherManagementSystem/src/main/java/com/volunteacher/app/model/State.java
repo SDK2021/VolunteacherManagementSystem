@@ -36,7 +36,7 @@ public class State {
 		super();
 	}
 	
-	public State(@NotNull String stateName, @NotNull Country country, List<District> districts) {
+	public State(String stateName, Country country, List<District> districts) {
 		super();
 		this.stateName = stateName;
 		this.country = country;
