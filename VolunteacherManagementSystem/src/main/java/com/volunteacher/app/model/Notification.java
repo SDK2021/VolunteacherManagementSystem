@@ -49,7 +49,7 @@ public class Notification {
 		super();
 	}
 	
-	public Notification(String notificationType, @Size(min = 3, max = 30) String title, String description,
+	public Notification(String notificationType, String title, String description,
 			Date createdDate, User createdBy) {
 		super();
 		this.notificationType = notificationType;
