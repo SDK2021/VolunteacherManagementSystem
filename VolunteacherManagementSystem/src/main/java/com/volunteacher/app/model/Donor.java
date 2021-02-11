@@ -44,8 +44,8 @@ public class Donor {
 		super();
 	}
 
-	public Donor(@NotNull @Size(min = 3, max = 20) String donorName, @NotNull String donorPhone,
-			@NotNull String donorEmail, @NotNull UserType userType, Payment payment) {
+	public Donor(String donorName, String donorPhone,
+			 String donorEmail, UserType userType, Payment payment) {
 		super();
 		this.donorName = donorName;
 		this.donorPhone = donorPhone;
