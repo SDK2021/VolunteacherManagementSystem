@@ -174,4 +174,12 @@ public class Event {
 	public void setActivities(List<Activity> activities) {
 		this.activities = activities;
 	}	
+	
+	@Override
+	public String toString() {
+		return "Event [eventId=" + eventId + ", title=" + title + ", eventData=" + eventData + ", eventDate="
+				+ eventDate + ", eventTime=" + eventTime + ", project=" + project + ", participants=" + participants
+				+ ", village=" + village + ", kids=" + kids + ", notification=" + notification + ", activities="
+				+ activities + "]";
+	}
 }
