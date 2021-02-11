@@ -1,4 +1,4 @@
-package com.volunteacher.app.model;
+package com.volunteachers.app.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,13 +44,15 @@ public class Donor {
 		super();
 	}
 
-	public Donor(@NotNull @Size(min = 3, max = 20) String donorName, @NotNull String donorPhone,
-			@NotNull String donorEmail, @NotNull UserType usertype, Payment payment) {
+
+	public Donor(int donorId, @NotNull @Size(min = 3, max = 20) String donorName, @NotNull String donorPhone,
+			@NotNull String donorEmail, @NotNull UserType userType, Payment payment) {
 		super();
+		this.donorId = donorId;
 		this.donorName = donorName;
 		this.donorPhone = donorPhone;
 		this.donorEmail = donorEmail;
-		this.userType = usertype;
+		this.userType = userType;
 		this.payment = payment;
 	}
 
@@ -87,11 +89,11 @@ public class Donor {
 	}
 
 	public UserType getUsertype() {
-		return usertype;
+		return userType;
 	}
 
 	public void setUsertype(UserType usertype) {
-		this.usertype = usertype;
+		this.userType = usertype;
 	}
 
 	public Payment getPayment() {
@@ -101,5 +103,10 @@ public class Donor {
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	} 
-
+	
+	@Override
+	public String toString() {
+		return "Donor [donorId=" + donorId + ", donorName=" + donorName + ", donorPhone=" + donorPhone + ", donorEmail="
+				+ donorEmail + ", userType=" + userType + ", payment=" + payment + "]";
+	}
 }
