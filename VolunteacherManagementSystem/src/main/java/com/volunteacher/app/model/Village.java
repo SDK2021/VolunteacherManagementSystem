@@ -29,7 +29,7 @@ public class Village {
 		super();
 	}
 
-	public Village(@NotNull String villageName, @NotNull Taluka taluka) {
+	public Village(String villageName, Taluka taluka) {
 		super();
 		this.villageName = villageName;
 		this.taluka = taluka;
