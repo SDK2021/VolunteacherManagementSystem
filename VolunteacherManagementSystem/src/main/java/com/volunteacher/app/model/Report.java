@@ -52,8 +52,8 @@ public class Report {
 		super();
 	}
 
-	public Report(@NotNull String title, @NotNull String description, @NotNull Date creationDate,
-			@NotNull User craetedBy) {
+	public Report( String title, String description, Date creationDate,
+			 User craetedBy) {
 		super();
 		this.title = title;
 		this.description = description;
