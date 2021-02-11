@@ -47,9 +47,9 @@ public class ApplicantRequest {
 		super();
 	}
 
-	public ApplicantRequest(@NotNull @Email String emailId,
-			@NotNull @Size(min = 3, max = 20) String name, @NotNull String phoneNumber, @NotNull int gender,
-			@NotNull UserType userType) {
+	public ApplicantRequest( String emailId,
+			 String name, String phoneNumber, int gender,
+			 UserType userType) {
 		super();
 		this.emailId = emailId;
 		this.name = name;
