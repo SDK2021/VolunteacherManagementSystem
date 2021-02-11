@@ -58,6 +58,10 @@ public class ApplicantRequest {
 		this.userType = userType;
 	}
 	
+	public int getRequestId() {
+		return requestId;
+	}
+
 	public String getEmailId() {
 		return emailId;
 	}

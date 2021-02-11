@@ -43,6 +43,10 @@ public class State {
 		this.districts = districts;
 	}
 
+	public int getStateId() {
+		return stateId;
+	}
+	
 	public String getStateName() {
 		return stateName;
 	}

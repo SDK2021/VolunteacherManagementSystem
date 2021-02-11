@@ -34,6 +34,10 @@ public class KidsGroup {
 		this.criteria = criteria;
 	}
 	
+	public int getGroupId() {
+		return groupId;
+	}
+
 	public String getGroupName() {
 		return groupName;
 	}

@@ -35,6 +35,10 @@ public class Village {
 		this.taluka = taluka;
 	}
 	
+	public int getVillageId() {
+		return villageId;
+	}
+	
 	public String getVillageName() {
 		return villageName;
 	}

@@ -42,6 +42,10 @@ public class Activity {
 		this.events = events;
 	}
 	
+	public int getActivityId() {
+		return activityId;
+	}
+	
 	public String getActivityName() {
 		return activityName;
 	}

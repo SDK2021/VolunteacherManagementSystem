@@ -42,6 +42,10 @@ public class Taluka {
 		this.district = district;
 		this.villages = villages;
 	}
+	
+	public int getTalukaId() {
+		return talukaId;
+	}
 
 	public String getTalukaName() {
 		return talukaName;

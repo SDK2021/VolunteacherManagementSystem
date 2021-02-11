@@ -24,8 +24,8 @@ public class KidsReport {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "kidreportId" , length = 6)
-	private int id;
+	@Column(length = 6)
+	private int kidreportId;
 	
 	@NotNull
 	@OneToOne
@@ -115,6 +115,10 @@ public class KidsReport {
 		this.maths = maths;
 		this.gujarati = gujarati;
 		this.english = english;
+	}
+	
+	public int getKidreportId() {
+		return kidreportId;
 	}
 
 	public Kid getKid() {
@@ -240,7 +244,7 @@ public class KidsReport {
 
 	@Override
 	public String toString() {
-		return "KidsReport [id=" + id + ", kid=" + kid + ", createdDate=" + createdDate + ", createdBy=" + createdBy
+		return "KidsReport [id=" + kidreportId + ", kid=" + kid + ", createdDate=" + createdDate + ", createdBy=" + createdBy
 				+ ", discipline=" + discipline + ", prayer=" + prayer + ", goshthi=" + goshthi + ", abhivyakti="
 				+ abhivyakti + ", volunteaching=" + volunteaching + ", nationConnection=" + nationConnection
 				+ ", games=" + games + ", futureExpectation=" + futureExpectation + ", remarks=" + remarks + ", maths="

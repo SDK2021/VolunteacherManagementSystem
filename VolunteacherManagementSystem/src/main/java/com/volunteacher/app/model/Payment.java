@@ -72,6 +72,10 @@ public class Payment {
 		this.donor = donor;
 	}
 
+	public int getPaymentId() {
+		return paymentId;
+	}
+
 	public Date getPaymentDate() {
 		return paymentDate;
 	}

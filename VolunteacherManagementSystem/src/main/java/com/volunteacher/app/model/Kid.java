@@ -74,15 +74,6 @@ public class Kid {
 	@OneToOne(cascade = CascadeType.ALL , mappedBy = "kid")
 	private KidsReport kidReport;
 	
-	
-	public KidsReport getKidReport() {
-		return kidReport;
-	}
-
-	public void setKidReport(KidsReport kidReport) {
-		this.kidReport = kidReport;
-	}
-
 	public Kid() {
 		super();
 	}
@@ -104,6 +95,10 @@ public class Kid {
 		this.projects = projects;
 		this.sessions = sessions;
 		this.events = events;
+	}
+
+	public int getKidId() {
+		return kidId;
 	}
 
 	public String getName() {
@@ -201,6 +196,15 @@ public class Kid {
 	public void setEvents(List<Event> events) {
 		this.events = events;
 	}
+	
+	public KidsReport getKidReport() {
+		return kidReport;
+	}
+
+	public void setKidReport(KidsReport kidReport) {
+		this.kidReport = kidReport;
+	}
+
 
 	@Override
 	public String toString() {

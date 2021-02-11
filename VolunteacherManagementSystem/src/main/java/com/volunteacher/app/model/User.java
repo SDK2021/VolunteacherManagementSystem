@@ -85,6 +85,10 @@ public class User {
 		this.posts = posts;
 	}
 	
+	public int getUserId() {
+		return userId;
+	}
+
 	public String getUserName() {
 		return userName;
 	}

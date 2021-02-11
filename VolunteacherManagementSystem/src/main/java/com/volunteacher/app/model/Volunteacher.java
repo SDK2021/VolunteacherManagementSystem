@@ -102,6 +102,10 @@ public class Volunteacher {
 		this.sessions = sessions;
 		this.projects = projects;
 	}
+	
+	public int getVolunteacherId() {
+		return volunteacherId;
+	}
 
 	public School getSchool() {
 		return school;

@@ -56,6 +56,10 @@ public class Notification {
 		this.createdBy = createdBy;
 	}
 
+	public int getNotificationId() {
+		return notificationId;
+	}
+
 	public String getNotificationType() {
 		return notificationType;
 	}
@@ -98,6 +102,8 @@ public class Notification {
 
 	@Override
 	public String toString() {
-		return "Notification [id=" + notificationId + ", notificationType=" + notificationType  + ", createdBy=" + createdBy + "]";
+		return "Notification [notificationId=" + notificationId + ", notificationType=" + notificationType
+				+ ", createdBy=" + createdBy + ", userType=" + userType + ", session=" + session + ", event=" + event
+				+ "]";
 	}
 }

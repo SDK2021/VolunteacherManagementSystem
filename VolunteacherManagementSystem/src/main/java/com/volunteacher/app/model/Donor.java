@@ -50,16 +50,12 @@ public class Donor {
 		this.donorName = donorName;
 		this.donorPhone = donorPhone;
 		this.donorEmail = donorEmail;
-		this.usertype = usertype;
+		this.userType = usertype;
 		this.payment = payment;
 	}
 
 	public int getDonorId() {
 		return donorId;
-	}
-
-	public void setDonorId(int donorId) {
-		this.donorId = donorId;
 	}
 
 	public String getDonorName() {
@@ -87,11 +83,11 @@ public class Donor {
 	}
 
 	public UserType getUsertype() {
-		return usertype;
+		return userType;
 	}
 
 	public void setUsertype(UserType usertype) {
-		this.usertype = usertype;
+		this.userType = usertype;
 	}
 
 	public Payment getPayment() {

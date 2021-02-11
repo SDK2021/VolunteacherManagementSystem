@@ -29,6 +29,10 @@ public class UserType {
 		this.type = type;
 	}
 	
+	public int getTypeId() {
+		return typeId;
+	}
+
 	public String getType() {
 		return type;
 	}

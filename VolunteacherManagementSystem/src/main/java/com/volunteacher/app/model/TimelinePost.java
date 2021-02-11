@@ -63,6 +63,19 @@ public class TimelinePost {
 		this.postDescription = postDescription;
 		this.creationDate = creationDate;
 	}
+	
+
+	public int getPostId() {
+		return postId;
+	}
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
 
 	public User getCraetedBy() {
 		return createdBy;

@@ -36,6 +36,10 @@ public class Requirement {
 		this.requirement = requirement;
 		this.schools = schools;
 	}
+	
+	public int getRequirementId() {
+		return requirementId;
+	}
 
 	public String getRequirement() {
 		return requirement;

@@ -96,6 +96,10 @@ public class Session {
 		this.kids = kids;
 		this.notification = notification;
 	}
+	
+	public int getSessionId() {
+		return sessionId;
+	}
 
 	public Date getSessionDate() {
 		return sessionDate;

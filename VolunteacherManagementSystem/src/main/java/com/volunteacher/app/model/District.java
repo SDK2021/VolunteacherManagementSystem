@@ -41,6 +41,10 @@ public class District {
 		this.state = state;
 		this.talukas = talukas;
 	}
+	
+	public int getDistrictId() {
+		return districtId;
+	}
 
 	public String getDistrictName() {
 		return districtName;

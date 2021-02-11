@@ -35,6 +35,10 @@ public class Content {
 		this.group = group;
 	}
 
+	public int getContentId() {
+		return contentId;
+	}
+
 	public String getContentData() {
 		return contentData;
 	}

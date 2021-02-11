@@ -37,6 +37,10 @@ public class Country {
 		this.states = states;
 	}
 
+	public int getCountryId() {
+		return countryId;
+	}
+
 	public String getCountryName() {
 		return countryName;
 	}

@@ -79,6 +79,10 @@ public class Participant {
 		this.activities = activities;
 		this.user = user;
 	}
+	
+	public int getParticipantId() {
+		return participantId;
+	}
 
 	public String getName() {
 		return name;

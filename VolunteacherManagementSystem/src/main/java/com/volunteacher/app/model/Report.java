@@ -61,6 +61,10 @@ public class Report {
 		this.craetedBy = craetedBy;
 	}
 
+	public int getReportId() {
+		return reportId;
+	}
+	
 	public String getTitle() {
 		return title;
 	}

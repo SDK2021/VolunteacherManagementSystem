@@ -87,6 +87,10 @@ public class Project {
 		this.volunteachers = volunteachers;
 		this.kids = kids;
 	}
+	
+	public int getProjectId() {
+		return projectId;
+	}
 
 	public String getProjectName() {
 		return projectName;

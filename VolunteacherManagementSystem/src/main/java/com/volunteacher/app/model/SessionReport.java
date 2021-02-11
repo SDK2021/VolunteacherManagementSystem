@@ -57,6 +57,10 @@ public class SessionReport {
 		this.user = user;
 	}
 
+	public int getSessionReportId() {
+		return sessionReportId;
+	}
+
 	public String getDescription() {
 		return description;
 	}
