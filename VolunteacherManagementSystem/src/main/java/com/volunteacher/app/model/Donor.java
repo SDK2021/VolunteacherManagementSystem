@@ -33,7 +33,7 @@ public class Donor {
 
 	@NotNull
 	@OneToOne
-	private UserType usertype;
+	private UserType userType;
 	
 	//add
 	@OneToOne(cascade = CascadeType.ALL , mappedBy = "donor")
@@ -45,13 +45,13 @@ public class Donor {
 	}
 
 	public Donor(int donorId, @NotNull @Size(min = 3, max = 20) String donorName, @NotNull String donorPhone,
-			@NotNull String donorEmail, @NotNull UserType usertype, Payment payment) {
+			@NotNull String donorEmail, @NotNull UserType userType, Payment payment) {
 		super();
 		this.donorId = donorId;
 		this.donorName = donorName;
 		this.donorPhone = donorPhone;
 		this.donorEmail = donorEmail;
-		this.usertype = usertype;
+		this.userType = usertype;
 		this.payment = payment;
 	}
 
@@ -88,11 +88,11 @@ public class Donor {
 	}
 
 	public UserType getUsertype() {
-		return usertype;
+		return userType;
 	}
 
 	public void setUsertype(UserType usertype) {
-		this.usertype = usertype;
+		this.usertype = userType;
 	}
 
 	public Payment getPayment() {
