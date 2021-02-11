@@ -110,7 +110,7 @@ public class Kid {
 		return name;
 	}
 	
-	public int getkidId() {
+	public int getKidId() {
 		return id;
 	}
 
