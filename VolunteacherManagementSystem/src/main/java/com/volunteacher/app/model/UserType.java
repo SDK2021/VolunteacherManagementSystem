@@ -16,7 +16,7 @@ public class UserType {
 	private int typeId;
 		
 	@NotNull
-	@Column(name="type",length=20, unique=true)
+	@Column(length = 20, unique = true)
 	private String type;
 
 }

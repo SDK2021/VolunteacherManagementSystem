@@ -1,5 +1,6 @@
 package com.volunteacher.app.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,5 +34,75 @@ public class Donor {
 	@NotNull
 	@OneToOne
 	private UserType usertype;
+	
+	//add
+	@OneToOne(cascade = CascadeType.ALL , mappedBy = "donor")
+	private Payment payment;
+
+	
+	public Donor() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	public Donor(int donorId, @NotNull @Size(min = 3, max = 20) String donorName, @NotNull String donorPhone,
+			@NotNull String donorEmail, @NotNull UserType usertype, Payment payment) {
+		super();
+		this.donorId = donorId;
+		this.donorName = donorName;
+		this.donorPhone = donorPhone;
+		this.donorEmail = donorEmail;
+		this.usertype = usertype;
+		this.payment = payment;
+	}
+
+	public int getDonorId() {
+		return donorId;
+	}
+
+	public void setDonorId(int donorId) {
+		this.donorId = donorId;
+	}
+
+	public String getDonorName() {
+		return donorName;
+	}
+
+	public void setDonorName(String donorName) {
+		this.donorName = donorName;
+	}
+
+	public String getDonorPhone() {
+		return donorPhone;
+	}
+
+	public void setDonorPhone(String donorPhone) {
+		this.donorPhone = donorPhone;
+	}
+
+	public String getDonorEmail() {
+		return donorEmail;
+	}
+
+	public void setDonorEmail(String donorEmail) {
+		this.donorEmail = donorEmail;
+	}
+
+	public UserType getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(UserType usertype) {
+		this.usertype = usertype;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	} 
 
 }

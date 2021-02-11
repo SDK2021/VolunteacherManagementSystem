@@ -9,15 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.sun.istack.NotNull;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -33,24 +29,20 @@ public class Notification {
 	private String notificationType;
 	
 	@NotNull
-	@Size(min = 3, max = 30)
-	@Column(nullable = false, length = 50)
-	private String title;
-	
-	@NotNull
-	@Column(nullable = false, columnDefinition = "Text")
-	private String description;
-	
-	@NotNull
-	@CreatedDate
-	@Temporal(TemporalType.DATE)
-	@Column(nullable = false)
-	private Date createdDate;
-	
-	@NotNull
 	@CreatedBy
 	@OneToOne
 	private User createdBy;
+	
+	@NotNull
+	@Column(nullable = false , length = 1)
+	private int userType;
+	
+	//add
+	@OneToOne
+	private Session session;
+	
+	@OneToOne
+	private Event event;
 	
 
 	public Notification() {
@@ -61,9 +53,6 @@ public class Notification {
 			Date createdDate, User createdBy) {
 		super();
 		this.notificationType = notificationType;
-		this.title = title;
-		this.description = description;
-		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 	}
 
@@ -75,30 +64,6 @@ public class Notification {
 		this.notificationType = notificationType;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
 	public User getCreatedBy() {
 		return createdBy;
 	}
@@ -107,9 +72,32 @@ public class Notification {
 		this.createdBy = createdBy;
 	}
 
+	public int getUserType() {
+		return userType;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
+	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+
 	@Override
 	public String toString() {
-		return "Notification [id=" + notificationId + ", notificationType=" + notificationType + ", title=" + title
-				+ ", description=" + description + ", createdDate=" + createdDate + ", createdBy=" + createdBy + "]";
+		return "Notification [id=" + notificationId + ", notificationType=" + notificationType  + ", createdBy=" + createdBy + "]";
 	}
 }

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -59,6 +60,122 @@ public class Event {
 	@ManyToMany
 	private List<Kid> kids;
 	
+	//add
+	@OneToOne(cascade = CascadeType.ALL , mappedBy = "session")
+	private Notification notification;
+	
+	//add
+	@ManyToMany(mappedBy = "events")
+	private List<Activity> activities;
 	//Kids Event participants activity kids?
 	//New table or not
+
+	public Event() {
+		super();
+	}
+	
+	public Event(int eventId, @NotNull String title, @NotNull String eventData, @NotNull Date eventDate,
+			@NotNull Date eventTime, @NotNull Project project, List<Participant> participants, @NotNull Village village,
+			List<Kid> kids, Notification notification, List<Activity> activities) {
+		super();
+		this.eventId = eventId;
+		this.title = title;
+		this.eventData = eventData;
+		this.eventDate = eventDate;
+		this.eventTime = eventTime;
+		this.project = project;
+		this.participants = participants;
+		this.village = village;
+		this.kids = kids;
+		this.notification = notification;
+		this.activities = activities;
+	}
+
+	public int getEventId() {
+		return eventId;
+	}
+
+	public void setEventId(int eventId) {
+		this.eventId = eventId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getEventData() {
+		return eventData;
+	}
+
+	public void setEventData(String eventData) {
+		this.eventData = eventData;
+	}
+
+	public Date getEventDate() {
+		return eventDate;
+	}
+
+	public void setEventDate(Date eventDate) {
+		this.eventDate = eventDate;
+	}
+
+	public Date getEventTime() {
+		return eventTime;
+	}
+
+	public void setEventTime(Date eventTime) {
+		this.eventTime = eventTime;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public List<Participant> getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(List<Participant> participants) {
+		this.participants = participants;
+	}
+
+	public Village getVillage() {
+		return village;
+	}
+
+	public void setVillage(Village village) {
+		this.village = village;
+	}
+
+	public List<Kid> getKids() {
+		return kids;
+	}
+
+	public void setKids(List<Kid> kids) {
+		this.kids = kids;
+	}
+
+	public Notification getNotification() {
+		return notification;
+	}
+
+	public void setNotification(Notification notification) {
+		this.notification = notification;
+	}
+
+	public List<Activity> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(List<Activity> activities) {
+		this.activities = activities;
+	}	
 }

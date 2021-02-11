@@ -27,4 +27,58 @@ public class Activity {
 	@ManyToMany(mappedBy = "activities")
 	private List<Participant> participants;
 	
+	//add
+	@ManyToMany
+	private List<Event> events;
+
+	
+	public Activity() {
+		super();
+	}
+	
+	public Activity(int activityId, @NotNull String activityName, List<Participant> participants, List<Event> events) {
+		super();
+		this.activityId = activityId;
+		this.activityName = activityName;
+		this.participants = participants;
+		this.events = events;
+	}
+
+	public int getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(int activityId) {
+		this.activityId = activityId;
+	}
+
+	public String getActivityName() {
+		return activityName;
+	}
+
+	public void setActivityName(String activityName) {
+		this.activityName = activityName;
+	}
+
+	public List<Participant> getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(List<Participant> participants) {
+		this.participants = participants;
+	}
+
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
+
+	@Override
+	public String toString() {
+		return "Activity [activityId=" + activityId + ", activityName=" + activityName + ", participants="
+				+ participants + ", events=" + events + "]";
+	}
 }

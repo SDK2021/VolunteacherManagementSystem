@@ -29,7 +29,7 @@ public class TimelinePost {
 	@NotNull
 	@ManyToOne
 	@CreatedBy
-	private User craetedBy;
+	private User createdBy;
 	
 	@NotNull
 	@Column(nullable = false)
@@ -57,7 +57,7 @@ public class TimelinePost {
 	public TimelinePost(@NotNull User craetedBy, @NotNull String postPhoto, @NotNull String postTitle,
 			@NotNull String postDescription, @NotNull Date creationDate) {
 		super();
-		this.craetedBy = craetedBy;
+		this.createdBy = craetedBy;
 		this.postPhoto = postPhoto;
 		this.postTitle = postTitle;
 		this.postDescription = postDescription;
@@ -65,17 +65,17 @@ public class TimelinePost {
 	}
 
 	public User getCraetedBy() {
-		return craetedBy;
+		return createdBy;
 	}
 
 	public void setCraetedBy(User craetedBy) {
-		this.craetedBy = craetedBy;
+		this.createdBy = craetedBy;
 	}
 
 	public String getPostPhoto() {
 		return postPhoto;
 	}
-
+	
 	public void setPostPhoto(String postPhoto) {
 		this.postPhoto = postPhoto;
 	}
@@ -106,7 +106,7 @@ public class TimelinePost {
 
 	@Override
 	public String toString() {
-		return "TimelinePost [id=" + postId + ", craetedBy=" + craetedBy + ", postPhoto=" + postPhoto + ", postTitle="
+		return "TimelinePost [id=" + postId + ", craetedBy=" + createdBy + ", postPhoto=" + postPhoto + ", postTitle="
 				+ postTitle + ", postDescription=" + postDescription + ", creationDate=" + creationDate + "]";
 	}
 }

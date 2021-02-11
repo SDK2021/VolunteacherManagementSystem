@@ -3,6 +3,7 @@ package com.volunteacher.app.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -69,6 +70,9 @@ public class Kid {
 //	?think....
 	@ManyToMany(mappedBy = "kids")
 	private List<Event> events;
+	
+	@OneToOne(cascade = CascadeType.ALL , mappedBy = "kid")
+	private KidsReport kidReport;
 	
 	
 	public Kid() {
@@ -190,6 +194,7 @@ public class Kid {
 		this.events = events;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "Kid [kidId=" + kidId + ", name=" + name + ", gender=" + gender + ", dob=" + dob + ", standard="
