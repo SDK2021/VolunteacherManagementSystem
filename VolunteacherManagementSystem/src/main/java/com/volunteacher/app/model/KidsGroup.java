@@ -28,7 +28,7 @@ public class KidsGroup {
 		super();
 	}
 
-	public KidsGroup(String groupName, String criteria) {
+	public KidsGroup(@NotNull String groupName, @NotNull String criteria) {
 		super();
 		this.groupName = groupName;
 		this.criteria = criteria;
@@ -40,10 +40,6 @@ public class KidsGroup {
 
 	public String getGroupName() {
 		return groupName;
-	}
-	
-	public int getGroupId() {
-		return id;
 	}
 
 	public void setGroupName(String groupName) {

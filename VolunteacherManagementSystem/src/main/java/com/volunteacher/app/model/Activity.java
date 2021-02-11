@@ -35,7 +35,7 @@ public class Activity {
 		super();
 	}
 	
-	public Activity(String activityName, List<Participant> participants, List<Event> events) {
+	public Activity(@NotNull String activityName, List<Participant> participants, List<Event> events) {
 		super();
 		this.activityName = activityName;
 		this.participants = participants;

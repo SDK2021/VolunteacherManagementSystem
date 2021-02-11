@@ -29,7 +29,7 @@ public class Content {
 		super();
 	}
 
-	public Content(String contentData, KidsGroup group) {
+	public Content(@NotNull String contentData, @NotNull KidsGroup group) {
 		super();
 		this.contentData = contentData;
 		this.group = group;
