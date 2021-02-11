@@ -69,7 +69,7 @@ public class User {
 		super();
 	}
 
-	public User(int userId, @NotNull String userName, @NotNull String email, @NotNull int gender,
+	public User(@NotNull String userName, @NotNull String email, @NotNull int gender,
 			@NotNull String phoneNumber, @NotNull Date dob, @NotNull String password, @NotNull UserType type,
 			List<SessionReport> sessionReports, Volunteacher volunteacher, List<TimelinePost> posts) {
 		super();

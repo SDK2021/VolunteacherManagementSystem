@@ -75,11 +75,10 @@ public class Event {
 		super();
 	}
 	
-	public Event(int eventId, @NotNull String title, @NotNull String eventData, @NotNull Date eventDate,
+	public Event(@NotNull String title, @NotNull String eventData, @NotNull Date eventDate,
 			@NotNull Date eventTime, @NotNull Project project, List<Participant> participants, @NotNull Village village,
 			List<Kid> kids, Notification notification, List<Activity> activities) {
 		super();
-		this.eventId = eventId;
 		this.title = title;
 		this.eventData = eventData;
 		this.eventDate = eventDate;

@@ -36,7 +36,7 @@ public class Taluka {
 		super();
 	}
 
-	public Taluka(int talukaId, @NotNull String talukaName, @NotNull District district, List<Village> villages) {
+	public Taluka(@NotNull String talukaName, @NotNull District district, List<Village> villages) {
 		super();
 		this.talukaName = talukaName;
 		this.district = district;

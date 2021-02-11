@@ -24,7 +24,7 @@ public class UserType {
 		super();
 	}
 
-	public UserType(int typeId, @NotNull String type) {
+	public UserType(@NotNull String type) {
 		super();
 		this.type = type;
 	}

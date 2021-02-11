@@ -46,7 +46,7 @@ public class SessionReport {
 	private User user;
 	
 
-	public SessionReport(int sessionReportId, @NotNull String description, @NotNull String suggestions,
+	public SessionReport(@NotNull String description, @NotNull String suggestions,
 			@NotNull String experience, @NotNull String requirements, @NotNull Session session, @NotNull User user) {
 		super();
 		this.description = description;

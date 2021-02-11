@@ -65,7 +65,7 @@ public class Participant {
 		super();
 	}
 
-	public Participant(int participantId, @NotNull String name, @NotNull String email, @NotNull int gender,
+	public Participant(@NotNull String name, @NotNull String email, @NotNull int gender,
 			@NotNull String phoneNumber, @NotNull Date dob, @NotNull UserType type, @NotNull Event event,
 			List<Activity> activities, @NotNull User user) {
 		super();

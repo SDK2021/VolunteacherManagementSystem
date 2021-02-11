@@ -73,7 +73,7 @@ public class Project {
 		super();
 	}
 
-	public Project(int projectId, @NotNull String projectName, @NotNull Date startingDate, @NotNull Date endingDate,
+	public Project(@NotNull String projectName, @NotNull Date startingDate, @NotNull Date endingDate,
 			@NotNull String projectData, @NotNull Date creationDate, List<Session> sessions, List<Event> events,
 			List<Volunteacher> volunteachers, List<Kid> kids) {
 		super();

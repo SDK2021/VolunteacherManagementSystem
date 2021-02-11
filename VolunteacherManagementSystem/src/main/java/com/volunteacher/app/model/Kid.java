@@ -75,6 +75,14 @@ public class Kid {
 	private KidsReport kidReport;
 	
 	
+	public KidsReport getKidReport() {
+		return kidReport;
+	}
+
+	public void setKidReport(KidsReport kidReport) {
+		this.kidReport = kidReport;
+	}
+
 	public Kid() {
 		super();
 	}
@@ -194,11 +202,11 @@ public class Kid {
 		this.events = events;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "Kid [kidId=" + kidId + ", name=" + name + ", gender=" + gender + ", dob=" + dob + ", standard="
 				+ standard + ", area=" + area + ", photo=" + photo + ", school=" + school + ", village=" + village
-				+ ", group=" + group + ", projects=" + projects + ", sessions=" + sessions + ", events=" + events + "]";
+				+ ", group=" + group + ", projects=" + projects + ", sessions=" + sessions + ", events=" + events
+				+ ", kidReport=" + kidReport + "]";
 	}
 }

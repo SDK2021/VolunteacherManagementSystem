@@ -84,7 +84,7 @@ public class Volunteacher {
 		super();
 	}
 
-	public Volunteacher(int volunteacherId, @NotNull School school, @NotNull String employerName, @NotNull int status,
+	public Volunteacher(@NotNull School school, @NotNull String employerName, @NotNull int status,
 			@NotNull Date joiningDate, @NotNull Date endingDate, @NotNull int pincode, @NotNull String education,
 			User user, @NotNull Village village, @NotNull District district, List<Session> sessions,
 			List<Project> projects) {

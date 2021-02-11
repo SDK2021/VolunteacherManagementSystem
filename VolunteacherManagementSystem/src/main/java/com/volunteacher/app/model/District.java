@@ -35,7 +35,7 @@ public class District {
 		super();
 	}
 
-	public District(int districtId, @NotNull String districtName, State state, List<Taluka> talukas) {
+	public District(@NotNull String districtName, State state, List<Taluka> talukas) {
 		super();
 		this.districtName = districtName;
 		this.state = state;

@@ -61,7 +61,7 @@ public class Payment {
 		super();
 	}
 
-	public Payment(int paymentId, @NotNull Date paymentDate, @NotNull Date paymentTime, @NotNull String paymentMode,
+	public Payment(@NotNull Date paymentDate, @NotNull Date paymentTime, @NotNull String paymentMode,
 			@NotNull double amount, @NotNull String transactionId, @NotNull Donor donor) {
 		super();
 		this.paymentDate = paymentDate;
