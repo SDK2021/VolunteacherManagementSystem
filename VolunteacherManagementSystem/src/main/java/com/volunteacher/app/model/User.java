@@ -69,8 +69,8 @@ public class User {
 		super();
 	}
 
-	public User(@NotNull String userName, @NotNull String email, @NotNull int gender,
-			@NotNull String phoneNumber, @NotNull Date dob, @NotNull String password, @NotNull UserType type,
+	public User( String userName, String email, int gender,
+			 String phoneNumber, Date dob, String password, UserType type,
 			List<SessionReport> sessionReports, Volunteacher volunteacher, List<TimelinePost> posts) {
 		super();
 		this.userName = userName;
