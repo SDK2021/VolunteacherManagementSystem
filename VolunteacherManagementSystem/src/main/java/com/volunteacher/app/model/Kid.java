@@ -74,22 +74,14 @@ public class Kid {
 	@OneToOne(cascade = CascadeType.ALL , mappedBy = "kid")
 	private KidsReport kidReport;
 	
-	
-	public KidsReport getKidReport() {
-		return kidReport;
-	}
-
-	public void setKidReport(KidsReport kidReport) {
-		this.kidReport = kidReport;
-	}
 
 	public Kid() {
 		super();
 	}
 
-	public Kid(@NotNull @Size(min = 3, max = 20) String name, @NotNull int gender, @NotNull Date dob,
-			@NotNull int standard, @NotNull @Size(min = 2, max = 20) String area, String photo, School school,
-			@NotNull Village village, @NotNull KidsGroup group, List<Project> projects, List<Session> sessions,
+	public Kid(String name, int gender, Date dob,
+			 int standard, String area, String photo, School school,
+			 Village village, KidsGroup group, List<Project> projects, List<Session> sessions,
 			List<Event> events) {
 		super();
 		this.name = name;
@@ -105,9 +97,21 @@ public class Kid {
 		this.sessions = sessions;
 		this.events = events;
 	}
+	
+	public KidsReport getKidReport() {
+		return kidReport;
+	}
+
+	public void setKidReport(KidsReport kidReport) {
+		this.kidReport = kidReport;
+	}
 
 	public String getName() {
 		return name;
+	}
+	
+	public int getkidId() {
+		return id;
 	}
 
 	public void setName(String name) {
