@@ -1,6 +1,6 @@
 package com.volunteacher.app.model;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,23 +36,23 @@ public class Session {
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date sessionDate;
+	private Calendar sessionDate;
 	
 	@NotNull
 	@Temporal(TemporalType.TIME)
 	@Column(nullable = false)
-	private Date startingTime;
+	private Calendar startingTime;
 	
 	@NotNull
 	@Temporal(TemporalType.TIME)
 	@Column(nullable = false)
-	private Date endingTime;
+	private Calendar endingTime;
 	
 	@NotNull
 	@CreatedDate
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date creationDate;
+	private Calendar creationDate;
 	
 	//Many session belongs to one project
 	@NotNull
@@ -84,8 +84,8 @@ public class Session {
 		super();
 	}
 
-	public Session( Date sessionDate, Date startingTime, Date endingTime,
-			 Date creationDate,  Project project, List<SessionReport> sessionReports,
+	public Session( Calendar sessionDate, Calendar startingTime, Calendar endingTime,
+			Calendar creationDate,  Project project, List<SessionReport> sessionReports,
 			 Village village, List<Volunteacher> volunteachers, List<Kid> kids, Notification notification) {
 		super();
 		this.sessionDate = sessionDate;
@@ -104,35 +104,35 @@ public class Session {
 		return sessionId;
 	}
 
-	public Date getSessionDate() {
+	public Calendar getSessionDate() {
 		return sessionDate;
 	}
 
-	public void setSessionDate(Date sessionDate) {
+	public void setSessionDate(Calendar sessionDate) {
 		this.sessionDate = sessionDate;
 	}
 
-	public Date getStartingTime() {
+	public Calendar getStartingTime() {
 		return startingTime;
 	}
 
-	public void setStartingTime(Date startingTime) {
+	public void setStartingTime(Calendar startingTime) {
 		this.startingTime = startingTime;
 	}
 
-	public Date getEndingTime() {
+	public Calendar getEndingTime() {
 		return endingTime;
 	}
 
-	public void setEndingTime(Date endingTime) {
+	public void setEndingTime(Calendar endingTime) {
 		this.endingTime = endingTime;
 	}
 
-	public Date getCreationDate() {
+	public Calendar getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(Calendar creationDate) {
 		this.creationDate = creationDate;
 	}
 
@@ -202,3 +202,4 @@ public class Session {
 
 	
 }
+
