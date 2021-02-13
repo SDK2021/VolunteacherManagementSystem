@@ -56,5 +56,9 @@ public class Attendance {
 		this.groups = groups;
 	}
 	
+	@Override
+	public String toString() {
+		return "Attendance [attendanceId=" + attendanceId + ", session=" + session + ", groups=" + groups + "]";
+	}
 	
 }
