@@ -27,7 +27,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Session {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length=8)
 	private int sessionId;
 	
@@ -74,8 +74,11 @@ public class Session {
 	private List<Kid> kids;
 	
 	//add
-	@OneToOne(cascade = CascadeType.ALL , mappedBy = "event")
+	@OneToOne(cascade = CascadeType.ALL , mappedBy = "session")
 	private Notification notification;
+	
+	@OneToOne(cascade = CascadeType.ALL , mappedBy = "session")
+	private Attendance attendance;
 
 	public Session() {
 		super();
@@ -180,12 +183,22 @@ public class Session {
 	public void setNotification(Notification notification) {
 		this.notification = notification;
 	}
+	
+	public Attendance getAttendance() {
+		return attendance;
+	}
+
+	public void setAttendance(Attendance attendance) {
+		this.attendance = attendance;
+	}
 
 	@Override
 	public String toString() {
 		return "Session [sessionId=" + sessionId + ", sessionDate=" + sessionDate + ", startingTime=" + startingTime
 				+ ", endingTime=" + endingTime + ", creationDate=" + creationDate + ", project=" + project
 				+ ", sessionReports=" + sessionReports + ", village=" + village + ", volunteachers=" + volunteachers
-				+ ", kids=" + kids + ", notification=" + notification + "]";
-	}	
+				+ ", kids=" + kids + ", notification=" + notification + ", attendance=" + attendance + "]";
+	}
+
+	
 }
