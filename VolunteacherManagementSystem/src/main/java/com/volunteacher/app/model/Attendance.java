@@ -1,4 +1,4 @@
-package com.volunteachers.database.model;
+package com.volunteachers.app.model;
 
 import java.util.List;
 
