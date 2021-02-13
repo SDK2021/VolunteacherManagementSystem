@@ -1,6 +1,8 @@
 package com.volunteacher.app.model;
 
-import java.util.Date;
+package com.volunteachers.database.model;
+
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -19,7 +21,7 @@ import javax.validation.constraints.NotNull;
 public class Participant {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length=8)
 	private int participantId;
 	
@@ -42,7 +44,7 @@ public class Participant {
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date dob;
+	private Calendar dob;
 	
 	@NotNull
 	@OneToOne
@@ -66,7 +68,7 @@ public class Participant {
 	}
 
 	public Participant( String name, String email, int gender,
-			 String phoneNumber, Date dob, UserType type, Event event,
+			 String phoneNumber, Calendar dob, UserType type, Event event,
 			List<Activity> activities, User user) {
 		super();
 		this.name = name;
@@ -116,11 +118,11 @@ public class Participant {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Date getDob() {
+	public Calendar getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(Calendar dob) {
 		this.dob = dob;
 	}
 
