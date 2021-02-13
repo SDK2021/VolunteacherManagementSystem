@@ -1,6 +1,6 @@
 package com.volunteacher.app.model;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 public class Kid {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 8)
 	private int kidId;
 	
@@ -36,7 +36,7 @@ public class Kid {
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date dob;
+	private Calendar dob;
 	
 	@NotNull
 	@Column(nullable = false, length = 2)
@@ -79,7 +79,7 @@ public class Kid {
 		super();
 	}
 
-	public Kid(String name, int gender, Date dob,
+	public Kid(String name, int gender, Calendar dob,
 			 int standard, String area, String photo, School school,
 			 Village village, KidsGroup group, List<Project> projects, List<Session> sessions,
 			List<Event> events) {
@@ -118,11 +118,11 @@ public class Kid {
 		this.gender = gender;
 	}
 
-	public Date getDob() {
+	public Calendar getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(Calendar dob) {
 		this.dob = dob;
 	}
 
