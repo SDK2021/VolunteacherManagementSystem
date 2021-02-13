@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
 public class Event {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 6)
 	private int eventId;
 	
@@ -61,7 +61,7 @@ public class Event {
 	private List<Kid> kids;
 	
 	//add
-	@OneToOne(cascade = CascadeType.ALL , mappedBy = "session")
+	@OneToOne(cascade = CascadeType.ALL , mappedBy = "event")
 	private Notification notification;
 	
 	//add
