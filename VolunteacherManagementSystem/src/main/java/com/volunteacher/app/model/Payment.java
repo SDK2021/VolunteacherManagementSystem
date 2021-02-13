@@ -1,10 +1,10 @@
 package com.volunteacher.app.model;
 
+import java.util.Calendar;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-
-import java.util.Date;
-import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +22,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Payment {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 5)
 	private int paymentId;
 
@@ -31,13 +31,13 @@ public class Payment {
 	@CreatedDate
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date paymentDate;
+	private Calendar paymentDate;
 
 	@NotNull
 	//Search to store time at first time
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIME)
-	private Date paymentTime;
+	private Calendar paymentTime;
 
 	@NotNull
 	@Column(nullable = false , length = 20)
@@ -61,7 +61,7 @@ public class Payment {
 		super();
 	}
 
-	public Payment( Date paymentDate, Date paymentTime, String paymentMode,
+	public Payment( Calendar paymentDate, Calendar paymentTime, String paymentMode,
 			 double amount, String transactionId, Donor donor) {
 		super();
 		this.paymentDate = paymentDate;
@@ -76,19 +76,19 @@ public class Payment {
 		return paymentId;
 	}
 
-	public Date getPaymentDate() {
+	public Calendar getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(Date paymentDate) {
+	public void setPaymentDate(Calendar paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 
-	public Date getPaymentTime() {
+	public Calendar getPaymentTime() {
 		return paymentTime;
 	}
 
-	public void setPaymentTime(Date paymentTime) {
+	public void setPaymentTime(Calendar paymentTime) {
 		this.paymentTime = paymentTime;
 	}
 
