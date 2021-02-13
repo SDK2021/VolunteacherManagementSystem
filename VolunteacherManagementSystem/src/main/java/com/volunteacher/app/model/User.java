@@ -1,6 +1,6 @@
 package com.volunteacher.app.model;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length=10)
 	private int userId;
 	
@@ -42,7 +42,7 @@ public class User {
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date dob;
+	private Calendar dob;
 	
 	@NotNull
 	@Column(length=15, nullable = false)
@@ -70,8 +70,7 @@ public class User {
 	}
 
 	public User( String userName, String email, int gender,
-			 String phoneNumber, Date dob, String password, UserType type,
-			List<SessionReport> sessionReports, Volunteacher volunteacher, List<TimelinePost> posts) {
+			 String phoneNumber, Calendar dob, String password, UserType type) {
 		super();
 		this.userName = userName;
 		this.email = email;
@@ -80,9 +79,6 @@ public class User {
 		this.dob = dob;
 		this.password = password;
 		this.type = type;
-		this.sessionReports = sessionReports;
-		this.volunteacher = volunteacher;
-		this.posts = posts;
 	}
 	
 	public int getUserId() {
@@ -121,11 +117,11 @@ public class User {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Date getDob() {
+	public Calendar getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(Calendar dob) {
 		this.dob = dob;
 	}
 
