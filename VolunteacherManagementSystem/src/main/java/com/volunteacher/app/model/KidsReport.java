@@ -1,6 +1,5 @@
 package com.volunteacher.app.model;
 
-package com.volunteachers.database.model;
 
 import java.util.Calendar;
 
