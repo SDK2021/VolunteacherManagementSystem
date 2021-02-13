@@ -1,6 +1,6 @@
 package com.volunteacher.app.model;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,7 +25,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Project {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 3)
 	private int projectId;
 
@@ -36,12 +36,12 @@ public class Project {
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date startingDate;
+	private Calendar startingDate;
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date endingDate;
+	private Calendar endingDate;
 	
 	@NotNull
 	@Column(nullable = false , columnDefinition = "TEXT")
@@ -51,7 +51,7 @@ public class Project {
 	@CreatedDate
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date creationDate;
+	private Calendar creationDate;
 	
 	//One Project Many Sessions - cascade deletion
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
@@ -73,8 +73,8 @@ public class Project {
 		super();
 	}
 
-	public Project( String projectName, Date startingDate, Date endingDate,
-			 String projectData, Date creationDate, List<Session> sessions, List<Event> events,
+	public Project( String projectName, Calendar startingDate, Calendar endingDate,
+			 String projectData, Calendar creationDate, List<Session> sessions, List<Event> events,
 			List<Volunteacher> volunteachers, List<Kid> kids) {
 		super();
 		this.projectName = projectName;
@@ -100,19 +100,19 @@ public class Project {
 		this.projectName = projectName;
 	}
 
-	public Date getStartingDate() {
+	public Calendar getStartingDate() {
 		return startingDate;
 	}
 
-	public void setStartingDate(Date startingDate) {
+	public void setStartingDate(Calendar startingDate) {
 		this.startingDate = startingDate;
 	}
 
-	public Date getEndingDate() {
+	public Calendar getEndingDate() {
 		return endingDate;
 	}
 
-	public void setEndingDate(Date endingDate) {
+	public void setEndingDate(Calendar endingDate) {
 		this.endingDate = endingDate;
 	}
 
@@ -124,11 +124,11 @@ public class Project {
 		this.projectData = projectData;
 	}
 
-	public Date getCreationDate() {
+	public Calendar getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(Calendar creationDate) {
 		this.creationDate = creationDate;
 	}
 
