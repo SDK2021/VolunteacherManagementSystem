@@ -1,17 +1,21 @@
 package com.volunteacher.app.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class KidsGroup {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 2)
 	private int groupId;
 
@@ -23,6 +27,8 @@ public class KidsGroup {
 	@Column(length = 20, nullable = false)
 	private String criteria;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "groups")
+	private List<Attendance> attendances;
 
 	public KidsGroup() {
 		super();
@@ -53,9 +59,20 @@ public class KidsGroup {
 	public void setCriteria(String criteria) {
 		this.criteria = criteria;
 	}
+	
+	
+	public List<Attendance> getAttendances() {
+		return attendances;
+	}
+
+	public void setAttendances(List<Attendance> attendances) {
+		this.attendances = attendances;
+	}
 
 	@Override
 	public String toString() {
-		return "KidsGroup [groupId=" + groupId + ", groupName=" + groupName + ", criteria=" + criteria + "]";
+		return "KidsGroup [groupId=" + groupId + ", groupName=" + groupName + ", criteria=" + criteria
+				+ ", attendances=" + attendances + "]";
 	}
+	
 }
