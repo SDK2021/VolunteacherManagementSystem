@@ -1,6 +1,6 @@
 package com.volunteacher.app.model;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +22,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class TimelinePost {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 10	)
 	private int postId;
 	
@@ -47,7 +47,7 @@ public class TimelinePost {
 	@CreatedDate
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date creationDate;
+	private Calendar creationDate;
 	
 
 	public TimelinePost() {
@@ -55,7 +55,7 @@ public class TimelinePost {
 	}
 
 	public TimelinePost( User craetedBy, String postPhoto, String postTitle,
-			 String postDescription, Date creationDate) {
+			 String postDescription, Calendar creationDate) {
 		super();
 		this.createdBy = craetedBy;
 		this.postPhoto = postPhoto;
@@ -109,11 +109,11 @@ public class TimelinePost {
 		this.postDescription = postDescription;
 	}
 
-	public Date getCreationDate() {
+	public Calendar getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(Calendar creationDate) {
 		this.creationDate = creationDate;
 	}
 
@@ -123,3 +123,4 @@ public class TimelinePost {
 				+ postTitle + ", postDescription=" + postDescription + ", creationDate=" + creationDate + "]";
 	}
 }
+
