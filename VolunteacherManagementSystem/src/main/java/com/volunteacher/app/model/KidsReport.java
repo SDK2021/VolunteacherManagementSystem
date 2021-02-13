@@ -1,6 +1,8 @@
 package com.volunteacher.app.model;
 
-import java.util.Date;
+package com.volunteachers.database.model;
+
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +25,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class KidsReport {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 6)
 	private int kidreportId;
 	
@@ -35,7 +37,7 @@ public class KidsReport {
 	@CreatedDate
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date createdDate;
+	private Calendar createdDate;
 	
 	@NotNull
 	@CreatedBy
@@ -94,7 +96,7 @@ public class KidsReport {
 		super();
 	}
 
-	public KidsReport( Kid kid, Date createdDate, User createdBy,
+	public KidsReport( Kid kid, Calendar createdDate, User createdBy,
 			 String discipline, String prayer, String goshthi, String abhivyakti,
 			 String volunteaching, String nationConnection, String games,
 			 String futureExpectation, String remarks, int maths, int gujarati,
@@ -129,11 +131,11 @@ public class KidsReport {
 		this.kid = kid;
 	}
 
-	public Date getCreatedDate() {
+	public Calendar getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Calendar createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -251,4 +253,5 @@ public class KidsReport {
 				+ maths + ", gujarati=" + gujarati + ", english=" + english + "]";
 	}
 }
+
 
