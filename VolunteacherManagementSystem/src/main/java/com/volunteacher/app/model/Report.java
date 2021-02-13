@@ -1,6 +1,6 @@
 package com.volunteacher.app.model;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +24,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Report {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 6)
 	private int reportId;
 	
@@ -40,7 +40,7 @@ public class Report {
 	@CreatedDate
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date creationDate;
+	private Calendar creationDate;
 	
 	@NotNull
 	@OneToOne
@@ -52,7 +52,7 @@ public class Report {
 		super();
 	}
 
-	public Report( String title, String description, Date creationDate,
+	public Report( String title, String description, Calendar creationDate,
 			 User craetedBy) {
 		super();
 		this.title = title;
@@ -81,11 +81,11 @@ public class Report {
 		this.description = description;
 	}
 
-	public Date getCreationDate() {
+	public Calendar getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(Calendar creationDate) {
 		this.creationDate = creationDate;
 	}
 
