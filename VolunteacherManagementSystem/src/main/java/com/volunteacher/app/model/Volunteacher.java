@@ -1,6 +1,6 @@
 package com.volunteacher.app.model;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,7 +25,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Volunteacher {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length=8)
 	private int volunteacherId;
 
@@ -45,12 +45,12 @@ public class Volunteacher {
 	@Temporal(TemporalType.DATE)
 	@CreatedDate
 	@Column(nullable = false)
-	private Date joiningDate;
+	private Calendar joiningDate;
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date endingDate;
+	private Calendar endingDate;
 
 	@NotNull
 	@Column(length = 6, nullable = false)
@@ -85,7 +85,7 @@ public class Volunteacher {
 	}
 
 	public Volunteacher( School school, String employerName, int status,
-			Date joiningDate, Date endingDate, int pincode, String education,
+			Calendar joiningDate, Calendar endingDate, int pincode, String education,
 			User user, Village village, District district, List<Session> sessions,
 			List<Project> projects) {
 		super();
@@ -131,19 +131,19 @@ public class Volunteacher {
 		this.status = status;
 	}
 
-	public Date getJoiningDate() {
+	public Calendar getJoiningDate() {
 		return joiningDate;
 	}
 
-	public void setJoiningDate(Date joiningDate) {
+	public void setJoiningDate(Calendar joiningDate) {
 		this.joiningDate = joiningDate;
 	}
 
-	public Date getEndingDate() {
+	public Calendar getEndingDate() {
 		return endingDate;
 	}
 
-	public void setEndingDate(Date endingDate) {
+	public void setEndingDate(Calendar endingDate) {
 		this.endingDate = endingDate;
 	}
 
@@ -211,3 +211,4 @@ public class Volunteacher {
 				+ ", district=" + district + ", sessions=" + sessions + ", projects=" + projects + "]";
 	}
 }
+
