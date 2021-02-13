@@ -1,6 +1,6 @@
 package com.volunteacher.app.model;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -20,7 +20,7 @@ public class School {
 	
 	@Id
 	@Column(length = 3)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int schoolId;
 	
 	@NotNull
@@ -39,7 +39,7 @@ public class School {
 	private String phoneNumber;
 	
 	@Temporal(TemporalType.DATE)
-	private Date startingDate;
+	private Calendar startingDate;
 	
 	@NotNull
 	@Size(min = 2 , max = 20)
@@ -66,7 +66,7 @@ public class School {
 	}
 
 	public School( String name, int pincode, int totalLabs,
-			 String phoneNumber, Date startingDate, String stream,
+			 String phoneNumber, Calendar startingDate, String stream,
 			 int totalStudent, int status, List<Requirement> requirements, Village village) {
 		super();
 		this.name = name;
@@ -117,11 +117,11 @@ public class School {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Date getStartingDate() {
+	public Calendar getStartingDate() {
 		return startingDate;
 	}
 
-	public void setStartingDate(Date startingDate) {
+	public void setStartingDate(Calendar startingDate) {
 		this.startingDate = startingDate;
 	}
 
@@ -173,3 +173,4 @@ public class School {
 				+ ", village=" + village + "]";
 	}
 }
+
