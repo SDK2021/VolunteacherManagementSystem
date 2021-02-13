@@ -1,6 +1,6 @@
 package com.volunteacher.app.model;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -38,12 +38,12 @@ public class Event {
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date eventDate;
+	private Calendar eventDate;
 	
 	@NotNull
 	@Temporal(TemporalType.TIME)
 	@Column(nullable = false)
-	private Date eventTime;
+	private Calendar eventTime;
 	
 	//Many events belongs to one project
 	@NotNull
@@ -75,8 +75,8 @@ public class Event {
 		super();
 	}
 	
-	public Event(String title, String eventData, Date eventDate,
-			 Date eventTime, Project project, List<Participant> participants, Village village,
+	public Event(String title, String eventData, Calendar eventDate,
+			Calendar eventTime, Project project, List<Participant> participants, Village village,
 			List<Kid> kids, Notification notification, List<Activity> activities) {
 		super();
 		this.title = title;
@@ -111,19 +111,19 @@ public class Event {
 		this.eventData = eventData;
 	}
 
-	public Date getEventDate() {
+	public Calendar getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(Date eventDate) {
+	public void setEventDate(Calendar eventDate) {
 		this.eventDate = eventDate;
 	}
 
-	public Date getEventTime() {
+	public Calendar getEventTime() {
 		return eventTime;
 	}
 
-	public void setEventTime(Date eventTime) {
+	public void setEventTime(Calendar eventTime) {
 		this.eventTime = eventTime;
 	}
 
