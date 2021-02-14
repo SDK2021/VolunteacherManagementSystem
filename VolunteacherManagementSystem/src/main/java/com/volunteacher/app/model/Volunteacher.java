@@ -27,7 +27,7 @@ public class Volunteacher {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length=8)
-	private int volunteacherId;
+	private long volunteacherId;
 
 	@NotNull
 	@OneToOne
@@ -103,7 +103,7 @@ public class Volunteacher {
 		this.projects = projects;
 	}
 	
-	public int getVolunteacherId() {
+	public long getVolunteacherId() {
 		return volunteacherId;
 	}
 
