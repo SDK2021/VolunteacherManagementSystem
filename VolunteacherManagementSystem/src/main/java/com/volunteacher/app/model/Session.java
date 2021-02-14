@@ -29,7 +29,7 @@ public class Session {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length=8)
-	private int sessionId;
+	private long sessionId;
 	
 	//attendance	
 	
@@ -100,7 +100,7 @@ public class Session {
 		this.notification = notification;
 	}
 	
-	public int getSessionId() {
+	public long getSessionId() {
 		return sessionId;
 	}
 
