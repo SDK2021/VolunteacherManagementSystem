@@ -26,7 +26,7 @@ public class Report {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 6)
-	private int reportId;
+	private long reportId;
 	
 	@NotNull
 	@Column(nullable = false, length = 50, columnDefinition = "Char")
@@ -61,7 +61,7 @@ public class Report {
 		this.craetedBy = craetedBy;
 	}
 
-	public int getReportId() {
+	public long getReportId() {
 		return reportId;
 	}
 	
