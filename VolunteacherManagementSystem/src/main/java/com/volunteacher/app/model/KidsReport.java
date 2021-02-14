@@ -26,7 +26,7 @@ public class KidsReport {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 6)
-	private int kidreportId;
+	private long kidreportId;
 	
 	@NotNull
 	@OneToOne
@@ -118,7 +118,7 @@ public class KidsReport {
 		this.english = english;
 	}
 	
-	public int getKidreportId() {
+	public long getKidreportId() {
 		return kidreportId;
 	}
 
