@@ -17,7 +17,7 @@ public class Attendance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length=10)
-	private int attendanceId;
+	private long attendanceId;
 	
 	@NotNull
 	@OneToOne
@@ -36,7 +36,7 @@ public class Attendance {
 		this.groups = groups;
 	}
 
-	public int getAttendanceId() {
+	public long getAttendanceId() {
 		return attendanceId;
 	}
 
