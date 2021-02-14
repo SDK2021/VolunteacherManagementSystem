@@ -23,8 +23,8 @@ public class TimelinePost {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(length = 10	)
-	private int postId;
+	@Column(length = 10)
+	private long postId;
 	
 	@NotNull
 	@ManyToOne
@@ -65,7 +65,7 @@ public class TimelinePost {
 	}
 	
 
-	public int getPostId() {
+	public long getPostId() {
 		return postId;
 	}
 
