@@ -25,7 +25,7 @@ public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 6)
-	private int eventId;
+	private long eventId;
 	
 	@NotNull
 	@Column(length = 50, nullable = false, columnDefinition = "Char")
@@ -91,7 +91,7 @@ public class Event {
 		this.activities = activities;
 	}
 
-	public int getEventId() {
+	public long getEventId() {
 		return eventId;
 	}
 
