@@ -18,8 +18,8 @@ public class SessionReport {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(length=8)
-	private int sessionReportId;
+	@Column(length=10)
+	private long sessionReportId;
 	
 	@NotNull
 	@Column(nullable = false , columnDefinition = "TEXT")
@@ -57,7 +57,7 @@ public class SessionReport {
 		this.user = user;
 	}
 
-	public int getSessionReportId() {
+	public long getSessionReportId() {
 		return sessionReportId;
 	}
 
