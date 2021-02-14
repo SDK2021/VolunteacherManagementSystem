@@ -22,7 +22,7 @@ public class Kid {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 8)
-	private int kidId;
+	private long kidId;
 	
 	@NotNull
 	@Size(min = 3 , max = 20)
@@ -98,7 +98,7 @@ public class Kid {
 		this.events = events;
 	}
 
-	public int getKidId() {
+	public long getKidId() {
 		return kidId;
 	}
 
