@@ -14,7 +14,7 @@ public class Village {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(length = 6)
-	private int villageId;
+	private long villageId;
 
 	@NotNull
 	@Column(length = 20, nullable = false , columnDefinition = "Char")
@@ -35,7 +35,7 @@ public class Village {
 		this.taluka = taluka;
 	}
 	
-	public int getVillageId() {
+	public long getVillageId() {
 		return villageId;
 	}
 	
