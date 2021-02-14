@@ -22,7 +22,7 @@ public class Participant {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length=8)
-	private int participantId;
+	private long participantId;
 	
 	@NotNull
 	@Column(length=20, nullable = false , columnDefinition = "Char")
@@ -81,7 +81,7 @@ public class Participant {
 		this.user = user;
 	}
 	
-	public int getParticipantId() {
+	public long getParticipantId() {
 		return participantId;
 	}
 
