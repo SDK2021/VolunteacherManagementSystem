@@ -22,7 +22,7 @@ public class Notification {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(length = 8)
-	private int notificationId;
+	private long notificationId;
 	
 	@NotNull
 	@Column(length = 15, nullable = false)
@@ -56,7 +56,7 @@ public class Notification {
 		this.createdBy = createdBy;
 	}
 
-	public int getNotificationId() {
+	public long getNotificationId() {
 		return notificationId;
 	}
 
