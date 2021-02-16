@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 public class Kid {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 8)
 	private long kidId;
 	
