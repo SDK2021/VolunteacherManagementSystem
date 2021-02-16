@@ -17,7 +17,7 @@ public class State {
 
 	@Id
 	@Column(length = 2, columnDefinition = "TINYINT")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int stateId;
 
 	@NotNull
