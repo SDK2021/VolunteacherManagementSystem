@@ -58,7 +58,7 @@ public class School {
 	private List<Requirement> requirements;
 	
 	@OneToOne
-	Village village;
+	private Village village;
 
 	
 	public School() {
