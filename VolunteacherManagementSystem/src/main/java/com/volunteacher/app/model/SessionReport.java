@@ -17,7 +17,7 @@ public class SessionReport {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length=10)
 	private long sessionReportId;
 	
