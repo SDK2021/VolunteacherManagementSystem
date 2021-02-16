@@ -16,7 +16,7 @@ import javax.persistence.CascadeType;
 public class Taluka {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 5)
 	private int talukaId;
 
