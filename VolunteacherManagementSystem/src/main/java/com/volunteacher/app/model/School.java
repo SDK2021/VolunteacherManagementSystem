@@ -20,7 +20,7 @@ public class School {
 	
 	@Id
 	@Column(length = 3)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int schoolId;
 	
 	@NotNull
