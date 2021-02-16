@@ -16,7 +16,7 @@ public class Country {
 
 	@Id
 	@Column(length = 1, columnDefinition = "TINYINT")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int countryId;
 
 	@NotNull
