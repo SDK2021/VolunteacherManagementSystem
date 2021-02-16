@@ -16,7 +16,7 @@ import javax.persistence.CascadeType;
 public class District {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 3)
 	private int districtId;
 
