@@ -61,7 +61,7 @@ public class KidsReport {
 	
 	@NotNull
 	@Column(nullable = false, length = 8)
-	String volunteaching;
+	private String volunteaching;
 	
 	@NotNull
 	@Column(nullable = false, length = 8)
