@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 public class Activity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length=3)
 	private int activityId;
 	
