@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 public class ApplicantRequest {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 4)
 	int requestId;
 	
