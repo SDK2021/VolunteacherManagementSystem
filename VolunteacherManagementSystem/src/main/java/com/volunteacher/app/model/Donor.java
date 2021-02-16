@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 public class Donor {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 5)
 	private int donorId;
 
