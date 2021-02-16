@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class Village {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 6)
 	private long villageId;
 
