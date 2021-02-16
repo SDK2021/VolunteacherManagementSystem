@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
 public class Event {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 6)
 	private long eventId;
 	
