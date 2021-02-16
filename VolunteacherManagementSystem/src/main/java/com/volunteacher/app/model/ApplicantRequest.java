@@ -23,24 +23,24 @@ public class ApplicantRequest {
 	@NotNull
 	@Email
 	@Column(length = 40, nullable = false)
-	String emailId;
+	private String emailId;
 	
 	@NotNull
 	@Size(min = 3 , max = 20)
 	@Column(nullable = false, columnDefinition = "Char", length = 20)
-	String name;
+	private String name;
 	
 	@NotNull
 	@Column(nullable = false, length = 10, unique = true)
-	String phoneNumber;
+	private String phoneNumber;
 	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "TinyInt", length = 1)
-	int gender;
+	private int gender;
 	
 	@NotNull
 	@OneToOne
-	UserType userType;
+	private UserType userType;
 	
 	
 	public ApplicantRequest() {
