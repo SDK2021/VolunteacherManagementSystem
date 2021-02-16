@@ -18,7 +18,7 @@ public class ApplicantRequest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 4)
-	int requestId;
+	Private int requestId;
 	
 	@NotNull
 	@Email
