@@ -25,7 +25,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Volunteacher {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length=8)
 	private long volunteacherId;
 
