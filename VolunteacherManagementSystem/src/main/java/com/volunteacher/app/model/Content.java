@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class Content {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 5)
 	private int contentId;
 
