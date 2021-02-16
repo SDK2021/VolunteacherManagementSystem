@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 public class Participant {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length=8)
 	private long participantId;
 	
