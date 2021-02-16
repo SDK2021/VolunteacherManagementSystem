@@ -16,7 +16,7 @@ public class Requirement {
 	
 	@Id
 	@Column(length = 3)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int requirementId;
 	
 	@NotNull
