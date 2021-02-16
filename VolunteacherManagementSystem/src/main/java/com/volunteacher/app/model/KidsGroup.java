@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class KidsGroup {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 2)
 	private int groupId;
 
