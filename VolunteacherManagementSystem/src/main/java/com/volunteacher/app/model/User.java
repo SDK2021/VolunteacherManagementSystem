@@ -13,7 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class User {
@@ -51,17 +53,21 @@ public class User {
 	//One User On Type
 	@NotNull
 	@OneToOne
+	@JsonManagedReference
 	private UserType type;
 	
 	//One User Many Reports- cascade deletion
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonBackReference
 	private List<SessionReport> sessionReports;	
 	
 	//One password of one user
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonBackReference
 	private Volunteacher volunteacher;
 	
 	@OneToMany(cascade = CascadeType.ALL , mappedBy = "createdBy")
+	@JsonBackReference
 	private List<TimelinePost> posts;
 
 	

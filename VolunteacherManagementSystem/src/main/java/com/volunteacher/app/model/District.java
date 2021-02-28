@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.CascadeType;
 
 @Entity
@@ -25,9 +29,11 @@ public class District {
 	private String districtName;
 
 	@OneToOne
+	@JsonBackReference
 	private State state;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "district")
+	@JsonManagedReference
 	private List<Taluka> talukas;
 	
 

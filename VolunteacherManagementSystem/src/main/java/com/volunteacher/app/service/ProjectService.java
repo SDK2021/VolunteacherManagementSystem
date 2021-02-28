@@ -1,5 +1,5 @@
 package com.volunteacher.app.service;
 
-public interface VolunteacherService {
+public interface ProjectService {
 
 }

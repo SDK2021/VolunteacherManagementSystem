@@ -3,6 +3,9 @@ package com.volunteacher.app.model;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,9 +29,11 @@ public class Taluka {
 
 	@NotNull
 	@OneToOne
+	@JsonBackReference
 	private District district;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "taluka")
+	@JsonManagedReference
 	private List<Village> villages;
 
 	

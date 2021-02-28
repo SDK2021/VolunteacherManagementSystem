@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.CascadeType;
 
 @Entity
@@ -24,6 +27,7 @@ public class Country {
 	private String countryName;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
+	@JsonManagedReference
 	private List<State> states;
 
 	

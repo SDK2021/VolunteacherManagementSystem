@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Village {
 
@@ -22,6 +24,7 @@ public class Village {
 
 	@NotNull
 	@OneToOne
+	@JsonBackReference
 	private Taluka taluka;
 	
 

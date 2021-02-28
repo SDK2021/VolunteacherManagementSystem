@@ -19,6 +19,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -32,6 +33,7 @@ public class TimelinePost {
 	@NotNull
 	@ManyToOne
 	@CreatedBy
+	@JsonManagedReference
 	private User createdBy;
 	
 	@NotNull

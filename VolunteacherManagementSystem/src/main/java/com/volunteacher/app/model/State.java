@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.CascadeType;
 
 @Entity
@@ -26,9 +30,11 @@ public class State {
 
 	@NotNull
 	@OneToOne
+	@JsonBackReference
 	private Country country;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "state")
+	@JsonManagedReference
 	private List<District> districts;
 
 	

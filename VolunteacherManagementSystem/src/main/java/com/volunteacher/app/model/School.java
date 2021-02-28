@@ -1,5 +1,6 @@
 package com.volunteacher.app.model;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class School {
 	private String phoneNumber;
 	
 	@JsonFormat(pattern = "dd-mm-yyyy")
-	private Date startingDate;
+	private Calendar startingDate;
 	
 	@NotNull
 	@Size(min = 2 , max = 20)
@@ -68,7 +69,7 @@ public class School {
 	}
 
 	public School(@NotNull @Size(min = 2, max = 30) String name, int pincode, int totalLabs,
-			@NotNull String phoneNumber, Date startingDate, @NotNull @Size(min = 2, max = 20) String stream,
+			@NotNull String phoneNumber, Calendar startingDate, @NotNull @Size(min = 2, max = 20) String stream,
 			@NotNull int totalStudent, @NotNull int status, List<Requirement> requirements, Village village) {
 		super();
 		this.name = name;
@@ -119,11 +120,11 @@ public class School {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Date getStartingDate() {
+	public Calendar getStartingDate() {
 		return startingDate;
 	}
 
-	public void setStartingDate(Date startingDate) {
+	public void setStartingDate(Calendar startingDate) {
 		this.startingDate = startingDate;
 	}
 

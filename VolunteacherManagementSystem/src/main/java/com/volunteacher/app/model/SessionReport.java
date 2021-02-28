@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class SessionReport {
 	
@@ -43,6 +45,7 @@ public class SessionReport {
 		
 	@NotNull
 	@ManyToOne
+	@JsonManagedReference
 	private User user;
 	
 

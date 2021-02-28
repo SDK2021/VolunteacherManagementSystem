@@ -19,6 +19,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -47,12 +48,10 @@ public class Volunteacher {
 	@Column(nullable = false)
 	private Calendar joiningDate;
 	
-	@NotNull
 	@JsonFormat(pattern = "dd-mm-yyy")
 	@Column(nullable = false)
 	private Calendar endingDate;
 
-	@NotNull
 	@Column(length = 6, nullable = false)
 	private int pincode;
 
@@ -62,6 +61,7 @@ public class Volunteacher {
 	
 	//One User-- for password
 	@OneToOne
+	@JsonManagedReference
 	private User user;
 	
 	@NotNull

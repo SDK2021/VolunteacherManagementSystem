@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Kid {
@@ -51,14 +52,17 @@ public class Kid {
 	private String photo;
 	
 	@OneToOne
+	@JsonManagedReference
 	private School school;
 	
 	@NotNull
 	@OneToOne
+	@JsonManagedReference
 	private Village village;
 	
 	@NotNull
 	@OneToOne
+	@JsonManagedReference
 	private KidsGroup group;
 	
 	@ManyToMany(mappedBy = "kids")
