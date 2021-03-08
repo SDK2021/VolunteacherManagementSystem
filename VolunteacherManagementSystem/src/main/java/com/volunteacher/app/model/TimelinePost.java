@@ -1,7 +1,6 @@
 package com.volunteacher.app.model;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedBy;
@@ -19,28 +16,26 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class TimelinePost {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(length = 10	)
-	private int postId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(length = 10)
+	private Long postId;
 	
 	@NotNull
 	@ManyToOne
 	@CreatedBy
-	@JsonManagedReference
 	private User createdBy;
 	
-	@NotNull
+	@NotNull(message = "post photo not be null")
 	@Column(nullable = false)
 	private String postPhoto;
 	
-	@NotNull
+	@NotNull(message = "post title not be null")
 	@Column(nullable = false, length = 100)
 	private String postTitle;
 	
@@ -50,7 +45,7 @@ public class TimelinePost {
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(pattern = "dd-mm-yyyy")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(nullable = false)
 	private Calendar creationDate;
 	
@@ -59,18 +54,16 @@ public class TimelinePost {
 		super();
 	}
 
-	public TimelinePost(@NotNull User craetedBy, @NotNull String postPhoto, @NotNull String postTitle,
-			@NotNull String postDescription, @NotNull Calendar creationDate) {
+	public TimelinePost(User createdBy, String postPhoto, String postTitle, String postDescription, Calendar creationDate) {
 		super();
-		this.createdBy = craetedBy;
+		this.createdBy = createdBy;
 		this.postPhoto = postPhoto;
 		this.postTitle = postTitle;
 		this.postDescription = postDescription;
 		this.creationDate = creationDate;
 	}
-	
 
-	public int getPostId() {
+	public Long getPostId() {
 		return postId;
 	}
 
@@ -80,14 +73,6 @@ public class TimelinePost {
 
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
-	}
-
-	public User getCraetedBy() {
-		return createdBy;
-	}
-
-	public void setCraetedBy(User craetedBy) {
-		this.createdBy = craetedBy;
 	}
 
 	public String getPostPhoto() {

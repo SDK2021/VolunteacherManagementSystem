@@ -8,13 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 @Entity
 public class Village {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 6)
 	private int villageId;
 
@@ -24,7 +22,6 @@ public class Village {
 
 	@NotNull
 	@OneToOne
-	@JsonBackReference
 	private Taluka taluka;
 	
 
@@ -32,7 +29,7 @@ public class Village {
 		super();
 	}
 
-	public Village(@NotNull String villageName, @NotNull Taluka taluka) {
+	public Village(String villageName, Taluka taluka) {
 		super();
 		this.villageName = villageName;
 		this.taluka = taluka;

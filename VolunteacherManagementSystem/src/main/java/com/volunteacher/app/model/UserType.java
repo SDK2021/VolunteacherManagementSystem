@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class UserType {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length=1 , columnDefinition = "TinyInt")
 	private int typeId;
 		
@@ -24,7 +24,7 @@ public class UserType {
 		super();
 	}
 
-	public UserType(@NotNull String type) {
+	public UserType(String type) {
 		super();
 		this.type = type;
 	}

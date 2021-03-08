@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.volunteacher.app.model.TimelinePost;
 
 @Repository
-public interface TimelinePostRepository extends PagingAndSortingRepository<TimelinePost, Integer>{
+public interface TimelinePostRepository extends PagingAndSortingRepository<TimelinePost, Long>{
 
 }

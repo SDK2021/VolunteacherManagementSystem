@@ -3,7 +3,6 @@ package com.volunteacher.app.model;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -19,16 +18,15 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Volunteacher {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length=8)
-	private int volunteacherId;
+	private Long volunteacherId;
 
 	@NotNull
 	@OneToOne
@@ -43,13 +41,13 @@ public class Volunteacher {
 	private int status;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-mm-yyy")
+	@JsonFormat(pattern = "dd-MM-yyy")
 	@CreatedDate
 	@Column(nullable = false)
 	private Calendar joiningDate;
 	
-	@JsonFormat(pattern = "dd-mm-yyy")
-	@Column(nullable = false)
+	@JsonFormat(pattern = "dd-MM-yyy")
+	@Column(columnDefinition = "DATE")
 	private Calendar endingDate;
 
 	@Column(length = 6, nullable = false)
@@ -61,7 +59,6 @@ public class Volunteacher {
 	
 	//One User-- for password
 	@OneToOne
-	@JsonManagedReference
 	private User user;
 	
 	@NotNull
@@ -72,7 +69,7 @@ public class Volunteacher {
 	@ManyToOne
 	private District district;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	private List<Session> sessions;
 	
 	//Does cascading required?
@@ -84,9 +81,9 @@ public class Volunteacher {
 		super();
 	}
 
-	public Volunteacher(@NotNull School school, @NotNull String employerName, @NotNull int status,
-			@NotNull Calendar joiningDate, @NotNull Calendar endingDate, @NotNull int pincode, @NotNull String education,
-			User user, @NotNull Village village, @NotNull District district, List<Session> sessions,
+	public Volunteacher( School school, String employerName, int status,
+			Calendar joiningDate, Calendar endingDate, int pincode, String education,
+			User user, Village village, District district, List<Session> sessions,
 			List<Project> projects) {
 		super();
 		this.school = school;
@@ -102,11 +99,11 @@ public class Volunteacher {
 		this.sessions = sessions;
 		this.projects = projects;
 	}
-	
-	public int getVolunteacherId() {
+
+	public Long getVolunteacherId() {
 		return volunteacherId;
 	}
-
+	
 	public School getSchool() {
 		return school;
 	}

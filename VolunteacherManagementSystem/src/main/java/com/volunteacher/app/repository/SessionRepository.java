@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.volunteacher.app.model.Session;
 
 @Repository
-public interface SessionRepository extends PagingAndSortingRepository<Session, Integer>{
-
+public interface SessionRepository extends PagingAndSortingRepository<Session, Long>{
 }

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 public class Activity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length=3)
 	private int activityId;
 	
@@ -35,7 +35,7 @@ public class Activity {
 		super();
 	}
 	
-	public Activity(@NotNull String activityName, List<Participant> participants, List<Event> events) {
+	public Activity(String activityName, List<Participant> participants, List<Event> events) {
 		super();
 		this.activityName = activityName;
 		this.participants = participants;
@@ -52,14 +52,6 @@ public class Activity {
 
 	public void setActivityName(String activityName) {
 		this.activityName = activityName;
-	}
-
-	public List<Participant> getParticipants() {
-		return participants;
-	}
-
-	public void setParticipants(List<Participant> participants) {
-		this.participants = participants;
 	}
 
 	public List<Event> getEvents() {

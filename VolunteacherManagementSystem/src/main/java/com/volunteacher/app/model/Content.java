@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class Content {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 5)
 	private int contentId;
 
@@ -29,7 +29,7 @@ public class Content {
 		super();
 	}
 
-	public Content(@NotNull String contentData, @NotNull KidsGroup group) {
+	public Content(String contentData, KidsGroup group) {
 		super();
 		this.contentData = contentData;
 		this.group = group;

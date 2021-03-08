@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -27,30 +26,30 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Session {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length=8)
-	private int sessionId;
+	private Long sessionId;
 	
 	//attendance	
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-mm-yyyy")
-	@Column(nullable = false)
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar sessionDate;
 	
 	@NotNull
-	@JsonFormat(pattern = "HH-mm-ss")
-	@Column(nullable = false)
+	@JsonFormat(pattern = "HH:mm:ss")
+	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar startingTime;
 	
 	@NotNull
-	@JsonFormat(pattern = "HH-mm-ss")
-	@Column(nullable = false)
+	@JsonFormat(pattern = "HH:mm:ss")
+	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar endingTime;
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(pattern = "dd-mm-yyyy")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(nullable = false)
 	private Calendar creationDate;
 	
@@ -60,47 +59,39 @@ public class Session {
 	private Project project;
 			
 	//One session many reports - cascade deletion
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "session")
-	private List<SessionReport> sessionReports;
 	
 	@NotNull
-	@ManyToOne
+	@OneToOne
 	private Village village;
 	
 	@ManyToMany(mappedBy = "sessions")
 	private List<Volunteacher> volunteachers;
 	
-	@ManyToMany
-	private List<Kid> kids;
+//	@ManyToMany
+//	private List<Kid> kids;
 	
 	//add
-	@OneToOne(cascade = CascadeType.ALL , mappedBy = "session")
+	@OneToOne(mappedBy = "session",cascade = CascadeType.ALL , orphanRemoval=true)
 	private Notification notification;
-	
-	@OneToOne(cascade = CascadeType.ALL , mappedBy = "session")
-	private Attendance attendance;
 
 	public Session() {
 		super();
 	}
 
 	public Session(Calendar sessionDate, Calendar startingTime, Calendar endingTime,
-			Calendar creationDate,  Project project, List<SessionReport> sessionReports,
-			 Village village, List<Volunteacher> volunteachers, List<Kid> kids, Notification notification) {
+			Calendar creationDate,  Project project,Village village, List<Volunteacher> volunteachers, List<Kid> kids) {
 		super();
 		this.sessionDate = sessionDate;
 		this.startingTime = startingTime;
 		this.endingTime = endingTime;
 		this.creationDate = creationDate;
 		this.project = project;
-		this.sessionReports = sessionReports;
 		this.village = village;
 		this.volunteachers = volunteachers;
-		this.kids = kids;
-		this.notification = notification;
+//		this.kids = kids;
 	}
 	
-	public int getSessionId() {
+	public Long getSessionId() {
 		return sessionId;
 	}
 
@@ -144,14 +135,6 @@ public class Session {
 		this.project = project;
 	}
 
-	public List<SessionReport> getSessionReports() {
-		return sessionReports;
-	}
-
-	public void setSessionReports(List<SessionReport> sessionReports) {
-		this.sessionReports = sessionReports;
-	}
-
 	public Village getVillage() {
 		return village;
 	}
@@ -168,35 +151,20 @@ public class Session {
 		this.volunteachers = volunteachers;
 	}
 
-	public List<Kid> getKids() {
-		return kids;
-	}
+//	public List<Kid> getKids() {
+//		return kids;
+//	}
+//
+//	public void setKids(List<Kid> kids) {
+//		this.kids = kids;
+//	}
 
-	public void setKids(List<Kid> kids) {
-		this.kids = kids;
-	}
-
-	public Notification getNotification() {
-		return notification;
-	}
-
-	public void setNotification(Notification notification) {
-		this.notification = notification;
-	}
-	
-	public Attendance getAttendance() {
-		return attendance;
-	}
-
-	public void setAttendance(Attendance attendance) {
-		this.attendance = attendance;
-	}
 
 	@Override
 	public String toString() {
 		return "Session [sessionId=" + sessionId + ", sessionDate=" + sessionDate + ", startingTime=" + startingTime
 				+ ", endingTime=" + endingTime + ", creationDate=" + creationDate + ", project=" + project
-				+ ", sessionReports=" + sessionReports + ", village=" + village + ", volunteachers=" + volunteachers
-				+ ", kids=" + kids + ", notification=" + notification + ", attendance=" + attendance + "]";
+				+ ", village=" + village + ", volunteachers=" + volunteachers
+				+ "]";
 	}
 }

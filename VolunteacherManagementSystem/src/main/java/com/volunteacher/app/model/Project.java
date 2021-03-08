@@ -3,7 +3,6 @@ package com.volunteacher.app.model;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -25,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Project {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 3)
 	private int projectId;
 
@@ -34,13 +33,13 @@ public class Project {
 	private String projectName;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-mm-yyyy")
-	@Column(nullable = false)
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar startingDate;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-mm-yyyy")
-	@Column(nullable = false)
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar endingDate;
 	
 	@NotNull
@@ -49,16 +48,16 @@ public class Project {
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(pattern = "dd-mm-yyyy")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(nullable = false)
 	private Calendar creationDate;
 	
 	//One Project Many Sessions - cascade deletion
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
+	@OneToMany(mappedBy = "project")
 	private List<Session> sessions;
 	
 	//One project many events
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
+	@OneToMany(mappedBy = "project")
 	private List<Event> events;
 	
 	//Does cascading required?
@@ -73,8 +72,8 @@ public class Project {
 		super();
 	}
 
-	public Project(@NotNull String projectName, @NotNull Calendar startingDate, @NotNull Calendar endingDate,
-			@NotNull String projectData, @NotNull Calendar creationDate, List<Session> sessions, List<Event> events,
+	public Project(String projectName,Calendar startingDate, Calendar endingDate,
+			 String projectData,Calendar creationDate, List<Session> sessions, List<Event> events,
 			List<Volunteacher> volunteachers, List<Kid> kids) {
 		super();
 		this.projectName = projectName;
@@ -82,9 +81,6 @@ public class Project {
 		this.endingDate = endingDate;
 		this.projectData = projectData;
 		this.creationDate = creationDate;
-		this.sessions = sessions;
-		this.events = events;
-		this.volunteachers = volunteachers;
 		this.kids = kids;
 	}
 	
@@ -132,22 +128,6 @@ public class Project {
 		this.creationDate = creationDate;
 	}
 
-	public List<Session> getSessions() {
-		return sessions;
-	}
-
-	public void setSessions(List<Session> sessions) {
-		this.sessions = sessions;
-	}
-
-	public List<Event> getEvents() {
-		return events;
-	}
-
-	public void setEvents(List<Event> events) {
-		this.events = events;
-	}
-
 	public List<Volunteacher> getVolunteachers() {
 		return volunteachers;
 	}
@@ -168,7 +148,7 @@ public class Project {
 	public String toString() {
 		return "Project [projectId=" + projectId + ", projectName=" + projectName + ", startingDate=" + startingDate
 				+ ", endingDate=" + endingDate + ", projectData=" + projectData + ", creationDate=" + creationDate
-				+ ", sessions=" + sessions + ", events=" + events + ", volunteachers=" + volunteachers + ", kids="
+				+ ", events=" + events + ", volunteachers=" + volunteachers + ", kids="
 				+ kids + "]";
 	}
 }

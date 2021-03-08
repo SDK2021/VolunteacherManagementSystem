@@ -1,11 +1,8 @@
 package com.volunteacher.app.model;
 
 import java.util.List;
-import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,13 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.CascadeType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Taluka {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 5)
 	private int talukaId;
 
@@ -29,11 +26,9 @@ public class Taluka {
 
 	@NotNull
 	@OneToOne
-	@JsonBackReference
 	private District district;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "taluka")
-	@JsonManagedReference
 	private List<Village> villages;
 
 	
@@ -41,11 +36,10 @@ public class Taluka {
 		super();
 	}
 
-	public Taluka(@NotNull String talukaName, @NotNull District district, List<Village> villages) {
+	public Taluka(String talukaName, District district) {
 		super();
 		this.talukaName = talukaName;
 		this.district = district;
-		this.villages = villages;
 	}
 	
 	public int getTalukaId() {
@@ -68,17 +62,8 @@ public class Taluka {
 		this.district = district;
 	}
 
-	public List<Village> getVillages() {
-		return villages;
-	}
-
-	public void setVillages(List<Village> villages) {
-		this.villages = villages;
-	}
-
 	@Override
 	public String toString() {
-		return "Taluka [talukaId=" + talukaId + ", talukaName=" + talukaName + ", district=" + district + ", villages="
-				+ villages + "]";
+		return "Taluka [talukaId=" + talukaId + ", talukaName=" + talukaName + ", district=" + district + "]";
 	}
 }

@@ -1,10 +1,8 @@
 package com.volunteacher.app.model;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,19 +12,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 
 
 @Entity
 public class Event {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 6)
 	private int eventId;
 	
@@ -39,32 +34,33 @@ public class Event {
 	private String eventData;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-mm-yyyy")
-	@Column(nullable = false)
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar eventDate;
 	
 	@NotNull
 	@JsonFormat(pattern = "HH:mm:ss")
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar eventTime;
+	
 	
 	//Many events belongs to one project
 	@NotNull
 	@ManyToOne
 	private Project project;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+	@OneToMany(mappedBy = "event")
 	private List<Participant> participants;
 	
 	@NotNull
-	@ManyToOne
+	@OneToOne
 	private Village village;
 	
 	@ManyToMany
 	private List<Kid> kids;
 	
 	//add
-	@OneToOne(cascade = CascadeType.ALL , mappedBy = "event")
+	@OneToOne(mappedBy = "event")
 	private Notification notification;
 	
 	//add
@@ -79,19 +75,16 @@ public class Event {
 	}
 	
 	public Event(String title, String eventData, Calendar eventDate,
-			Calendar eventTime, Project project, List<Participant> participants, Village village,
-			List<Kid> kids, Notification notification, List<Activity> activities) {
+			Calendar eventTime, Project project,  Village village,
+			List<Kid> kids) {
 		super();
 		this.title = title;
 		this.eventData = eventData;
 		this.eventDate = eventDate;
 		this.eventTime = eventTime;
 		this.project = project;
-		this.participants = participants;
 		this.village = village;
 		this.kids = kids;
-		this.notification = notification;
-		this.activities = activities;
 	}
 
 	public int getEventId() {
@@ -138,14 +131,6 @@ public class Event {
 		this.project = project;
 	}
 
-	public List<Participant> getParticipants() {
-		return participants;
-	}
-
-	public void setParticipants(List<Participant> participants) {
-		this.participants = participants;
-	}
-
 	public Village getVillage() {
 		return village;
 	}
@@ -162,27 +147,10 @@ public class Event {
 		this.kids = kids;
 	}
 
-	public Notification getNotification() {
-		return notification;
-	}
-
-	public void setNotification(Notification notification) {
-		this.notification = notification;
-	}
-
-	public List<Activity> getActivities() {
-		return activities;
-	}
-
-	public void setActivities(List<Activity> activities) {
-		this.activities = activities;
-	}
 
 	@Override
 	public String toString() {
 		return "Event [eventId=" + eventId + ", title=" + title + ", eventData=" + eventData + ", eventDate="
-				+ eventDate + ", eventTime=" + eventTime + ", project=" + project + ", participants=" + participants
-				+ ", village=" + village + ", kids=" + kids + ", notification=" + notification + ", activities="
-				+ activities + "]";
+				+ eventDate + ", eventTime=" + eventTime + ", project=" + project + ", village=" + village + ", kids=" + kids + "]";
 	}	
 }

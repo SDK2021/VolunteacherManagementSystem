@@ -6,20 +6,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class SessionReport {
 	
-	public SessionReport() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length=8)
 	private int sessionReportId;
 	
@@ -40,17 +34,19 @@ public class SessionReport {
 	private String requirements;
 	
 	@NotNull
-	@ManyToOne
+	@OneToOne
 	private Session session;
 		
 	@NotNull
 	@ManyToOne
-	@JsonManagedReference
 	private User user;
 	
+	public SessionReport() {
+		super();
+	}
 
-	public SessionReport(@NotNull String description, @NotNull String suggestions,
-			@NotNull String experience, @NotNull String requirements, @NotNull Session session, @NotNull User user) {
+	public SessionReport(String description, String suggestions,
+			String experience,String requirements, Session session,User user) {
 		super();
 		this.description = description;
 		this.suggestions = suggestions;

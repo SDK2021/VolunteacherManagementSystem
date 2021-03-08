@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Report {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 6)
 	private int reportId;
 	
@@ -38,7 +38,7 @@ public class Report {
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(pattern = "dd-mm-yyyy")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(nullable = false)
 	private Calendar creationDate;
 	
@@ -52,8 +52,7 @@ public class Report {
 		super();
 	}
 
-	public Report(@NotNull String title, @NotNull String description, @NotNull Calendar creationDate,
-			@NotNull User craetedBy) {
+	public Report(String title, String description,Calendar creationDate,User craetedBy) {
 		super();
 		this.title = title;
 		this.description = description;

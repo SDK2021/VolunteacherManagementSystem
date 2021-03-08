@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 public class Donor {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 5)
 	private int donorId;
 
@@ -44,14 +44,12 @@ public class Donor {
 		super();
 	}
 
-	public Donor(@NotNull @Size(min = 3, max = 20) String donorName, @NotNull String donorPhone,
-			@NotNull String donorEmail, @NotNull UserType userType, Payment payment) {
+	public Donor(String donorName, String donorPhone,String donorEmail, UserType userType) {
 		super();
 		this.donorName = donorName;
 		this.donorPhone = donorPhone;
 		this.donorEmail = donorEmail;
 		this.userType = userType;
-		this.payment = payment;
 	}
 
 	public int getDonorId() {
@@ -90,12 +88,10 @@ public class Donor {
 		this.userType = usertype;
 	}
 
-	public Payment getPayment() {
-		return payment;
+	@Override
+	public String toString() {
+		return "Donor [donorId=" + donorId + ", donorName=" + donorName + ", donorPhone=" + donorPhone + ", donorEmail="
+				+ donorEmail + ", userType=" + userType + "]";
 	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	} 
-
+	
 }

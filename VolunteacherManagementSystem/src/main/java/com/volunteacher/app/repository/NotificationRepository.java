@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.volunteacher.app.model.Notification;
 
 @Repository
-public interface NotificationRepository extends PagingAndSortingRepository<Notification, Integer>{
+public interface NotificationRepository extends PagingAndSortingRepository<Notification, Long>{
 
 }
 

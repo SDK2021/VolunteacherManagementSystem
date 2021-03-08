@@ -3,7 +3,6 @@ package com.volunteacher.app.model;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,15 +14,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Kid {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 8)
-	private int kidId;
+	private Long kidId;
 	
 	@NotNull
 	@Size(min = 3 , max = 20)
@@ -36,7 +34,7 @@ public class Kid {
 	
 	@NotNull
 	@JsonFormat(pattern = "dd-mm-yyyy")
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar dob;
 	
 	@NotNull
@@ -48,44 +46,35 @@ public class Kid {
 	@Column(nullable = false, length = 20)
 	private String area;
 	
-	
 	private String photo;
 	
 	@OneToOne
-	@JsonManagedReference
 	private School school;
 	
 	@NotNull
 	@OneToOne
-	@JsonManagedReference
 	private Village village;
 	
 	@NotNull
 	@OneToOne
-	@JsonManagedReference
 	private KidsGroup group;
 	
 	@ManyToMany(mappedBy = "kids")
 	private List<Project> projects;
 	
-	@ManyToMany(mappedBy = "kids")
-	private List<Session> sessions;
+//	@ManyToMany(mappedBy = "kids")
+//	private List<Session> sessions;
 	
 //	?think....
 	@ManyToMany(mappedBy = "kids")
 	private List<Event> events;
 	
-	@OneToOne(cascade = CascadeType.ALL , mappedBy = "kid")
-	private KidsReport kidReport;
-	
-	
 	public Kid() {
 		super();
 	}
 
-	public Kid(@NotNull @Size(min = 3, max = 20) String name, @NotNull int gender, Calendar dob,
-			@NotNull int standard, @NotNull @Size(min = 2, max = 20) String area, String photo, School school,
-			@NotNull Village village, @NotNull KidsGroup group, List<Project> projects, List<Session> sessions,
+	public Kid(String name, int gender, Calendar dob,int standard, String area, String photo, School school,
+			Village village,  KidsGroup group, List<Project> projects, List<Session> sessions,
 			List<Event> events) {
 		super();
 		this.name = name;
@@ -97,12 +86,10 @@ public class Kid {
 		this.school = school;
 		this.village = village;
 		this.group = group;
-		this.projects = projects;
-		this.sessions = sessions;
-		this.events = events;
+//		this.sessions = sessions;
 	}
 
-	public int getKidId() {
+	public Long getKidId() {
 		return kidId;
 	}
 
@@ -178,44 +165,18 @@ public class Kid {
 		this.group = group;
 	}
 
-	public List<Project> getProjects() {
-		return projects;
-	}
-
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
-	}
-
-	public List<Session> getSessions() {
-		return sessions;
-	}
-
-	public void setSessions(List<Session> sessions) {
-		this.sessions = sessions;
-	}
-
-	public List<Event> getEvents() {
-		return events;
-	}
-
-	public void setEvents(List<Event> events) {
-		this.events = events;
-	}
-	
-	public KidsReport getKidReport() {
-		return kidReport;
-	}
-
-	public void setKidReport(KidsReport kidReport) {
-		this.kidReport = kidReport;
-	}
-
+//	public List<Session> getSessions() {
+//		return sessions;
+//	}
+//
+//	public void setSessions(List<Session> sessions) {
+//		this.sessions = sessions;
+//	}
 
 	@Override
 	public String toString() {
 		return "Kid [kidId=" + kidId + ", name=" + name + ", gender=" + gender + ", dob=" + dob + ", standard="
 				+ standard + ", area=" + area + ", photo=" + photo + ", school=" + school + ", village=" + village
-				+ ", group=" + group + ", projects=" + projects + ", sessions=" + sessions + ", events=" + events
-				+ ", kidReport=" + kidReport + "]";
+				+ ", group=" + group +"]";
 	}
 }

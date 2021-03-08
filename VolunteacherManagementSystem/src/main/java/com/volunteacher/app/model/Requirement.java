@@ -16,7 +16,7 @@ public class Requirement {
 	
 	@Id
 	@Column(length = 3)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int requirementId;
 	
 	@NotNull
@@ -31,7 +31,7 @@ public class Requirement {
 		super();
 	}
 
-	public Requirement(@NotNull String requirement, List<School> schools) {
+	public Requirement(String requirement, List<School> schools) {
 		super();
 		this.requirement = requirement;
 		this.schools = schools;

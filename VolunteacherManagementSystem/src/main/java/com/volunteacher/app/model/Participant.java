@@ -19,9 +19,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Participant {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length=8)
-	private int participantId;
+	private Long participantId;
 	
 	@NotNull
 	@Column(length=20, nullable = false , columnDefinition = "Char")
@@ -41,7 +41,7 @@ public class Participant {
 	
 	@NotNull
 	@JsonFormat(pattern = "dd-mm-yyyy")
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar dob;
 	
 	@NotNull
@@ -65,9 +65,8 @@ public class Participant {
 		super();
 	}
 
-	public Participant(@NotNull String name, @NotNull String email, @NotNull int gender,
-			@NotNull String phoneNumber, @NotNull Calendar dob, @NotNull UserType type, @NotNull Event event,
-			List<Activity> activities, @NotNull User user) {
+	public Participant(String name,  String email,int gender, String phoneNumber, Calendar dob, UserType type,Event event,
+			List<Activity> activities,User user) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -80,7 +79,7 @@ public class Participant {
 		this.user = user;
 	}
 	
-	public int getParticipantId() {
+	public Long getParticipantId() {
 		return participantId;
 	}
 

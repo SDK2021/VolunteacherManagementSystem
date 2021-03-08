@@ -2,6 +2,7 @@ package com.volunteacher.app.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,17 +12,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import javax.persistence.CascadeType;
-
 @Entity
 public class State {
 
 	@Id
 	@Column(length = 2, columnDefinition = "TINYINT")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int stateId;
 
 	@NotNull
@@ -30,11 +26,9 @@ public class State {
 
 	@NotNull
 	@OneToOne
-	@JsonBackReference
 	private Country country;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "state")
-	@JsonManagedReference
 	private List<District> districts;
 
 	
@@ -42,11 +36,10 @@ public class State {
 		super();
 	}
 	
-	public State(@NotNull String stateName, @NotNull Country country, List<District> districts) {
+	public State(String stateName, Country country) {
 		super();
 		this.stateName = stateName;
 		this.country = country;
-		this.districts = districts;
 	}
 
 	public int getStateId() {
@@ -69,17 +62,8 @@ public class State {
 		this.country = country;
 	}
 
-	public List<District> getDistricts() {
-		return districts;
-	}
-
-	public void setDistricts(List<District> districts) {
-		this.districts = districts;
-	}
-
 	@Override
 	public String toString() {
-		return "State [stateId=" + stateId + ", stateName=" + stateName + ", country=" + country + ", districts="
-				+ districts + "]";
+		return "State [stateId=" + stateId + ", stateName=" + stateName + ", country=" + country +  "]";
 	}
 }

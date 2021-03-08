@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.volunteacher.app.model.Participant;
 
 @Repository
-public interface ParticipantRepository extends PagingAndSortingRepository<Participant, Integer>{
+public interface ParticipantRepository extends PagingAndSortingRepository<Participant, Long>{
 
 }

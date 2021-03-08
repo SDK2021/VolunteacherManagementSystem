@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,9 +17,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Notification {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 8)
-	private int notificationId;
+	private Long notificationId;
 	
 	@NotNull
 	@Column(length = 15, nullable = false)
@@ -32,8 +31,8 @@ public class Notification {
 	private User createdBy;
 	
 	@NotNull
-	@Column(nullable = false , length = 1)
-	private int userType;
+	@OneToOne
+	private UserType userType;
 	
 	//add
 	@OneToOne
@@ -47,14 +46,13 @@ public class Notification {
 		super();
 	}
 	
-	public Notification(String notificationType, @Size(min = 3, max = 30) String title, String description,
-			User createdBy) {
+	public Notification(String notificationType, String title, String description,User createdBy) {
 		super();
 		this.notificationType = notificationType;
 		this.createdBy = createdBy;
 	}
 
-	public int getNotificationId() {
+	public Long getNotificationId() {
 		return notificationId;
 	}
 
@@ -74,11 +72,11 @@ public class Notification {
 		this.createdBy = createdBy;
 	}
 
-	public int getUserType() {
+	public UserType getUserType() {
 		return userType;
 	}
 
-	public void setUserType(int userType) {
+	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
 

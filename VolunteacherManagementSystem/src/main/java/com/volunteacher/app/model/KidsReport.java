@@ -9,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedBy;
@@ -25,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class KidsReport {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 6)
 	private int kidreportId;
 	
@@ -35,7 +33,7 @@ public class KidsReport {
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(pattern = "dd-mm-yyyy")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(nullable = false)
 	private Calendar createdDate;
 	
@@ -74,7 +72,23 @@ public class KidsReport {
 	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "Text")
-	private String futureExpectation;
+	private String interesArea;
+	
+	@NotNull
+	@Column(nullable =  false, length = 3)
+	private int artCraft;
+	
+	@NotNull
+	@Column(nullable =  false, length = 3)
+	private int sports;
+	
+	@NotNull
+	@Column(nullable =  false, length = 3)
+	private int literature;
+	
+	@NotNull
+	@Column(nullable =  false, length = 3)
+	private int attendance;
 	
 	@Column(columnDefinition = "Text")
 	private String remarks;
@@ -96,13 +110,11 @@ public class KidsReport {
 		super();
 	}
 
-	public KidsReport(@NotNull Kid kid, @NotNull Calendar createdDate, @NotNull User createdBy,
-			@NotNull String discipline, @NotNull String prayer, @NotNull String goshthi, @NotNull String abhivyakti,
-			@NotNull String volunteaching, @NotNull String nationConnection, @NotNull String games,
-			@NotNull String futureExpectation, String remarks, @NotNull int maths, @NotNull int gujarati,
-			@NotNull int english) {
+	public KidsReport(Calendar createdDate, User createdBy,String discipline, String prayer, 
+			String goshthi, String abhivyakti, String volunteaching, String nationConnection, 
+			String games,String interesArea, int artCraft,  int sports, int literature,
+			 int attendance, String remarks,  int maths,int gujarati,int english) {
 		super();
-		this.kid = kid;
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 		this.discipline = discipline;
@@ -112,13 +124,17 @@ public class KidsReport {
 		this.volunteaching = volunteaching;
 		this.nationConnection = nationConnection;
 		this.games = games;
-		this.futureExpectation = futureExpectation;
+		this.interesArea = interesArea;
+		this.artCraft = artCraft;
+		this.sports = sports;
+		this.literature = literature;
+		this.attendance = attendance;
 		this.remarks = remarks;
 		this.maths = maths;
 		this.gujarati = gujarati;
 		this.english = english;
 	}
-	
+
 	public int getKidreportId() {
 		return kidreportId;
 	}
@@ -127,105 +143,171 @@ public class KidsReport {
 		return kid;
 	}
 
+
 	public void setKid(Kid kid) {
 		this.kid = kid;
 	}
+
 
 	public Calendar getCreatedDate() {
 		return createdDate;
 	}
 
+
 	public void setCreatedDate(Calendar createdDate) {
 		this.createdDate = createdDate;
 	}
+
 
 	public User getCreatedBy() {
 		return createdBy;
 	}
 
+
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
+
 
 	public String getDiscipline() {
 		return discipline;
 	}
 
+
 	public void setDiscipline(String discipline) {
 		this.discipline = discipline;
 	}
+
 
 	public String getPrayer() {
 		return prayer;
 	}
 
+
 	public void setPrayer(String prayer) {
 		this.prayer = prayer;
 	}
+
 
 	public String getGoshthi() {
 		return goshthi;
 	}
 
+
 	public void setGoshthi(String goshthi) {
 		this.goshthi = goshthi;
 	}
+
 
 	public String getAbhivyakti() {
 		return abhivyakti;
 	}
 
+
 	public void setAbhivyakti(String abhivyakti) {
 		this.abhivyakti = abhivyakti;
 	}
+
 
 	public String getVolunteaching() {
 		return volunteaching;
 	}
 
+
 	public void setVolunteaching(String volunteaching) {
 		this.volunteaching = volunteaching;
 	}
+
 
 	public String getNationConnection() {
 		return nationConnection;
 	}
 
+
 	public void setNationConnection(String nationConnection) {
 		this.nationConnection = nationConnection;
 	}
+
 
 	public String getGames() {
 		return games;
 	}
 
+
 	public void setGames(String games) {
 		this.games = games;
 	}
 
-	public String getFutureExpectation() {
-		return futureExpectation;
+
+	public String getInteresArea() {
+		return interesArea;
 	}
 
-	public void setFutureExpectation(String futureExpectation) {
-		this.futureExpectation = futureExpectation;
+
+	public void setInteresArea(String interesArea) {
+		this.interesArea = interesArea;
 	}
+
+
+	public int getArtCraft() {
+		return artCraft;
+	}
+
+
+	public void setArtCraft(int artCraft) {
+		this.artCraft = artCraft;
+	}
+
+
+	public int getSports() {
+		return sports;
+	}
+
+
+	public void setSports(int sports) {
+		this.sports = sports;
+	}
+
+
+	public int getLiterature() {
+		return literature;
+	}
+
+
+	public void setLiterature(int literature) {
+		this.literature = literature;
+	}
+
+
+	public int getAttendance() {
+		return attendance;
+	}
+
+
+	public void setAttendance(int attendance) {
+		this.attendance = attendance;
+	}
+
 
 	public String getRemarks() {
 		return remarks;
 	}
 
+
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
 
 	public int getMaths() {
 		return maths;
 	}
 
+
 	public void setMaths(int maths) {
 		this.maths = maths;
 	}
+
 
 	public int getGujarati() {
 		return gujarati;
@@ -236,9 +318,11 @@ public class KidsReport {
 		this.gujarati = gujarati;
 	}
 
+
 	public int getEnglish() {
 		return english;
 	}
+
 
 	public void setEnglish(int english) {
 		this.english = english;
@@ -246,11 +330,13 @@ public class KidsReport {
 
 	@Override
 	public String toString() {
-		return "KidsReport [id=" + kidreportId + ", kid=" + kid + ", createdDate=" + createdDate + ", createdBy=" + createdBy
-				+ ", discipline=" + discipline + ", prayer=" + prayer + ", goshthi=" + goshthi + ", abhivyakti="
-				+ abhivyakti + ", volunteaching=" + volunteaching + ", nationConnection=" + nationConnection
-				+ ", games=" + games + ", futureExpectation=" + futureExpectation + ", remarks=" + remarks + ", maths="
-				+ maths + ", gujarati=" + gujarati + ", english=" + english + "]";
+		return "KidsReport [kidreportId=" + kidreportId + ", kid=" + kid + ", createdDate=" + createdDate
+				+ ", createdBy=" + createdBy + ", discipline=" + discipline + ", prayer=" + prayer + ", goshthi="
+				+ goshthi + ", abhivyakti=" + abhivyakti + ", volunteaching=" + volunteaching + ", nationConnection="
+				+ nationConnection + ", games=" + games + ", interesArea=" + interesArea + ", artCraft=" + artCraft
+				+ ", sports=" + sports + ", literature=" + literature + ", attendance=" + attendance + ", remarks="
+				+ remarks + ", maths=" + maths + ", gujarati=" + gujarati + ", english=" + english + "]";
 	}
+
 }
 

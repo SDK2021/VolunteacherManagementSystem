@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -22,21 +23,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Payment {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 5)
 	private int paymentId;
 
 	@NotNull
 	//for storing time at first time--upadateOp???
 	@CreatedDate
-	@JsonFormat(pattern = "dd-mm-yyyy")
-	@Column(nullable = false)
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar paymentDate;
 
 	@NotNull
 	//Search to store time at first time
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "TIME")
 	@JsonFormat(pattern = "HH-mm-ss")
+	@CreationTimestamp
 	private Calendar paymentTime;
 
 	@NotNull
@@ -61,8 +63,8 @@ public class Payment {
 		super();
 	}
 
-	public Payment(@NotNull Calendar paymentDate, @NotNull Calendar paymentTime, @NotNull String paymentMode,
-			@NotNull double amount, @NotNull String transactionId, @NotNull Donor donor) {
+	public Payment(Calendar paymentDate,  Calendar paymentTime,String paymentMode,
+			double amount, String transactionId, Donor donor) {
 		super();
 		this.paymentDate = paymentDate;
 		this.paymentTime = paymentTime;

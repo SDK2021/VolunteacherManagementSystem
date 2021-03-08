@@ -16,40 +16,38 @@ import javax.validation.constraints.Size;
 public class ApplicantRequest {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 4)
-	int requestId;
+	private int requestId;
 	
 	@NotNull
 	@Email
 	@Column(length = 40, nullable = false)
-	String emailId;
+	private String emailId;
 	
 	@NotNull
 	@Size(min = 3 , max = 20)
 	@Column(nullable = false, columnDefinition = "Char", length = 20)
-	String name;
+	private String name;
 	
 	@NotNull
 	@Column(nullable = false, length = 10, unique = true)
-	String phoneNumber;
+	private String phoneNumber;
 	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "TinyInt", length = 1)
-	int gender;
+	private int gender;
 	
 	@NotNull
 	@OneToOne
-	UserType userType;
+	private UserType userType;
 	
 	
 	public ApplicantRequest() {
 		super();
 	}
 
-	public ApplicantRequest(@NotNull @Email String emailId,
-			@NotNull @Size(min = 3, max = 20) String name, @NotNull String phoneNumber, @NotNull int gender,
-			@NotNull UserType userType) {
+	public ApplicantRequest(String emailId,String name,String phoneNumber, int gender, UserType userType) {
 		super();
 		this.emailId = emailId;
 		this.name = name;

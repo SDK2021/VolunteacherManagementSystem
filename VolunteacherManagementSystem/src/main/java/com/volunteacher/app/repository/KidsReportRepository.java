@@ -7,5 +7,6 @@ import com.volunteacher.app.model.KidsReport;
 
 @Repository
 public interface KidsReportRepository extends PagingAndSortingRepository<KidsReport, Integer>{
-	
+
+	public KidsReport findByKidKidId(int id);
 }
