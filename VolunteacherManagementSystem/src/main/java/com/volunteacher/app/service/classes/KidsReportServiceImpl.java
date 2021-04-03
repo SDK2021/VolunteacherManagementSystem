@@ -19,48 +19,64 @@ public class KidsReportServiceImpl implements KidsReportService{
 	KidsReportRepository kidsReportRepository;
 	
 	@Override
-	public ResponseEntity<Object> addKidReport(KidsReport kidsReport) {
-		
+	public ResponseEntity<Object> addKidReport(KidsReport kidsReport) 
+	{
 		try {
-			KidsReport addReport = kidsReportRepository.save(kidsReport);
-			return ResponseEntity.status(HttpStatus.CREATED).body(addReport);
+			KidsReport saveKidsReport = kidsReportRepository.save(kidsReport);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveKidsReport);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creation kidsReport");
 		}
-	
 	}
 
 	@Override
-	public List<KidsReport> kidReportList()
+	public ResponseEntity<Object> kidReportList()
 	{
-		List<KidsReport> kidReportList = (List<KidsReport>) kidsReportRepository.findAll();
-		
-		if(kidReportList.size() < 1)
-			throw new ResourceNotFoundException("Kids report not found");
-		
-		return kidReportList;
+		try {
+			List<KidsReport> kidReportList = (List<KidsReport>) kidsReportRepository.findAll();
+			
+			if(kidReportList.size() < 1)
+				throw new ResourceNotFoundException("Kids report not found");
+			return ResponseEntity.status(HttpStatus.OK).body(kidReportList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids report");
+		}
 	}
 	
 	@Override
-	public KidsReport KidReport(int id) 
+	public ResponseEntity<Object> kidReportById(int id) 
 	{
-		KidsReport kidsReport = kidsReportRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Kids Report not found"));
-		return kidsReport;
+		try {
+			KidsReport kidsReport = kidsReportRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Kids Report not found"));
+			return ResponseEntity.status(HttpStatus.OK).body(kidsReport);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids report");
+		}
 	}
 	
 	@Override
-	public KidsReport kidReportByKid(int id)
+	public ResponseEntity<Object> kidReportByKid(int id)
 	{
-		KidsReport kidReport = kidsReportRepository.findByKidKidId(id);
-		if(kidReport == null)
-			throw new ResourceNotFoundException("Kid's report is not found for kid id: "+ id);
-		return kidReport;
+		try {
+			KidsReport kidReport = kidsReportRepository.findByKidKidId(id);
+			
+			if(kidReport == null)
+				throw new ResourceNotFoundException("Kid's report is not found for kid id: "+ id);
+			
+			return ResponseEntity.status(HttpStatus.OK).body(kidReport);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids report");
+		}
 	}
 
 	@Override
 	public ResponseEntity<Object> updateKidReport(KidsReport kidReport, int id) {
 		KidsReport updateKidReport = kidsReportRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Kid report not found for id: "+ id));
+		
 		updateKidReport.setAbhivyakti(kidReport.getAbhivyakti());
 		updateKidReport.setArtCraft(kidReport.getArtCraft());
 		updateKidReport.setAttendance(kidReport.getAttendance());
@@ -73,14 +89,18 @@ public class KidsReportServiceImpl implements KidsReportService{
 		updateKidReport.setInteresArea(kidReport.getInteresArea());
 		updateKidReport.setLiterature(kidReport.getLiterature());
 		updateKidReport.setMaths(kidReport.getMaths());
-		updateKidReport.setNationConnection(kidReport.getNationConnection());
 		updateKidReport.setPrayer(kidReport.getPrayer());
 		updateKidReport.setRemarks(kidReport.getRemarks());
 		updateKidReport.setSports(kidReport.getSports());
 		updateKidReport.setVolunteaching(kidReport.getVolunteaching());
 		
-		kidsReportRepository.save(updateKidReport);
-		return ResponseEntity.status(HttpStatus.OK).body(updateKidReport);
+		try {
+			kidsReportRepository.save(updateKidReport);
+			return ResponseEntity.status(HttpStatus.OK).body(updateKidReport);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Kids Report for id:" +id);
+		}
 		
 	}
 	
@@ -88,8 +108,14 @@ public class KidsReportServiceImpl implements KidsReportService{
 	public ResponseEntity<Object> deleteKidReport(int id) 
 	{	
 		kidsReportRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("KidReport Not found for id: "+ id));
-		kidsReportRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Kid report deleted for id: " + id);
+		
+		try {
+			kidsReportRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Kid report deleted for id: " + id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Kids Report for id:" +id);
+		}
 	}
 	
 }

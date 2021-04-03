@@ -1,7 +1,5 @@
 package com.volunteacher.app.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.volunteacher.app.model.Attendance;
 import com.volunteacher.app.model.Kid;
 import com.volunteacher.app.model.KidsGroup;
 import com.volunteacher.app.model.KidsReport;
@@ -44,22 +41,28 @@ public class KidsController {
 		return kidService.addKid(kid);
 	}
 	
-	@GetMapping("/kids/")
-	public List<Kid> kidsList()
+	@GetMapping("/kids")
+	public ResponseEntity<Object> getKidsList()
 	{
 		return kidService.kidList();
 	}
 	
 	@GetMapping("/kids/{id}")
-	public Kid getKid(@PathVariable Long id)
+	public ResponseEntity<Object> getKid(@PathVariable Long id)
 	{
-		return kidService.getKid(id);
+		return kidService.kidById(id);
 	}
-	
-	@GetMapping("/kids")
-	public List<Kid> kidslistByGroup(@RequestParam(name = "group") int id)
+//	
+//	@GetMapping("/kids")
+//	public List<Kid> getKidsByGroup(@RequestParam(name = "group") int id)
+//	{
+//			return kidService.kidsListByGroup(id);
+//	}
+//	
+	@GetMapping("/villagekids")
+	public ResponseEntity<Object> getKidsByGroupAndVillage(@RequestParam("villageId") int vid, @RequestParam("groupId") int gid)
 	{
-			return kidService.kidsListByGroup(id);
+		return kidService.kidsListByGroupAndVillage(vid, gid);
 	}
 	
 	@PutMapping("/kids/{id}")
@@ -74,45 +77,76 @@ public class KidsController {
 		return kidService.deleteKid(id);
 	}
 	
-	@GetMapping("/kidsReport/")
-	public List<KidsReport> kidReportList()
+	@GetMapping("/kids-reports")
+	public ResponseEntity<Object> getKidReportList()
 	{
 		return kidReportService.kidReportList();
 	}
 	
-	@PostMapping("/kidsReports")
+	@PostMapping("/kids-reports")
 	public ResponseEntity<Object> addkidReport(@RequestBody KidsReport kidsReport)
 	{
 		return kidReportService.addKidReport(kidsReport);
 	}
 	
 	@GetMapping("kids/{id}/kid-report")
-	public KidsReport kidReportByKid(@PathVariable int id)
+	public ResponseEntity<Object> getKidReportByKid(@PathVariable int id)
 	{
 		return kidReportService.kidReportByKid(id);
 	}
 	
-	@GetMapping("/kids-group/")
-	public List<KidsGroup> kidGroupList()
+	@PutMapping("/kids-reports/{id}")
+	public ResponseEntity<Object> updateKidReport(@RequestBody KidsReport kidsReport,@PathVariable int id)
+	{
+		return kidReportService.updateKidReport(kidsReport, id);
+	}
+	
+	@DeleteMapping("/kids-reports/{id}")
+	public ResponseEntity<Object> deleteKidReport(@PathVariable int id)
+	{
+		return kidReportService.deleteKidReport(id);
+	}
+	
+	@GetMapping("/kids-groups")
+	public ResponseEntity<Object> getKidGroupList()
 	{
 		return kidService.kidGroupList();
 	}
 	
-	@GetMapping("/attendances/")
-	public List<Attendance> attndanceList()
+	@PostMapping("/kids-groups")
+	public ResponseEntity<Object> addKidGroup(@RequestBody KidsGroup kidsGroup)
+	{
+		return kidService.addKidsGroup(kidsGroup);
+	}
+	
+	@DeleteMapping("/kids-groups/{id}")
+	public ResponseEntity<Object> deleteKidGroup(@PathVariable int id)
+	{
+		return kidService.deleteKidsGroup(id);
+	}
+	
+	@PostMapping("/kids-groups/{id}")
+	public ResponseEntity<Object> deleteKidGroup(@RequestBody KidsGroup kidsGroup, @PathVariable int id)
+	{
+		return kidService.updateKidsGroup(kidsGroup, id);
+	}
+	
+	@GetMapping("/attendances")
+	public ResponseEntity<Object> getAttendanceList()
 	{
 		return attendanceService.attendanceList();
 	}
 	
 	@GetMapping("/attendance")
-	public Attendance attendanceBySessionAndGroup(@RequestParam("groupId") int gid, @RequestParam("sessionId") Long sid)
+	public ResponseEntity<Object> getAttendanceBySessionAndGroup(@RequestParam("groupId") int gid, @RequestParam("sessionId") Long sid)
 	{
 		return attendanceService.attendanceByGroupAndSession(gid, sid);
 	}
 	
 	@GetMapping("/attendances/group/{id}")
-	public List<Attendance> attendanceBySession(@PathVariable int id)
+	public ResponseEntity<Object> getAttendanceBySession(@PathVariable int id)
 	{
 		return attendanceService.attendanceByGroup(id);
 	}
+	
 }

@@ -19,57 +19,79 @@ public class ProjectServiceImpl implements ProjectService{
 	ProjectRepository projectRepository;
 	
 	@Override
-	public ResponseEntity<Object> addProject(Project project) {
-		
+	public ResponseEntity<Object> addProject(Project project) 
+	{
 		try {
-			Project addProject = projectRepository.save(project);
-			return ResponseEntity.status(HttpStatus.CREATED).body(addProject);
+			Project saveProject = projectRepository.save(project);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveProject);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.OK).body("Error on Project Creation");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on Project Creation");
 		}
 	}
 
 	@Override
-	public List<Project> projectList() {
-		
-		List<Project> projectList = (List<Project>) projectRepository.findAll();
-		
-		if(projectList.size() < 1)
-			throw new ResourceNotFoundException("Project list not found");
-		
-		return projectList;
+	public ResponseEntity<Object> projectList() 
+	{
+		try {
+			List<Project> projectList = (List<Project>) projectRepository.findAll();
+			
+			if(projectList.size() < 1)
+				throw new ResourceNotFoundException("Project list not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(projectList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch projects");
+		}
 	}
 
 	@Override
-	public Project project(int id) {
-		
-		Project project = projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project is not found for id: "+id));
-		return project;
+	public ResponseEntity<Object> projectById(int id) 
+	{
+		try {
+			Project project = projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project is not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(project);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch project for id:" +id);
+		}
 	}
 
 	@Override
-	public ResponseEntity<Object> updateProject(Project project, int id) {
-		
+	public ResponseEntity<Object> updateProject(Project project, int id) 
+	{
 		Project updateProject = projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project is not found for id: "+id));
 		
 		updateProject.setProjectName(project.getProjectName());
 		updateProject.setProjectData(project.getProjectData());
 		updateProject.setStartingDate(project.getStartingDate());
 		updateProject.setCreationDate(project.getCreationDate());
+		updateProject.setCreationTime(project.getCreationTime());
 		updateProject.setVolunteachers(project.getVolunteachers());
 		updateProject.setKids(project.getKids());
 		updateProject.setEndingDate(project.getCreationDate());
 		
-		projectRepository.save(updateProject);
-		return ResponseEntity.status(HttpStatus.OK).body(updateProject);
+		try {
+			projectRepository.save(updateProject);
+			return ResponseEntity.status(HttpStatus.OK).body(updateProject);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Project for id:" +id);
+		}
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteProject(int id) {
-		
+	public ResponseEntity<Object> deleteProject(int id) 
+	{
 		projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project is not found for id: "+id));
-		projectRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Project is deleted for id: "+id);
+		
+		try {
+			projectRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Project is deleted for id: "+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Project for id:" +id);
+		}
 	}
 }

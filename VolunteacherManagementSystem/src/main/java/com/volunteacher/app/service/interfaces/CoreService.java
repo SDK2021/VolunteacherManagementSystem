@@ -1,31 +1,35 @@
 package com.volunteacher.app.service.interfaces;
 
-import java.util.List;
+import org.springframework.http.ResponseEntity;
 
-import com.volunteacher.app.model.Country;
 import com.volunteacher.app.model.District;
-import com.volunteacher.app.model.State;
 import com.volunteacher.app.model.Taluka;
 import com.volunteacher.app.model.Village;
 
 public interface CoreService {
 	
-	public List<Country> countryList();
+	public ResponseEntity<Object> countryList();
 	
-	public List<State> statesList();
+	public ResponseEntity<Object> statesList();
 	
-	public List<District> districtsList();
+	public ResponseEntity<Object> districtsList();
 	
-	public List<Taluka> talukasList();
+	public ResponseEntity<Object> talukasList();
 	
-	public List<Village> villagesList();
+	public ResponseEntity<Object> villagesList();
 	
-	public List<State> statesByCountry(int id);
+	public ResponseEntity<Object> statesByCountry(int id);
 	
-	public List<District> districtsByState(int id);
+	public ResponseEntity<Object> addDistrict(District district);
 	
-	public List<Taluka> talukasByDistrict(int id);
+	public ResponseEntity<Object> districtsByState(int id);
 	
-	public List<Village> villagesByTaluka(int id);
+	public ResponseEntity<Object> addTaluka(Taluka taluka);
+	
+	public ResponseEntity<Object> talukasByDistrict(int id);
+	
+	public ResponseEntity<Object> addVillage(Village village);
+	
+	public ResponseEntity<Object> villagesByTaluka(int id);
 	
 }

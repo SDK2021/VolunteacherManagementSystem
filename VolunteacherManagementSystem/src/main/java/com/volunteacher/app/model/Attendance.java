@@ -7,27 +7,37 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Attendance {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length=10)
 	private Long attendanceId;
 	
 	@NotNull
-	@OneToOne
+	@ManyToOne
 	private Session session; 
 	
 	@OneToOne
 	@NotNull
 	private KidsGroup group;
 
-	@OneToMany
+	@ManyToMany(mappedBy = "attendances")
 	@NotNull
 	private List<Kid> kids;
 

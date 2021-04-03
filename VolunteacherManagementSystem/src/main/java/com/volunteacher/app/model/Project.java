@@ -3,6 +3,7 @@ package com.volunteacher.app.model;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -24,12 +26,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Project {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length = 3)
 	private int projectId;
 
 	@NotNull
-	@Column(length=50, unique=true, nullable = false , columnDefinition = "Char")
+	@Column(length=50, unique=true, nullable = false , columnDefinition = "Char(50)")
 	private String projectName;
 	
 	@NotNull
@@ -53,15 +62,20 @@ public class Project {
 	private Calendar creationDate;
 	
 	//One Project Many Sessions - cascade deletion
-	@OneToMany(mappedBy = "project")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
 	private List<Session> sessions;
 	
 	//One project many events
-	@OneToMany(mappedBy = "project")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
 	private List<Event> events;
 	
+	@NotNull
+	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
+	@Column(nullable = false, columnDefinition = "TIME")
+	private Calendar creationTime;
+
 	//Does cascading required?
-	@ManyToMany(mappedBy = "projects")
+	@ManyToMany
 	private List<Volunteacher> volunteachers;
 	
 	@ManyToMany
@@ -118,6 +132,14 @@ public class Project {
 
 	public void setProjectData(String projectData) {
 		this.projectData = projectData;
+	}
+
+	public Calendar getCreationTime() {
+		return creationTime;
+	}
+
+	public void setCreationTime(Calendar creationTime) {
+		this.creationTime = creationTime;
 	}
 
 	public Calendar getCreationDate() {

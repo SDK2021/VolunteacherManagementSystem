@@ -1,7 +1,5 @@
 package com.volunteacher.app.service.interfaces;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 
 import com.volunteacher.app.model.Content;
@@ -10,9 +8,9 @@ public interface ContentService {
 	
 	public ResponseEntity<Object> addContent(Content content);
 	
-	public List<Content> contentList();
+	public ResponseEntity<Object> contentList();
 	
-	public Content contentById(int id);
+	public ResponseEntity<Object> contentById(int id);
 	
 	public ResponseEntity<Object> updateContent(Content content, int id);
 	

@@ -1,7 +1,5 @@
 package com.volunteacher.app.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.User;
-import com.volunteacher.app.model.UserType;
 import com.volunteacher.app.model.Volunteacher;
 import com.volunteacher.app.service.interfaces.UserService;
 import com.volunteacher.app.service.interfaces.VolunteacherService;
@@ -32,28 +29,52 @@ public class UserController {
 	@Autowired
 	VolunteacherService volunteacherService;
 	
-	@GetMapping("/volunteachers/")
-	public List<Volunteacher> volunteacherList()
+	@GetMapping("/volunteachers")
+	public ResponseEntity<Object> getVolunteacherList()
 	{
 		return volunteacherService.volunteacherList();
 	}
 	
-	@GetMapping("/volunteachers/day")
-	public List<Volunteacher> vyByDay()
+	@PostMapping("/volunteachers")
+	public ResponseEntity<Object> addVolunteacher(@RequestBody Volunteacher volunteacher)
 	{
-		return volunteacherService.vtByToday();
+		return volunteacherService.addVolunteacher(volunteacher);
 	}
 	
-	@GetMapping("/users/")
-	public List<User> userList()
+	@GetMapping("/volunteachers/{id}")
+	public ResponseEntity<Object> getVolunteacher(@PathVariable int id)
+	{
+		return volunteacherService.volunteacherById(id);
+	}
+	
+	@PutMapping("/volunteachers/{id}")
+	public ResponseEntity<Object> updateVolunteacher(@RequestBody Volunteacher volunteacher, @PathVariable int id)
+	{
+		return volunteacherService.updateVolunteacher(volunteacher, id);
+	}
+//	
+//	@DeleteMapping("/volunteachers/{id}")
+//	public ResponseEntity<Object> deleteVolunteacher(@PathVariable int id)
+//	{
+//		return volunteacherService.deleteVolunteacher(id);
+//	}
+//	
+//	@GetMapping("/volunteachers/day")
+//	public ResponseEntity<Object> getVolunteacherByDay()
+//	{
+//		return volunteacherService.vtByToday();
+//	}
+//	
+	@GetMapping("/users")
+	public ResponseEntity<Object> getUserList()
 	{
 		return userService.userList();
 	}
 	
 	@GetMapping("/users/{id}")
-	public User User(@PathVariable Long id)
+	public ResponseEntity<Object> User(@PathVariable Long id)
 	{
-		return userService.getUser(id);
+		return userService.userById(id);
 	}
 	
 	@DeleteMapping("/users/{id}")
@@ -74,8 +95,8 @@ public class UserController {
 		return userService.updateUser(user, id);
 	}
 	
-	@GetMapping("/user-types/")
-	public List<UserType> userTypeList()
+	@GetMapping("/user-types")
+	public ResponseEntity<Object> getUserTypeList()
 	{
 		return userService.userTypeList();
 	}

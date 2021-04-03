@@ -10,20 +10,28 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 
 @Entity
 public class Requirement {
-	
 	@Id
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length = 3)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int requirementId;
 	
 	@NotNull
 	@Column(name = "requirement", columnDefinition = "Text")
 	private String requirement;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy = "requirements")
 	private List<School> schools;
 
 	
@@ -47,14 +55,6 @@ public class Requirement {
 
 	public void setRequirement(String requirement) {
 		this.requirement = requirement;
-	}
-
-	public List<School> getSchools() {
-		return schools;
-	}
-
-	public void setSchools(List<School> schools) {
-		this.schools = schools;
 	}
 
 	@Override

@@ -15,9 +15,17 @@ public class ExceptionController {
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<Object> resourceNotFound(ResourceNotFoundException error, WebRequest webRequest)
 	{
-		Error error2 = new Error(new Date(), HttpStatus.NOT_FOUND , error.getMessage(), webRequest.getDescription(false));
-		return new ResponseEntity<>(error2,HttpStatus.NOT_FOUND);
+		Error notfoundError = new Error(new Date(), HttpStatus.NOT_FOUND , error.getMessage(), webRequest.getDescription(false));
+		return new ResponseEntity<>(notfoundError,HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(UnauthorizedUserException.class)
+	public ResponseEntity<Object> unauthorizedUserException(ResourceNotFoundException error, WebRequest webRequest)
+	{
+		Error unauthorizedException = new Error(new Date(), HttpStatus.UNAUTHORIZED, error.getMessage(), webRequest.getDescription(false));
+		return new ResponseEntity<>(unauthorizedException,HttpStatus.UNAUTHORIZED);
+	}
+
 
 }
 

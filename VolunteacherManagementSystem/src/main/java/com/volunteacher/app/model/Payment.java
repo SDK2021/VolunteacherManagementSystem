@@ -8,10 +8,11 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -23,7 +24,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Payment {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length = 5)
 	private int paymentId;
 
@@ -37,7 +45,7 @@ public class Payment {
 	@NotNull
 	//Search to store time at first time
 	@Column(nullable = false, columnDefinition = "TIME")
-	@JsonFormat(pattern = "HH-mm-ss")
+	@JsonFormat(timezone = "IST",pattern = "HH-mm-ss")
 	@CreationTimestamp
 	private Calendar paymentTime;
 
@@ -55,7 +63,7 @@ public class Payment {
 	private String transactionId;
 
 	@NotNull
-	@OneToOne
+	@ManyToOne
 	private Donor donor;
 	
 

@@ -21,34 +21,44 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public ResponseEntity<Object> addContent(Content content)
 	{
-		try 
-		{
-			contentRepository.save(content);
-			return ResponseEntity.status(HttpStatus.CREATED).body(content);
+		try {
+			Content saveContent = contentRepository.save(content);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveContent);
 		} 
-		catch (Exception e) 
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating Content");
 		}
 	}
 	
 	@Override
-	public List<Content> contentList()
+	public ResponseEntity<Object> contentList()
 	{
-		List<Content> contentList = (List<Content>) contentRepository.findAll();
-		
-		if(contentList.size() < 1)
-			throw new ResourceNotFoundException("Content List not found");
-		
-		return contentList;
+		try {
+			List<Content> contentList = (List<Content>) contentRepository.findAll();
+			
+			if(contentList.size() < 1)
+				throw new ResourceNotFoundException("Content List not found");
+			
+			return ResponseEntity.status(HttpStatus.CREATED).body(contentList);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch content list");
+		}
 	}
 	
 	@Override
-	public Content contentById(int id)
+	public ResponseEntity<Object> contentById(int id)
 	{
-		Content content = contentRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Content is not found for id: "+id));
-		return content;
+		try {
+			Content content = contentRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Content is not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.CREATED).body(content);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Content for id:" +id);
+		}
 	}
 	
 	@Override
@@ -58,9 +68,13 @@ public class ContentServiceImpl implements ContentService {
 		
 		updateContent.setContentData(content.getContentData());
 		updateContent.setGroup(content.getGroup());
-		
-		contentRepository.save(updateContent);
-		return ResponseEntity.status(HttpStatus.OK).body(updateContent);
+		try {
+			contentRepository.save(updateContent);
+			return ResponseEntity.status(HttpStatus.OK).body(updateContent);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Content for id:" +id);
+		}
 		
 	}
 	
@@ -68,7 +82,13 @@ public class ContentServiceImpl implements ContentService {
 	public ResponseEntity<Object> deleteContent(int id)
 	{
 		contentRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Content is not found for id: "+ id));
-		contentRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Content deleted for id: "+id);
+		
+		try {
+			contentRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Content deleted for id: "+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting content for id:" +id);
+		}
 	}
 }

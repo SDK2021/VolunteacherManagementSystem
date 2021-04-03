@@ -13,5 +13,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long>{
 	
 	
 	@Query(value = "SELECT * FROM user WHERE MONTH(dob) = MONTH(NOW()) AND DAY(dob) = DAY(NOW())" , nativeQuery = true)
-	List<User> findAllByDob();
+	public List<User> findAllByDob();
+	
+	public User findByEmail(String email);
 }

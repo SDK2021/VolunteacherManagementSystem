@@ -3,6 +3,7 @@ package com.volunteacher.app.model;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,18 +13,29 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Component
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length=10)
 	private Long userId;
 	
 	@NotNull
-	@Column(length=20, nullable = false, columnDefinition = "Char")
+	@Column(length=20, nullable = false, columnDefinition = "Char(30)")
 	private String userName;
 	
 	@NotNull
@@ -44,7 +56,7 @@ public class User {
 	private Calendar dob;
 	
 	@NotNull
-	@Column(length=15, nullable = false)
+	@Column(length=60, nullable = false)
 	private String password;
 	
 	//One User On Type
@@ -54,19 +66,20 @@ public class User {
 	
 	private String photo;
 	
-	//One User Many Reports- cascade deletion
-	@OneToMany(mappedBy = "user")
-//	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+	private List<Announcement>announcement;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private List<SessionReport> sessionReports;	
 	
-	//One password of one user
-	@OneToOne(mappedBy = "user")
-//	@JsonBackReference
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
 	private Volunteacher volunteacher;
 	
-	@OneToMany(mappedBy = "createdBy")
-//	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
 	private List<TimelinePost> posts;
+	
+	@OneToMany(mappedBy = "createdBy")
+	private List<KidsReport> kidsReports;
 
 	public User() {
 		super();

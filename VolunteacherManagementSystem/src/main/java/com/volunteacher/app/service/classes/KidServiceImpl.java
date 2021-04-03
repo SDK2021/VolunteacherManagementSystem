@@ -28,8 +28,9 @@ public class KidServiceImpl implements KidService {
 	{
 		try {
 			
-			Kid addKid = kidRepository.save(kid);
-			return ResponseEntity.status(HttpStatus.OK).body(addKid);
+			Kid saveKid = kidRepository.save(kid);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveKid);
+			
 			
 		} catch (Exception e) {
 			
@@ -39,31 +40,66 @@ public class KidServiceImpl implements KidService {
 	}
 	
 	@Override
-	public List<Kid> kidList() {
-		
-		List<Kid> kidList = (List<Kid>) kidRepository.findAll();
-		
-		if(kidList.size() < 0)
-			throw new ResourceNotFoundException("Kids List not found");
-		
-		return kidList;	
+	public ResponseEntity<Object> kidList() 
+	{
+		try {
+			List<Kid> kidList = (List<Kid>) kidRepository.findAll();
+			
+			if(kidList.size() < 0)
+				throw new ResourceNotFoundException("Kids List not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(kidList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids");
+		}
 	}
 	
 	@Override
-	public Kid getKid(Long id)
+	public ResponseEntity<Object> kidById(Long id)
 	{
-		Kid kid = kidRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Kid not found for id: " + id));
-		return kid;
+		try {
+			Kid kid = kidRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Kid not found for id: " + id));
+			return ResponseEntity.status(HttpStatus.OK).body(kid);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids");
+		}
 	}
 	
-	public List<Kid> kidsListByGroup(int group)
+	@Override
+	public ResponseEntity<Object> kidsListByGroupAndVillage(int villageId, int groupId) 
 	{
-		List<Kid> kidsList = kidRepository.findAllByGroupGroupId(group);
-		if(kidsList.size() < 1)
-			throw new ResourceNotFoundException("Kid List not found for group id: "+ group);
-		return kidsList;
+		try {
+			List<Kid> kidsList = kidRepository.findAllByVillageVillageIdAndGroupGroupId(villageId, groupId);
+			
+			if(kidsList.size() < 0)
+				throw new ResourceNotFoundException("Kids List not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids");
+		}
 	}
 	
+	@Override
+	public ResponseEntity<Object> kidsListByGroup(int groupId)
+	{
+		try {
+			List<Kid> kidsList = kidRepository.findAllByGroupGroupId(groupId);
+			
+			if(kidsList.size() < 1)
+				throw new ResourceNotFoundException("Kid List not found for group id: "+ groupId);
+			
+			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids");
+		}
+	}
+	
+	@Override
 	public ResponseEntity<Object> updateKid(Kid kid, Long id)
 	{
 		Kid updatekid = kidRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Kid not found for id: " + id));
@@ -78,57 +114,87 @@ public class KidServiceImpl implements KidService {
 		updatekid.setStandard(kid.getStandard());
 		updatekid.setVillage(kid.getVillage());
 		updatekid.setGroup(kid.getGroup());
-	
-		kidRepository.save(updatekid);
-		return ResponseEntity.status(HttpStatus.OK).body(updatekid);
+		
+		try {
+			kidRepository.save(updatekid);
+			return ResponseEntity.status(HttpStatus.OK).body(updatekid);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Kid for id:" +id);
+		}
 	}
 	
 	@Override
 	public ResponseEntity<Object> deleteKid(Long id)
 	{
 		kidRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Kid not found for id: " + id));
-		kidRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Kid deleted for id: " + id);
+		
+		try {
+			kidRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Kid deleted for id: " + id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Kid for id:" +id);
+		}
 	}
 	
 	@Override
-	public List<KidsGroup> kidGroupList()
+	public ResponseEntity<Object> kidGroupList()
 	{
-		List<KidsGroup> kidGroupList = (List<KidsGroup>) kidsGroupRepository.findAll();
-		
-		if(kidGroupList.size() < 1)
-			throw new ResourceNotFoundException("Kids Group not found");
-		
-		return  kidGroupList;
+		try {
+			List<KidsGroup> kidGroupList = (List<KidsGroup>) kidsGroupRepository.findAll();
+			
+			if(kidGroupList.size() < 1)
+				throw new ResourceNotFoundException("Kids Group not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(kidGroupList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids Group");
+		}
 	}
 
 	@Override
-	public ResponseEntity<Object> addKidsGroup(KidsGroup kidsGroup) {
+	public ResponseEntity<Object> addKidsGroup(KidsGroup kidsGroup) 
+	{
 		try {
 			KidsGroup savekidsGroup = kidsGroupRepository.save(kidsGroup);
 			return ResponseEntity.status(HttpStatus.CREATED).body(savekidsGroup);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.OK).body("Error on creating KidsGroup");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating KidsGroup");
 		}
 		
 	}
 
 	@Override
-	public ResponseEntity<Object> updateKidsGroup(KidsGroup kidsGroup, int id) {
+	public ResponseEntity<Object> updateKidsGroup(KidsGroup kidsGroup, int id) 
+	{
 		KidsGroup updatekidsGroup = kidsGroupRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Kids Group not found for id: "+ id));
 		
 		updatekidsGroup.setGroupName(kidsGroup.getGroupName());
 		updatekidsGroup.setCriteria(kidsGroup.getCriteria());
 		
-		kidsGroupRepository.save(updatekidsGroup);
-		return ResponseEntity.status(HttpStatus.OK).body(updatekidsGroup);
+		try {
+			kidsGroupRepository.save(updatekidsGroup);
+			return ResponseEntity.status(HttpStatus.OK).body(updatekidsGroup);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Kids Group for id:" +id);
+		}
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteKidsGroup(int id) {
+	public ResponseEntity<Object> deleteKidsGroup(int id) 
+	{
 		kidsGroupRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Kids Group not found for id: "+ id));
-		kidsGroupRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Delete kids Group id: "+id);
+		
+		try {
+			kidsGroupRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Delete kids Group id: "+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Kids Group for id:" +id);
+		}
 	}
 }

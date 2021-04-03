@@ -1,7 +1,5 @@
 package com.volunteacher.app.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,8 +34,14 @@ public class EventController {
 		return eventService.addEvent(event);
 	}
 	
-	@GetMapping("/events/")
-	public List<Event> eventList()
+	@GetMapping("/events/{id}")
+	public ResponseEntity<Object> getEvent(@PathVariable int id)
+	{
+		return eventService.eventById(id);
+	}
+	
+	@GetMapping("/events")
+	public ResponseEntity<Object> getEventList()
 	{
 		return eventService.eventList();
 	}
@@ -60,16 +64,16 @@ public class EventController {
 		return participantService.addParticipant(participant);
 	}
 	
-	@GetMapping("/participants/")
-	public List<Participant> participantList()
+	@GetMapping("/participants")
+	public ResponseEntity<Object> getParticipantList()
 	{
 		return participantService.participantList();
 	}
 	
 	@GetMapping("participants/{id}")
-	public Participant Participant(@PathVariable Long id)
+	public ResponseEntity<Object> getParticipant(@PathVariable Long id)
 	{
-		return participantService.participant(id);
+		return participantService.participantById(id);
 	}
 	
 }

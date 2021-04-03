@@ -1,7 +1,5 @@
 package com.volunteacher.app.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,20 +28,20 @@ public class NotificationController {
 		return notificationService.addNotification(notification);
 	}
 	
-	@GetMapping("/notifications/")
-	public List<Notification> notificationList()
+	@GetMapping("/notifications")
+	public ResponseEntity<Object> getNotificationList()
 	{
 		return notificationService.notificationList();
 	}
 	
 	@GetMapping("/notifications/{id}")
-	public Notification notificationById(@PathVariable Long id)
+	public ResponseEntity<Object> getNotification(@PathVariable Long id)
 	{
 		return notificationService.notificationById(id);
 	}
 	
 	@DeleteMapping("/notifications/{id}")
-	public ResponseEntity<Object> deleteNotification(Long id)
+	public ResponseEntity<Object> deleteNotification(@PathVariable Long id)
 	{
 		return notificationService.deleteNotification(id);
 	}

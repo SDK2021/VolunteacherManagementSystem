@@ -13,18 +13,27 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Participant {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length=8)
 	private Long participantId;
 	
 	@NotNull
-	@Column(length=20, nullable = false , columnDefinition = "Char")
+	@Column(length=20, nullable = false , columnDefinition = "Char(20)")
 	private String name;
 	
 	@NotNull
@@ -40,7 +49,7 @@ public class Participant {
 	private String phoneNumber;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-mm-yyyy")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar dob;
 	
@@ -56,7 +65,6 @@ public class Participant {
 	private List<Activity> activities;
 	
 	//participant can be user, if we delete user, though user is not there, but we can see who participated
-	@NotNull
 	@OneToOne
 	private User user;
 	

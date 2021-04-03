@@ -22,8 +22,8 @@ public class ParticipantServiceImpl implements ParticipantService {
 	public ResponseEntity<Object> addParticipant(Participant participant)
 	{
 		try {
-			Participant addParticipant = participantRepository.save(participant);
-			return ResponseEntity.status(HttpStatus.CREATED).body(addParticipant);
+			Participant saveParticipant = participantRepository.save(participant);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveParticipant);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating participant");
@@ -31,26 +31,37 @@ public class ParticipantServiceImpl implements ParticipantService {
 	}
 	
 	@Override
-	public List<Participant> participantList()
+	public ResponseEntity<Object> participantList()
 	{
-		List<Participant> participantList = (List<Participant>) participantRepository.findAll();
-		
-		if(participantList.size() < 1)
-			throw new ResourceNotFoundException("Participant List not found");
-		
-		return participantList;
+		try {
+			List<Participant> participantList = (List<Participant>) participantRepository.findAll();
+			
+			if(participantList.size() < 1)
+				throw new ResourceNotFoundException("Participant List not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(participantList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Participants");
+		}
 	}
 	
 	@Override
-	public Participant participant(Long id)
+	public ResponseEntity<Object> participantById(Long id)
 	{
-		Participant participant = participantRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("participant not found for id: "+ id));
-		return participant;
+		try {
+			Participant participant = participantRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("participant not found for id: "+ id));
+			return ResponseEntity.status(HttpStatus.OK).body(participant);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Participants");
+		}
 	}
 	@Override
 	public ResponseEntity<Object> updateParticipant(Participant participant, Long id)
 	{
 		Participant updateparticipant = participantRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("participant not found for id: "+ id));
+		
 		updateparticipant.setActivities(participant.getActivities());
 		updateparticipant.setName(participant.getName());
 		updateparticipant.setGender(participant.getGender());
@@ -59,10 +70,15 @@ public class ParticipantServiceImpl implements ParticipantService {
 		updateparticipant.setPhoneNumber(participant.getPhoneNumber());
 		updateparticipant.setType(participant.getType());
 		
-		participantRepository.save(updateparticipant);
-		return ResponseEntity.status(HttpStatus.OK).body(updateparticipant);
+		try {
+			participantRepository.save(updateparticipant);
+			return ResponseEntity.status(HttpStatus.OK).body(updateparticipant);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Participant for id:" +id);
+		}
 		
 	}
-	
-	
+
 }

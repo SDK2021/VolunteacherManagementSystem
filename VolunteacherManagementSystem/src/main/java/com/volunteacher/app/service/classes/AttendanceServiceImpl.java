@@ -19,22 +19,23 @@ public class AttendanceServiceImpl implements AttendanceService{
 	AttendanceRepository attendanceRepository;
 	
 	@Override
-	public List<Attendance> attendanceList()
+	public ResponseEntity<Object> attendanceList()
 	{
-		List<Attendance> attendanceList = (List<Attendance>) attendanceRepository.findAll();
-		
-		if(attendanceList.size() < 1)
-			throw new ResourceNotFoundException("Attendance List not found");
-		
-		return  attendanceList;
+		try {
+			List<Attendance> attendanceList = (List<Attendance>) attendanceRepository.findAll();
+			return ResponseEntity.status(HttpStatus.OK).body(attendanceList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch attendance list");
+		}
 	}
 	
 	@Override
 	public ResponseEntity<Object> addAttendance(Attendance attendance)
 	{
 		try {
-			Attendance saveattendance = attendanceRepository.save(attendance);
-			return ResponseEntity.status(HttpStatus.CREATED).body(saveattendance);
+			Attendance saveAttendance = attendanceRepository.save(attendance);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveAttendance);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating Attendance");
@@ -42,17 +43,27 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 
 	@Override
-	public List<Attendance> attendanceByGroup(int groupId) 
+	public ResponseEntity<Object> attendanceByGroup(int groupId) 
 	{
-		List<Attendance> attendanceList = attendanceRepository.findAllByGroupGroupId(groupId);
-		return attendanceList;
+		try {
+			List<Attendance> attendanceList = attendanceRepository.findAllByGroupGroupId(groupId);
+			return ResponseEntity.status(HttpStatus.OK).body(attendanceList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch attendance list");
+		}
 	}
 
 	@Override
-	public Attendance attendanceByGroupAndSession(int groupId, Long sessionId) 
+	public ResponseEntity<Object> attendanceByGroupAndSession(int groupId, Long sessionId) 
 	{
-		Attendance attendance = attendanceRepository.findAllByGroupGroupIdAndSessionSessionId(groupId, sessionId);
-		return attendance;
+		try {
+			Attendance attendance = attendanceRepository.findAllByGroupGroupIdAndSessionSessionId(groupId, sessionId);
+			return ResponseEntity.status(HttpStatus.OK).body(attendance);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch attendance");
+		}
 	}
 	
 	@Override
@@ -61,15 +72,25 @@ public class AttendanceServiceImpl implements AttendanceService{
 		Attendance updateAttendance = attendanceRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Attendance not found for id: "+id));
 		
 		updateAttendance.setKids(attendance.getKids());
-		attendanceRepository.save(updateAttendance);
-		return ResponseEntity.status(HttpStatus.OK).body(updateAttendance);
+		try {
+			attendanceRepository.save(updateAttendance);
+			return ResponseEntity.status(HttpStatus.OK).body(updateAttendance);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Attendance for id:" +id);
+		}
 	}
 
 	@Override
-	public List<Attendance> attendanceBySession(Long sessionId) {
-		List<Attendance> attendanceList = attendanceRepository.findAllBySessionSessionId(sessionId);
-		return attendanceList;
+	public ResponseEntity<Object> attendanceBySession(Long sessionId) 
+	{
+
+		try {
+			List<Attendance> attendanceList = attendanceRepository.findAllBySessionSessionId(sessionId);
+			return ResponseEntity.status(HttpStatus.OK).body(attendanceList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch attendance list");
+		}
 	}
-	
-	
 }

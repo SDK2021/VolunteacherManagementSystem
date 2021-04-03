@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -17,8 +18,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Notification {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(length = 8)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	private Long notificationId;
 	
 	@NotNull
@@ -31,10 +38,8 @@ public class Notification {
 	private User createdBy;
 	
 	@NotNull
-	@OneToOne
-	private UserType userType;
+	private String userType;
 	
-	//add
 	@OneToOne
 	private Session session;
 	
@@ -72,11 +77,11 @@ public class Notification {
 		this.createdBy = createdBy;
 	}
 
-	public UserType getUserType() {
+	public String getUserType() {
 		return userType;
 	}
 
-	public void setUserType(UserType userType) {
+	public void setUserType(String userType) {
 		this.userType = userType;
 	}
 

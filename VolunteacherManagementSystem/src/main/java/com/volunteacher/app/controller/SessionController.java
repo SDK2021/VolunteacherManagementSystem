@@ -1,7 +1,5 @@
 package com.volunteacher.app.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,49 +23,49 @@ public class SessionController {
 	@Autowired
 	SessionService sessionService;
 	
-	@PostMapping("/session")
+	@PostMapping("/sessions")
 	public ResponseEntity<Object> addSession(@RequestBody  Session session)
 	{
 		return sessionService.addSession(session);
 	}
 	
-	@GetMapping("/sessions/")
-	public List<Session> sessionList()
+	@GetMapping("/sessions")
+	public ResponseEntity<Object> getSessionList()
 	{
 		return sessionService.sessionList();
 	}
 	
-	@GetMapping("/session/{id}")
-	public Session sessionById(@PathVariable Long id)
+	@GetMapping("/sessions/{id}")
+	public ResponseEntity<Object> getSession(@PathVariable Long id)
 	{
 		return sessionService.sessionById(id);
 	}
 	
-	@DeleteMapping("/session/{id}")
+	@DeleteMapping("/sessions/{id}")
 	public ResponseEntity<Object> deleteSession(@PathVariable Long id)
 	{
 		return sessionService.deleteSession(id);
 	}
 	
-	@PostMapping("/sessionReport")
-	public ResponseEntity<Object> adddSessionReport(SessionReport report)
+	@PostMapping("/session-reports")
+	public ResponseEntity<Object> addSessionReport(@RequestBody SessionReport report)
 	{
 		return sessionService.addSessionReport(report);
 	}
 	
-	@GetMapping("/sessionReports/")
-	public List<SessionReport> sessionReportList()
+	@GetMapping("/session-reports")
+	public ResponseEntity<Object> getSessionReportList()
 	{
 		return sessionService.sessionReportList();
 	}
 	
-	@GetMapping("/sessionReport/{id}")
-	public SessionReport sessionReport(@PathVariable int id)
+	@GetMapping("/session-reports/{id}")
+	public ResponseEntity<Object> getSessionReport(@PathVariable int id)
 	{
 		return sessionService.sessionReport(id);
 	}
 	
-	@DeleteMapping("/sessionReport/{id}")
+	@DeleteMapping("/session-reports/{id}")
 	public ResponseEntity<Object> deleteSessionReport(@PathVariable int id)
 	{
 		return sessionService.deleteSessionReport(id);

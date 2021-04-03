@@ -8,9 +8,11 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -23,7 +25,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class KidsReport {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length = 6)
 	private int kidreportId;
 	
@@ -34,41 +43,37 @@ public class KidsReport {
 	@NotNull
 	@CreatedDate
 	@JsonFormat(pattern = "dd-MM-yyyy")
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "Date")
 	private Calendar createdDate;
 	
 	@NotNull
 	@CreatedBy
-	@OneToOne
+	@ManyToOne
 	private User createdBy;
 	
 	@NotNull
 	@Column(nullable = false, length = 8)
-	private String discipline;
+	private int discipline;
 	
 	@NotNull
 	@Column(nullable = false, length = 8)
-	private String prayer;
+	private int prayer;
 	
 	@NotNull
 	@Column(nullable = false, length = 8)
-	private String goshthi;
+	private int goshthi;
 	
 	@NotNull
 	@Column(nullable = false, length = 8)
-	private String abhivyakti;
+	private int abhivyakti;
 	
 	@NotNull
-	@Column(nullable = false, length = 8)
-	String volunteaching;
+	@Column(nullable = false, length = 3)
+	private int volunteaching;
 	
 	@NotNull
-	@Column(nullable = false, length = 8)
-	private String nationConnection;
-	
-	@NotNull
-	@Column(nullable = false, length = 8)
-	private String games;
+	@Column(nullable = false, length = 3)
+	private int games;
 	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "Text")
@@ -110,11 +115,15 @@ public class KidsReport {
 		super();
 	}
 
-	public KidsReport(Calendar createdDate, User createdBy,String discipline, String prayer, 
-			String goshthi, String abhivyakti, String volunteaching, String nationConnection, 
-			String games,String interesArea, int artCraft,  int sports, int literature,
-			 int attendance, String remarks,  int maths,int gujarati,int english) {
+
+	public KidsReport(int kidreportId, Kid kid, Calendar createdDate, User createdBy,
+			int discipline,  int prayer, int goshthi, int abhivyakti,
+			int volunteaching,  int games,  String interesArea, int artCraft,
+			int sports, int literature,  int attendance, String remarks, int maths,
+			int gujarati,  int english) {
 		super();
+		this.kidreportId = kidreportId;
+		this.kid = kid;
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 		this.discipline = discipline;
@@ -122,7 +131,6 @@ public class KidsReport {
 		this.goshthi = goshthi;
 		this.abhivyakti = abhivyakti;
 		this.volunteaching = volunteaching;
-		this.nationConnection = nationConnection;
 		this.games = games;
 		this.interesArea = interesArea;
 		this.artCraft = artCraft;
@@ -135,9 +143,16 @@ public class KidsReport {
 		this.english = english;
 	}
 
+
 	public int getKidreportId() {
 		return kidreportId;
 	}
+
+
+	public void setKidreportId(int kidreportId) {
+		this.kidreportId = kidreportId;
+	}
+
 
 	public Kid getKid() {
 		return kid;
@@ -169,72 +184,62 @@ public class KidsReport {
 	}
 
 
-	public String getDiscipline() {
+	public int getDiscipline() {
 		return discipline;
 	}
 
 
-	public void setDiscipline(String discipline) {
+	public void setDiscipline(int discipline) {
 		this.discipline = discipline;
 	}
 
 
-	public String getPrayer() {
+	public int getPrayer() {
 		return prayer;
 	}
 
 
-	public void setPrayer(String prayer) {
+	public void setPrayer(int prayer) {
 		this.prayer = prayer;
 	}
 
 
-	public String getGoshthi() {
+	public int getGoshthi() {
 		return goshthi;
 	}
 
 
-	public void setGoshthi(String goshthi) {
+	public void setGoshthi(int goshthi) {
 		this.goshthi = goshthi;
 	}
 
 
-	public String getAbhivyakti() {
+	public int getAbhivyakti() {
 		return abhivyakti;
 	}
 
 
-	public void setAbhivyakti(String abhivyakti) {
+	public void setAbhivyakti(int abhivyakti) {
 		this.abhivyakti = abhivyakti;
 	}
 
 
-	public String getVolunteaching() {
+	public int getVolunteaching() {
 		return volunteaching;
 	}
 
 
-	public void setVolunteaching(String volunteaching) {
+	public void setVolunteaching(int volunteaching) {
 		this.volunteaching = volunteaching;
 	}
 
 
-	public String getNationConnection() {
-		return nationConnection;
-	}
-
-
-	public void setNationConnection(String nationConnection) {
-		this.nationConnection = nationConnection;
-	}
-
-
-	public String getGames() {
+	public int getGames() {
 		return games;
 	}
 
 
-	public void setGames(String games) {
+	public void setGames(int games) {
 		this.games = games;
 	}
 
@@ -328,14 +333,15 @@ public class KidsReport {
 		this.english = english;
 	}
 
+
 	@Override
 	public String toString() {
 		return "KidsReport [kidreportId=" + kidreportId + ", kid=" + kid + ", createdDate=" + createdDate
 				+ ", createdBy=" + createdBy + ", discipline=" + discipline + ", prayer=" + prayer + ", goshthi="
-				+ goshthi + ", abhivyakti=" + abhivyakti + ", volunteaching=" + volunteaching + ", nationConnection="
-				+ nationConnection + ", games=" + games + ", interesArea=" + interesArea + ", artCraft=" + artCraft
-				+ ", sports=" + sports + ", literature=" + literature + ", attendance=" + attendance + ", remarks="
-				+ remarks + ", maths=" + maths + ", gujarati=" + gujarati + ", english=" + english + "]";
+				+ goshthi + ", abhivyakti=" + abhivyakti + ", volunteaching=" + volunteaching + ", games=" + games
+				+ ", interesArea=" + interesArea + ", artCraft=" + artCraft + ", sports=" + sports + ", literature="
+				+ literature + ", attendance=" + attendance + ", remarks=" + remarks + ", maths=" + maths
+				+ ", gujarati=" + gujarati + ", english=" + english + "]";
 	}
 
 }

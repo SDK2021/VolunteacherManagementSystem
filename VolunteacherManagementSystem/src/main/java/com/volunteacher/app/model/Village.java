@@ -8,16 +8,25 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class Village {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length = 6)
 	private int villageId;
 
 	@NotNull
-	@Column(length = 20, nullable = false , columnDefinition = "Char")
+	@Column(length = 50, nullable = false , columnDefinition = "Char(50)")
 	private String villageName;
 
 	@NotNull

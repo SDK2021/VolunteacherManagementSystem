@@ -22,8 +22,8 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 	public ResponseEntity<Object> addPost(TimelinePost post)
 	{
 		try {
-			TimelinePost addPost = timelinePostRepository.save(post);
-			return ResponseEntity.status(HttpStatus.CREATED).body(addPost);
+			TimelinePost savePost = timelinePostRepository.save(post);
+			return ResponseEntity.status(HttpStatus.CREATED).body(savePost);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating post");
@@ -31,42 +31,63 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 	}
 	
 	@Override
-	public List<TimelinePost> postList()
+	public ResponseEntity<Object> postList()
 	{
-		List<TimelinePost> postList = (List<TimelinePost>) timelinePostRepository.findAll();
-		
-		if(postList.size() < 1)
-			throw new ResourceNotFoundException("Timepost list not found");
-		
-		return  postList;
+		try {
+			List<TimelinePost> postList = (List<TimelinePost>) timelinePostRepository.findAll();
+			
+			if(postList.size() < 1)
+				throw new ResourceNotFoundException("Timelinepost list not found");
+			return ResponseEntity.status(HttpStatus.OK).body(postList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Timeline post ");
+		}
 	}
 	
 	@Override
-	public TimelinePost postById(Long id)
+	public ResponseEntity<Object> postById(Long id)
 	{
-		TimelinePost post = timelinePostRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post is not found for id: "+id));
-		return post;
+		try {
+			TimelinePost post = timelinePostRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Timeline Post is not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(post);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Post for id: "+ id);
+		}
 	}
 	
 	@Override
 	public ResponseEntity<Object> updatePost(TimelinePost post, Long id)
 	{
-		TimelinePost updatePost = timelinePostRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post not found for id: "+id));
+		TimelinePost updatePost = timelinePostRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Timeline Post not found for id: "+id));
+		
 		updatePost.setPostTitle(post.getPostTitle());
 		updatePost.setPostDescription(post.getPostDescription());
 		updatePost.setPostPhoto(post.getPostPhoto());
 		
-		timelinePostRepository.save(updatePost);
-		return ResponseEntity.status(HttpStatus.OK).body(updatePost);
+		try {
+			timelinePostRepository.save(updatePost);
+			return ResponseEntity.status(HttpStatus.OK).body(updatePost);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Timeline postfor id:" +id);
+		}
 		
 	}
 	
 	@Override
 	public ResponseEntity<Object> deletePost(Long id)
 	{
-		timelinePostRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("POst is not found for id: "+ id));
-		timelinePostRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("post deleted for id: "+id);
+		timelinePostRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("TimelinePost is not found for id: "+ id));
+	
+		try {
+			timelinePostRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("post deleted for id: "+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Timeline Post for id:" +id);
+		}
 	}
 	
 }

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -24,7 +25,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Report {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length = 6)
 	private int reportId;
 	
@@ -101,7 +109,4 @@ public class Report {
 		return "Report [id=" + reportId + ", title=" + title + ", description=" + description + ", creationDate="
 				+ creationDate + ", craetedBy=" + craetedBy + "]";
 	}
-	
-	
-	
 }

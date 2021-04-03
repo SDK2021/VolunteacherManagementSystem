@@ -24,38 +24,48 @@ public class SchoolServiceImpl implements SchoolService {
 	RequirementRepository requirementRepository;
 	
 	@Override
-	public ResponseEntity<Object> addSchool(School school) {
-		
+	public ResponseEntity<Object> addSchool(School school) 
+	{
 		try {
-			School addSchool = schoolRepository.save(school);
-			return ResponseEntity.status(HttpStatus.CREATED).body(addSchool);
+			School saveSchool = schoolRepository.save(school);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveSchool);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.OK).body("Error on School Creation");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on School Creation");
 		}
 	}
 
 	@Override
-	public List<School> schoolList() {
-		
-		List<School> schoolList = (List<School>) schoolRepository.findAll();
-		
-		if(schoolList.size() < 1)
-			throw new ResourceNotFoundException("School list not found");
-		
-		return schoolList;
+	public ResponseEntity<Object> schoolList() 
+	{
+		try {
+			List<School> schoolList = (List<School>) schoolRepository.findAll();
+			
+			if(schoolList.size() < 1)
+				throw new ResourceNotFoundException("School list not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(schoolList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch School ");
+		}
 	}
 
 	@Override
-	public School schoolById(int id) {
-		
-		School school = schoolRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("School is not found for id: "+id));
-		return school;
+	public ResponseEntity<Object> schoolById(int id) 
+	{
+		try {
+			School school = schoolRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("School is not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(school);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch School for id: "+ id);
+		}
 	}
 
 	@Override
-	public ResponseEntity<Object> updateSchool(School school, int id) {
-		
+	public ResponseEntity<Object> updateSchool(School school, int id) 
+	{
 		School updateSchool = schoolRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("School is not found for id: "+id));
 		
 		updateSchool.setName(school.getName());
@@ -68,47 +78,82 @@ public class SchoolServiceImpl implements SchoolService {
 		updateSchool.setTotalStudent(school.getTotalStudent());
 		updateSchool.setVillage(school.getVillage());
 		
-		schoolRepository.save(updateSchool);
-		return ResponseEntity.status(HttpStatus.OK).body(updateSchool);
+		try {
+			schoolRepository.save(updateSchool);
+			return ResponseEntity.status(HttpStatus.OK).body(updateSchool);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating School for id:" +id);
+		}
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteSchool(int id) {
-		
+	public ResponseEntity<Object> deleteSchool(int id) 
+	{
 		schoolRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("School is not found for id: "+id));
-		schoolRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("School is deleted for id: "+id);
+		
+		try {
+			schoolRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("School is deleted for id: "+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting School for id:" +id);
+		}
 	}
 
 	@Override
-	public ResponseEntity<Object> addRequirement(Requirement requirement) {
-		
+	public ResponseEntity<Object> addRequirement(Requirement requirement) 
+	{
 		try {
 			Requirement saveRequirement = requirementRepository.save(requirement);
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveRequirement);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.OK).body("Error on creating Requirement");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating Requirement");
 		}
 	}
 
 	@Override
-	public List<Requirement> requirementList() {
-		
-		List<Requirement> requirementList = (List<Requirement>) requirementRepository.findAll();
-		
-		if(requirementList.size() < 1)
-			throw new ResourceNotFoundException("Requirement List list not found");
-		
-		return requirementList;
+	public ResponseEntity<Object> requirementList() 
+	{
+		try {
+			List<Requirement> requirementList = (List<Requirement>) requirementRepository.findAll();
+			
+			if(requirementList.size() < 1)
+				throw new ResourceNotFoundException("Requirement List list not found");
+			return ResponseEntity.status(HttpStatus.OK).body(requirementList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch requirement");
+		}
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteRequirement(int id) {
+	public ResponseEntity<Object> updateRequirement(Requirement requirement, int id) 
+	{
+		Requirement updateRequirement = requirementRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Requiremement not found for id:"+id));
+
+		try {
+			updateRequirement.setRequirement(requirement.getRequirement());
+			return ResponseEntity.status(HttpStatus.OK).body(updateRequirement);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Requirement for id:" +id);
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> deleteRequirement(int id) 
+	{
+		requirementRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Requirement not found for id:"+id));
 		
-		requirementRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Requirement Not Found for id: "+id));
-		requirementRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Delete Requirement for id: "+ id);
+		try {
+			requirementRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Requirement Deleted For id:"+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Requirement for id:" +id);
+		}
 	}
 
 }	

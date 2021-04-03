@@ -1,7 +1,5 @@
 package com.volunteacher.app.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,8 +22,8 @@ public class TimelinePostController {
 	@Autowired
 	TimelinePostService timelinePostService;
 	
-	@GetMapping("/posts/")
-	public List<TimelinePost> postList()
+	@GetMapping("/posts")
+	public ResponseEntity<Object> getPostList()
 	{
 		return timelinePostService.postList();
 	}

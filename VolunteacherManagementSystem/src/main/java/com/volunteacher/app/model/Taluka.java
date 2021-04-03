@@ -12,16 +12,25 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class Taluka {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length = 5)
 	private int talukaId;
 
 	@NotNull
-	@Column(length = 20, nullable = false, unique = true)
+	@Column(length = 50, nullable = false, columnDefinition = "Char(50)")
 	private String talukaName;
 
 	@NotNull

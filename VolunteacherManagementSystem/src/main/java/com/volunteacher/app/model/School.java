@@ -13,19 +13,28 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class School {
 	
 	@Id
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length = 3)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int schoolId;
 	
 	@NotNull
 	@Size(min = 2 , max = 30)
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, length = 30, columnDefinition = "Char(30)")
 	private String name;
 	
 	@Column(length = 6)
@@ -38,13 +47,12 @@ public class School {
 	@Column(nullable = false, length = 10, unique = true)
 	private String phoneNumber;
 	
-	@JsonFormat(pattern = "dd-mm-yyyy")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(columnDefinition = "DATE")
 	private Calendar startingDate;
 	
 	@NotNull
-	@Size(min = 2 , max = 20)
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 30)
 	private String stream;
 	
 	@NotNull
@@ -55,7 +63,7 @@ public class School {
 	@Column(nullable = false, length = 1, columnDefinition = "TinyInt") 
 	private int status;
 	
-	@ManyToMany(mappedBy = "schools")
+	@ManyToMany
 	private List<Requirement> requirements;
 	
 	@OneToOne
@@ -154,6 +162,14 @@ public class School {
 
 	public void setVillage(Village village) {
 		this.village = village;
+	}
+	
+	public List<Requirement> getRequirements() {
+		return requirements;
+	}
+
+	public void setRequirements(List<Requirement> requirements) {
+		this.requirements = requirements;
 	}
 
 	@Override

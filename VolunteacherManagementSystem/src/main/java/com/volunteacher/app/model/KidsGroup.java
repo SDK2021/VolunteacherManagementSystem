@@ -7,16 +7,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class KidsGroup {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length = 2)
 	private int groupId;
 
 	@NotNull
-	@Column(length = 20, nullable = false , columnDefinition = "Char")
+	@Column(length = 20, unique = true, nullable = false , columnDefinition = "Char(20)")
 	private String groupName;
 
 	@NotNull

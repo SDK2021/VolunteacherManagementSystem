@@ -3,6 +3,7 @@ package com.volunteacher.app.model;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
@@ -21,12 +24,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Event {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length = 6)
 	private int eventId;
 	
 	@NotNull
-	@Column(length = 50, nullable = false, columnDefinition = "Char")
+	@Column(length = 50, nullable = false, columnDefinition = "Char(50)")
 	private String title;
 	
 	@NotNull
@@ -39,17 +49,16 @@ public class Event {
 	private Calendar eventDate;
 	
 	@NotNull
-	@JsonFormat(pattern = "HH:mm:ss")
+	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
-	private Calendar eventTime;
-	
+	private Calendar eventStartingTime;
 	
 	//Many events belongs to one project
 	@NotNull
 	@ManyToOne
 	private Project project;
 	
-	@OneToMany(mappedBy = "event")
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
 	private List<Participant> participants;
 	
 	@NotNull
@@ -60,28 +69,32 @@ public class Event {
 	private List<Kid> kids;
 	
 	//add
-	@OneToOne(mappedBy = "event")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "event")
 	private Notification notification;
 	
 	//add
-	@ManyToMany(mappedBy = "events")
+	@ManyToMany
 	private List<Activity> activities;
 	//Kids Event participants activity kids?
 	//New table or not
-	
+	@NotNull
+	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
+	@Column(nullable = false, columnDefinition = "TIME")
+	private Calendar eventEndingTime;
 
 	public Event() {
 		super();
 	}
 	
 	public Event(String title, String eventData, Calendar eventDate,
-			Calendar eventTime, Project project,  Village village,
+			Calendar eventstartingTime,Calendar eventendingTime, Project project,  Village village,
 			List<Kid> kids) {
 		super();
 		this.title = title;
 		this.eventData = eventData;
 		this.eventDate = eventDate;
-		this.eventTime = eventTime;
+		this.eventStartingTime = eventstartingTime;
+		this.eventEndingTime = eventendingTime;
 		this.project = project;
 		this.village = village;
 		this.kids = kids;
@@ -115,12 +128,12 @@ public class Event {
 		this.eventDate = eventDate;
 	}
 
-	public Calendar getEventTime() {
-		return eventTime;
+	public Calendar getEventStartingTime() {
+		return eventStartingTime;
 	}
 
-	public void setEventTime(Calendar eventTime) {
-		this.eventTime = eventTime;
+	public void setEventStartingTime(Calendar eventStartingTime) {
+		this.eventStartingTime = eventStartingTime;
 	}
 
 	public Project getProject() {
@@ -129,6 +142,14 @@ public class Event {
 
 	public void setProject(Project project) {
 		this.project = project;
+	}
+
+	public List<Participant> getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(List<Participant> participants) {
+		this.participants = participants;
 	}
 
 	public Village getVillage() {
@@ -147,10 +168,35 @@ public class Event {
 		this.kids = kids;
 	}
 
+	public Notification getNotification() {
+		return notification;
+	}
+
+	public void setNotification(Notification notification) {
+		this.notification = notification;
+	}
+
+	public List<Activity> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(List<Activity> activities) {
+		this.activities = activities;
+	}
+
+	public Calendar getEventEndingTime() {
+		return eventEndingTime;
+	}
+
+	public void setEventEndingTime(Calendar eventEndingTime) {
+		this.eventEndingTime = eventEndingTime;
+	}
 
 	@Override
 	public String toString() {
 		return "Event [eventId=" + eventId + ", title=" + title + ", eventData=" + eventData + ", eventDate="
-				+ eventDate + ", eventTime=" + eventTime + ", project=" + project + ", village=" + village + ", kids=" + kids + "]";
-	}	
+				+ eventDate + ", eventStartingTime=" + eventStartingTime + ", project=" + project + ", participants="
+				+ participants + ", village=" + village + ", kids=" + kids + ", notification=" + notification
+				+ ", activities=" + activities + ", eventEndingTime=" + eventEndingTime + "]";
+	}
 }

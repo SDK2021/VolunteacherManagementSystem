@@ -22,8 +22,8 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	public ResponseEntity<Object> addRequest(ApplicantRequest request)
 	{
 		try {
-			ApplicantRequest addRequest = applicantRequestRepository.save(request);
-			return ResponseEntity.status(HttpStatus.CREATED).body(addRequest);
+			ApplicantRequest saveRequest = applicantRequestRepository.save(request);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating applicant Request");
@@ -31,29 +31,40 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	}
 	
 	@Override
-	public List<ApplicantRequest> requestList()
+	public ResponseEntity<Object> requestList()
 	{
-		List<ApplicantRequest> requestList = (List<ApplicantRequest>) applicantRequestRepository.findAll();
-		
-		if (requestList.size() < 2) 
-			throw new ResourceNotFoundException("Applicant Request List Not found");
-		
-		return requestList;
+		try {
+			List<ApplicantRequest> requestList = (List<ApplicantRequest>) applicantRequestRepository.findAll();
+			return ResponseEntity.status(HttpStatus.OK).body(requestList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Applicant request list");
+		}
 	}
 	
 	@Override
-	public ApplicantRequest requestById(int id)
+	public ResponseEntity<Object> requestById(int id)
 	{
-		ApplicantRequest request = applicantRequestRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Request bot found for id: "+ id));
-		return request;
+		try {
+			ApplicantRequest request = applicantRequestRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Applicant Request not found for id: "+ id));
+			return ResponseEntity.status(HttpStatus.OK).body(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Applicant request of id:" +id);
+		}
 	}
 	
 	@Override
 	public ResponseEntity<Object> deleteRequest(int id)
 	{
-		applicantRequestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Request Not foubd for Id: "+id));
-		applicantRequestRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Request deleted for id:" + id);
+		applicantRequestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Applicant Request Not found for Id: "+id));
+		
+		try {
+			applicantRequestRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Applicant deleted for id:" + id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Applicant Request for id:" +id);
+		}
 	}
-	
 }

@@ -22,8 +22,8 @@ public class NotificationServiceImpl implements NotificationService {
 	public ResponseEntity<Object> addNotification(Notification notification)
 	{
 		try {
-			Notification addNotification = notificationRepository.save(notification);
-			return ResponseEntity.status(HttpStatus.CREATED).body(addNotification);
+			Notification saveNotification = notificationRepository.save(notification);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveNotification);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating Notification");
@@ -31,34 +31,50 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 	
 	@Override
-	public List<Notification> notificationList()
+	public ResponseEntity<Object> notificationList()
 	{
-		List<Notification> notificationList = (List<Notification>) notificationRepository.findAll();
-		
-		if(notificationList.size() < 1)
-			throw new ResourceNotFoundException("Notification list not found");
-		
-		return  notificationList;
+		try {
+			List<Notification> notificationList = (List<Notification>) notificationRepository.findAll();
+			
+			if(notificationList.size() < 1)
+				throw new ResourceNotFoundException("Notification list not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(notificationList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Notifications");
+		}
 	}
 	
 	@Override
-	public Notification notificationById(Long id)
+	public ResponseEntity<Object> notificationById(Long id)
 	{
-		Notification notification = notificationRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Notification is not found for id: "+id));
-		return notification;
+		try {
+			Notification notification = notificationRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Notification is not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(notification);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Notofications");
+		}
 	}
 	
-	@Override
-	public ResponseEntity<Object> updateNotification(Notification notification, Long id) {
-		return null;
-	}
+//	@Override
+//	public ResponseEntity<Object> updateNotification(Notification notification, Long id) {
+//		return null;
+//	}
 	 
 	@Override
 	public ResponseEntity<Object> deleteNotification(Long id)
 	{
 		notificationRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Notification is not found for id: "+ id));
-		notificationRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Notification deleted for id: "+id);
+		
+		try {
+			notificationRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Notification deleted for id: "+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Notification for id:" +id);
+		}
 	}
 	
 }

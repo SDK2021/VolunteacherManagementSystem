@@ -12,16 +12,25 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class State {
 
 	@Id
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length = 2, columnDefinition = "TINYINT")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int stateId;
 
 	@NotNull
-	@Column(length = 20, unique = true, nullable = false , columnDefinition = "Char")
+	@Column(length = 50, unique = true, nullable = false , columnDefinition = "Char(50)")
 	private String stateName;
 
 	@NotNull

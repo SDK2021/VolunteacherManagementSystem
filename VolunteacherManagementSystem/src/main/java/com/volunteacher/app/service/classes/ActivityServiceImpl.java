@@ -2,6 +2,7 @@ package com.volunteacher.app.service.classes;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,14 +14,15 @@ import com.volunteacher.app.service.interfaces.ActivityService;
 
 @Service
 public class ActivityServiceImpl implements ActivityService{
-
+	
+	@Autowired 
 	ActivityRepository activityRepository;
 	
 	@Override
-	public ResponseEntity<Object> addActivity(List<Activity> activities) {
-		
+	public ResponseEntity<Object> addActivity(Activity activity) 
+	{
 		try {
-			List<Activity> saveActivity = (List<Activity>) activityRepository.saveAll(activities);
+			Activity saveActivity = activityRepository.save(activity);
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveActivity);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -29,15 +31,48 @@ public class ActivityServiceImpl implements ActivityService{
 	}
 
 	@Override
-	public List<Activity> activitiesList() {
-		
-		List<Activity> activityList = (List<Activity>) activityRepository.findAll();
-		
-		if(activityList.size() < 1)
-			throw new ResourceNotFoundException("Activity list not found");
-		
-		return activityList;
+	public ResponseEntity<Object> activitiesList() 
+	{
+		try {
+			List<Activity> activityList = (List<Activity>) activityRepository.findAll();
+			
+			if(activityList.size() < 1)
+				throw new ResourceNotFoundException("Activity list not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(activityList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch activity list");
+		}
 	}
-	
-	
+
+	@Override
+	public ResponseEntity<Object> updateActivity(Activity activity, int id) 
+	{
+		Activity updateActivity = activityRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Activity is not found for id: "+ id));
+		
+		updateActivity.setActivityName(activity.getActivityName());
+		try {
+			activityRepository.save(updateActivity);
+			return ResponseEntity.status(HttpStatus.OK).body(updateActivity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating activity for id:" +id);
+		}
+		
+	}
+
+	@Override
+	public ResponseEntity<Object> deleteActivity(int id) 
+	{
+		activityRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Activity is not found for id: "+ id));
+		
+		try {
+			activityRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Activity deleted for id: "+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on deleting activity");
+		}
+	}
 }

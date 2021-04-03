@@ -22,8 +22,8 @@ public class EventServiceImpl implements EventService{
 	public ResponseEntity<Object> addEvent(Event event)
 	{
 		try {
-			Event addEvent = eventRepository.save(event);
-			return ResponseEntity.status(HttpStatus.OK).body(addEvent);
+			Event saveEvent = eventRepository.save(event);
+			return ResponseEntity.status(HttpStatus.OK).body(saveEvent);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error for creating ");
@@ -31,13 +31,15 @@ public class EventServiceImpl implements EventService{
 	}
 	
 	@Override
-	public List<Event> eventList()
+	public ResponseEntity<Object> eventList()
 	{
-		List<Event> eventList = (List<Event>) eventRepository.findAll();
-		if(eventList.size() < 1)
-			throw new ResourceNotFoundException("Event list not found");
-		
-		return eventList;
+		try {
+			List<Event> eventList = (List<Event>) eventRepository.findAll();
+			return ResponseEntity.status(HttpStatus.OK).body(eventList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Events");
+		}
 	}
 	
 	public ResponseEntity<Object> updateEvent(Event event, int id)
@@ -47,21 +49,45 @@ public class EventServiceImpl implements EventService{
 		updateEvent.setTitle(event.getTitle());
 		updateEvent.setEventData(event.getEventData());
 		updateEvent.setEventDate(event.getEventDate());
-		updateEvent.setEventTime(event.getEventTime());
 		updateEvent.setKids(event.getKids());
 		updateEvent.setProject(event.getProject());
 		updateEvent.setVillage(event.getVillage());
-		
-		eventRepository.save(updateEvent);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(updateEvent);
+		updateEvent.setEventEndingTime(event.getEventEndingTime());
+		updateEvent.setEventStartingTime(event.getEventStartingTime());
+		try {
+			eventRepository.save(updateEvent);
+			return ResponseEntity.status(HttpStatus.OK).body(updateEvent);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Event for id:" +id);
+		}
 	}
 	
 	@Override
 	public ResponseEntity<Object> deleteEvent(int id)
 	{
 		eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event not found for id: "+id));
-		eventRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Event deleted for id: "+id);
+		
+		try {
+			eventRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Event deleted for id: "+id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Event for id:" +id);
+		}
+		
+	}
+
+	@Override
+	public ResponseEntity<Object> eventById(int id) 
+	{
+		try {
+			Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(event);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Events");
+		}
+		
 	}
 }

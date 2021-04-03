@@ -1,7 +1,5 @@
 package com.volunteacher.app.service.interfaces;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 
 import com.volunteacher.app.model.Requirement;
@@ -11,9 +9,9 @@ public interface SchoolService {
 	
 	public ResponseEntity<Object> addSchool(School school);
 	
-	public List<School> schoolList();
+	public ResponseEntity<Object> schoolList();
 	
-	public School schoolById(int id);
+	public ResponseEntity<Object> schoolById(int id);
 	
 	public ResponseEntity<Object> updateSchool(School school, int id);
 	
@@ -21,7 +19,11 @@ public interface SchoolService {
 	
 	public ResponseEntity<Object> addRequirement(Requirement requirement);
 	
-	public List<Requirement> requirementList();
+	public ResponseEntity<Object> requirementList();
+	
+	public ResponseEntity<Object> updateRequirement(Requirement requirement, int id);
 	
 	public ResponseEntity<Object> deleteRequirement(int id);
+	
+	
 }

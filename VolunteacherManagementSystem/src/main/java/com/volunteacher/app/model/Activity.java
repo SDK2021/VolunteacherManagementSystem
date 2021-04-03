@@ -11,24 +11,33 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 
 @Entity
 public class Activity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length=3)
 	private int activityId;
 	
 	@NotNull
-	@Column(nullable = false , length=20, unique = true , columnDefinition = "Char")
+	@Column(nullable = false , length=20, unique = true , columnDefinition = "Char(20)")
 	private String activityName;
 	
 	@ManyToMany(mappedBy = "activities")
 	private List<Participant> participants;
 	
 	//add
-	@ManyToMany
+	@ManyToMany(mappedBy = "activities")
 	private List<Event> events;
 
 	public Activity() {
@@ -52,14 +61,6 @@ public class Activity {
 
 	public void setActivityName(String activityName) {
 		this.activityName = activityName;
-	}
-
-	public List<Event> getEvents() {
-		return events;
-	}
-
-	public void setEvents(List<Event> events) {
-		this.events = events;
 	}
 
 	@Override

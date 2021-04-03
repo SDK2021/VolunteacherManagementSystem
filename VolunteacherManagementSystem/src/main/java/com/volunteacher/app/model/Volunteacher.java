@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -24,16 +25,21 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Volunteacher {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length=8)
-	private Long volunteacherId;
+	private int volunteacherId;
 
-	@NotNull
-	@OneToOne
-	private School school;
+	@Column(length = 50)
+	private String school;
 
-	@NotNull
-	@Column(length = 20, nullable = false)
+	@Column(length = 20	)
 	private String employerName;
 	
 	@NotNull
@@ -43,7 +49,7 @@ public class Volunteacher {
 	@NotNull
 	@JsonFormat(pattern = "dd-MM-yyy")
 	@CreatedDate
-	@Column(nullable = false)
+	@Column(nullable = false,columnDefinition = "DATE")
 	private Calendar joiningDate;
 	
 	@JsonFormat(pattern = "dd-MM-yyy")
@@ -53,7 +59,6 @@ public class Volunteacher {
 	@Column(length = 6, nullable = false)
 	private int pincode;
 
-	@NotNull
 	@Column(length = 20, nullable = false)
 	private String education;
 	
@@ -73,7 +78,7 @@ public class Volunteacher {
 	private List<Session> sessions;
 	
 	//Does cascading required?
-	@ManyToMany
+	@ManyToMany(mappedBy = "volunteachers")
 	private List<Project> projects;
 	
 
@@ -81,7 +86,7 @@ public class Volunteacher {
 		super();
 	}
 
-	public Volunteacher( School school, String employerName, int status,
+	public Volunteacher( String school, String employerName, int status,
 			Calendar joiningDate, Calendar endingDate, int pincode, String education,
 			User user, Village village, District district, List<Session> sessions,
 			List<Project> projects) {
@@ -100,15 +105,15 @@ public class Volunteacher {
 		this.projects = projects;
 	}
 
-	public Long getVolunteacherId() {
+	public int getVolunteacherId() {
 		return volunteacherId;
 	}
 	
-	public School getSchool() {
+	public String getSchool() {
 		return school;
 	}
 
-	public void setSchool(School school) {
+	public void setSchool(String school) {
 		this.school = school;
 	}
 

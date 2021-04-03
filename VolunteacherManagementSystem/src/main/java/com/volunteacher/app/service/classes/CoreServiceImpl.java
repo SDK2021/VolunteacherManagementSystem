@@ -3,6 +3,8 @@ package com.volunteacher.app.service.classes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
@@ -42,76 +44,167 @@ public class CoreServiceImpl implements CoreService {
 	
 
 	@Override
-	public List<Country> countryList() {
-		List<Country> countryList = (List<Country>) countryRepository.findAll();
-		
-		if(countryList.size() < 1)
-			throw new ResourceNotFoundException("Country list not found");
-		
-		return countryList;
+	public ResponseEntity<Object> countryList() 
+	{
+		try {
+			List<Country> countryList = (List<Country>) countryRepository.findAll();
+			
+			if(countryList.size() < 1)
+				throw new ResourceNotFoundException("Country list not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(countryList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Country");
+		}
 	}
 
 	@Override
-	public List<State> statesList() {
-		List<State> stateList = (List<State>) stateRepository.findAll();
-		System.out.println(stateList);
-		if(stateList.size() < 1)
-			throw new ResourceNotFoundException("State list not found");
-		
-		return stateList;
+	public ResponseEntity<Object> statesList() 
+	{
+		try {
+			List<State> stateList = (List<State>) stateRepository.findAll();
+			
+			if(stateList.size() < 1)
+				throw new ResourceNotFoundException("State list not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(stateList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Sates");
+		}
 	}
 
 	@Override
-	public List<District> districtsList() {
-		List<District> districtList = (List<District>) districtRepository.findAll();
-		
-		if(districtList.size() < 1)
-			throw new ResourceNotFoundException("District list not found");
-		
-		return districtList;
+	public ResponseEntity<Object> districtsList() 
+	{
+		try {
+			List<District> districtList = (List<District>) districtRepository.findAll();
+			
+			if(districtList.size() < 1)
+				throw new ResourceNotFoundException("District list not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(districtList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Districts");
+		}
 	}
 
 	@Override
-	public List<Taluka> talukasList() {
-		List<Taluka> talukaList = (List<Taluka>) talukaRepository.findAll();
+	public ResponseEntity<Object> talukasList() 
+	{
+		try {
+			List<Taluka> talukaList = (List<Taluka>) talukaRepository.findAll();
+			
+			if(talukaList.size() < 1)
+				throw new ResourceNotFoundException("Taluka list not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(talukaList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Talukas");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> villagesList() 
+	{
+		try {
+			List<Village> villageList = (List<Village>) villageRepository.findAll();
+			
+			if(villageList.size() < 1)
+				throw new ResourceNotFoundException("Villages list not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(villageList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Villages");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> statesByCountry(int id) 
+	{
+		try {
+			List<State> stateList = stateRepository.findAllByCountryCountryId(id);
+			return ResponseEntity.status(HttpStatus.OK).body(stateList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch States");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> districtsByState(int id) 
+	{
+		try {
+			List<District> districtList = districtRepository.findAllByStateStateId(id);
+			return ResponseEntity.status(HttpStatus.OK).body(districtList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch districts");
+		}
 		
-		if(talukaList.size() < 1)
-			throw new ResourceNotFoundException("Taluka list not found");
-		
-		return talukaList;
 	}
 
 	@Override
-	public List<Village> villagesList() {
-		List<Village> villageList = (List<Village>) villageRepository.findAll();
-		
-		if(villageList.size() < 1)
-			throw new ResourceNotFoundException("Villages list not found");
-		
-		return villageList;
+	public ResponseEntity<Object> talukasByDistrict(int id) 
+	{
+		try {
+			List<Taluka> talukaList = talukaRepository.findAllByDistrictDistrictId(id);
+			return ResponseEntity.status(HttpStatus.OK).body(talukaList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Talukas");
+		}
 	}
 
 	@Override
-	public List<State> statesByCountry(int id) {
-		List<State> stateList = stateRepository.findAllByCountryCountryId(id);
-		return stateList;
+	public ResponseEntity<Object> villagesByTaluka(int id) 
+	{
+		try {
+			List<Village> villageList = villageRepository.findAllByTalukaTalukaId(id);
+			return ResponseEntity.status(HttpStatus.OK).body(villageList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Villages");
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> addDistrict(District district) 
+	{
+		try {
+			District saveDistrict = districtRepository.save(district);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveDistrict);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating District");
+		}
 	}
 
 	@Override
-	public List<District> districtsByState(int id) {
-		List<District> districtList = districtRepository.findAllByStateStateId(id);
-		return districtList;
+	public ResponseEntity<Object> addTaluka(Taluka taluka) 
+	{
+		try {
+			Taluka saveTaluka = talukaRepository.save(taluka);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveTaluka);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating taluka");
+		}
 	}
 
 	@Override
-	public List<Taluka> talukasByDistrict(int id) {
-		List<Taluka> talukaList = talukaRepository.findAllByDistrictDistrictId(id);
-		return talukaList;
-	}
-
-	@Override
-	public List<Village> villagesByTaluka(int id) {
-		List<Village> villageList = villageRepository.findAllByTalukaTalukaId(id);
-		return villageList;
+	public ResponseEntity<Object> addVillage(Village village) 
+	{
+		try {
+			Village saveVillage = villageRepository.save(village);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveVillage);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating Village");
+		}
 	}
 }

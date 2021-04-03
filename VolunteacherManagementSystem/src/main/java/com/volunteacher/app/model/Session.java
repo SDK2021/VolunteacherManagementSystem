@@ -12,9 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -26,7 +28,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Session {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length=8)
 	private Long sessionId;
 	
@@ -38,27 +47,31 @@ public class Session {
 	private Calendar sessionDate;
 	
 	@NotNull
-	@JsonFormat(pattern = "HH:mm:ss")
+	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar startingTime;
 	
 	@NotNull
-	@JsonFormat(pattern = "HH:mm:ss")
+	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar endingTime;
 	
 	@NotNull
 	@CreatedDate
 	@JsonFormat(pattern = "dd-MM-yyyy")
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar creationDate;
 	
 	//Many session belongs to one project
 	@NotNull
 	@ManyToOne
 	private Project project;
-			
-	//One session many reports - cascade deletion
+	
+	@OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
+	private List<Attendance> attendance;
+	
+	@OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
+	private List<SessionReport> sessionReports;
 	
 	@NotNull
 	@OneToOne
@@ -71,8 +84,8 @@ public class Session {
 //	private List<Kid> kids;
 	
 	//add
-	@OneToOne(mappedBy = "session",cascade = CascadeType.ALL , orphanRemoval=true)
-	private Notification notification;
+//	@OneToOne(mappedBy = "session",cascade = CascadeType.REMOVE)
+//	private Notification notification;
 
 	public Session() {
 		super();
@@ -151,6 +164,7 @@ public class Session {
 		this.volunteachers = volunteachers;
 	}
 
+	
 //	public List<Kid> getKids() {
 //		return kids;
 //	}
@@ -158,7 +172,6 @@ public class Session {
 //	public void setKids(List<Kid> kids) {
 //		this.kids = kids;
 //	}
-
 
 	@Override
 	public String toString() {

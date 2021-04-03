@@ -6,35 +6,40 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class SessionReport {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length=8)
 	private int sessionReportId;
 	
-	@NotNull
-	@Column(nullable = false , columnDefinition = "TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	
-	@NotNull
-	@Column(nullable = false , columnDefinition = "TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String suggestions;
 	
 	@NotNull
-	@Column(length = 20, nullable = false)
+	@Column(length = 20, nullable = false, columnDefinition = "TEXT")
 	private String experience;
 	
-	@NotNull
-	@Column(nullable = false , columnDefinition = "TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String requirements;
 	
 	@NotNull
-	@OneToOne
+	@ManyToOne
 	private Session session;
 		
 	@NotNull

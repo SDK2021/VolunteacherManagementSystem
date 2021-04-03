@@ -7,16 +7,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class UserType {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(
+	    strategy= GenerationType.AUTO,
+	    generator="native"
+	)
+	@GenericGenerator(
+	    name = "native",
+	    strategy = "native"
+	)
 	@Column(length=1 , columnDefinition = "TinyInt")
 	private int typeId;
 		
 	@NotNull
-	@Column(length = 20, unique = true)
+	@Column(length = 20, unique = true, columnDefinition = "Char(20)")
 	private String type;
 
 	

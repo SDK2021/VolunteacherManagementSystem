@@ -24,10 +24,11 @@ public class SessionServiceImpl implements SessionService {
 	SessionReportRepository sessionReportRepository;
 	
 	@Override
-	public ResponseEntity<Object> addSession(Session session) {
+	public ResponseEntity<Object> addSession(Session session)
+	{
 		try {
-			Session addsession = sessionRepository.save(session);
-			return ResponseEntity.status(HttpStatus.CREATED).body(addsession);
+			Session saveSession = sessionRepository.save(session);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveSession);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating Session");
@@ -35,20 +36,30 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public List<Session> sessionList() {
-		
-		List<Session> sessionList = (List<Session>)sessionRepository.findAll();
-		
-		if(sessionList.size() < 1)
-			throw new ResourceNotFoundException("Session List Not found");
-		
-		return sessionList;
+	public ResponseEntity<Object> sessionList() 
+	{
+		try {
+			List<Session> sessionList = (List<Session>)sessionRepository.findAll();
+			
+			if(sessionList.size() < 1)
+				throw new ResourceNotFoundException("Session List Not found");
+			return ResponseEntity.status(HttpStatus.OK).body(sessionList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Sessions");
+		}
 	}
 
 	@Override
-	public Session sessionById(Long id) {
-		Session session = sessionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Session not found for id: "+id));
-		return session;
+	public ResponseEntity<Object> sessionById(Long id)
+	{
+		try {
+			Session session = sessionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Session not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(session);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Session for id: "+ id);
+		}
 	}
 
 	@Override
@@ -61,24 +72,35 @@ public class SessionServiceImpl implements SessionService {
 		updateSession.setStartingTime(session.getStartingTime());
 		updateSession.setVillage(session.getVillage());
 		
-		sessionRepository.save(updateSession);
-		return ResponseEntity.status(HttpStatus.OK).body(updateSession);
+		try {
+			sessionRepository.save(updateSession);
+			return ResponseEntity.status(HttpStatus.OK).body(updateSession);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Session for id:" +id);
+		}
 	}
 
 	@Override
 	public ResponseEntity<Object> deleteSession(Long id) 
 	{
 		sessionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Session not found for id: "+id));
-		sessionRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Session deleted for id:" + id);
+		
+		try {
+			sessionRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Session deleted for id:" + id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Session for id:" +id);
+		}
 	}
 
 	@Override
-	public ResponseEntity<Object> addSessionReport(SessionReport sessionReport) {
-		
+	public ResponseEntity<Object> addSessionReport(SessionReport sessionReport) 
+	{
 		try {
-			SessionReport sessionreport = sessionReportRepository.save(sessionReport);
-			return ResponseEntity.status(HttpStatus.CREATED).body(sessionreport);
+			SessionReport saveSessionReport = sessionReportRepository.save(sessionReport);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveSessionReport);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating Session Report");
@@ -86,27 +108,41 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public List<SessionReport> sessionReportList() {
-		
-		List<SessionReport> sessionReportList = (List<SessionReport>)sessionReportRepository.findAll();
-		
-		if(sessionReportList.size() < 1)
-			throw new ResourceNotFoundException("Session report List Not found");
-		
-		return sessionReportList;
+	public ResponseEntity<Object> sessionReportList() 
+	{
+		try {
+			List<SessionReport> sessionReportList = (List<SessionReport>)sessionReportRepository.findAll();
+			return ResponseEntity.status(HttpStatus.OK).body(sessionReportList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Session Report ");
+		}
 	}
 
 	@Override
-	public SessionReport sessionReport(int id) {
-		SessionReport sessionReport = sessionReportRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Session report not found for id: "+id));
-		return sessionReport;
+	public ResponseEntity<Object> sessionReport(int id) 
+	{
+		try {
+			SessionReport sessionReport = sessionReportRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Session report not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(sessionReport);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Session report for id: "+ id);
+		}
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteSessionReport(int id) {
+	public ResponseEntity<Object> deleteSessionReport(int id) 
+	{
 		sessionReportRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Session report not found for id: "+id));
-		sessionReportRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Session Report deleted for id:" + id);
+		
+		try {
+			sessionReportRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Session Report deleted for id:" + id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Session Report for id:" +id);
+		}
 		
 	}
 }
