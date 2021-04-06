@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -52,6 +53,12 @@ public class Volunteacher {
 	@Column(nullable = false,columnDefinition = "DATE")
 	private Calendar joiningDate;
 	
+	@NotNull
+	@Column(nullable = false, columnDefinition = "TIME")
+	@JsonFormat(timezone = "IST", pattern = "HH-mm-ss")
+	@CreationTimestamp
+	private Calendar JoiningTime;
+	
 	@JsonFormat(pattern = "dd-MM-yyy")
 	@Column(columnDefinition = "DATE")
 	private Calendar endingDate;
@@ -62,7 +69,6 @@ public class Volunteacher {
 	@Column(length = 20, nullable = false)
 	private String education;
 	
-	//One User-- for password
 	@OneToOne
 	private User user;
 	
@@ -71,13 +77,12 @@ public class Volunteacher {
 	private Village village;
 	
 	@NotNull
-	@ManyToOne
+	@OneToOne
 	private District district;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy = "volunteachers")
 	private List<Session> sessions;
 	
-	//Does cascading required?
 	@ManyToMany(mappedBy = "volunteachers")
 	private List<Project> projects;
 	
@@ -157,6 +162,14 @@ public class Volunteacher {
 		this.pincode = pincode;
 	}
 
+	public Calendar getJoiningTime() {
+		return JoiningTime;
+	}
+
+	public void setJoiningTime(Calendar joiningTime) {
+		JoiningTime = joiningTime;
+	}
+
 	public String getEducation() {
 		return education;
 	}
@@ -187,22 +200,6 @@ public class Volunteacher {
 
 	public void setDistrict(District district) {
 		this.district = district;
-	}
-
-	public List<Session> getSessions() {
-		return sessions;
-	}
-
-	public void setSessions(List<Session> sessions) {
-		this.sessions = sessions;
-	}
-
-	public List<Project> getProjects() {
-		return projects;
-	}
-
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
 	}
 
 	@Override

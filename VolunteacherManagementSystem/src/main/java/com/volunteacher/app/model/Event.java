@@ -53,7 +53,11 @@ public class Event {
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar eventStartingTime;
 	
-	//Many events belongs to one project
+	@NotNull
+	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
+	@Column(nullable = false, columnDefinition = "TIME")
+	private Calendar eventEndingTime;
+	
 	@NotNull
 	@ManyToOne
 	private Project project;
@@ -68,19 +72,11 @@ public class Event {
 	@ManyToMany
 	private List<Kid> kids;
 	
-	//add
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "event")
-	private Notification notification;
-	
-	//add
 	@ManyToMany
 	private List<Activity> activities;
-	//Kids Event participants activity kids?
-	//New table or not
-	@NotNull
-	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
-	@Column(nullable = false, columnDefinition = "TIME")
-	private Calendar eventEndingTime;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "event")
+	private Notification notification;
 
 	public Event() {
 		super();
@@ -144,14 +140,6 @@ public class Event {
 		this.project = project;
 	}
 
-	public List<Participant> getParticipants() {
-		return participants;
-	}
-
-	public void setParticipants(List<Participant> participants) {
-		this.participants = participants;
-	}
-
 	public Village getVillage() {
 		return village;
 	}
@@ -166,14 +154,6 @@ public class Event {
 
 	public void setKids(List<Kid> kids) {
 		this.kids = kids;
-	}
-
-	public Notification getNotification() {
-		return notification;
-	}
-
-	public void setNotification(Notification notification) {
-		this.notification = notification;
 	}
 
 	public List<Activity> getActivities() {

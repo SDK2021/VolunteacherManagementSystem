@@ -62,9 +62,12 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 	{
 		TimelinePost updatePost = timelinePostRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Timeline Post not found for id: "+id));
 		
-		updatePost.setPostTitle(post.getPostTitle());
+//		updatePost.setPostTitle(post.getPostTitle());
 		updatePost.setPostDescription(post.getPostDescription());
 		updatePost.setPostPhoto(post.getPostPhoto());
+		updatePost.setCreationDate(post.getCreationDate());
+//		updatePost.setCreationTime(post.getCreationTime());
+		updatePost.setLikes(post.getLikes());
 		
 		try {
 			timelinePostRepository.save(updatePost);

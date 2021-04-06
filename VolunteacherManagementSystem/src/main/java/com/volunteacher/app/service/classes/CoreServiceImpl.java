@@ -8,16 +8,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
+import com.volunteacher.app.model.Area;
 import com.volunteacher.app.model.Country;
 import com.volunteacher.app.model.District;
 import com.volunteacher.app.model.State;
 import com.volunteacher.app.model.Taluka;
 import com.volunteacher.app.model.Village;
+import com.volunteacher.app.repository.AreaRepository;
 import com.volunteacher.app.repository.CountryRepository;
 import com.volunteacher.app.repository.DistrictRepository;
 import com.volunteacher.app.repository.StateRepository;
 import com.volunteacher.app.repository.TalukaRepository;
-import com.volunteacher.app.repository.UserRepository;
 import com.volunteacher.app.repository.VillageRepository;
 import com.volunteacher.app.service.interfaces.CoreService;
 
@@ -40,7 +41,7 @@ public class CoreServiceImpl implements CoreService {
 	VillageRepository villageRepository;
 	
 	@Autowired
-	UserRepository userRepository;
+	AreaRepository areaRepository;
 	
 
 	@Override
@@ -161,7 +162,7 @@ public class CoreServiceImpl implements CoreService {
 	}
 
 	@Override
-	public ResponseEntity<Object> villagesByTaluka(int id) 
+	public ResponseEntity<Object> villagesBytaluka(int id) 
 	{
 		try {
 			List<Village> villageList = villageRepository.findAllByTalukaTalukaId(id);
@@ -205,6 +206,43 @@ public class CoreServiceImpl implements CoreService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating Village");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> areaList() {
+		try {
+			List<Area> areaList = (List<Area>) areaRepository.findAll();
+			
+			if(areaList.size() < 1)
+				throw new ResourceNotFoundException("Area list not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(areaList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Areas");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> addArea(Area area) {
+		try {
+			Area saveArea = areaRepository.save(area);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saveArea);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating Area");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> areaByvillages(int id) {
+		try {
+			List<Area> areaList = areaRepository.findAllByVillageVillageId(id);
+			return ResponseEntity.status(HttpStatus.OK).body(areaList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Area");
 		}
 	}
 }

@@ -61,9 +61,7 @@ public class Session {
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar creationDate;
-	
-	//Many session belongs to one project
-	@NotNull
+
 	@ManyToOne
 	private Project project;
 	
@@ -73,20 +71,13 @@ public class Session {
 	@OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
 	private List<SessionReport> sessionReports;
 	
-	@NotNull
 	@OneToOne
 	private Village village;
 	
-	@ManyToMany(mappedBy = "sessions")
+	@ManyToMany
 	private List<Volunteacher> volunteachers;
-	
-//	@ManyToMany
-//	private List<Kid> kids;
-	
-	//add
-//	@OneToOne(mappedBy = "session",cascade = CascadeType.REMOVE)
-//	private Notification notification;
 
+	
 	public Session() {
 		super();
 	}
@@ -101,7 +92,6 @@ public class Session {
 		this.project = project;
 		this.village = village;
 		this.volunteachers = volunteachers;
-//		this.kids = kids;
 	}
 	
 	public Long getSessionId() {
@@ -163,15 +153,6 @@ public class Session {
 	public void setVolunteachers(List<Volunteacher> volunteachers) {
 		this.volunteachers = volunteachers;
 	}
-
-	
-//	public List<Kid> getKids() {
-//		return kids;
-//	}
-//
-//	public void setKids(List<Kid> kids) {
-//		this.kids = kids;
-//	}
 
 	@Override
 	public String toString() {

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.volunteacher.app.model.Attendance;
 import com.volunteacher.app.model.Kid;
 import com.volunteacher.app.model.KidsGroup;
 import com.volunteacher.app.model.KidsReport;
@@ -125,7 +126,7 @@ public class KidsController {
 		return kidService.deleteKidsGroup(id);
 	}
 	
-	@PostMapping("/kids-groups/{id}")
+	@PutMapping("/kids-groups/{id}")
 	public ResponseEntity<Object> deleteKidGroup(@RequestBody KidsGroup kidsGroup, @PathVariable int id)
 	{
 		return kidService.updateKidsGroup(kidsGroup, id);
@@ -147,6 +148,12 @@ public class KidsController {
 	public ResponseEntity<Object> getAttendanceBySession(@PathVariable int id)
 	{
 		return attendanceService.attendanceByGroup(id);
+	}
+	
+	@PutMapping("/attendances/{id}")
+	public ResponseEntity<Object> updateAttendance(@RequestBody Attendance attendance,@PathVariable Long id)
+	{
+		return attendanceService.updateAttendance(attendance, id);
 	}
 	
 }

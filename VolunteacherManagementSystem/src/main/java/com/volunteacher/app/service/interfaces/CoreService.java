@@ -2,6 +2,7 @@ package com.volunteacher.app.service.interfaces;
 
 import org.springframework.http.ResponseEntity;
 
+import com.volunteacher.app.model.Area;
 import com.volunteacher.app.model.District;
 import com.volunteacher.app.model.Taluka;
 import com.volunteacher.app.model.Village;
@@ -18,6 +19,8 @@ public interface CoreService {
 	
 	public ResponseEntity<Object> villagesList();
 	
+	public ResponseEntity<Object> areaList();
+	
 	public ResponseEntity<Object> statesByCountry(int id);
 	
 	public ResponseEntity<Object> addDistrict(District district);
@@ -30,6 +33,11 @@ public interface CoreService {
 	
 	public ResponseEntity<Object> addVillage(Village village);
 	
-	public ResponseEntity<Object> villagesByTaluka(int id);
+	public ResponseEntity<Object> villagesBytaluka(int id);
+	
+	public ResponseEntity<Object> addArea(Area area);
+	
+	public ResponseEntity<Object> areaByvillages(int id);
+	
 	
 }

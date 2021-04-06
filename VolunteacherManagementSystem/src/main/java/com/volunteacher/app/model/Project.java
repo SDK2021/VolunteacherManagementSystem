@@ -61,11 +61,9 @@ public class Project {
 	@Column(nullable = false)
 	private Calendar creationDate;
 	
-	//One Project Many Sessions - cascade deletion
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
 	private List<Session> sessions;
 	
-	//One project many events
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
 	private List<Event> events;
 	
@@ -74,7 +72,6 @@ public class Project {
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar creationTime;
 
-	//Does cascading required?
 	@ManyToMany
 	private List<Volunteacher> volunteachers;
 	
@@ -161,7 +158,7 @@ public class Project {
 	public List<Kid> getKids() {
 		return kids;
 	}
-
+	
 	public void setKids(List<Kid> kids) {
 		this.kids = kids;
 	}

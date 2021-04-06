@@ -58,17 +58,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ResponseEntity<Object> updateUser(User user, Long id)
 	{
-		User userById = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found for id: "+ id));
-		userById.setEmail(user.getEmail());
-		userById.setGender(user.getGender());
-		userById.setPassword(user.getPassword());
-		userById.setPhoneNumber(user.getPhoneNumber());
-		userById.setUserName(user.getUserName());
-		userById.setDob(user.getDob());
+		User updateuser = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found for id: "+ id));
+		updateuser.setEmail(user.getEmail());
+		updateuser.setGender(user.getGender());
+		updateuser.setPassword(user.getPassword());
+		updateuser.setPhoneNumber(user.getPhoneNumber());
+		updateuser.setUserName(user.getUserName());
+		updateuser.setDob(user.getDob());
+		updateuser.setType(user.getType());
+		
 		
 		try {
-			userRepository.save(userById);
-			return ResponseEntity.status(HttpStatus.OK).body(userById);
+			userRepository.save(updateuser);
+			return ResponseEntity.status(HttpStatus.OK).body(updateuser);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating User for id:" +id);
@@ -118,18 +120,6 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Usertype");
-		}
-	}
-
-	@Override
-	public ResponseEntity<Object> getUserTypeById(int id) 
-	{
-		try {
-			UserType userType = userTypeRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found for id: " + id));
-			return ResponseEntity.status(HttpStatus.OK).body(userType);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch User type for id: "+ id);
 		}
 	}
 	

@@ -58,13 +58,15 @@ public class User {
 	@NotNull
 	@Column(length=60, nullable = false)
 	private String password;
-	
-	//One User On Type
+
 	@NotNull
 	@OneToOne
 	private UserType type;
 	
 	private String photo;
+	
+	@OneToMany(mappedBy = "createdBy")
+	private List<KidsReport> kidsReports;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
 	private List<Announcement>announcement;
@@ -78,9 +80,7 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
 	private List<TimelinePost> posts;
 	
-	@OneToMany(mappedBy = "createdBy")
-	private List<KidsReport> kidsReports;
-
+	
 	public User() {
 		super();
 	}
@@ -152,18 +152,9 @@ public class User {
 		return type;
 	}
 
-	
-//	public List<SessionReport> getSessionReports() {
-//		return sessionReports;
-//	}
-//
-//	public Volunteacher getVolunteacher() {
-//		return volunteacher;
-//	}
-//
-//	public List<TimelinePost> getPosts() {
-//		return posts;
-//	}
+	public void setType(UserType type) {
+		this.type = type;
+	}
 
 	public String getPhoto() {
 		return photo;

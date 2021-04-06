@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -52,11 +53,6 @@ public class Kid {
 	private String standard;
 	
 	@NotNull
-	@Size(min = 2 , max = 20)
-	@Column(nullable = false, length = 20)
-	private String area;
-	
-	@NotNull
 	@Column(nullable = false, length = 25)
 	private String level;
 	
@@ -73,26 +69,26 @@ public class Kid {
 	@OneToOne
 	private KidsGroup group;
 	
-	@OneToOne(mappedBy = "kid", cascade = CascadeType.REMOVE)
-	private KidsReport kidsReport;
+	@ManyToOne
+	private Area area;
 	
 	@ManyToMany(mappedBy = "kids")
 	private List<Project> projects;
 	
-//	@ManyToMany(mappedBy = "kids")
-//	private List<Session> sessions;
-	
 	@ManyToMany(mappedBy = "kids")
 	private List<Event> events;
 	
-	@ManyToMany
+	@OneToOne(mappedBy = "kid", cascade = CascadeType.REMOVE)
+	private KidsReport kidsReport;
+	
+	@ManyToMany(mappedBy = "kids",cascade = CascadeType.ALL)
 	private List<Attendance> attendances;
 	
 	public Kid() {
 		super();
 	}
 
-	public Kid(String name, int gender, Calendar dob,String standard, String area, String level,
+	public Kid(String name, int gender, Calendar dob,String standard, Area area, String level,
 			String photo, School school, Village village, KidsGroup group, KidsReport kidsReport,
 			List<Project> projects, List<Event> events, List<Attendance> attendances) {
 		super();
@@ -106,10 +102,6 @@ public class Kid {
 		this.school = school;
 		this.village = village;
 		this.group = group;
-		this.kidsReport = kidsReport;
-		this.projects = projects;
-		this.events = events;
-		this.attendances = attendances;
 	}
 
 	public Long getKidId() {
@@ -148,11 +140,11 @@ public class Kid {
 		this.standard = standard;
 	}
 
-	public String getArea() {
+	public Area getArea() {
 		return area;
 	}
 
-	public void setArea(String area) {
+	public void setArea(Area area) {
 		this.area = area;
 	}
 
@@ -195,30 +187,5 @@ public class Kid {
 	public void setGroup(KidsGroup group) {
 		this.group = group;
 	}
-
-	public List<Project> getProjects() {
-		return projects;
-	}
-
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
-	}
-
-	public List<Event> getEvents() {
-		return events;
-	}
-
-	public void setEvents(List<Event> events) {
-		this.events = events;
-	}
-
-	public List<Attendance> getAttendances() {
-		return attendances;
-	}
-
-	public void setAttendances(List<Attendance> attendances) {
-		this.attendances = attendances;
-	}
-
 	
 }

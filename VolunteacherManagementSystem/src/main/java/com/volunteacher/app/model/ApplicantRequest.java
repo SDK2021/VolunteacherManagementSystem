@@ -59,7 +59,6 @@ public class ApplicantRequest {
 		super();
 	}
 
-
 	public ApplicantRequest(String emailId,
 			String name, String phoneNumber, int gender,
 			 UserType userType, int active) {
@@ -71,7 +70,6 @@ public class ApplicantRequest {
 		this.userType = userType;
 		this.active = active;
 	}
-
 
 	public int getRequestId() {
 		return requestId;
@@ -106,31 +104,25 @@ public class ApplicantRequest {
 		this.phoneNumber = phoneNumber;
 	}
 
-
 	public int getGender() {
 		return gender;
 	}
-
 
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
 
-
 	public UserType getUserType() {
 		return userType;
 	}
-
 
 	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
 
-
 	public int isActive() {
 		return active;
 	}
-
 
 	public void setActive(int active) {
 		this.active = active;

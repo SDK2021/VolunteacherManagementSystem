@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.volunteacher.app.model.Area;
 import com.volunteacher.app.model.District;
 import com.volunteacher.app.model.Taluka;
 import com.volunteacher.app.model.Village;
@@ -54,7 +55,13 @@ public class CoreController {
 			return coreService.villagesList();
 		}
 		
-		@GetMapping("/country/{id}/states")
+		@GetMapping("/areas")
+		public ResponseEntity<Object> getAreaList()
+		{
+			return coreService.areaList();
+		}
+		
+		@GetMapping("/countries/{id}/states")
 		public ResponseEntity<Object> getStatesByCountry(@PathVariable int id)
 		{
 			return coreService.statesByCountry(id);
@@ -75,7 +82,13 @@ public class CoreController {
 		@GetMapping("/talukas/{id}/villages")
 		public ResponseEntity<Object> getVillagesByTaluka(@PathVariable int id)
 		{
-			return coreService.villagesByTaluka(id);
+			return coreService.villagesBytaluka(id);
+		}
+		
+		@GetMapping("/villages/{id}/areas")
+		public ResponseEntity<Object> getAreasByVillage(@PathVariable int id)
+		{
+			return coreService.areaByvillages(id);
 		}
 		
 		@PostMapping("/districts")
@@ -91,9 +104,15 @@ public class CoreController {
 		}
 		
 		@PostMapping("/villages")
-		public ResponseEntity<Object> addTalukas(@RequestBody Village village)
+		public ResponseEntity<Object> addVillage(@RequestBody Village village)
 		{
 			return coreService.addVillage(village);
+		}
+		
+		@PostMapping("/areas")
+		public ResponseEntity<Object> addAreas(@RequestBody Area area)
+		{
+			return coreService.addArea(area);
 		}
 }
 

@@ -46,8 +46,7 @@ public class Donor {
 	@NotNull
 	@OneToOne
 	private UserType userType;
-	
-	//add
+
 	@OneToMany(cascade = CascadeType.ALL , mappedBy = "donor")
 	private List<Payment> payment;
 

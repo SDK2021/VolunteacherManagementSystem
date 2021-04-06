@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +35,12 @@ public class TimelinePostController {
 		return timelinePostService.addPost(post);
 	}
 
+	@PutMapping("/posts/{id}")
+	public ResponseEntity<Object> updatePost(@RequestBody TimelinePost post,@PathVariable Long id)
+	{
+		return timelinePostService.updatePost(post, id);
+	}
+	
 	@DeleteMapping("/posts/{id}")
 	public ResponseEntity<Object> deletePost(@PathVariable Long id)
 	{

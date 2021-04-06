@@ -37,8 +37,7 @@ public class Attendance {
 	@NotNull
 	private KidsGroup group;
 
-	@ManyToMany(mappedBy = "attendances")
-	@NotNull
+	@ManyToMany
 	private List<Kid> kids;
 
 	public Attendance() {
@@ -64,14 +63,6 @@ public class Attendance {
 		this.session = session;
 	}
 
-	public KidsGroup getGroups() {
-		return group;
-	}
-
-	public void setGroups(KidsGroup groups) {
-		this.group = groups;
-	}
-	
 	public KidsGroup getGroup() {
 		return group;
 	}

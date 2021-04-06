@@ -93,6 +93,7 @@ public class KidsReportServiceImpl implements KidsReportService{
 		updateKidReport.setRemarks(kidReport.getRemarks());
 		updateKidReport.setSports(kidReport.getSports());
 		updateKidReport.setVolunteaching(kidReport.getVolunteaching());
+//Needed?		updateKidReport.setCreatedDate(kidReport.getCreatedDate());
 		
 		try {
 			kidsReportRepository.save(updateKidReport);

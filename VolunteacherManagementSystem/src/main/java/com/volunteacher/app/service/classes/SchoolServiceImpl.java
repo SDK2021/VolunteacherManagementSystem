@@ -77,6 +77,7 @@ public class SchoolServiceImpl implements SchoolService {
 		updateSchool.setTotalLabs(school.getTotalLabs());
 		updateSchool.setTotalStudent(school.getTotalStudent());
 		updateSchool.setVillage(school.getVillage());
+		updateSchool.setRequirements(school.getRequirements());
 		
 		try {
 			schoolRepository.save(updateSchool);
@@ -132,9 +133,9 @@ public class SchoolServiceImpl implements SchoolService {
 	public ResponseEntity<Object> updateRequirement(Requirement requirement, int id) 
 	{
 		Requirement updateRequirement = requirementRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Requiremement not found for id:"+id));
-
+		updateRequirement.setRequirement(requirement.getRequirement());
 		try {
-			updateRequirement.setRequirement(requirement.getRequirement());
+			requirementRepository.save(updateRequirement);
 			return ResponseEntity.status(HttpStatus.OK).body(updateRequirement);
 		} catch (Exception e) {
 			e.printStackTrace();

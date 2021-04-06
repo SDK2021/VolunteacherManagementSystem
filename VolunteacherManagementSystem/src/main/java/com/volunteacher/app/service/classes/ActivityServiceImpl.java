@@ -52,6 +52,7 @@ public class ActivityServiceImpl implements ActivityService{
 		Activity updateActivity = activityRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Activity is not found for id: "+ id));
 		
 		updateActivity.setActivityName(activity.getActivityName());
+		updateActivity.setDescription(activity.getActivityName());
 		try {
 			activityRepository.save(updateActivity);
 			return ResponseEntity.status(HttpStatus.OK).body(updateActivity);

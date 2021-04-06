@@ -18,6 +18,4 @@ public interface UserService {
 	
 	public ResponseEntity<Object> userTypeList();
 	
-	public ResponseEntity<Object> getUserTypeById(int id);
-	
 }

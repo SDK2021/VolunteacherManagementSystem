@@ -42,7 +42,7 @@ public class ActivityController {
 	}
 	
 	@DeleteMapping("/activities/{id}")
-	public ResponseEntity<Object> updateActivity(@PathVariable int id)
+	public ResponseEntity<Object> deleteActivity(@PathVariable int id)
 	{
 		return activityService.deleteActivity(id);
 	}

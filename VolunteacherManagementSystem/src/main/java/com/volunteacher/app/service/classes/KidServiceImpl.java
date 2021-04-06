@@ -113,7 +113,7 @@ public class KidServiceImpl implements KidService {
 		updatekid.setSchool(kid.getSchool());
 		updatekid.setStandard(kid.getStandard());
 		updatekid.setVillage(kid.getVillage());
-		updatekid.setGroup(kid.getGroup());
+		updatekid.setLevel(kid.getLevel());
 		
 		try {
 			kidRepository.save(updatekid);

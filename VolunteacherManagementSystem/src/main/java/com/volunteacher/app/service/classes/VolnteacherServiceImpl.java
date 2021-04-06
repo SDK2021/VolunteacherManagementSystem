@@ -79,6 +79,7 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 		updateVolunteacher.setSchool(volunteacher.getSchool());
 		updateVolunteacher.setStatus(volunteacher.getStatus());
 		updateVolunteacher.setVillage(volunteacher.getVillage());
+		updateVolunteacher.setJoiningTime(volunteacher.getJoiningTime());
 	
 		try {
 			volunteacherRepository.save(updateVolunteacher);

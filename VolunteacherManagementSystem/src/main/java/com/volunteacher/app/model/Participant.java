@@ -37,7 +37,7 @@ public class Participant {
 	private String name;
 	
 	@NotNull
-	@Column(length=40, unique=true, nullable = false)
+	@Column(length=40, nullable = false)
 	private String email;
 	
 	@NotNull
@@ -45,7 +45,7 @@ public class Participant {
 	private int gender;
 	
 	@NotNull
-	@Column(length=10, unique=true, nullable = false)
+	@Column(length=10, nullable = false)
 	private String phoneNumber;
 	
 	@NotNull
@@ -64,7 +64,6 @@ public class Participant {
 	@ManyToMany
 	private List<Activity> activities;
 	
-	//participant can be user, if we delete user, though user is not there, but we can see who participated
 	@OneToOne
 	private User user;
 	
@@ -137,14 +136,6 @@ public class Participant {
 
 	public void setType(UserType type) {
 		this.type = type;
-	}
-
-	public Event getEvent() {
-		return event;
-	}
-
-	public void setEvent(Event event) {
-		this.event = event;
 	}
 
 	public List<Activity> getActivities() {

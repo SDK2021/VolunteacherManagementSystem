@@ -48,6 +48,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		Announcement updateAnnouncement = announcementRepsitory.findById(id).orElseThrow(()-> new ResourceNotFoundException("Announcement not foud for id:"+id));
 		
 		updateAnnouncement.setData(announcement.getData());
+		updateAnnouncement.setCreationDate(announcement.getCreationDate());
+		updateAnnouncement.setCreationTime(announcement.getCreationTime());
 		try {
 			announcementRepsitory.save(updateAnnouncement);
 			return ResponseEntity.status(HttpStatus.OK).body(updateAnnouncement);

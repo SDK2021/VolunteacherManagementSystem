@@ -53,19 +53,19 @@ public class Report {
 	@NotNull
 	@OneToOne
 	@CreatedBy
-	private User craetedBy;
+	private User createdBy;
 
 	
 	public Report() {
 		super();
 	}
 
-	public Report(String title, String description,Calendar creationDate,User craetedBy) {
+	public Report(String title, String description,Calendar creationDate,User createdBy) {
 		super();
 		this.title = title;
 		this.description = description;
 		this.creationDate = creationDate;
-		this.craetedBy = craetedBy;
+		this.createdBy = createdBy;
 	}
 
 	public int getReportId() {
@@ -97,16 +97,16 @@ public class Report {
 	}
 
 	public User getCraetedBy() {
-		return craetedBy;
+		return createdBy;
 	}
 
 	public void setCraetedBy(User craetedBy) {
-		this.craetedBy = craetedBy;
+		this.createdBy = craetedBy;
 	}
 
 	@Override
 	public String toString() {
 		return "Report [id=" + reportId + ", title=" + title + ", description=" + description + ", creationDate="
-				+ creationDate + ", craetedBy=" + craetedBy + "]";
+				+ creationDate + ", craetedBy=" + createdBy + "]";
 	}
 }

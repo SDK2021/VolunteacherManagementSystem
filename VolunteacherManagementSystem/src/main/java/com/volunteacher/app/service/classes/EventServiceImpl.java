@@ -54,6 +54,7 @@ public class EventServiceImpl implements EventService{
 		updateEvent.setVillage(event.getVillage());
 		updateEvent.setEventEndingTime(event.getEventEndingTime());
 		updateEvent.setEventStartingTime(event.getEventStartingTime());
+		updateEvent.setActivities(event.getActivities());
 		try {
 			eventRepository.save(updateEvent);
 			return ResponseEntity.status(HttpStatus.OK).body(updateEvent);

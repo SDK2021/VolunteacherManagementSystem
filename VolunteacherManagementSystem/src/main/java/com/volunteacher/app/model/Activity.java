@@ -33,39 +33,54 @@ public class Activity {
 	@Column(nullable = false , length=20, unique = true , columnDefinition = "Char(20)")
 	private String activityName;
 	
+	@Column(nullable = false, columnDefinition = "TEXT")
+	private String description;
+	
 	@ManyToMany(mappedBy = "activities")
 	private List<Participant> participants;
 	
-	//add
 	@ManyToMany(mappedBy = "activities")
 	private List<Event> events;
+	
 
 	public Activity() {
 		super();
 	}
-	
-	public Activity(String activityName, List<Participant> participants, List<Event> events) {
+
+	public Activity(int activityId, @NotNull String activityName, String description, List<Participant> participants,
+			List<Event> events) {
 		super();
+		this.activityId = activityId;
 		this.activityName = activityName;
+		this.description = description;
 		this.participants = participants;
 		this.events = events;
 	}
-	
+
 	public int getActivityId() {
 		return activityId;
 	}
-	
+
 	public String getActivityName() {
 		return activityName;
 	}
-
+	
 	public void setActivityName(String activityName) {
 		this.activityName = activityName;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Override
 	public String toString() {
-		return "Activity [activityId=" + activityId + ", activityName=" + activityName + ", participants="
-				+ participants + ", events=" + events + "]";
+		return "Activity [activityId=" + activityId + ", activityName=" + activityName + ", description=" + description
+				+ ", participants=" + participants + ", events=" + events + "]";
 	}
+
 }

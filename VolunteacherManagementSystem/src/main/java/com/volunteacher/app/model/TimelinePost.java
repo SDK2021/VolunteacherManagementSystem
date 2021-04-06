@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -36,17 +35,12 @@ public class TimelinePost {
 	private Long postId;
 	
 	@NotNull
-	@ManyToOne
-	@CreatedBy
-	private User createdBy;
-	
-	@NotNull
 	@Column(nullable = false)
 	private String postPhoto;
 	
-	@NotNull
-	@Column(nullable = false, length = 100)
-	private String postTitle;
+//	@NotNull
+//	@Column(nullable = false, length = 100)
+//	private String postTitle;
 	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "Text")
@@ -58,13 +52,18 @@ public class TimelinePost {
 	@Column(nullable = false)
 	private Calendar creationDate;
 	
-	@NotNull
-	@Column(nullable = false, columnDefinition = "TIME")
-	@JsonFormat(timezone = "IST", pattern = "HH-mm-ss")
-	@CreationTimestamp
-	private Calendar creationTime;
+//	@NotNull
+//	@Column(nullable = false, columnDefinition = "TIME")
+//	@JsonFormat(timezone = "IST", pattern = "HH-mm-ss")
+//	@CreationTimestamp
+//	private Calendar creationTime;
 	
 	private int likes;
+	
+	@NotNull
+	@ManyToOne
+	@CreatedBy
+	private User createdBy;
 	
 	public TimelinePost() {
 		super();
@@ -77,10 +76,10 @@ public class TimelinePost {
 		this.postId = postId;
 		this.createdBy = createdBy;
 		this.postPhoto = postPhoto;
-		this.postTitle = postTitle;
+//		this.postTitle = postTitle;
 		this.postDescription = postDescription;
 		this.creationDate = creationDate;
-		this.creationTime = creationTime;
+//		this.creationTime = creationTime;
 		this.likes = likes;
 	}
 
@@ -108,13 +107,13 @@ public class TimelinePost {
 		this.postPhoto = postPhoto;
 	}
 
-	public String getPostTitle() {
-		return postTitle;
-	}
-
-	public void setPostTitle(String postTitle) {
-		this.postTitle = postTitle;
-	}
+//	public String getPostTitle() {
+//		return postTitle;
+//	}
+//
+//	public void setPostTitle(String postTitle) {
+//		this.postTitle = postTitle;
+//	}
 
 	public String getPostDescription() {
 		return postDescription;
@@ -132,13 +131,13 @@ public class TimelinePost {
 		this.creationDate = creationDate;
 	}
 
-	public Calendar getCreationTime() {
-		return creationTime;
-	}
-
-	public void setCreationTime(Calendar creationTime) {
-		this.creationTime = creationTime;
-	}
+//	public Calendar getCreationTime() {
+//		return creationTime;
+//	}
+//
+//	public void setCreationTime(Calendar creationTime) {
+//		this.creationTime = creationTime;
+//	}
 
 	public int getLikes() {
 		return likes;
@@ -150,10 +149,8 @@ public class TimelinePost {
 
 	@Override
 	public String toString() {
-		return "TimelinePost [postId=" + postId + ", createdBy=" + createdBy + ", postPhoto=" + postPhoto
-				+ ", postTitle=" + postTitle + ", postDescription=" + postDescription + ", creationDate=" + creationDate
-				+ ", creationTime=" + creationTime + ", likes=" + likes + "]";
+		return "TimelinePost [postId=" + postId + ", postPhoto=" + postPhoto + ", postDescription=" + postDescription
+				+ ", creationDate=" + creationDate + ", likes=" + likes + ", createdBy=" + createdBy + "]";
 	}
-
 	
 }
