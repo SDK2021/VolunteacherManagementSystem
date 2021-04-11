@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.volunteacher.app.model.Event;
@@ -41,9 +42,9 @@ public class EventController {
 	}
 	
 	@GetMapping("/events")
-	public ResponseEntity<Object> getEventList()
+	public ResponseEntity<Object> getEventList(@RequestParam("page") int page)
 	{
-		return eventService.eventList();
+		return eventService.eventList(page);
 	}
 	
 	@DeleteMapping("/events/{id}")

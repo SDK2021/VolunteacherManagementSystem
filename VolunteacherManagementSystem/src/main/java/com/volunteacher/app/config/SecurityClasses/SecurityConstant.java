@@ -8,6 +8,6 @@ public class SecurityConstant {
 	public static final String TOKEN_CANNOT_BE_VERIFIED = "Token cannot be verified";
 	public static final String FORBIDDEN_MESSAGE = "You need to Login to access this page";
 	public static final String ACCESS_DENIED_MESSAGE = "You do not have permission to access this page";
-	public static final String[] PUBLIC_URL = {"/vms/login","/vms/register","vms/donations"};
+	public static final String[] PUBLIC_URL = {"/vms/events","/vms/applicant-requests","/vms/donors","/vms/user-types/*"};
 	
 }

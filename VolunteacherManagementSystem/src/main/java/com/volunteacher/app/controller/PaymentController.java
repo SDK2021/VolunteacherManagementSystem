@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.volunteacher.app.model.Donor;
@@ -24,9 +25,9 @@ public class PaymentController {
 	PaymentService paymentService;
 	
 	@GetMapping("/donors")
-	public ResponseEntity<Object> getDonorList()
+	public ResponseEntity<Object> getDonorList(@RequestParam("page") int id)
 	{
-		return paymentService.donorList();
+		return paymentService.donorList(id);
 	}
 	
 	@PostMapping("/donors")
@@ -48,9 +49,9 @@ public class PaymentController {
 	}
 	
 	@GetMapping("/payments")
-	public ResponseEntity<Object> getPaymentsList()
+	public ResponseEntity<Object> getPaymentsList(@RequestParam("page") int id)
 	{
-		return paymentService.paymentList();
+		return paymentService.paymentList(id);
 	}
 	
 	@PostMapping("/payments")

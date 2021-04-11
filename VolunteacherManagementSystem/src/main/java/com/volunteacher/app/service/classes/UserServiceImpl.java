@@ -1,6 +1,7 @@
 package com.volunteacher.app.service.classes;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -121,6 +122,12 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Usertype");
 		}
+	}
+
+	@Override
+	public ResponseEntity<Object> userTypeById(int id) {
+		UserType userType = userTypeRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("UserType is not found id:" +id));
+		return ResponseEntity.status(HttpStatus.OK).body(userType);
 	}
 	
 }

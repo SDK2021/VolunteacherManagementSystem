@@ -3,6 +3,7 @@ package com.volunteacher.app.service.classes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class SessionServiceImpl implements SessionService {
 	public ResponseEntity<Object> sessionList() 
 	{
 		try {
-			List<Session> sessionList = (List<Session>)sessionRepository.findAll();
+			List<Session> sessionList = (List<Session>)sessionRepository.findAll(Sort.by("CreationDate").descending());
 			
 			if(sessionList.size() < 1)
 				throw new ResourceNotFoundException("Session List Not found");

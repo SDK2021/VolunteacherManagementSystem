@@ -75,7 +75,7 @@ public class Session {
 	private Village village;
 	
 	@ManyToMany
-	private List<Volunteacher> volunteachers;
+	private List<User> users;
 
 	
 	public Session() {
@@ -91,7 +91,6 @@ public class Session {
 		this.creationDate = creationDate;
 		this.project = project;
 		this.village = village;
-		this.volunteachers = volunteachers;
 	}
 	
 	public Long getSessionId() {
@@ -146,19 +145,19 @@ public class Session {
 		this.village = village;
 	}
 
-	public List<Volunteacher> getVolunteachers() {
-		return volunteachers;
+	public List<User> getUsers() {
+		return users;
 	}
 
-	public void setVolunteachers(List<Volunteacher> volunteachers) {
-		this.volunteachers = volunteachers;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	@Override
 	public String toString() {
 		return "Session [sessionId=" + sessionId + ", sessionDate=" + sessionDate + ", startingTime=" + startingTime
 				+ ", endingTime=" + endingTime + ", creationDate=" + creationDate + ", project=" + project
-				+ ", village=" + village + ", volunteachers=" + volunteachers
-				+ "]";
+				+ ", attendance=" + attendance + ", sessionReports=" + sessionReports + ", village=" + village
+				+ ", users=" + users + "]";
 	}
 }

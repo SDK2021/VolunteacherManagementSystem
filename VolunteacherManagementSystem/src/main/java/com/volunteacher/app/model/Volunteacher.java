@@ -79,13 +79,6 @@ public class Volunteacher {
 	@NotNull
 	@OneToOne
 	private District district;
-	
-	@ManyToMany(mappedBy = "volunteachers")
-	private List<Session> sessions;
-	
-	@ManyToMany(mappedBy = "volunteachers")
-	private List<Project> projects;
-	
 
 	public Volunteacher() {
 		super();
@@ -106,8 +99,6 @@ public class Volunteacher {
 		this.user = user;
 		this.village = village;
 		this.district = district;
-		this.sessions = sessions;
-		this.projects = projects;
 	}
 
 	public int getVolunteacherId() {
@@ -207,6 +198,6 @@ public class Volunteacher {
 		return "Volunteacher [volunteacherId=" + volunteacherId + ", school=" + school + ", employerName="
 				+ employerName + ", status=" + status + ", joiningDate=" + joiningDate + ", endingDate=" + endingDate
 				+ ", pincode=" + pincode + ", education=" + education + ", user=" + user + ", village=" + village
-				+ ", district=" + district + ", sessions=" + sessions + ", projects=" + projects + "]";
+				+ ", district=" + district + "]";
 	}
 }

@@ -3,6 +3,9 @@ package com.volunteacher.app.service.classes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -40,15 +43,13 @@ public class KidServiceImpl implements KidService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> kidList() 
+	public ResponseEntity<Object> kidList(int id) 
 	{
 		try {
-			List<Kid> kidList = (List<Kid>) kidRepository.findAll();
+			Pageable pageable = PageRequest.of(id, 5);
+			Page<Kid> kidList = (Page<Kid>) kidRepository.findAll(pageable);
 			
-			if(kidList.size() < 0)
-				throw new ResourceNotFoundException("Kids List not found");
-			
-			return ResponseEntity.status(HttpStatus.OK).body(kidList);
+			return ResponseEntity.status(HttpStatus.OK).body(kidList.getContent());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids");
@@ -68,14 +69,10 @@ public class KidServiceImpl implements KidService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> kidsListByGroupAndVillage(int villageId, int groupId) 
+	public ResponseEntity<Object> kidsListByVillageAndGroup(int villageId, int groupId) 
 	{
 		try {
 			List<Kid> kidsList = kidRepository.findAllByVillageVillageIdAndGroupGroupId(villageId, groupId);
-			
-			if(kidsList.size() < 0)
-				throw new ResourceNotFoundException("Kids List not found");
-			
 			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -195,6 +192,81 @@ public class KidServiceImpl implements KidService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Kids Group for id:" +id);
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> kidsListByArea(int areaId) {
+		try {
+			List<Kid> kidsList = kidRepository.findAllByAreaAreaId(areaId);
+			
+			if(kidsList.size() < 1)
+				throw new ResourceNotFoundException("Kid List not found for area id: "+ areaId);
+			
+			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching area wise kids List");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> kidsListByVillage(int villageId) {
+		try {
+			List<Kid> kidsList = kidRepository.findAllByVillageVillageId(villageId);
+			
+			if(kidsList.size() < 1)
+				throw new ResourceNotFoundException("Kid List not found for village id: "+ villageId);
+			
+			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching Village wise kids List");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> kidsListByVillageAndArea(int villageId, int areaId) {
+		try {
+			List<Kid> kidsList = kidRepository.findAllByVillageVillageIdAndAreaAreaId(villageId,areaId);
+			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching village and area wise kids List");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> kidsListByAreaAndGroup(int areaId, int groupId) {
+		try {
+			List<Kid> kidsList = kidRepository.findAllByAreaAreaIdAndGroupGroupId(areaId, groupId);
+			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching area and groupwise kids List");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> kidsListByAreaAndGroupAndVillage(int areaId, int groupId, int villageId) {
+		try {
+			List<Kid> kidsList = kidRepository.findAllByAreaAreaIdAndGroupGroupIdAndVillageVillageId(areaId, groupId, villageId);
+			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching area and group and village wise kids List");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> kidsListByLevel(int level) {
+		try {
+			List<Kid> kidsList = kidRepository.findAllByLevel(level);
+			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching level wise kids List");
 		}
 	}
 }

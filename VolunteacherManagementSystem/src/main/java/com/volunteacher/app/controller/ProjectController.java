@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.volunteacher.app.model.Project;
@@ -30,9 +31,9 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/projects")
-	public ResponseEntity<Object> getProjectList()
+	public ResponseEntity<Object> getProjectList(@RequestParam("page") int page)
 	{
-		return projectService.projectList();
+		return projectService.projectList(page);
 	}
 	
 	@GetMapping("/projects/{id}")
@@ -51,5 +52,11 @@ public class ProjectController {
 	public ResponseEntity<Object> deleteProject(@PathVariable int id)
 	{
 		return projectService.deleteProject(id);
+	}
+	
+	@GetMapping("/projectNumber/{id}")
+	public int totalProjectByUser(@PathVariable int id)
+	{
+		return projectService.TotalNumberProjectByUser(id);
 	}
 }

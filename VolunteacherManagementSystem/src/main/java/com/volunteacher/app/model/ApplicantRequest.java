@@ -1,16 +1,21 @@
 package com.volunteacher.app.model;
 
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 
 
@@ -47,28 +52,27 @@ public class ApplicantRequest {
 	@Column(nullable = false, columnDefinition = "TinyInt", length = 1)
 	private int gender;
 	
-	@NotNull
-	@OneToOne
-	private UserType userType;
-	
 	@Column(nullable = false, columnDefinition = "TinyInt", length = 1)
-	private int active;
+	private int status;
+	
+	@CreatedDate
+	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(nullable = false)
+	private Calendar requestDate;
 	
 	
 	public ApplicantRequest() {
 		super();
 	}
 
-	public ApplicantRequest(String emailId,
-			String name, String phoneNumber, int gender,
-			 UserType userType, int active) {
+	public ApplicantRequest(String emailId, String name, String phoneNumber, int gender,
+			 				int active) {
 		super();
 		this.emailId = emailId;
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.gender = gender;
-		this.userType = userType;
-		this.active = active;
+		this.status = active;
 	}
 
 	public int getRequestId() {
@@ -79,11 +83,9 @@ public class ApplicantRequest {
 		return emailId;
 	}
 
-
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-
 
 	public String getName() {
 		return name;
@@ -112,26 +114,12 @@ public class ApplicantRequest {
 		this.gender = gender;
 	}
 
-	public UserType getUserType() {
-		return userType;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setUserType(UserType userType) {
-		this.userType = userType;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
-	public int isActive() {
-		return active;
-	}
-
-	public void setActive(int active) {
-		this.active = active;
-	}
-
-
-	@Override
-	public String toString() {
-		return "ApplicantRequest [requestId=" + requestId + ", emailId=" + emailId + ", name=" + name + ", phoneNumber="
-				+ phoneNumber + ", gender=" + gender + ", userType=" + userType + ", active=" + active + "]";
-	}
 }

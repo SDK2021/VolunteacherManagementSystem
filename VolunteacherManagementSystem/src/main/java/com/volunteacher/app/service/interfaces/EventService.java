@@ -8,7 +8,7 @@ public interface EventService {
 	
 	public ResponseEntity<Object> addEvent(Event event);
 	
-	public ResponseEntity<Object> eventList();
+	public ResponseEntity<Object> eventList(int page);
 	
 	public ResponseEntity<Object> updateEvent(Event event, int id);
 	

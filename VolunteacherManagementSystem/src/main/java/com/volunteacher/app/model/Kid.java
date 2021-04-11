@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -53,8 +54,8 @@ public class Kid {
 	private String standard;
 	
 	@NotNull
-	@Column(nullable = false, length = 25)
-	private String level;
+	@Column(nullable = false, columnDefinition = "TINYINT")
+	private int level;
 	
 	private String photo;
 	
@@ -78,8 +79,8 @@ public class Kid {
 	@ManyToMany(mappedBy = "kids")
 	private List<Event> events;
 	
-	@OneToOne(mappedBy = "kid", cascade = CascadeType.REMOVE)
-	private KidsReport kidsReport;
+	@OneToMany(mappedBy = "kid", cascade = CascadeType.REMOVE)
+	private List<KidsReport> kidsReport;
 	
 	@ManyToMany(mappedBy = "kids",cascade = CascadeType.ALL)
 	private List<Attendance> attendances;
@@ -88,7 +89,7 @@ public class Kid {
 		super();
 	}
 
-	public Kid(String name, int gender, Calendar dob,String standard, Area area, String level,
+	public Kid(String name, int gender, Calendar dob,String standard, Area area, int level,
 			String photo, School school, Village village, KidsGroup group, KidsReport kidsReport,
 			List<Project> projects, List<Event> events, List<Attendance> attendances) {
 		super();
@@ -148,11 +149,11 @@ public class Kid {
 		this.area = area;
 	}
 
-	public String getLevel() {
+	public int getLevel() {
 		return level;
 	}
 
-	public void setLevel(String level) {
+	public void setLevel(int level) {
 		this.level = level;
 	}
 

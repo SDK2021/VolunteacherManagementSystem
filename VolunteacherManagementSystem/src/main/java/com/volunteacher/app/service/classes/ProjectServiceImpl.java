@@ -3,6 +3,10 @@ package com.volunteacher.app.service.classes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,15 +35,23 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public ResponseEntity<Object> projectList() 
+	public ResponseEntity<Object> projectList(int page) 
 	{
 		try {
 			List<Project> projectList = (List<Project>) projectRepository.findAll();
 			
 			if(projectList.size() < 1)
+			{
 				throw new ResourceNotFoundException("Project list not found");
+			}
+			else 
+			{
+				Pageable pageable = PageRequest.of(page, 5, Sort.by("creationDate").descending());
+				Page<Project> pageprojectList = (Page<Project>) projectRepository.findAll(pageable);
+				return ResponseEntity.status(HttpStatus.OK).body(pageprojectList.getContent());
+			}
 			
-			return ResponseEntity.status(HttpStatus.OK).body(projectList);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch projects");
@@ -68,7 +80,7 @@ public class ProjectServiceImpl implements ProjectService{
 		updateProject.setStartingDate(project.getStartingDate());
 		updateProject.setCreationDate(project.getCreationDate());
 		updateProject.setCreationTime(project.getCreationTime());
-		updateProject.setVolunteachers(project.getVolunteachers());
+		updateProject.setUsers(project.getUsers());
 		updateProject.setKids(project.getKids());
 		updateProject.setEndingDate(project.getCreationDate());
 		
@@ -93,5 +105,10 @@ public class ProjectServiceImpl implements ProjectService{
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Project for id:" +id);
 		}
+	}
+
+	@Override
+	public int TotalNumberProjectByUser(int id) {
+			return projectRepository.TotalProjectByUser(id);
 	}
 }

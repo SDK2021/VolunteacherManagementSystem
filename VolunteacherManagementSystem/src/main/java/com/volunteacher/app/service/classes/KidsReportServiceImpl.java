@@ -3,6 +3,7 @@ package com.volunteacher.app.service.classes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -58,15 +59,15 @@ public class KidsReportServiceImpl implements KidsReportService{
 	}
 	
 	@Override
-	public ResponseEntity<Object> kidReportByKid(int id)
+	public ResponseEntity<Object> kidReportByKid(Long id)
 	{
 		try {
-			KidsReport kidReport = kidsReportRepository.findByKidKidId(id);
+			 List<KidsReport>  kidsReportList = kidsReportRepository.findAllByKidKidId(id,Sort.by("createdDate").descending());
 			
-			if(kidReport == null)
-				throw new ResourceNotFoundException("Kid's report is not found for kid id: "+ id);
-			
-			return ResponseEntity.status(HttpStatus.OK).body(kidReport);
+			if(kidsReportList.size() < 0)
+				throw new ResourceNotFoundException("Kid's reports is not found for kid id: "+ id);
+
+			return ResponseEntity.status(HttpStatus.OK).body(kidsReportList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids report");
@@ -117,6 +118,13 @@ public class KidsReportServiceImpl implements KidsReportService{
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Kids Report for id:" +id);
 		}
+	}
+
+	@Override
+	public ResponseEntity<Object> kidReportByYear(Long kid, int year) {
+		
+		List<KidsReport> kidsReportList = kidsReportRepository.KidsReportByYear(kid, year);
+		return ResponseEntity.status(HttpStatus.OK).body(kidsReportList);
 	}
 	
 }

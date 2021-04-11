@@ -37,7 +37,7 @@ public class KidsReport {
 	private int kidreportId;
 	
 	@NotNull
-	@OneToOne
+	@ManyToOne
 	private Kid kid;
 	
 	@NotNull

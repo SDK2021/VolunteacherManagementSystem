@@ -2,7 +2,13 @@ package com.volunteacher.app.service.classes;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,6 +25,7 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	ApplicantRequestRepository applicantRequestRepository;
 	
 	@Override
+	@Transactional
 	public ResponseEntity<Object> addRequest(ApplicantRequest request)
 	{
 		try {
@@ -34,6 +41,11 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	public ResponseEntity<Object> requestList()
 	{
 		try {
+//			Sort sort = Sort.by(
+//					Sort.Order.desc("requestDate"),
+//					Sort.Order.asc("name")	
+//			);
+//			Pageable pageable = PageRequest.of(id, 5,Sort.by("requestDate"));
 			List<ApplicantRequest> requestList = (List<ApplicantRequest>) applicantRequestRepository.findAll();
 			return ResponseEntity.status(HttpStatus.OK).body(requestList);
 		} catch (Exception e) {

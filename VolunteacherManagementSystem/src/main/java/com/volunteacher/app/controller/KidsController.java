@@ -43,9 +43,9 @@ public class KidsController {
 	}
 	
 	@GetMapping("/kids")
-	public ResponseEntity<Object> getKidsList()
+	public ResponseEntity<Object> getKidsList(@RequestParam("page") int id)
 	{
-		return kidService.kidList();
+		return kidService.kidList(id);
 	}
 	
 	@GetMapping("/kids/{id}")
@@ -53,17 +53,53 @@ public class KidsController {
 	{
 		return kidService.kidById(id);
 	}
-//	
-//	@GetMapping("/kids")
-//	public List<Kid> getKidsByGroup(@RequestParam(name = "group") int id)
-//	{
-//			return kidService.kidsListByGroup(id);
-//	}
-//	
-	@GetMapping("/villagekids")
-	public ResponseEntity<Object> getKidsByGroupAndVillage(@RequestParam("villageId") int vid, @RequestParam("groupId") int gid)
+	
+	@GetMapping("/groupKids")
+	public ResponseEntity<Object> getKidsByGroup(@RequestParam(name = "group") int gid)
 	{
-		return kidService.kidsListByGroupAndVillage(vid, gid);
+			return kidService.kidsListByGroup(gid);
+	}
+	
+	@GetMapping("/villageKids")
+	public ResponseEntity<Object> getKidsListByVillage(@RequestParam("village") int vid)
+	{
+		return kidService.kidsListByVillage(vid);
+	}
+	
+	@GetMapping("/areaKids")
+	public ResponseEntity<Object> getKidsListByArea(@RequestParam("area") int aid)
+	{
+		return kidService.kidsListByArea(aid);
+	}
+	
+	@GetMapping("/vAndgKids")
+	public ResponseEntity<Object> getKidsListByGroupAndVillage(@RequestParam("village") int vid, @RequestParam("group") int gid)
+	{
+		return kidService.kidsListByVillageAndGroup(vid, gid);
+	}
+	
+	@GetMapping("/vAndaKids")
+	public ResponseEntity<Object> getKidsListByVillageAndArea(@RequestParam("village") int vid, @RequestParam("area") int aid)
+	{
+		return kidService.kidsListByVillageAndArea(vid, aid);
+	}
+	
+	@GetMapping("/aAndgKids")
+	public ResponseEntity<Object> getKidsListByAreaAndGroup(@RequestParam("area") int aid, @RequestParam("group") int gid)
+	{
+		return kidService.kidsListByAreaAndGroup(aid, gid);
+	}
+
+	@GetMapping("/aAndgAndavKids")
+	public ResponseEntity<Object> getKidsListByVillageAndGroupAndArea(@RequestParam("area") int aid, @RequestParam("group") int gid,@RequestParam("village") int vid)
+	{
+		return kidService.kidsListByAreaAndGroupAndVillage(aid, gid, vid);
+	}
+	
+	@GetMapping("/levelKids")
+	public ResponseEntity<Object> getKidsListByLevel(@RequestParam("level") int level)
+	{
+		return kidService.kidsListByLevel(level);
 	}
 	
 	@PutMapping("/kids/{id}")
@@ -90,10 +126,16 @@ public class KidsController {
 		return kidReportService.addKidReport(kidsReport);
 	}
 	
-	@GetMapping("kids/{id}/kid-report")
-	public ResponseEntity<Object> getKidReportByKid(@PathVariable int id)
+	@GetMapping("kids/{id}/kids-reports")
+	public ResponseEntity<Object> getKidReportByKid(@PathVariable Long id)
 	{
 		return kidReportService.kidReportByKid(id);
+	}
+	
+	@GetMapping("kid-reports")
+	public ResponseEntity<Object> kidsReportByYear(@RequestParam("kid") Long kid,@RequestParam("year") int year)
+	{
+		return kidReportService.kidReportByYear(kid, year);
 	}
 	
 	@PutMapping("/kids-reports/{id}")
@@ -127,7 +169,7 @@ public class KidsController {
 	}
 	
 	@PutMapping("/kids-groups/{id}")
-	public ResponseEntity<Object> deleteKidGroup(@RequestBody KidsGroup kidsGroup, @PathVariable int id)
+	public ResponseEntity<Object> updateKidGroup(@RequestBody KidsGroup kidsGroup, @PathVariable int id)
 	{
 		return kidService.updateKidsGroup(kidsGroup, id);
 	}

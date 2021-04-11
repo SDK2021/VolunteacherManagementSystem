@@ -9,13 +9,25 @@ public interface KidService {
 	
 	public ResponseEntity<Object> addKid(Kid kid);
 	
-	public ResponseEntity<Object> kidList();
+	public ResponseEntity<Object> kidList(int id);
 	
 	public ResponseEntity<Object> kidById(Long id);
 	
 	public ResponseEntity<Object> kidsListByGroup(int groupId);
 	
-	public ResponseEntity<Object> kidsListByGroupAndVillage(int villageId, int groupId);
+	public ResponseEntity<Object> kidsListByArea(int areaId);
+	
+	public ResponseEntity<Object> kidsListByVillage(int villageId);
+	
+	public ResponseEntity<Object> kidsListByVillageAndArea(int villageId,int areaId);
+	
+	public ResponseEntity<Object> kidsListByVillageAndGroup(int villageId, int groupId);
+	
+	public ResponseEntity<Object> kidsListByAreaAndGroup(int areaId,int groupId);
+	
+	public ResponseEntity<Object> kidsListByAreaAndGroupAndVillage(int areaId, int groupId,int villageId);
+	
+	public ResponseEntity<Object> kidsListByLevel(int level);
 	
 	public ResponseEntity<Object> updateKid(Kid kid, Long id);
 	

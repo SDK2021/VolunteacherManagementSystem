@@ -27,7 +27,7 @@ public class UserType {
 	@NotNull
 	@Column(length = 20, unique = true, columnDefinition = "Char(20)")
 	private String type;
-
+	
 	
 	public UserType() {
 		super();

@@ -3,6 +3,10 @@ package com.volunteacher.app.service.classes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,11 +35,12 @@ public class EventServiceImpl implements EventService{
 	}
 	
 	@Override
-	public ResponseEntity<Object> eventList()
+	public ResponseEntity<Object> eventList(int page)
 	{
 		try {
-			List<Event> eventList = (List<Event>) eventRepository.findAll();
-			return ResponseEntity.status(HttpStatus.OK).body(eventList);
+			Pageable pageable = PageRequest.of(page, 5, Sort.by("eventDate"));
+			Page<Event> eventList = (Page<Event>) eventRepository.findAll(pageable);
+			return ResponseEntity.status(HttpStatus.OK).body(eventList.getContent());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Events");

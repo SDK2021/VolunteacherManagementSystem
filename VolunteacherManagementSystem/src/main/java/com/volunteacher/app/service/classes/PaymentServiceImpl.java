@@ -3,6 +3,9 @@ package com.volunteacher.app.service.classes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,10 +39,11 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public ResponseEntity<Object> donorList() 
+	public ResponseEntity<Object> donorList(int id) 
 	{
 		try {
-			List<Donor> donorList = (List<Donor>) donorRepository.findAll();
+			Pageable pageable = PageRequest.of(id, 5);
+			Page<Donor> donorList = (Page<Donor>) donorRepository.findAll(pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(donorList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -86,9 +90,10 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public ResponseEntity<Object> paymentList() 
+	public ResponseEntity<Object> paymentList(int id) 
 	{
 		try {
+			Pageable pageable = PageRequest.of(id, 5);
 			List<Payment> paymentList = (List<Payment>) paymentRepository.findAll();
 			return ResponseEntity.status(HttpStatus.OK).body(paymentList);
 		} catch (Exception e) {

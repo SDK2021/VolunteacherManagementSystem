@@ -16,4 +16,6 @@ public interface TimelinePostService {
 	
 	public ResponseEntity<Object> deletePost(Long id);
 	
+	public int TotalPostByUser(int id);
+	
 }

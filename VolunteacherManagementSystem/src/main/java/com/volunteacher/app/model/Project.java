@@ -73,7 +73,7 @@ public class Project {
 	private Calendar creationTime;
 
 	@ManyToMany
-	private List<Volunteacher> volunteachers;
+	private List<User> users;
 	
 	@ManyToMany
 	private List<Kid> kids;
@@ -147,12 +147,12 @@ public class Project {
 		this.creationDate = creationDate;
 	}
 
-	public List<Volunteacher> getVolunteachers() {
-		return volunteachers;
+	public List<User> getUsers() {
+		return users;
 	}
 
-	public void setVolunteachers(List<Volunteacher> volunteachers) {
-		this.volunteachers = volunteachers;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	public List<Kid> getKids() {
@@ -167,7 +167,8 @@ public class Project {
 	public String toString() {
 		return "Project [projectId=" + projectId + ", projectName=" + projectName + ", startingDate=" + startingDate
 				+ ", endingDate=" + endingDate + ", projectData=" + projectData + ", creationDate=" + creationDate
-				+ ", events=" + events + ", volunteachers=" + volunteachers + ", kids="
-				+ kids + "]";
+				+ ", sessions=" + sessions + ", events=" + events + ", creationTime=" + creationTime + ", users="
+				+ users + ", kids=" + kids + "]";
 	}
+
 }

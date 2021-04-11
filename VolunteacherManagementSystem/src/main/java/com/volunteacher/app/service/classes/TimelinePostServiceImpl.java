@@ -92,5 +92,10 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Timeline Post for id:" +id);
 		}
 	}
+
+	@Override
+	public int TotalPostByUser(int id) {
+		return timelinePostRepository.TotalPostByUser(id);
+	}
 	
 }

@@ -7,4 +7,5 @@ import com.volunteacher.app.model.Session;
 
 @Repository
 public interface SessionRepository extends PagingAndSortingRepository<Session, Long>{
+	
 }

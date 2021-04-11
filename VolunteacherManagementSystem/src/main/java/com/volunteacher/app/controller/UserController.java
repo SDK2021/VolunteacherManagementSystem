@@ -101,6 +101,12 @@ public class UserController {
 		return userService.userTypeList();
 	}
 	
+	@GetMapping("/user-types/{id}")
+	public ResponseEntity<Object> getUserTypeList(@PathVariable int id)
+	{
+		return userService.userTypeById(id);
+	}
+	
 	@GetMapping("/error")
 	public void check_error()
 	{
