@@ -49,12 +49,12 @@ public class Event {
 	private Calendar eventDate;
 	
 	@NotNull
-	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
+	@JsonFormat(pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar eventStartingTime;
 	
 	@NotNull
-	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
+	@JsonFormat(pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar eventEndingTime;
 	

@@ -9,7 +9,7 @@ public interface SessionService {
 	
 	public ResponseEntity<Object> addSession(Session session);
 	
-	public ResponseEntity<Object> sessionList();
+	public ResponseEntity<Object> sessionList(int month,int year);
 	
 	public ResponseEntity<Object> sessionById(Long id);
 	
@@ -20,6 +20,8 @@ public interface SessionService {
 	public ResponseEntity<Object> addSessionReport(SessionReport sessionReport);
 	
 	public ResponseEntity<Object> sessionReportList();
+	
+	public ResponseEntity<Object> totalSessionsByUser(int id);
 	
 	public ResponseEntity<Object> sessionReport(int id);
 	

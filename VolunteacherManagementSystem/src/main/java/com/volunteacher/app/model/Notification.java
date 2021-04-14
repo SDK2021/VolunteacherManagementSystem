@@ -100,6 +100,8 @@ public class Notification {
 	public void setEvent(Event event) {
 		this.event = event;
 	}
+	
+	
 
 	@Override
 	public String toString() {

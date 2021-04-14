@@ -16,8 +16,12 @@ public interface UserService {
 	
 	public ResponseEntity<Object> deleteUser(Long id);
 	
+	public ResponseEntity<Object> userByEmail(String email);
+	
 	public ResponseEntity<Object> userTypeList();
 	
 	public ResponseEntity<Object> userTypeById(int id);
+	
+	public ResponseEntity<Object> usersByBirthday();
 	
 }

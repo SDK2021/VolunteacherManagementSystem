@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.volunteacher.app.model.Notification;
@@ -29,9 +30,9 @@ public class NotificationController {
 	}
 	
 	@GetMapping("/notifications")
-	public ResponseEntity<Object> getNotificationList()
+	public ResponseEntity<Object> getNotificationList(@RequestParam("month") int month, @RequestParam("year") int year,@RequestParam("userType") String userType)
 	{
-		return notificationService.notificationList();
+		return notificationService.notificationList(month,year,userType);
 	}
 	
 	@GetMapping("/notifications/{id}")

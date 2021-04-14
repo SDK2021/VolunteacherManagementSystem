@@ -7,5 +7,6 @@ import com.volunteacher.app.model.SessionReport;
 
 @Repository
 public interface SessionReportRepository extends PagingAndSortingRepository<SessionReport, Integer>{
-
+	
+	
 }

@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -61,16 +62,26 @@ public class Project {
 	@Column(nullable = false)
 	private Calendar creationDate;
 	
+	private String imageUrl;
+	
+	
+	@NotNull
+	@JsonFormat(pattern = "HH:mm:ss")
+	@Column(nullable = false, columnDefinition = "TIME")
+	@CreationTimestamp
+	private Calendar creationTime;
+	
+	private int totalKids;
+	
+	private int totalSessions;
+	
+	private int totalVolunteachers;
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
 	private List<Session> sessions;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
 	private List<Event> events;
-	
-	@NotNull
-	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
-	@Column(nullable = false, columnDefinition = "TIME")
-	private Calendar creationTime;
 
 	@ManyToMany
 	private List<User> users;
@@ -83,18 +94,32 @@ public class Project {
 		super();
 	}
 
-	public Project(String projectName,Calendar startingDate, Calendar endingDate,
-			 String projectData,Calendar creationDate, List<Session> sessions, List<Event> events,
-			List<Volunteacher> volunteachers, List<Kid> kids) {
+	
+	
+	public Project(int projectId, String projectName, Calendar startingDate,
+			 Calendar endingDate, String projectData, Calendar creationDate, String imageUrl,
+			Calendar creationTime, int totalKids, int totalSessions, int totalVolunteacher,
+			List<Session> sessions, List<Event> events, List<User> users, List<Kid> kids) {
 		super();
+		this.projectId = projectId;
 		this.projectName = projectName;
 		this.startingDate = startingDate;
 		this.endingDate = endingDate;
 		this.projectData = projectData;
 		this.creationDate = creationDate;
+		this.imageUrl = imageUrl;
+		this.creationTime = creationTime;
+		this.totalKids = totalKids;
+		this.totalSessions = totalSessions;
+		this.totalVolunteachers = totalVolunteacher;
+		this.sessions = sessions;
+		this.events = events;
+		this.users = users;
 		this.kids = kids;
 	}
-	
+
+
+
 	public int getProjectId() {
 		return projectId;
 	}
@@ -130,6 +155,14 @@ public class Project {
 	public void setProjectData(String projectData) {
 		this.projectData = projectData;
 	}
+	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
 	public Calendar getCreationTime() {
 		return creationTime;
@@ -141,6 +174,30 @@ public class Project {
 
 	public Calendar getCreationDate() {
 		return creationDate;
+	}
+
+	public int getTotalKids() {
+		return totalKids;
+	}
+
+	public void setTotalKids(int totalKids) {
+		this.totalKids = totalKids;
+	}
+
+	public int getTotalSessions() {
+		return totalSessions;
+	}
+
+	public void setTotalSessions(int totalSessions) {
+		this.totalSessions = totalSessions;
+	}
+
+	public int getTotalVolunteachers() {
+		return totalVolunteachers;
+	}
+
+	public void setTotalVolunteachers(int totalVolunteacher) {
+		this.totalVolunteachers = totalVolunteacher;
 	}
 
 	public void setCreationDate(Calendar creationDate) {
@@ -162,6 +219,7 @@ public class Project {
 	public void setKids(List<Kid> kids) {
 		this.kids = kids;
 	}
+	
 
 	@Override
 	public String toString() {

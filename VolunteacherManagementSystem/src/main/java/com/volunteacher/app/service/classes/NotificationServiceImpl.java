@@ -22,6 +22,7 @@ public class NotificationServiceImpl implements NotificationService {
 	public ResponseEntity<Object> addNotification(Notification notification)
 	{
 		try {
+			notification.setUserType(notification.getUserType().toUpperCase());
 			Notification saveNotification = notificationRepository.save(notification);
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveNotification);
 		} catch (Exception e) {
@@ -31,13 +32,13 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> notificationList()
+	public ResponseEntity<Object> notificationList(int month, int year, String userType)
 	{
 		try {
-			List<Notification> notificationList = (List<Notification>) notificationRepository.findAll();
+			List<Notification> notificationList = (List<Notification>) notificationRepository.notificationByMonthAndYear(month, year,userType);
 			
-			if(notificationList.size() < 1)
-				throw new ResourceNotFoundException("Notification list not found");
+//			if(notificationList.size() < 1)
+//				throw new ResourceNotFoundException("Notification list not found");
 			
 			return ResponseEntity.status(HttpStatus.OK).body(notificationList);
 		} catch (Exception e) {

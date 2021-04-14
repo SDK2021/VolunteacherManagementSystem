@@ -43,10 +43,10 @@ public class KidServiceImpl implements KidService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> kidList(int id) 
+	public ResponseEntity<Object> kidList(int page) 
 	{
 		try {
-			Pageable pageable = PageRequest.of(id, 5);
+			Pageable pageable = PageRequest.of(page, 5);
 			Page<Kid> kidList = (Page<Kid>) kidRepository.findAll(pageable);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(kidList.getContent());

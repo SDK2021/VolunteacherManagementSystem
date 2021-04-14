@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.volunteacher.app.model.Session;
@@ -31,9 +32,9 @@ public class SessionController {
 	}
 	
 	@GetMapping("/sessions")
-	public ResponseEntity<Object> getSessionList()
+	public ResponseEntity<Object> getSessionList(@RequestParam("month") int month, @RequestParam("year") int year)
 	{
-		return sessionService.sessionList();
+		return sessionService.sessionList(month, year);
 	}
 	
 	@GetMapping("/sessions/{id}")
@@ -76,5 +77,11 @@ public class SessionController {
 	public ResponseEntity<Object> deleteSessionReport(@PathVariable int id)
 	{
 		return sessionService.deleteSessionReport(id);
+	}
+	
+	@GetMapping("/totalSessions/{id}")
+	public ResponseEntity<Object> getTotalSessions(@PathVariable int id)
+	{
+		return sessionService.totalSessionsByUser(id);
 	}
 }

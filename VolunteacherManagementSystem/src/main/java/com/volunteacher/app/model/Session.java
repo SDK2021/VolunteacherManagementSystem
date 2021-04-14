@@ -47,12 +47,12 @@ public class Session {
 	private Calendar sessionDate;
 	
 	@NotNull
-	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
+	@JsonFormat(pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar startingTime;
 	
 	@NotNull
-	@JsonFormat(timezone = "IST",pattern = "HH:mm:ss")
+	@JsonFormat(pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar endingTime;
 	
@@ -61,6 +61,8 @@ public class Session {
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar creationDate;
+	
+	private boolean notified;
 
 	@ManyToOne
 	private Project project;
@@ -81,18 +83,26 @@ public class Session {
 	public Session() {
 		super();
 	}
-
-	public Session(Calendar sessionDate, Calendar startingTime, Calendar endingTime,
-			Calendar creationDate,  Project project,Village village, List<Volunteacher> volunteachers, List<Kid> kids) {
+	
+	public Session(Long sessionId, Calendar sessionDate, Calendar startingTime,
+			Calendar endingTime, Calendar creationDate, boolean notified, Project project,
+			List<Attendance> attendance, List<SessionReport> sessionReports, Village village, List<User> users) {
 		super();
+		this.sessionId = sessionId;
 		this.sessionDate = sessionDate;
 		this.startingTime = startingTime;
 		this.endingTime = endingTime;
 		this.creationDate = creationDate;
+		this.notified = notified;
 		this.project = project;
+		this.attendance = attendance;
+		this.sessionReports = sessionReports;
 		this.village = village;
+		this.users = users;
 	}
-	
+
+
+
 	public Long getSessionId() {
 		return sessionId;
 	}
@@ -153,11 +163,11 @@ public class Session {
 		this.users = users;
 	}
 
-	@Override
-	public String toString() {
-		return "Session [sessionId=" + sessionId + ", sessionDate=" + sessionDate + ", startingTime=" + startingTime
-				+ ", endingTime=" + endingTime + ", creationDate=" + creationDate + ", project=" + project
-				+ ", attendance=" + attendance + ", sessionReports=" + sessionReports + ", village=" + village
-				+ ", users=" + users + "]";
+	public boolean isNotified() {
+		return notified;
+	}
+
+	public void setNotified(boolean notified) {
+		this.notified = notified;
 	}
 }

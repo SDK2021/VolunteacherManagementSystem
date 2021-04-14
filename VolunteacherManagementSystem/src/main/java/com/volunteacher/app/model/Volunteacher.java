@@ -55,7 +55,7 @@ public class Volunteacher {
 	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "TIME")
-	@JsonFormat(timezone = "IST", pattern = "HH-mm-ss")
+	@JsonFormat(pattern = "HH-mm-ss")
 	@CreationTimestamp
 	private Calendar JoiningTime;
 	

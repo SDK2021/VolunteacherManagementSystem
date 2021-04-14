@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
@@ -47,6 +48,12 @@ public class UserController {
 		return volunteacherService.volunteacherById(id);
 	}
 	
+	@GetMapping("/volunteacher/{userId}")
+	public ResponseEntity<Object> getVolunteacherByUserId(@PathVariable long userId)
+	{
+		return volunteacherService.volunteacherByUserId(userId); 
+	}
+	
 	@PutMapping("/volunteachers/{id}")
 	public ResponseEntity<Object> updateVolunteacher(@RequestBody Volunteacher volunteacher, @PathVariable int id)
 	{
@@ -59,12 +66,12 @@ public class UserController {
 //		return volunteacherService.deleteVolunteacher(id);
 //	}
 //	
-//	@GetMapping("/volunteachers/day")
-//	public ResponseEntity<Object> getVolunteacherByDay()
-//	{
-//		return volunteacherService.vtByToday();
-//	}
-//	
+	@GetMapping("/volunteachers/day")
+	public ResponseEntity<Object> getVolunteacherByDay()
+	{
+		return volunteacherService.vtByToday();
+	}
+	
 	@GetMapping("/users")
 	public ResponseEntity<Object> getUserList()
 	{
@@ -95,6 +102,12 @@ public class UserController {
 		return userService.updateUser(user, id);
 	}
 	
+	@GetMapping("/emailusers")
+	public ResponseEntity<Object> getUserByEmail(@RequestParam("email") String email)
+	{
+		return userService.userByEmail(email);
+	}
+	
 	@GetMapping("/user-types")
 	public ResponseEntity<Object> getUserTypeList()
 	{
@@ -105,6 +118,12 @@ public class UserController {
 	public ResponseEntity<Object> getUserTypeList(@PathVariable int id)
 	{
 		return userService.userTypeById(id);
+	}
+	
+	@GetMapping("/birthUsers")
+	public ResponseEntity<Object> getUserByBirthday()
+	{
+		return userService.usersByBirthday();
 	}
 	
 	@GetMapping("/error")

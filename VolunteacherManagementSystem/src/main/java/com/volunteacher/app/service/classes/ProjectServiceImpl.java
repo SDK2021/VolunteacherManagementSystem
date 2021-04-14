@@ -83,8 +83,14 @@ public class ProjectServiceImpl implements ProjectService{
 		updateProject.setUsers(project.getUsers());
 		updateProject.setKids(project.getKids());
 		updateProject.setEndingDate(project.getCreationDate());
+		updateProject.setImageUrl(project.getImageUrl());
 		
 		try {
+			projectRepository.save(updateProject);
+			updateProject.setTotalKids(projectRepository.TotalKidsByProject(id));
+			updateProject.setTotalSessions(projectRepository.TotalSessionByProject(id));
+			updateProject.setTotalVolunteachers(projectRepository.TotalVolunteachersByProject(id));
+			System.out.println(projectRepository.TotalSessionByProject(id));
 			projectRepository.save(updateProject);
 			return ResponseEntity.status(HttpStatus.OK).body(updateProject);
 		} catch (Exception e) {
@@ -108,7 +114,70 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public int TotalNumberProjectByUser(int id) {
-			return projectRepository.TotalProjectByUser(id);
+	public int TotalNumberProjectByUser(int id) 
+	{
+		return projectRepository.TotalProjectByUser(id);
 	}
+
+	@Override
+	public ResponseEntity<Object> allProjectList() 
+	{
+		try {
+			List<Project> projectList = (List<Project>) projectRepository.findAll();
+			
+			if(projectList.size() < 1)
+			{
+				throw new ResourceNotFoundException("Project list not found");
+			}
+			
+			return ResponseEntity.status(HttpStatus.OK).body(projectList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch projects");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> projectNumbersByUser(int userId) {
+		try {
+			List<Integer> projectNumbers = projectRepository.projectNumberByUser(userId);
+			return ResponseEntity.status(HttpStatus.OK).body(projectNumbers);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetcjing project numbers");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> totalSessionsByProject(int projectId) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(projectRepository.TotalSessionByProject(projectId));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total sessions of project");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> totalKidsByProject(int projectId) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(projectRepository.TotalKidsByProject(projectId));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total kids of project");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> totalVolunteachersByProject(int projectId) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(projectRepository.TotalVolunteachersByProject(projectId));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total kids of project");
+		}
+	}
+	
+	
 }

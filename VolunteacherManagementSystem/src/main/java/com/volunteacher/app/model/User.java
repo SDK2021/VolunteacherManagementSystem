@@ -82,10 +82,10 @@ public class User {
 	private List<TimelinePost> posts;
 	
 	@ManyToMany(mappedBy = "users")
-	private List<Project> projectList; 
+	private List<Project> projects; 
 	
 	@ManyToMany(mappedBy = "users")
-	private List<Session> sessionList; 
+	private List<Session> sessions; 
 	
 	
 	public User() {

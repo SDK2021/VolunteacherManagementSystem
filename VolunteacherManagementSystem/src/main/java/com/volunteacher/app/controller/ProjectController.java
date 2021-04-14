@@ -59,4 +59,34 @@ public class ProjectController {
 	{
 		return projectService.TotalNumberProjectByUser(id);
 	}
+	
+	@GetMapping("/projectslist")
+	public ResponseEntity<Object> getAllProject()
+	{
+		return projectService.allProjectList();
+	}
+	
+	@GetMapping("/projectNumbers/{id}")
+	public ResponseEntity<Object> getAllProjectNumbers(@PathVariable int id)
+	{
+		return projectService.projectNumbersByUser(id);
+	}
+	
+	@GetMapping("/sessionsProjects")
+	public ResponseEntity<Object> getAllSessionsByProject(@RequestParam("project") int id)
+	{
+		return projectService.totalSessionsByProject(id);
+	}
+	
+	@GetMapping("/kidsProjects")
+	public ResponseEntity<Object> getAllKidsByProject(@RequestParam("project") int id)
+	{
+		return projectService.totalKidsByProject(id);
+	}
+	
+	@GetMapping("/volunteachersProjects")
+	public ResponseEntity<Object> getAllVolunteachersByProject(@RequestParam("project") int id)
+	{
+		return projectService.totalVolunteachersByProject(id);
+	}
 }

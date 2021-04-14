@@ -2,6 +2,8 @@ package com.volunteacher.app.service.classes;
 
 import java.util.List;
 
+import javax.swing.text.Highlighter.HighlightPainter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +35,11 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Volunteacher ");
 		}
 	}
-//	
-//	public ResponseEntity<Object> vtByToday()
-//	{
-//		return volunteacherRepository.findAllByDay();
-//	}
+	
+	public ResponseEntity<Object> vtByToday()
+	{
+		return volunteacherRepository.findAllByDay();
+	}
 
 	@Override
 	public ResponseEntity<Object> addVolunteacher(Volunteacher volunteacher) 
@@ -101,6 +103,17 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Volunteacher for id:" +id);
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> volunteacherByUserId(long id) {
+		try {
+			Volunteacher volunteacher = volunteacherRepository.findByUserUserId(id);
+			return ResponseEntity.status(HttpStatus.OK).body(volunteacher);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching volunteacher by user Id");
 		}
 	}
 }

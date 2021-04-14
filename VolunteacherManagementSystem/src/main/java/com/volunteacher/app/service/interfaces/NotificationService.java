@@ -8,7 +8,7 @@ public interface NotificationService {
 
 	public ResponseEntity<Object> addNotification(Notification notification);
 	
-	public ResponseEntity<Object> notificationList();
+	public ResponseEntity<Object> notificationList(int month, int year,String userType);
 	
 //	public ResponseEntity<Object> updateNotification(Notification notification, Long id);
 	

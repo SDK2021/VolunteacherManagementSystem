@@ -3,6 +3,10 @@ package com.volunteacher.app.service.classes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,14 +35,15 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> postList()
+	public ResponseEntity<Object> postList(int page)
 	{
 		try {
-			List<TimelinePost> postList = (List<TimelinePost>) timelinePostRepository.findAll();
+			Pageable pageable = PageRequest.of(page, 7, Sort.by("creationDate").descending());
+			Page<TimelinePost> postList = (Page<TimelinePost>) timelinePostRepository.findAll(pageable);
 			
-			if(postList.size() < 1)
-				throw new ResourceNotFoundException("Timelinepost list not found");
-			return ResponseEntity.status(HttpStatus.OK).body(postList);
+//			if(postList.size() < 1)
+//				throw new ResourceNotFoundException("Timelinepost list not found");
+			return ResponseEntity.status(HttpStatus.OK).body(postList.getContent());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Timeline post ");
@@ -96,6 +101,17 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 	@Override
 	public int TotalPostByUser(int id) {
 		return timelinePostRepository.TotalPostByUser(id);
+	}
+
+	@Override
+	public ResponseEntity<Object> postListByUser(Long id) {
+		try {
+			List<TimelinePost> postList = timelinePostRepository.findAllByCreatedByUserId(id,Sort.by("creationDate").descending());
+			return ResponseEntity.status(HttpStatus.OK).body(postList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in fetching Timeline Posts for id:" +id);
+		}
 	}
 	
 }

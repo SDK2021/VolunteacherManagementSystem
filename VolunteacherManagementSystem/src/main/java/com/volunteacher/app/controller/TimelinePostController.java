@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.volunteacher.app.model.TimelinePost;
@@ -24,9 +25,9 @@ public class TimelinePostController {
 	TimelinePostService timelinePostService;
 	
 	@GetMapping("/posts")
-	public ResponseEntity<Object> getPostList()
+	public ResponseEntity<Object> getPostList(@RequestParam("page") int page)
 	{
-		return timelinePostService.postList();
+		return timelinePostService.postList(page);
 	}
 	
 	@PostMapping("/posts")
@@ -47,10 +48,16 @@ public class TimelinePostController {
 		return timelinePostService.deletePost(id);
 	}
 	
-	@GetMapping("/totalPost/{id}")
+	@GetMapping("/totalPosts/{id}")
 	public int getAllPostByUser(@PathVariable int id)
 	{
 		return timelinePostService.TotalPostByUser(id);
+	}
+	
+	@GetMapping("/userPosts")
+	public ResponseEntity<Object> getAllPostByUser(@RequestParam("user") Long id)
+	{
+		return timelinePostService.postListByUser(id);
 	}
 	
 }

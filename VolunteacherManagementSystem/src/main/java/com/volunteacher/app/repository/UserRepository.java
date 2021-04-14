@@ -16,4 +16,5 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long>{
 	public List<User> findAllByDob();
 	
 	public User findByEmail(String email);
+
 }

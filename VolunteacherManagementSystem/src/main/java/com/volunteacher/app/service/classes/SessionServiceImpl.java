@@ -37,13 +37,14 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public ResponseEntity<Object> sessionList() 
+	public ResponseEntity<Object> sessionList(int month,int year) 
 	{
 		try {
-			List<Session> sessionList = (List<Session>)sessionRepository.findAll(Sort.by("CreationDate").descending());
 			
-			if(sessionList.size() < 1)
-				throw new ResourceNotFoundException("Session List Not found");
+			List<Session> sessionList = (List<Session>)sessionRepository.sessionByMonthAndYear(month, year);
+			
+//			if(sessionList.size() < 1)
+//				throw new ResourceNotFoundException("Session List Not found");
 			return ResponseEntity.status(HttpStatus.OK).body(sessionList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -145,5 +146,17 @@ public class SessionServiceImpl implements SessionService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Session Report for id:" +id);
 		}
 		
+	}
+
+	@Override
+	public ResponseEntity<Object> totalSessionsByUser(int userId) 
+	{
+		try {
+			int totalSession = sessionRepository.totalSessionByUser(userId);
+			return ResponseEntity.status(HttpStatus.OK).body(totalSession);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in fetching Session number for id:" +userId);
+		}
 	}
 }

@@ -45,7 +45,7 @@ public class Payment {
 	@NotNull
 	//Search to store time at first time
 	@Column(nullable = false, columnDefinition = "TIME")
-	@JsonFormat(timezone = "IST",pattern = "HH-mm-ss")
+	@JsonFormat(pattern = "HH-mm-ss")
 	@CreationTimestamp
 	private Calendar paymentTime;
 

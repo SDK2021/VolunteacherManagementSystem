@@ -1,7 +1,6 @@
 package com.volunteacher.app.service.classes;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -108,6 +107,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	
 	@Override
 	public ResponseEntity<Object> userTypeList()
 	{
@@ -128,6 +128,28 @@ public class UserServiceImpl implements UserService {
 	public ResponseEntity<Object> userTypeById(int id) {
 		UserType userType = userTypeRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("UserType is not found id:" +id));
 		return ResponseEntity.status(HttpStatus.OK).body(userType);
+	}
+
+	@Override
+	public ResponseEntity<Object> userByEmail(String email) {
+		try {
+			User user = userRepository.findByEmail(email);
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching User by Email");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> usersByBirthday() {
+		try {
+			List<User> userList = userRepository.findAllByDob();
+			return ResponseEntity.status(HttpStatus.OK).body(userList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching User by Email");
+		}
 	}
 	
 }
