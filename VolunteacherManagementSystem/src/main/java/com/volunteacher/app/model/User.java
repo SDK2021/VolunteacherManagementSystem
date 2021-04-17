@@ -66,6 +66,12 @@ public class User {
 	
 	private String photo;
 	
+	private String userOTP;
+	
+	@Column(columnDefinition = "TIME")
+	@JsonFormat(timezone = "IST", pattern = "HH-mm-ss")
+	private Calendar userOTPTime;
+	
 	@OneToMany(mappedBy = "createdBy")
 	private List<KidsReport> kidsReports;
 	
@@ -169,6 +175,22 @@ public class User {
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+
+	public String getUserOTP() {
+		return userOTP;
+	}
+
+	public void setUserOTP(String userOTP) {
+		this.userOTP = userOTP;
+	}
+
+	public Calendar getUserOTPTime() {
+		return userOTPTime;
+	}
+
+	public void setUserOTPTime(Calendar userOTPTime) {
+		this.userOTPTime = userOTPTime;
 	}
 
 	@Override

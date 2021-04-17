@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.resource.beans.internal.FallbackBeanInstanceProducer;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -57,13 +58,16 @@ public class Project {
 	private String projectData;
 	
 	@NotNull
+	@Column(nullable = false, columnDefinition = "TEXT")
+	private String description;
+	
+	@NotNull
 	@CreatedDate
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(nullable = false)
 	private Calendar creationDate;
 	
 	private String imageUrl;
-	
 	
 	@NotNull
 	@JsonFormat(pattern = "HH:mm:ss")
@@ -156,6 +160,14 @@ public class Project {
 		this.projectData = projectData;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getImageUrl() {
 		return imageUrl;
 	}

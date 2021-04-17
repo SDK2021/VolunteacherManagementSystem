@@ -22,10 +22,23 @@ public class ExceptionController {
 	@ExceptionHandler(UnauthorizedUserException.class)
 	public ResponseEntity<Object> unauthorizedUserException(ResourceNotFoundException error, WebRequest webRequest)
 	{
-		Error unauthorizedException = new Error(new Date(), HttpStatus.UNAUTHORIZED, error.getMessage(), webRequest.getDescription(false));
-		return new ResponseEntity<>(unauthorizedException,HttpStatus.UNAUTHORIZED);
+		Error unauthorizedError = new Error(new Date(), HttpStatus.UNAUTHORIZED, error.getMessage(), webRequest.getDescription(false));
+		return new ResponseEntity<>(unauthorizedError,HttpStatus.UNAUTHORIZED);
+	}
+	
+	@ExceptionHandler(EmailAlreadyExistException.class)
+	public ResponseEntity<Object> emailAlreadyExist(EmailAlreadyExistException error, WebRequest webRequest)
+	{
+		Error emailAlreadyExistError = new Error(new Date(), HttpStatus.BAD_REQUEST, error.getMessage(), webRequest.getDescription(false));
+		return new ResponseEntity<>(emailAlreadyExistError,HttpStatus.BAD_REQUEST);
 	}
 
+	@ExceptionHandler(EmailNotFoundException.class)
+	public ResponseEntity<Object> emailNotFound(EmailNotFoundException error, WebRequest webRequest)
+	{
+		Error emailNotFoundError = new Error(new Date(),HttpStatus.BAD_REQUEST,error.getMessage(),webRequest.getDescription(true));
+		return new ResponseEntity<>(emailNotFoundError,HttpStatus.BAD_REQUEST);
+	}
 
 }
 

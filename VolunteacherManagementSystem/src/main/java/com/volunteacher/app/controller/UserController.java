@@ -48,8 +48,8 @@ public class UserController {
 		return volunteacherService.volunteacherById(id);
 	}
 	
-	@GetMapping("/volunteacher/{userId}")
-	public ResponseEntity<Object> getVolunteacherByUserId(@PathVariable long userId)
+	@GetMapping("/volunteachers/users")
+	public ResponseEntity<Object> getVolunteacherByUserId(@RequestParam("user") long userId)
 	{
 		return volunteacherService.volunteacherByUserId(userId); 
 	}

@@ -45,7 +45,7 @@ public class Kid {
 	private int gender;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "MM-dd-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar dob;
 	
