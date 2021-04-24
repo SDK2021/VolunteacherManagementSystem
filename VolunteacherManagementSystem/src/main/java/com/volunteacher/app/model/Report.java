@@ -37,7 +37,7 @@ public class Report {
 	private int reportId;
 	
 	@NotNull
-	@Column(nullable = false, length = 50, columnDefinition = "Char")
+	@Column(nullable = false, length = 50, columnDefinition = "Char(50)")
 	private String title;
 	
 	@NotNull
@@ -58,14 +58,6 @@ public class Report {
 	
 	public Report() {
 		super();
-	}
-
-	public Report(String title, String description,Calendar creationDate,User createdBy) {
-		super();
-		this.title = title;
-		this.description = description;
-		this.creationDate = creationDate;
-		this.createdBy = createdBy;
 	}
 
 	public int getReportId() {
@@ -95,18 +87,12 @@ public class Report {
 	public void setCreationDate(Calendar creationDate) {
 		this.creationDate = creationDate;
 	}
-
-	public User getCraetedBy() {
+	
+	public User getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCraetedBy(User craetedBy) {
-		this.createdBy = craetedBy;
-	}
-
-	@Override
-	public String toString() {
-		return "Report [id=" + reportId + ", title=" + title + ", description=" + description + ", creationDate="
-				+ creationDate + ", craetedBy=" + createdBy + "]";
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
 	}
 }

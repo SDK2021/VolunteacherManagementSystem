@@ -1,14 +1,12 @@
 package com.volunteacher.app.model;
 
 import java.util.Calendar;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,6 +14,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Entity
 public class School {
@@ -35,7 +34,7 @@ public class School {
 	@NotNull
 	@Size(min = 2 , max = 30)
 	@Column(nullable = false, length = 30, columnDefinition = "Char(30)")
-	private String name;
+	private String schoolName;
 	
 	@Column(length = 6)
 	private int pincode;
@@ -47,7 +46,7 @@ public class School {
 	@Column(nullable = false, length = 10, unique = true)
 	private String phoneNumber;
 	
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy")
 	@Column(columnDefinition = "DATE")
 	private Calendar startingDate;
 	
@@ -63,8 +62,8 @@ public class School {
 	@Column(nullable = false, length = 1, columnDefinition = "TinyInt") 
 	private int status;
 	
-	@ManyToMany
-	private List<Requirement> requirements;
+	@Column(columnDefinition = "TEXT")
+	private String requirements;
 	
 	@OneToOne
 	private Village village;
@@ -74,30 +73,16 @@ public class School {
 		super();
 	}
 
-	public School(String name, int pincode, int totalLabs, String phoneNumber, Calendar startingDate, String stream,
-			int totalStudent,int status, List<Requirement> requirements, Village village) {
-		super();
-		this.name = name;
-		this.pincode = pincode;
-		this.totalLabs = totalLabs;
-		this.phoneNumber = phoneNumber;
-		this.startingDate = startingDate;
-		this.stream = stream;
-		this.totalStudent = totalStudent;
-		this.status = status;
-		this.village = village;
-	}
-
 	public int getSchoolId() {
 		return schoolId;
 	}
 
-	public String getName() {
-		return name;
+	public String getSchoolName() {
+		return schoolName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
 	}
 
 	public int getPincode() {
@@ -164,19 +149,11 @@ public class School {
 		this.village = village;
 	}
 	
-	public List<Requirement> getRequirements() {
+	public String getRequirements() {
 		return requirements;
 	}
 
-	public void setRequirements(List<Requirement> requirements) {
+	public void setRequirements(String requirements) {
 		this.requirements = requirements;
-	}
-
-	@Override
-	public String toString() {
-		return "School [id=" + schoolId + ", name=" + name + ", pincode=" + pincode + ", totalLabs=" + totalLabs
-				+ ", phoneNumber=" + phoneNumber + ", startingDate=" + startingDate + ", stream=" + stream
-				+ ", totalStudent=" + totalStudent + ", status=" + status + ", requirements=" + requirements
-				+ ", village=" + village + "]";
 	}
 }

@@ -39,6 +39,7 @@ public class KidsController {
 	@PostMapping("/kids")
 	public ResponseEntity<Object> addKid(@RequestBody Kid kid)
 	{
+		System.out.println(kid);
 		return kidService.addKid(kid);
 	}
 	
@@ -123,6 +124,7 @@ public class KidsController {
 	@PostMapping("/kids-reports")
 	public ResponseEntity<Object> addkidReport(@RequestBody KidsReport kidsReport)
 	{
+		System.out.println(kidsReport);
 		return kidReportService.addKidReport(kidsReport);
 	}
 	
@@ -166,6 +168,12 @@ public class KidsController {
 	public ResponseEntity<Object> deleteKidGroup(@PathVariable int id)
 	{
 		return kidService.deleteKidsGroup(id);
+	}
+	
+	@GetMapping("/kids-groups/{id}")
+	public ResponseEntity<Object> getkidsGroupbyId(@PathVariable int id)
+	{
+		return kidService.kidsGroupById(id);
 	}
 	
 	@PutMapping("/kids-groups/{id}")

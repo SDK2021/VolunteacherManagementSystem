@@ -32,11 +32,6 @@ public class UserType {
 	public UserType() {
 		super();
 	}
-
-	public UserType(String type) {
-		super();
-		this.type = type;
-	}
 	
 	public int getTypeId() {
 		return typeId;
@@ -48,10 +43,5 @@ public class UserType {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	@Override
-	public String toString() {
-		return "UserType [typeId=" + typeId + ", type=" + type + "]";
 	}
 }

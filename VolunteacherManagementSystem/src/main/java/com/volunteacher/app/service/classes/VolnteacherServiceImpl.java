@@ -2,8 +2,6 @@ package com.volunteacher.app.service.classes;
 
 import java.util.List;
 
-import javax.swing.text.Highlighter.HighlightPainter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +34,7 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 		}
 	}
 	
-	public ResponseEntity<Object> vtByToday()
+	public List<Volunteacher> vtByToday()
 	{
 		return volunteacherRepository.findAllByDay();
 	}

@@ -50,12 +50,6 @@ public class Notification {
 	public Notification() {
 		super();
 	}
-	
-	public Notification(String notificationType, String title, String description,User createdBy) {
-		super();
-		this.notificationType = notificationType;
-		this.createdBy = createdBy;
-	}
 
 	public Long getNotificationId() {
 		return notificationId;
@@ -99,14 +93,5 @@ public class Notification {
 
 	public void setEvent(Event event) {
 		this.event = event;
-	}
-	
-	
-
-	@Override
-	public String toString() {
-		return "Notification [notificationId=" + notificationId + ", notificationType=" + notificationType
-				+ ", createdBy=" + createdBy + ", userType=" + userType + ", session=" + session + ", event=" + event
-				+ "]";
 	}
 }

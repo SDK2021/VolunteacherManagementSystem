@@ -65,16 +65,6 @@ public class ApplicantRequest {
 		super();
 	}
 
-	public ApplicantRequest(String emailId, String name, String phoneNumber, int gender,
-			 				int active) {
-		super();
-		this.emailId = emailId;
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.gender = gender;
-		this.status = active;
-	}
-
 	public int getRequestId() {
 		return requestId;
 	}
@@ -121,5 +111,4 @@ public class ApplicantRequest {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
 }

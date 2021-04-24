@@ -1,9 +1,6 @@
 package com.volunteacher.app.config.configuration;
 
 import java.util.Properties;
-import java.util.Random;
-
-import javax.naming.directory.NoSuchAttributeException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -36,7 +36,7 @@ public class ExceptionController {
 	@ExceptionHandler(EmailNotFoundException.class)
 	public ResponseEntity<Object> emailNotFound(EmailNotFoundException error, WebRequest webRequest)
 	{
-		Error emailNotFoundError = new Error(new Date(),HttpStatus.BAD_REQUEST,error.getMessage(),webRequest.getDescription(true));
+		Error emailNotFoundError = new Error(new Date(),HttpStatus.BAD_REQUEST,error.getMessage(),webRequest.getDescription(false));
 		return new ResponseEntity<>(emailNotFoundError,HttpStatus.BAD_REQUEST);
 	}
 

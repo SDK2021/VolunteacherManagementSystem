@@ -9,10 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.volunteacher.app.exception.EmailAlreadyExistException;
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.ApplicantRequest;
 import com.volunteacher.app.repository.ApplicantRequestRepository;
 import com.volunteacher.app.service.interfaces.ApplicantRequestService;
+import com.volunteacher.app.service.interfaces.UserService;
 
 @Service
 public class ApplicantRequestServiceImpl implements ApplicantRequestService {
@@ -20,11 +22,21 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	@Autowired
 	ApplicantRequestRepository applicantRequestRepository;
 	
+	@Autowired
+	UserService userService;
+	
 	@Override
 	@Transactional
 	public ResponseEntity<Object> addRequest(ApplicantRequest request)
 	{
 		try {
+			
+			if(userService.userByEmail(request.getEmailId()) != null)
+			{
+				//throw new EmailAlreadyExistException("You email id already exist");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			}
+			
 			ApplicantRequest saveRequest = applicantRequestRepository.save(request);
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveRequest);
 		} catch (Exception e) {

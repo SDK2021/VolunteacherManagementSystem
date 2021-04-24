@@ -1,5 +1,8 @@
 package com.volunteacher.app.service.classes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,8 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
+import com.volunteacher.app.model.Activity;
 import com.volunteacher.app.model.Event;
+import com.volunteacher.app.model.Kid;
+import com.volunteacher.app.repository.ActivityRepository;
 import com.volunteacher.app.repository.EventRepository;
+import com.volunteacher.app.repository.KidRepository;
 import com.volunteacher.app.service.interfaces.EventService;
 
 @Service
@@ -20,10 +27,21 @@ public class EventServiceImpl implements EventService{
 	@Autowired
 	EventRepository eventRepository;
 	
+	List<Kid> kids;
+	
+	List<Activity> activities;
+	
+	@Autowired
+	ActivityRepository activityRepository;
+	
+	@Autowired
+	KidRepository kidRepository;
+	
 	@Override
-	public ResponseEntity<Object> addEvent(Event event)
+	public ResponseEntity<Object> addEvent(Event event,String[] activityIds)
 	{
 		try {
+			event.setActivities(this.createActivityList(activityIds));
 			Event saveEvent = eventRepository.save(event);
 			return ResponseEntity.status(HttpStatus.OK).body(saveEvent);
 		} catch (Exception e) {
@@ -36,7 +54,7 @@ public class EventServiceImpl implements EventService{
 	public ResponseEntity<Object> eventList(int page)
 	{
 		try {
-			Pageable pageable = PageRequest.of(page, 5, Sort.by("eventDate"));
+			Pageable pageable = PageRequest.of(page, 5, Sort.by("event_date"));
 			Page<Event> eventList = (Page<Event>) eventRepository.findAll(pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(eventList.getContent());
 		} catch (Exception e) {
@@ -93,5 +111,42 @@ public class EventServiceImpl implements EventService{
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Events");
 		}
 		
+	}
+
+	@Override
+	public ResponseEntity<Object> addKidsParticipants(String[] ids, String eventId) {
+		Event event = eventRepository.findById(Integer.parseInt(eventId)).orElseThrow(()->new ResourceNotFoundException("Event id not found on add kids participants"));
+		
+		try {
+			event.setKids(this.createKidsParticipantsList(ids));
+			eventRepository.save(event);
+			return ResponseEntity.status(HttpStatus.OK).body(event);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on adding participants");
+		}
+	}
+	
+	@Override
+	public List<Kid> createKidsParticipantsList(String[] ids)
+	{
+		this.kids = new ArrayList<Kid>();
+		for(int i =0; i<ids.length;i++)
+		{
+			Kid kid = this.kidRepository.findById(Long.parseLong(ids[i])).orElseThrow(()->new ResourceNotFoundException("Kid Id not found on add participants"));
+			this.kids.add(kid);
+		}
+		return this.kids;
+	}
+	
+	@Override
+	public List<Activity> createActivityList(String[] ids) {
+		this.activities = new ArrayList<Activity>();
+		for(int i =0; i<ids.length;i++)
+		{
+			Activity activity = this.activityRepository.findById(Integer.parseInt(ids[i])).orElseThrow(()->new ResourceNotFoundException("Activity Id not found on add Event"));
+			this.activities.add(activity);
+		}
+		return this.activities;
 	}
 }

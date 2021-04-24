@@ -109,7 +109,6 @@ public class KidServiceImpl implements KidService {
 		updatekid.setPhoto(kid.getPhoto());
 		updatekid.setSchool(kid.getSchool());
 		updatekid.setStandard(kid.getStandard());
-		updatekid.setVillage(kid.getVillage());
 		updatekid.setLevel(kid.getLevel());
 		
 		try {
@@ -267,6 +266,17 @@ public class KidServiceImpl implements KidService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching level wise kids List");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> kidsGroupById(int id) {
+		try {
+			KidsGroup kidsGroup = kidsGroupRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Kids Group not found for id: "+ id));;
+			return ResponseEntity.status(HttpStatus.OK).body(kidsGroup);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching Kids Group");
 		}
 	}
 }

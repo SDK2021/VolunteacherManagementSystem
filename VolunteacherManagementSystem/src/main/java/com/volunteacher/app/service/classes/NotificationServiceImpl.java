@@ -35,7 +35,7 @@ public class NotificationServiceImpl implements NotificationService {
 	public ResponseEntity<Object> notificationList(int month, int year, String userType)
 	{
 		try {
-			List<Notification> notificationList = (List<Notification>) notificationRepository.notificationByMonthAndYear(month, year,userType);
+			List<Notification> notificationList = (List<Notification>) notificationRepository.notificationByUser(userType);
 			
 //			if(notificationList.size() < 1)
 //				throw new ResourceNotFoundException("Notification list not found");

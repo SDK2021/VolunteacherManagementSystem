@@ -44,12 +44,6 @@ public class Attendance {
 		super();
 	}
 
-	public Attendance(Session session, KidsGroup group, List<Kid> kids) {
-		super();
-		this.session = session;
-		this.group = group;
-		this.kids = kids;
-	}
 
 	public Long getAttendanceId() {
 		return attendanceId;
@@ -78,11 +72,4 @@ public class Attendance {
 	public void setKids(List<Kid> kids) {
 		this.kids = kids;
 	}
-
-	@Override
-	public String toString() {
-		return "Attendance [attendanceId=" + attendanceId + ", session=" + session + ", group=" + group + ", kids="
-				+ kids + "]";
-	}
-	
 }

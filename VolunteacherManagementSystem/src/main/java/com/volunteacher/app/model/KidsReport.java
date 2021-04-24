@@ -76,7 +76,7 @@ public class KidsReport {
 	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "Text")
-	private String interesArea;
+	private String interestArea;
 	
 	@NotNull
 	@Column(nullable =  false, length = 3)
@@ -93,7 +93,7 @@ public class KidsReport {
 	@NotNull
 	@Column(nullable =  false, length = 3)
 	private int attendance;
-	
+		
 	@Column(columnDefinition = "Text")
 	private String remarks;
 	
@@ -113,35 +113,6 @@ public class KidsReport {
 	public KidsReport() {
 		super();
 	}
-
-
-	public KidsReport(int kidreportId, Kid kid, Calendar createdDate, User createdBy,
-			int discipline,  int prayer, int goshthi, int abhivyakti,
-			int volunteaching,  int games,  String interesArea, int artCraft,
-			int sports, int literature,  int attendance, String remarks, int maths,
-			int gujarati,  int english) {
-		super();
-		this.kidreportId = kidreportId;
-		this.kid = kid;
-		this.createdDate = createdDate;
-		this.createdBy = createdBy;
-		this.discipline = discipline;
-		this.prayer = prayer;
-		this.goshthi = goshthi;
-		this.abhivyakti = abhivyakti;
-		this.volunteaching = volunteaching;
-		this.games = games;
-		this.interesArea = interesArea;
-		this.artCraft = artCraft;
-		this.sports = sports;
-		this.literature = literature;
-		this.attendance = attendance;
-		this.remarks = remarks;
-		this.maths = maths;
-		this.gujarati = gujarati;
-		this.english = english;
-	}
-
 
 	public int getKidreportId() {
 		return kidreportId;
@@ -242,16 +213,13 @@ public class KidsReport {
 		this.games = games;
 	}
 
-
-	public String getInteresArea() {
-		return interesArea;
+	public String getInterestArea() {
+		return interestArea;
 	}
 
-
-	public void setInteresArea(String interesArea) {
-		this.interesArea = interesArea;
+	public void setInterestArea(String interestArea) {
+		this.interestArea = interestArea;
 	}
-
 
 	public int getArtCraft() {
 		return artCraft;
@@ -331,17 +299,5 @@ public class KidsReport {
 	public void setEnglish(int english) {
 		this.english = english;
 	}
-
-
-	@Override
-	public String toString() {
-		return "KidsReport [kidreportId=" + kidreportId + ", kid=" + kid + ", createdDate=" + createdDate
-				+ ", createdBy=" + createdBy + ", discipline=" + discipline + ", prayer=" + prayer + ", goshthi="
-				+ goshthi + ", abhivyakti=" + abhivyakti + ", volunteaching=" + volunteaching + ", games=" + games
-				+ ", interesArea=" + interesArea + ", artCraft=" + artCraft + ", sports=" + sports + ", literature="
-				+ literature + ", attendance=" + attendance + ", remarks=" + remarks + ", maths=" + maths
-				+ ", gujarati=" + gujarati + ", english=" + english + "]";
-	}
-
 }
 

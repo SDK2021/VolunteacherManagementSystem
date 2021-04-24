@@ -17,6 +17,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 
 @Entity
@@ -38,14 +39,14 @@ public class Payment {
 	@NotNull
 	//for storing time at first time--upadateOp???
 	@CreatedDate
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar paymentDate;
 
 	@NotNull
 	//Search to store time at first time
 	@Column(nullable = false, columnDefinition = "TIME")
-	@JsonFormat(pattern = "HH-mm-ss")
+	@JsonFormat(shape = Shape.STRING,pattern = "HH-mm-ss")
 	@CreationTimestamp
 	private Calendar paymentTime;
 
@@ -69,17 +70,6 @@ public class Payment {
 
 	public Payment() {
 		super();
-	}
-
-	public Payment(Calendar paymentDate,  Calendar paymentTime,String paymentMode,
-			double amount, String transactionId, Donor donor) {
-		super();
-		this.paymentDate = paymentDate;
-		this.paymentTime = paymentTime;
-		this.paymentMode = paymentMode;
-		this.amount = amount;
-		this.transactionId = transactionId;
-		this.donor = donor;
 	}
 
 	public int getPaymentId() {
@@ -132,12 +122,5 @@ public class Payment {
 
 	public void setDonor(Donor donor) {
 		this.donor = donor;
-	}
-
-	@Override
-	public String toString() {
-		return "Payment [paymentId=" + paymentId + ", paymentDate=" + paymentDate + ", paymentTime=" + paymentTime
-				+ ", paymentMode=" + paymentMode + ", amount=" + amount + ", transactionId=" + transactionId
-				+ ", donor=" + donor + "]";
 	}
 }

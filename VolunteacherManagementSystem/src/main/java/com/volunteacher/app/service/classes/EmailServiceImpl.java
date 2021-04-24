@@ -1,8 +1,6 @@
 package com.volunteacher.app.service.classes;
 
-import java.time.LocalTime;
 import java.util.Calendar;
-import java.util.Optional;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -39,7 +37,7 @@ public class EmailServiceImpl implements EmailService {
 			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 			MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true);
 			mimeMessageHelper.setSubject("Password Reset Requests");
-			mimeMessage.setContent("<h2>Hello  " + name +"</h2><br>"
+			mimeMessage.setContent("<h2>Hello  	" + name +"</h2><br>"
 					+ "<span style='color:gray;'>We received a request to reset the password on your Volunteacher Management System Account.</span>"
 					+"<br><br>"
 					+ "Your OTP - <center><h2><strong>" + otp +"</strong></h2></center><br>"

@@ -18,9 +18,11 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 
 @Entity
+//@IdClass(Event.class)
 public class Event {
 	
 	@Id
@@ -44,19 +46,22 @@ public class Event {
 	private String eventData;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar eventDate;
 	
 	@NotNull
-	@JsonFormat(pattern = "HH:mm:ss")
+	@JsonFormat(shape = Shape.STRING,pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar eventStartingTime;
 	
 	@NotNull
-	@JsonFormat(pattern = "HH:mm:ss")
+	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar eventEndingTime;
+	
+	@Column(columnDefinition = "TEXT")
+	private String photo;
 	
 	@NotNull
 	@ManyToOne
@@ -72,6 +77,9 @@ public class Event {
 	@ManyToMany
 	private List<Kid> kids;
 	
+	@OneToMany(mappedBy = "event")
+	private List<EventKidActivity> eka;
+	
 	@ManyToMany
 	private List<Activity> activities;
 	
@@ -82,20 +90,6 @@ public class Event {
 		super();
 	}
 	
-	public Event(String title, String eventData, Calendar eventDate,
-			Calendar eventstartingTime,Calendar eventendingTime, Project project,  Village village,
-			List<Kid> kids) {
-		super();
-		this.title = title;
-		this.eventData = eventData;
-		this.eventDate = eventDate;
-		this.eventStartingTime = eventstartingTime;
-		this.eventEndingTime = eventendingTime;
-		this.project = project;
-		this.village = village;
-		this.kids = kids;
-	}
-
 	public int getEventId() {
 		return eventId;
 	}
@@ -168,15 +162,15 @@ public class Event {
 		return eventEndingTime;
 	}
 
-	public void setEventEndingTime(Calendar eventEndingTime) {
-		this.eventEndingTime = eventEndingTime;
+	public String getPhoto() {
+		return photo;
 	}
 
-	@Override
-	public String toString() {
-		return "Event [eventId=" + eventId + ", title=" + title + ", eventData=" + eventData + ", eventDate="
-				+ eventDate + ", eventStartingTime=" + eventStartingTime + ", project=" + project + ", participants="
-				+ participants + ", village=" + village + ", kids=" + kids + ", notification=" + notification
-				+ ", activities=" + activities + ", eventEndingTime=" + eventEndingTime + "]";
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public void setEventEndingTime(Calendar eventEndingTime) {
+		this.eventEndingTime = eventEndingTime;
 	}
 }

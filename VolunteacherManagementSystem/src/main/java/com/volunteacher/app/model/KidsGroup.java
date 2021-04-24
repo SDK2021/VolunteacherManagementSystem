@@ -29,17 +29,11 @@ public class KidsGroup {
 	private String groupName;
 
 	@NotNull
-	@Column(length = 20, nullable = false)
+	@Column(nullable = false)
 	private String criteria;
 	
 	public KidsGroup() {
 		super();
-	}
-
-	public KidsGroup(String groupName, String criteria) {
-		super();
-		this.groupName = groupName;
-		this.criteria = criteria;
 	}
 	
 	public int getGroupId() {
@@ -61,11 +55,4 @@ public class KidsGroup {
 	public void setCriteria(String criteria) {
 		this.criteria = criteria;
 	}
-
-	@Override
-	public String toString() {
-		return "KidsGroup [groupId=" + groupId + ", groupName=" + groupName + ", criteria=" + criteria
-				+ ", attendances=" + "]";
-	}
-	
 }

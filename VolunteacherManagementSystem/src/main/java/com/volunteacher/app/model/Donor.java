@@ -32,7 +32,7 @@ public class Donor {
 
 	@NotNull
 	@Size(min = 3 , max = 20)
-	@Column(columnDefinition = "Char(20)", length = 20, nullable = false)
+	@Column(columnDefinition = "Char(30)", length = 20, nullable = false)
 	private String donorName;
 
 	@NotNull
@@ -53,14 +53,6 @@ public class Donor {
 	
 	public Donor() {
 		super();
-	}
-
-	public Donor(String donorName, String donorPhone,String donorEmail, UserType userType) {
-		super();
-		this.donorName = donorName;
-		this.donorPhone = donorPhone;
-		this.donorEmail = donorEmail;
-		this.userType = userType;
 	}
 
 	public int getDonorId() {
@@ -98,11 +90,4 @@ public class Donor {
 	public void setUsertype(UserType usertype) {
 		this.userType = usertype;
 	}
-
-	@Override
-	public String toString() {
-		return "Donor [donorId=" + donorId + ", donorName=" + donorName + ", donorPhone=" + donorPhone + ", donorEmail="
-				+ donorEmail + ", userType=" + userType + "]";
-	}
-	
 }

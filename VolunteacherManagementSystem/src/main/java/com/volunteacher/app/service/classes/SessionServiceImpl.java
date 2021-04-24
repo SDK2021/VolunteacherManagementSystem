@@ -3,7 +3,6 @@ package com.volunteacher.app.service.classes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.Session;
 import com.volunteacher.app.model.SessionReport;
+import com.volunteacher.app.model.User;
 import com.volunteacher.app.repository.SessionReportRepository;
 import com.volunteacher.app.repository.SessionRepository;
 import com.volunteacher.app.service.interfaces.SessionService;
@@ -157,6 +157,19 @@ public class SessionServiceImpl implements SessionService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in fetching Session number for id:" +userId);
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> addSessionVolunteachers(List<User> users,String sessionId) {
+		Session session = sessionRepository.findById(Long.parseLong(sessionId)).orElseThrow(()->new ResourceNotFoundException("Error on fetching session by id in atteding session"));
+		try {
+			session.setUsers(users);
+			sessionRepository.save(session);
+			return ResponseEntity.status(HttpStatus.OK).body(session);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in add volunteacher for session:");
 		}
 	}
 }

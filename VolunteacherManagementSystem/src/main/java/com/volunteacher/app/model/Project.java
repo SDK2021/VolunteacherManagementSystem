@@ -16,11 +16,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.resource.beans.internal.FallbackBeanInstanceProducer;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 
 @Entity
@@ -44,12 +44,12 @@ public class Project {
 	private String projectName;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar startingDate;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar endingDate;
 	
@@ -63,22 +63,25 @@ public class Project {
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
 	@Column(nullable = false)
 	private Calendar creationDate;
 	
 	private String imageUrl;
 	
 	@NotNull
-	@JsonFormat(pattern = "HH:mm:ss")
+	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	@CreationTimestamp
 	private Calendar creationTime;
 	
+	@Column(length = 6)
 	private int totalKids;
 	
+	@Column(length = 6)
 	private int totalSessions;
 	
+	@Column(length = 6)	
 	private int totalVolunteachers;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
@@ -97,32 +100,6 @@ public class Project {
 	public Project() {
 		super();
 	}
-
-	
-	
-	public Project(int projectId, String projectName, Calendar startingDate,
-			 Calendar endingDate, String projectData, Calendar creationDate, String imageUrl,
-			Calendar creationTime, int totalKids, int totalSessions, int totalVolunteacher,
-			List<Session> sessions, List<Event> events, List<User> users, List<Kid> kids) {
-		super();
-		this.projectId = projectId;
-		this.projectName = projectName;
-		this.startingDate = startingDate;
-		this.endingDate = endingDate;
-		this.projectData = projectData;
-		this.creationDate = creationDate;
-		this.imageUrl = imageUrl;
-		this.creationTime = creationTime;
-		this.totalKids = totalKids;
-		this.totalSessions = totalSessions;
-		this.totalVolunteachers = totalVolunteacher;
-		this.sessions = sessions;
-		this.events = events;
-		this.users = users;
-		this.kids = kids;
-	}
-
-
 
 	public int getProjectId() {
 		return projectId;
@@ -231,14 +208,4 @@ public class Project {
 	public void setKids(List<Kid> kids) {
 		this.kids = kids;
 	}
-	
-
-	@Override
-	public String toString() {
-		return "Project [projectId=" + projectId + ", projectName=" + projectName + ", startingDate=" + startingDate
-				+ ", endingDate=" + endingDate + ", projectData=" + projectData + ", creationDate=" + creationDate
-				+ ", sessions=" + sessions + ", events=" + events + ", creationTime=" + creationTime + ", users="
-				+ users + ", kids=" + kids + "]";
-	}
-
 }

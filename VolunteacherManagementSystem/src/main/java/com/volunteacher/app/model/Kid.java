@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Entity
 public class Kid {
@@ -45,13 +46,13 @@ public class Kid {
 	private int gender;
 	
 	@NotNull
-	@JsonFormat(pattern = "MM-dd-yyyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar dob;
 	
 	@NotNull
 	@Column(nullable = false, length = 10)
-	private String standard;
+	private int standard;
 	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "TINYINT")
@@ -59,17 +60,17 @@ public class Kid {
 	
 	private String photo;
 	
-	@OneToOne
-	private School school;
-	
-	@NotNull
-	@OneToOne
-	private Village village;
+	private String school;
 	
 	@NotNull
 	@OneToOne
 	private KidsGroup group;
 	
+	@NotNull
+	@ManyToOne
+	private Village village;
+	
+	@NotNull
 	@ManyToOne
 	private Area area;
 	
@@ -79,30 +80,20 @@ public class Kid {
 	@ManyToMany(mappedBy = "kids")
 	private List<Event> events;
 	
+	@OneToMany(mappedBy = "kid")
+	private List<EventKidActivity> eka;
+	
 	@OneToMany(mappedBy = "kid", cascade = CascadeType.REMOVE)
 	private List<KidsReport> kidsReport;
 	
 	@ManyToMany(mappedBy = "kids",cascade = CascadeType.ALL)
 	private List<Attendance> attendances;
 	
+	@ManyToMany(mappedBy = "kids")	
+	private List<Session> sessions;
+	
 	public Kid() {
 		super();
-	}
-
-	public Kid(String name, int gender, Calendar dob,String standard, Area area, int level,
-			String photo, School school, Village village, KidsGroup group, KidsReport kidsReport,
-			List<Project> projects, List<Event> events, List<Attendance> attendances) {
-		super();
-		this.name = name;
-		this.gender = gender;
-		this.dob = dob;
-		this.standard = standard;
-		this.area = area;
-		this.level = level;
-		this.photo = photo;
-		this.school = school;
-		this.village = village;
-		this.group = group;
 	}
 
 	public Long getKidId() {
@@ -133,11 +124,11 @@ public class Kid {
 		this.dob = dob;
 	}
 
-	public String getStandard() {
+	public int getStandard() {
 		return standard;
 	}
 
-	public void setStandard(String standard) {
+	public void setStandard(int standard) {
 		this.standard = standard;
 	}
 
@@ -165,20 +156,12 @@ public class Kid {
 		this.photo = photo;
 	}
 
-	public School getSchool() {
+	public String getSchool() {
 		return school;
 	}
 
-	public void setSchool(School school) {
+	public void setSchool(String school) {
 		this.school = school;
-	}
-
-	public Village getVillage() {
-		return village;
-	}
-
-	public void setVillage(Village village) {
-		this.village = village;
 	}
 
 	public KidsGroup getGroup() {
@@ -187,6 +170,14 @@ public class Kid {
 
 	public void setGroup(KidsGroup group) {
 		this.group = group;
+	}
+
+	public Village getVillage() {
+		return village;
+	}
+
+	public void setVillage(Village village) {
+		this.village = village;
 	}
 	
 }

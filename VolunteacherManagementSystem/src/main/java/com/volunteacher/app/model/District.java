@@ -44,12 +44,6 @@ public class District {
 		super();
 	}
 
-	public District(String districtName, State state) {
-		super();
-		this.districtName = districtName;
-		this.state = state;
-	}
-	
 	public int getDistrictId() {
 		return districtId;
 	}
@@ -68,11 +62,5 @@ public class District {
 
 	public void setState(State state) {
 		this.state = state;
-	}
-
-	@Override
-	public String toString() {
-		return "District [districtId=" + districtId + ", districtName=" + districtName + ", state=" + state
-				 + "]";
 	}
 }

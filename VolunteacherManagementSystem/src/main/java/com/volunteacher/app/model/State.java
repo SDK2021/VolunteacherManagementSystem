@@ -44,12 +44,6 @@ public class State {
 	public State() {
 		super();
 	}
-	
-	public State(String stateName, Country country) {
-		super();
-		this.stateName = stateName;
-		this.country = country;
-	}
 
 	public int getStateId() {
 		return stateId;
@@ -69,10 +63,5 @@ public class State {
 
 	public void setCountry(Country country) {
 		this.country = country;
-	}
-
-	@Override
-	public String toString() {
-		return "State [stateId=" + stateId + ", stateName=" + stateName + ", country=" + country +  "]";
 	}
 }

@@ -49,16 +49,34 @@ public class CoreController {
 			return coreService.talukasList();
 		}
 		
+		@GetMapping("/talukas/{id}")
+		public ResponseEntity<Object> getTalukaById(@PathVariable int id)
+		{
+			return coreService.talukaById(id);
+		}
+		
 		@GetMapping("/villages")
 		public ResponseEntity<Object> getVillagesList()
 		{
 			return coreService.villagesList();
 		}
 		
+		@GetMapping("/villages/{id}")
+		public ResponseEntity<Object> getVillageById(@PathVariable int id)
+		{
+			return coreService.villageById(id);
+		}
+		
 		@GetMapping("/areas")
 		public ResponseEntity<Object> getAreaList()
 		{
 			return coreService.areaList();
+		}
+		
+		@GetMapping("/areas/{id}")
+		public ResponseEntity<Object> getAreaById(@PathVariable int id)
+		{
+			return coreService.areaById(id);
 		}
 		
 		@GetMapping("/countries/{id}/states")

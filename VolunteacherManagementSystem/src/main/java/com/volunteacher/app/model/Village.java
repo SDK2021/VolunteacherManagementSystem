@@ -39,17 +39,14 @@ public class Village {
 	@OneToMany(mappedBy = "village")
 	private List<Area> areas;
 	
+	@OneToMany(mappedBy = "village")
+	private List<Kid> kids;
+	
 
 	public Village() {
 		super();
 	}
 
-	public Village(String villageName, Taluka taluka) {
-		super();
-		this.villageName = villageName;
-		this.taluka = taluka;
-	}
-	
 	public int getVillageId() {
 		return villageId;
 	}

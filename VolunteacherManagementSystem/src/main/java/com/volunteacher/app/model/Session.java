@@ -21,6 +21,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 
 @Entity
@@ -42,23 +43,23 @@ public class Session {
 	//attendance	
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar sessionDate;
 	
 	@NotNull
-	@JsonFormat(pattern = "HH:mm:ss")
+	@JsonFormat(shape = Shape.STRING,pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar startingTime;
 	
 	@NotNull
-	@JsonFormat(pattern = "HH:mm:ss")
+	@JsonFormat(shape = Shape.STRING,pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar endingTime;
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar creationDate;
 	
@@ -78,30 +79,14 @@ public class Session {
 	
 	@ManyToMany
 	private List<User> users;
+	
+	@ManyToMany
+	private List<Kid> kids;
 
 	
 	public Session() {
 		super();
 	}
-	
-	public Session(Long sessionId, Calendar sessionDate, Calendar startingTime,
-			Calendar endingTime, Calendar creationDate, boolean notified, Project project,
-			List<Attendance> attendance, List<SessionReport> sessionReports, Village village, List<User> users) {
-		super();
-		this.sessionId = sessionId;
-		this.sessionDate = sessionDate;
-		this.startingTime = startingTime;
-		this.endingTime = endingTime;
-		this.creationDate = creationDate;
-		this.notified = notified;
-		this.project = project;
-		this.attendance = attendance;
-		this.sessionReports = sessionReports;
-		this.village = village;
-		this.users = users;
-	}
-
-
 
 	public Long getSessionId() {
 		return sessionId;
@@ -169,5 +154,13 @@ public class Session {
 
 	public void setNotified(boolean notified) {
 		this.notified = notified;
+	}
+
+	public List<Kid> getKids() {
+		return kids;
+	}
+
+	public void setKids(List<Kid> kids) {
+		this.kids = kids;
 	}
 }

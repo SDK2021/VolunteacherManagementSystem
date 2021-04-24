@@ -38,13 +38,6 @@ public class Area {
 		super();
 	}
 
-	public Area(int areaId, @NotNull String areaName, Village village) {
-		super();
-		this.areaId = areaId;
-		this.areaName = areaName;
-		this.village = village;
-	}
-
 	public int getAreaId() {
 		return areaId;
 	}
@@ -64,10 +57,4 @@ public class Area {
 	public void setVillage(Village village) {
 		this.village = village;
 	}
-
-	@Override
-	public String toString() {
-		return "Area [areaId=" + areaId + ", areaName=" + areaName + ", village=" + village + "]";
-	}
-	
 }

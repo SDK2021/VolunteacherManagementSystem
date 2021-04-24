@@ -1,7 +1,6 @@
 package com.volunteacher.app.model;
 
 import java.util.Calendar;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -20,6 +18,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -48,18 +47,18 @@ public class Volunteacher {
 	private int status;
 	
 	@NotNull
-	@JsonFormat(pattern = "MM-dd-yyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyy")
 	@CreatedDate
 	@Column(nullable = false,columnDefinition = "DATE")
 	private Calendar joiningDate;
 	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "TIME")
-	@JsonFormat(pattern = "HH-mm-ss")
+	@JsonFormat(shape = Shape.STRING,pattern = "HH-mm-ss")
 	@CreationTimestamp
 	private Calendar JoiningTime;
 	
-	@JsonFormat(pattern = "MM-dd-yyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyy")
 	@Column(columnDefinition = "DATE")
 	private Calendar endingDate;
 
@@ -72,33 +71,14 @@ public class Volunteacher {
 	@OneToOne
 	private User user;
 	
-	@NotNull
 	@ManyToOne
 	private Village village;
 	
-	@NotNull
 	@OneToOne
 	private District district;
 
 	public Volunteacher() {
 		super();
-	}
-
-	public Volunteacher( String school, String employerName, int status,
-			Calendar joiningDate, Calendar endingDate, int pincode, String education,
-			User user, Village village, District district, List<Session> sessions,
-			List<Project> projects) {
-		super();
-		this.school = school;
-		this.employerName = employerName;
-		this.status = status;
-		this.joiningDate = joiningDate;
-		this.endingDate = endingDate;
-		this.pincode = pincode;
-		this.education = education;
-		this.user = user;
-		this.village = village;
-		this.district = district;
 	}
 
 	public int getVolunteacherId() {
@@ -191,13 +171,5 @@ public class Volunteacher {
 
 	public void setDistrict(District district) {
 		this.district = district;
-	}
-
-	@Override
-	public String toString() {
-		return "Volunteacher [volunteacherId=" + volunteacherId + ", school=" + school + ", employerName="
-				+ employerName + ", status=" + status + ", joiningDate=" + joiningDate + ", endingDate=" + endingDate
-				+ ", pincode=" + pincode + ", education=" + education + ", user=" + user + ", village=" + village
-				+ ", district=" + district + "]";
 	}
 }

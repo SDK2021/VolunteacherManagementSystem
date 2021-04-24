@@ -50,17 +50,6 @@ public class SessionReport {
 		super();
 	}
 
-	public SessionReport(String description, String suggestions,
-			String experience,String requirements, Session session,User user) {
-		super();
-		this.description = description;
-		this.suggestions = suggestions;
-		this.experience = experience;
-		this.requirements = requirements;
-		this.session = session;
-		this.user = user;
-	}
-
 	public int getSessionReportId() {
 		return sessionReportId;
 	}
@@ -111,12 +100,5 @@ public class SessionReport {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	@Override
-	public String toString() {
-		return "SessionReport [sessionReportId=" + sessionReportId + ", description=" + description + ", suggestions="
-				+ suggestions + ", experience=" + experience + ", requirements=" + requirements + ", session=" + session
-				+ ", user=" + user + "]";
 	}
 }

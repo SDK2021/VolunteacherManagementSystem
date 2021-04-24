@@ -69,20 +69,6 @@ public class TimelinePost {
 		super();
 	}
 
-	public TimelinePost(Long postId, User createdBy,String postPhoto,
-			String postTitle, String postDescription, Calendar creationDate, 
-			Calendar creationTime, int likes) {
-		super();
-		this.postId = postId;
-		this.createdBy = createdBy;
-		this.postPhoto = postPhoto;
-//		this.postTitle = postTitle;
-		this.postDescription = postDescription;
-		this.creationDate = creationDate;
-//		this.creationTime = creationTime;
-		this.likes = likes;
-	}
-
 	public Long getPostId() {
 		return postId;
 	}
@@ -145,12 +131,5 @@ public class TimelinePost {
 
 	public void setLikes(int likes) {
 		this.likes = likes;
-	}
-
-	@Override
-	public String toString() {
-		return "TimelinePost [postId=" + postId + ", postPhoto=" + postPhoto + ", postDescription=" + postDescription
-				+ ", creationDate=" + creationDate + ", likes=" + likes + ", createdBy=" + createdBy + "]";
-	}
-	
+	}	
 }

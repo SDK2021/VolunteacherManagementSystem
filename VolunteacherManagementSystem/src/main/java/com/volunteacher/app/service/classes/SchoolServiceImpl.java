@@ -8,9 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
-import com.volunteacher.app.model.Requirement;
 import com.volunteacher.app.model.School;
-import com.volunteacher.app.repository.RequirementRepository;
 import com.volunteacher.app.repository.SchoolRepository;
 import com.volunteacher.app.service.interfaces.SchoolService;
 
@@ -19,9 +17,6 @@ public class SchoolServiceImpl implements SchoolService {
 	
 	@Autowired
 	SchoolRepository schoolRepository;
-	
-	@Autowired
-	RequirementRepository requirementRepository;
 	
 	@Override
 	public ResponseEntity<Object> addSchool(School school) 
@@ -68,7 +63,7 @@ public class SchoolServiceImpl implements SchoolService {
 	{
 		School updateSchool = schoolRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("School is not found for id: "+id));
 		
-		updateSchool.setName(school.getName());
+		updateSchool.setSchoolName(school.getSchoolName());
 		updateSchool.setPhoneNumber(school.getPhoneNumber());
 		updateSchool.setPincode(school.getPincode());
 		updateSchool.setStartingDate(school.getStartingDate());
@@ -77,7 +72,6 @@ public class SchoolServiceImpl implements SchoolService {
 		updateSchool.setTotalLabs(school.getTotalLabs());
 		updateSchool.setTotalStudent(school.getTotalStudent());
 		updateSchool.setVillage(school.getVillage());
-		updateSchool.setRequirements(school.getRequirements());
 		
 		try {
 			schoolRepository.save(updateSchool);
@@ -99,61 +93,6 @@ public class SchoolServiceImpl implements SchoolService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting School for id:" +id);
-		}
-	}
-
-	@Override
-	public ResponseEntity<Object> addRequirement(Requirement requirement) 
-	{
-		try {
-			Requirement saveRequirement = requirementRepository.save(requirement);
-			return ResponseEntity.status(HttpStatus.CREATED).body(saveRequirement);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating Requirement");
-		}
-	}
-
-	@Override
-	public ResponseEntity<Object> requirementList() 
-	{
-		try {
-			List<Requirement> requirementList = (List<Requirement>) requirementRepository.findAll();
-			
-			if(requirementList.size() < 1)
-				throw new ResourceNotFoundException("Requirement List list not found");
-			return ResponseEntity.status(HttpStatus.OK).body(requirementList);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch requirement");
-		}
-	}
-
-	@Override
-	public ResponseEntity<Object> updateRequirement(Requirement requirement, int id) 
-	{
-		Requirement updateRequirement = requirementRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Requiremement not found for id:"+id));
-		updateRequirement.setRequirement(requirement.getRequirement());
-		try {
-			requirementRepository.save(updateRequirement);
-			return ResponseEntity.status(HttpStatus.OK).body(updateRequirement);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Requirement for id:" +id);
-		}
-	}
-
-	@Override
-	public ResponseEntity<Object> deleteRequirement(int id) 
-	{
-		requirementRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Requirement not found for id:"+id));
-		
-		try {
-			requirementRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Requirement Deleted For id:"+id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Requirement for id:" +id);
 		}
 	}
 

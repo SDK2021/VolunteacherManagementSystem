@@ -44,12 +44,6 @@ public class Taluka {
 	public Taluka() {
 		super();
 	}
-
-	public Taluka(String talukaName, District district) {
-		super();
-		this.talukaName = talukaName;
-		this.district = district;
-	}
 	
 	public int getTalukaId() {
 		return talukaId;
@@ -69,10 +63,5 @@ public class Taluka {
 
 	public void setDistrict(District district) {
 		this.district = district;
-	}
-
-	@Override
-	public String toString() {
-		return "Taluka [talukaId=" + talukaId + ", talukaName=" + talukaName + ", district=" + district + "]";
 	}
 }

@@ -38,12 +38,6 @@ public class Content {
 		super();
 	}
 
-	public Content(String contentData, KidsGroup group) {
-		super();
-		this.contentData = contentData;
-		this.group = group;
-	}
-
 	public int getContentId() {
 		return contentId;
 	}
@@ -62,10 +56,5 @@ public class Content {
 
 	public void setGroup(KidsGroup group) {
 		this.group = group;
-	}
-
-	@Override
-	public String toString() {
-		return "Content [contentId=" + contentId + ", contentData=" + contentData + ", group=" + group + "]";
 	}
 }

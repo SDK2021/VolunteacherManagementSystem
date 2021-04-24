@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -42,19 +43,12 @@ public class Activity {
 	@ManyToMany(mappedBy = "activities")
 	private List<Event> events;
 	
+	@OneToMany(mappedBy = "activity")
+	private List<EventKidActivity> eka;
+	
 
 	public Activity() {
 		super();
-	}
-
-	public Activity(int activityId, @NotNull String activityName, String description, List<Participant> participants,
-			List<Event> events) {
-		super();
-		this.activityId = activityId;
-		this.activityName = activityName;
-		this.description = description;
-		this.participants = participants;
-		this.events = events;
 	}
 
 	public int getActivityId() {
@@ -76,11 +70,4 @@ public class Activity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	@Override
-	public String toString() {
-		return "Activity [activityId=" + activityId + ", activityName=" + activityName + ", description=" + description
-				+ ", participants=" + participants + ", events=" + events + "]";
-	}
-
 }

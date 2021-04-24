@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,15 +26,22 @@ public class ProjectController {
 	ProjectService projectService;
 	
 	@PostMapping("/projects")
-	public ResponseEntity<Object> addProject(@RequestBody Project project)
+	public ResponseEntity<Object> addProject(@RequestBody Project project, @RequestHeader("volunteacherIds") String vIds[],@RequestHeader("kidsIds") String kIds[])
 	{
-		return projectService.addProject(project);
+		System.out.println(vIds);
+		return projectService.addProject(project,vIds,kIds);
 	}
 	
 	@GetMapping("/projects")
 	public ResponseEntity<Object> getProjectList(@RequestParam("page") int page)
 	{
 		return projectService.projectList(page);
+	}
+	
+	@GetMapping("/allprojects")
+	public ResponseEntity<Object> getAllprojectList()
+	{
+		return projectService.AllprojectList();
 	}
 	
 	@GetMapping("/projects/{id}")

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,9 +31,9 @@ public class EventController {
 	ParticipantService participantService;
 	
 	@PostMapping("/events")
-	public ResponseEntity<Object> addEvent(@RequestBody Event event)
+	public ResponseEntity<Object> addEvent(@RequestBody Event event,@RequestHeader("activityIds") String[] ids)
 	{
-		return eventService.addEvent(event);
+		return eventService.addEvent(event,ids);
 	}
 	
 	@GetMapping("/events/{id}")
@@ -62,6 +63,7 @@ public class EventController {
 	@PostMapping("/participants")
 	public ResponseEntity<Object> addParticipant(@RequestBody Participant participant)
 	{
+		System.out.println(participant);
 		return participantService.addParticipant(participant);
 	}
 	
@@ -75,6 +77,12 @@ public class EventController {
 	public ResponseEntity<Object> getParticipant(@PathVariable Long id)
 	{
 		return participantService.participantById(id);
+	}
+	
+	@PostMapping("/kidsParticipants")
+	public ResponseEntity<Object> addAllKidsParticipants(@RequestHeader("kidsIds")String [] kidsIds,@RequestHeader("eventId") String eventId)
+	{
+		return this.eventService.addKidsParticipants(kidsIds, eventId);
 	}
 	
 }

@@ -245,4 +245,37 @@ public class CoreServiceImpl implements CoreService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Area");
 		}
 	}
+
+	@Override
+	public ResponseEntity<Object> areaById(int id) {
+		try {
+			Area area = areaRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("areaid not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(area);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Area by id");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> villageById(int id) {
+		try {
+			Village village = villageRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Village id not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(village);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Village by id");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> talukaById(int id) {
+		try {
+			Taluka taluka = talukaRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Taluka id not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(taluka);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch taluka by id");
+		}
+	}
 }

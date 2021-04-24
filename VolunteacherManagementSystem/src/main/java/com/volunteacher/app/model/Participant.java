@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Entity
 public class Participant {
@@ -49,7 +50,7 @@ public class Participant {
 	private String phoneNumber;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar dob;
 	
@@ -64,26 +65,12 @@ public class Participant {
 	@ManyToMany
 	private List<Activity> activities;
 	
-	@OneToOne
-	private User user;
-	
+//	@OneToOne
+//	private User user;
+//	
 
 	public Participant() {
 		super();
-	}
-
-	public Participant(String name,  String email,int gender, String phoneNumber, Calendar dob, UserType type,Event event,
-			List<Activity> activities,User user) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.gender = gender;
-		this.phoneNumber = phoneNumber;
-		this.dob = dob;
-		this.type = type;
-		this.event = event;
-		this.activities = activities;
-		this.user = user;
 	}
 	
 	public Long getParticipantId() {
@@ -146,18 +133,11 @@ public class Participant {
 		this.activities = activities;
 	}
 
-	public User getUser() {
-		return user;
+	public Event getEvent() {
+		return event;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	@Override
-	public String toString() {
-		return "Participant [participantId=" + participantId + ", name=" + name + ", email=" + email + ", gender="
-				+ gender + ", phoneNumber=" + phoneNumber + ", dob=" + dob + ", type=" + type + ", event=" + event
-				+ ", activities=" + activities + ", user=" + user + "]";
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 }

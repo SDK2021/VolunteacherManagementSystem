@@ -18,6 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Entity
 @Component
@@ -52,7 +53,7 @@ public class User {
 	private String phoneNumber;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar dob;
 	
@@ -66,10 +67,11 @@ public class User {
 	
 	private String photo;
 	
+	@Column(length = 10)
 	private String userOTP;
 	
 	@Column(columnDefinition = "TIME")
-	@JsonFormat(timezone = "IST", pattern = "HH-mm-ss")
+	@JsonFormat(shape = Shape.STRING,timezone = "IST", pattern = "HH-mm-ss")
 	private Calendar userOTPTime;
 	
 	@OneToMany(mappedBy = "createdBy")
@@ -96,17 +98,6 @@ public class User {
 	
 	public User() {
 		super();
-	}
-
-	public User(String userName, String email,  int gender, String phoneNumber, Calendar dob,  String password, UserType type) {
-		super();
-		this.userName = userName;
-		this.email = email;
-		this.gender = gender;
-		this.phoneNumber = phoneNumber;
-		this.dob = dob;
-		this.password = password;
-		this.type = type;
 	}
 	
 	public Long getUserId() {
@@ -192,12 +183,4 @@ public class User {
 	public void setUserOTPTime(Calendar userOTPTime) {
 		this.userOTPTime = userOTPTime;
 	}
-
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", email=" + email + ", gender=" + gender
-				+ ", phoneNumber=" + phoneNumber + ", dob=" + dob + ", password=" + password + ", type=" + type + "]";
-	}
-
-
 }

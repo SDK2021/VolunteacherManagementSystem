@@ -1,5 +1,7 @@
 package com.volunteacher.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -67,7 +69,7 @@ public class UserController {
 //	}
 //	
 	@GetMapping("/volunteachers/day")
-	public ResponseEntity<Object> getVolunteacherByDay()
+	public List<Volunteacher> getVolunteacherByDay()
 	{
 		return volunteacherService.vtByToday();
 	}

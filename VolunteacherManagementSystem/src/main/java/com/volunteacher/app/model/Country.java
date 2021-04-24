@@ -40,11 +40,6 @@ public class Country {
 		super();
 	}
 
-	public Country(String countryName) {
-		super();
-		this.countryName = countryName;
-	}
-
 	public int getCountryId() {
 		return countryId;
 	}
@@ -55,10 +50,5 @@ public class Country {
 
 	public void setCountryName(String countryName) {
 		this.countryName = countryName;
-	}
-
-	@Override
-	public String toString() {
-		return "Country [countryId=" + countryId + ", countryName=" + countryName +"]";
 	}
 }

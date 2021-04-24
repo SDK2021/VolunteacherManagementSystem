@@ -1,5 +1,6 @@
 package com.volunteacher.app.service.classes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
+import com.volunteacher.app.model.Kid;
 import com.volunteacher.app.model.Project;
+import com.volunteacher.app.model.User;
+import com.volunteacher.app.repository.KidRepository;
 import com.volunteacher.app.repository.ProjectRepository;
+import com.volunteacher.app.repository.UserRepository;
 import com.volunteacher.app.service.interfaces.ProjectService;
 
 @Service
@@ -22,10 +27,22 @@ public class ProjectServiceImpl implements ProjectService{
 	@Autowired
 	ProjectRepository projectRepository;
 	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	KidRepository kidRepository;
+	
+	List<User> users;
+	
+	List<Kid> kids;
+	
 	@Override
-	public ResponseEntity<Object> addProject(Project project) 
+	public ResponseEntity<Object> addProject(Project project,String[] vIds,String[] kIds) 
 	{
 		try {
+			project.setUsers(this.createVolunteachersList(vIds));
+			project.setKids(this.createKidsList(kIds));
 			Project saveProject = projectRepository.save(project);
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveProject);
 		} catch (Exception e) {
@@ -34,6 +51,27 @@ public class ProjectServiceImpl implements ProjectService{
 		}
 	}
 
+	@Override
+	public ResponseEntity<Object> AllprojectList() 
+	{
+		try {
+			List<Project> projectList = (List<Project>) projectRepository.findAll();
+			
+			if(projectList.size() < 1)
+			{
+				throw new ResourceNotFoundException("Project list not found");
+			}
+			else 
+			{
+				return ResponseEntity.status(HttpStatus.OK).body(projectList);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch projects list");
+		}
+	}
+	
 	@Override
 	public ResponseEntity<Object> projectList(int page) 
 	{
@@ -57,6 +95,7 @@ public class ProjectServiceImpl implements ProjectService{
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch projects");
 		}
 	}
+
 
 	@Override
 	public ResponseEntity<Object> projectById(int id) 
@@ -179,5 +218,27 @@ public class ProjectServiceImpl implements ProjectService{
 		}
 	}
 	
+	@Override
+	public List<User> createVolunteachersList(String[] ids)
+	{
+		this.users = new ArrayList<User>();
+		for (int i = 0;i<ids.length;i++) {
+			User user = this.userRepository.findById(Long.parseLong(ids[i])).orElseThrow(()-> new ResourceNotFoundException("VT id not found for id: "));
+			this.users.add(user);
+		}
+		System.out.println(this.users + " " + this.users.size());
+		return this.users;
+	}
 	
+	@Override
+	public List<Kid> createKidsList(String[] ids)
+	{
+		this.kids = new ArrayList<Kid>();
+		for (int i = 0;i<ids.length;i++) {
+			Kid kid = this.kidRepository.findById(Long.parseLong(ids[i])).orElseThrow(()-> new ResourceNotFoundException("VT id not found for id: "));
+			this.kids.add(kid);
+		}
+		System.out.println(this.kids + " " + this.kids.size());
+		return this.kids;
+	}
 }

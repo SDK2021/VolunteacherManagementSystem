@@ -18,6 +18,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -42,28 +43,20 @@ public class Announcement {
 	@CreatedBy
 	private User createdBy;
 	
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "dd-MM-yyyy")
 	@NotNull
 	@CreatedDate
+	@Column(columnDefinition = "DATE")
 	private Calendar creationDate;
 	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "TIME")
-	@JsonFormat(pattern = "HH-mm-ss")
+	@JsonFormat(shape = Shape.STRING, pattern = "HH-mm-ss")
 	@CreationTimestamp
 	private Calendar creationTime;
 
 	public Announcement() {
 		super();
-	}
-
-	public Announcement(String data, User createdBy, Calendar creationDate,
-			Calendar creationTime) {
-		super();
-		this.data = data;
-		this.createdBy = createdBy;
-		this.creationDate = creationDate;
-		this.creationTime = creationTime;
 	}
 
 	public Long getAnnouncementId() {
@@ -100,11 +93,5 @@ public class Announcement {
 
 	public void setCreationTime(Calendar creationTime) {
 		this.creationTime = creationTime;
-	}
-
-	@Override
-	public String toString() {
-		return "Announcement [announcementId=" + announcementId + ", data=" + data + ", user=" + createdBy
-				+ ", creationDate=" + creationDate + ", creationTime=" + creationTime + "]";
 	}
 }
