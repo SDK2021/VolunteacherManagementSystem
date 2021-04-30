@@ -26,7 +26,7 @@ public class Content {
 	private int contentId;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String contentData;
 
 	@NotNull

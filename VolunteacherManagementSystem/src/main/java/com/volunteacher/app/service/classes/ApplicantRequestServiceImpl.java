@@ -5,13 +5,17 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.volunteacher.app.exception.EmailAlreadyExistException;
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.ApplicantRequest;
+import com.volunteacher.app.model.User;
 import com.volunteacher.app.repository.ApplicantRequestRepository;
 import com.volunteacher.app.service.interfaces.ApplicantRequestService;
 import com.volunteacher.app.service.interfaces.UserService;
@@ -26,16 +30,23 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	UserService userService;
 	
 	@Override
-	@Transactional
 	public ResponseEntity<Object> addRequest(ApplicantRequest request)
 	{
+		
+		if((userService.userByEmail(request.getEmailId()).getBody() != null) || (this.requestByEmail(request.getEmailId()).getBody() != null))
+		{
+			System.out.println(userService.userByEmail(request.getEmailId()));
+			//throw new EmailAlreadyExistException("You email id already exist");
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+		if(userService.userByPhoneNumber(request.getPhoneNumber()).getBody() != null || (this.requestByPhoneNumber(request.getPhoneNumber()).getBody() != null))
+		{
+			//throw new EmailAlreadyExistException("You email id already exist");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+		
 		try {
-			
-			if(userService.userByEmail(request.getEmailId()) != null)
-			{
-				//throw new EmailAlreadyExistException("You email id already exist");
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-			}
 			
 			ApplicantRequest saveRequest = applicantRequestRepository.save(request);
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveRequest);
@@ -53,9 +64,9 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 //					Sort.Order.desc("requestDate"),
 //					Sort.Order.asc("name")	
 //			);
-//			Pageable pageable = PageRequest.of(id, 5,Sort.by("requestDate"));
-			List<ApplicantRequest> requestList = (List<ApplicantRequest>) applicantRequestRepository.findAll();
-			return ResponseEntity.status(HttpStatus.OK).body(requestList);
+			Pageable pageable = PageRequest.of(0, 5,Sort.by("requestDate"));
+			Page<ApplicantRequest> requestList = (Page<ApplicantRequest>) applicantRequestRepository.findAll(pageable);
+			return ResponseEntity.status(HttpStatus.OK).body(requestList.getContent());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Applicant request list");
@@ -85,6 +96,30 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Applicant Request for id:" +id);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> requestByEmail(String email) {
+		System.out.println(email);
+		try {
+			ApplicantRequest request = applicantRequestRepository.findByEmailId(email);
+			return ResponseEntity.status(HttpStatus.OK).body(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching Request by Email");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> requestByPhoneNumber(String number) {
+		System.out.println(number);
+		try {
+			ApplicantRequest request = applicantRequestRepository.findByPhoneNumber(number);
+			return ResponseEntity.status(HttpStatus.OK).body(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching Request by Phonenumber");
 		}
 	}
 }

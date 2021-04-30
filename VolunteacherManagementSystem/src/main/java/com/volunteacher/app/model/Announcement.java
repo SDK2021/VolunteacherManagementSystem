@@ -43,7 +43,7 @@ public class Announcement {
 	@CreatedBy
 	private User createdBy;
 	
-	@JsonFormat(shape = Shape.STRING,pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy")
 	@NotNull
 	@CreatedDate
 	@Column(columnDefinition = "DATE")

@@ -122,7 +122,7 @@ public class ProjectServiceImpl implements ProjectService{
 		updateProject.setUsers(project.getUsers());
 		updateProject.setKids(project.getKids());
 		updateProject.setEndingDate(project.getCreationDate());
-		updateProject.setImageUrl(project.getImageUrl());
+		updateProject.setPhoto(project.getPhoto());
 		
 		try {
 			projectRepository.save(updateProject);
@@ -233,6 +233,7 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public List<Kid> createKidsList(String[] ids)
 	{
+		System.out.println("Hello I am Kids list" + ids.length);
 		this.kids = new ArrayList<Kid>();
 		for (int i = 0;i<ids.length;i++) {
 			Kid kid = this.kidRepository.findById(Long.parseLong(ids[i])).orElseThrow(()-> new ResourceNotFoundException("VT id not found for id: "));

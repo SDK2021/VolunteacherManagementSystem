@@ -15,4 +15,6 @@ public interface NotificationService {
 	public ResponseEntity<Object> notificationById(Long id);
 	
 	public ResponseEntity<Object> deleteNotification(Long id);
+	
+	public ResponseEntity<Object> notificationListByUser(String userType);
 }

@@ -16,6 +16,8 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long>{
 	public List<User> findAllByDob();
 	
 	public User findByEmail(String email);
+
+	public User findByPhoneNumber(String number);
 	
 	@Query(value = "select * from user where user_id=:userId",nativeQuery = true)
 	public User findByUserId(Long userId);

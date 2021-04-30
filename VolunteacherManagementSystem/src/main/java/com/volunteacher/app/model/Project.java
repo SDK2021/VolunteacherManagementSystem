@@ -44,12 +44,12 @@ public class Project {
 	private String projectName;
 	
 	@NotNull
-	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING, pattern = "MM-dd-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar startingDate;
 	
 	@NotNull
-	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING, pattern = "MM-dd-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar endingDate;
 	
@@ -63,11 +63,13 @@ public class Project {
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING, pattern = "MM-dd-yyyy")
 	@Column(nullable = false)
 	private Calendar creationDate;
 	
-	private String imageUrl;
+	@NotNull
+	@Column(nullable = false, columnDefinition = "TEXT")
+	private String photo;
 	
 	@NotNull
 	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm:ss")
@@ -145,12 +147,14 @@ public class Project {
 		this.description = description;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
+	
+
+	public String getPhoto() {
+		return photo;
 	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	public Calendar getCreationTime() {

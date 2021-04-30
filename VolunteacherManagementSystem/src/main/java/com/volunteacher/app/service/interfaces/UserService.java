@@ -18,10 +18,14 @@ public interface UserService {
 	
 	public ResponseEntity<Object> userByEmail(String email);
 	
+	public ResponseEntity<Object> userByPhoneNumber(String email);
+	
 	public ResponseEntity<Object> userTypeList();
 	
 	public ResponseEntity<Object> userTypeById(int id);
 	
 	public ResponseEntity<Object> usersByBirthday();
+	
+	public boolean setProfile(String url,String userId);
 	
 }

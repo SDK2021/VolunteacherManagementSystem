@@ -41,7 +41,7 @@ public class KidsReport {
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "MM-dd-yyyy")
 	@Column(nullable = false, columnDefinition = "Date")
 	private Calendar createdDate;
 	

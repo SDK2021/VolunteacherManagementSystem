@@ -60,8 +60,12 @@ public class Event {
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar eventEndingTime;
 	
-	@Column(columnDefinition = "TEXT")
+	@NotNull
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String photo;
+	
+	@NotNull
+	private boolean notified;
 	
 	@NotNull
 	@ManyToOne
@@ -172,5 +176,13 @@ public class Event {
 
 	public void setEventEndingTime(Calendar eventEndingTime) {
 		this.eventEndingTime = eventEndingTime;
+	}
+
+	public boolean isNotified() {
+		return notified;
+	}
+
+	public void setNotified(boolean notified) {
+		this.notified = notified;
 	}
 }

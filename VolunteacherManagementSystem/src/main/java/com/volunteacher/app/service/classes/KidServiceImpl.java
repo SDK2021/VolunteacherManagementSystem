@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -71,9 +72,18 @@ public class KidServiceImpl implements KidService {
 	@Override
 	public ResponseEntity<Object> kidsListByVillageAndGroup(int villageId, int groupId) 
 	{
+		HttpHeaders headers = new HttpHeaders();
+		System.out.println("Hello VillageGroup");
 		try {
-			List<Kid> kidsList = kidRepository.findAllByVillageVillageIdAndGroupGroupId(villageId, groupId);
-			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
+			Pageable pageable = PageRequest.of(0, 7);
+			Page<Kid> kidsList = (Page<Kid>) kidRepository.findAllByVillageVillageIdAndGroupGroupId(villageId, groupId, pageable);
+			headers.add("totalKids",String.valueOf(kidsList.getTotalElements()));
+		//	List<Kid> kidsList = kidRepository.findAllByVillageVillageIdAndGroupGroupId(villageId, groupId);
+		//	return ResponseEntity.status(HttpStatus.OK).header("Hello", "world").body(kidsList.getContent());
+			 ResponseEntity<Object> responseEntity = new ResponseEntity<>(kidsList.getContent(),headers,HttpStatus.OK);
+			 System.out.println(responseEntity.getHeaders());
+			 return responseEntity;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids");
@@ -279,4 +289,5 @@ public class KidServiceImpl implements KidService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching Kids Group");
 		}
 	}
+	
 }

@@ -48,7 +48,7 @@ public class TimelinePost {
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "MM-dd-yyyy")
 	@Column(nullable = false)
 	private Calendar creationDate;
 	

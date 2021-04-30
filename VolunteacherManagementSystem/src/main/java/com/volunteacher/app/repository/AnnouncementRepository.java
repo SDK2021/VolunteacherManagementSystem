@@ -13,4 +13,6 @@ public interface AnnouncementRepository extends PagingAndSortingRepository<Annou
 	
 	@Query(value = "select * from announcement where creation_date > DATE_SUB(NOW(),INTERVAL 7 DAY)", nativeQuery = true)
 	List<Announcement> findAll();
+	
+	
 }

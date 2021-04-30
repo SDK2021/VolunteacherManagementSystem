@@ -58,6 +58,10 @@ public class Kid {
 	@Column(nullable = false, columnDefinition = "TINYINT")
 	private int level;
 	
+	private int totalSessions;
+	
+	@NotNull
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String photo;
 	
 	private String school;
@@ -88,9 +92,6 @@ public class Kid {
 	
 	@ManyToMany(mappedBy = "kids",cascade = CascadeType.ALL)
 	private List<Attendance> attendances;
-	
-	@ManyToMany(mappedBy = "kids")	
-	private List<Session> sessions;
 	
 	public Kid() {
 		super();
@@ -179,5 +180,14 @@ public class Kid {
 	public void setVillage(Village village) {
 		this.village = village;
 	}
+
+	public int getTotalSessions() {
+		return totalSessions;
+	}
+
+	public void setTotalSessions(int totalSessions) {
+		this.totalSessions = totalSessions;
+	}
 	
+
 }

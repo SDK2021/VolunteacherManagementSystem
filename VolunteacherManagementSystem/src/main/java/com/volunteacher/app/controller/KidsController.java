@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,6 @@ import com.volunteacher.app.service.interfaces.KidsReportService;
 
 @RestController
 @RequestMapping(path = "/vms")
-@CrossOrigin(origins="http://localhost:4200")
 public class KidsController {
 	
 	@Autowired
@@ -206,4 +206,9 @@ public class KidsController {
 		return attendanceService.updateAttendance(attendance, id);
 	}
 	
+	@PostMapping("/addKidsAttendance")
+	public ResponseEntity<Object> createKidsAttendance(@RequestBody Attendance attendance,@RequestHeader("KidsIds") String[] kidsIds)
+	{
+		return this.attendanceService.addKidsAttendance(attendance, kidsIds);
+	}
 }

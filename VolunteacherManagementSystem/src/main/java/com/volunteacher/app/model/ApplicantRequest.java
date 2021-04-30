@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -20,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class ApplicantRequest {
 	
 	@Id
@@ -55,8 +58,9 @@ public class ApplicantRequest {
 	@Column(nullable = false, columnDefinition = "TinyInt", length = 1)
 	private int status;
 	
+	@NotNull
 	@CreatedDate
-	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "MM-dd-yyyy")
 	@Column(nullable = false)
 	private Calendar requestDate;
 	
@@ -111,4 +115,14 @@ public class ApplicantRequest {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
+	public Calendar getRequestDate() {
+		return requestDate;
+	}
+
+	public void setRequestDate(Calendar requestDate) {
+		this.requestDate = requestDate;
+	}
+	
+	
 }

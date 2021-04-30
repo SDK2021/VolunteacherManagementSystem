@@ -1,8 +1,11 @@
 package com.volunteacher.app.service.interfaces;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import com.volunteacher.app.model.Attendance;
+import com.volunteacher.app.model.Kid;
 
 public interface AttendanceService {
 	
@@ -17,4 +20,8 @@ public interface AttendanceService {
 	public ResponseEntity<Object> updateAttendance(Attendance attendance, Long id);
 	
 	public ResponseEntity<Object> attendanceBySession(Long sessionId);
+	
+	public ResponseEntity<Object> addKidsAttendance(Attendance attendance,String[] kidsIds);
+	
+	public List<Kid> createKidsList(String [] kidsIds);
 }

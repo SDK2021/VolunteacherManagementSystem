@@ -59,7 +59,7 @@ public class Session {
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = Shape.STRING, pattern = "MM-dd-yyyy")
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar creationDate;
 	
@@ -77,11 +77,11 @@ public class Session {
 	@OneToOne
 	private Village village;
 	
-	@ManyToMany
-	private List<User> users;
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "session")
+	private Notification notification;
 	
 	@ManyToMany
-	private List<Kid> kids;
+	private List<User> users;
 
 	
 	public Session() {
@@ -154,13 +154,5 @@ public class Session {
 
 	public void setNotified(boolean notified) {
 		this.notified = notified;
-	}
-
-	public List<Kid> getKids() {
-		return kids;
-	}
-
-	public void setKids(List<Kid> kids) {
-		this.kids = kids;
 	}
 }

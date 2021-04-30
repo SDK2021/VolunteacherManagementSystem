@@ -8,4 +8,7 @@ import com.volunteacher.app.model.ApplicantRequest;
 @Repository
 public interface ApplicantRequestRepository extends PagingAndSortingRepository<ApplicantRequest, Integer>{
 
+	public ApplicantRequest findByEmailId(String email);
+	
+	public ApplicantRequest findByPhoneNumber(String number);
 }

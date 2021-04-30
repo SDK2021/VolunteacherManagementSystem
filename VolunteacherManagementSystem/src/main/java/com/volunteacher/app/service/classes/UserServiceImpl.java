@@ -132,6 +132,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ResponseEntity<Object> userByEmail(String email) {
+		System.out.println(email);
 		try {
 			User user = userRepository.findByEmail(email);
 			return ResponseEntity.status(HttpStatus.OK).body(user);
@@ -142,6 +143,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public ResponseEntity<Object> userByPhoneNumber(String number) {
+		System.out.println(number);
+		try {
+			User user = userRepository.findByPhoneNumber(number);
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching User by Email");
+		}
+	}
+	
+	@Override
 	public ResponseEntity<Object> usersByBirthday() {
 		try {
 			List<User> userList = userRepository.findAllByDob();
@@ -149,6 +162,19 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching User by Email");
+		}
+	}
+	
+	@Override
+	public boolean setProfile(String url,String userId) {
+		try {
+			User user =userRepository.findById(Long.parseLong(userId)).orElseThrow(()-> new ResourceNotFoundException("Error on set profile"));
+			user.setPhoto(url);
+			userRepository.save(user);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 	

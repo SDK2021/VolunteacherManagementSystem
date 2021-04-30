@@ -45,5 +45,9 @@ public interface CoreService {
 	
 	public ResponseEntity<Object> areaByvillages(int id);
 	
+	public ResponseEntity<Object> deleteVillageById(int id);
+	
+	public ResponseEntity<Object> deleteAreaById(int id);
+	
 	
 }

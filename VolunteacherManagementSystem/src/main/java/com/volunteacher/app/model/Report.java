@@ -45,8 +45,12 @@ public class Report {
 	private String description;
 	
 	@NotNull
+	@Column(nullable = false, columnDefinition = "TEXT")
+	private String pdfUrl;
+	
+	@NotNull
 	@CreatedDate
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "MM-dd-yyyy")
 	@Column(nullable = false)
 	private Calendar creationDate;
 	
@@ -95,4 +99,14 @@ public class Report {
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
+
+	public String getPdfUrl() {
+		return pdfUrl;
+	}
+
+	public void setPdfUrl(String pdfUrl) {
+		this.pdfUrl = pdfUrl;
+	}
+	
+	
 }

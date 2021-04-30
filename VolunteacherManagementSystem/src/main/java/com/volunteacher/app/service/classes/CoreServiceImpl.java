@@ -278,4 +278,29 @@ public class CoreServiceImpl implements CoreService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch taluka by id");
 		}
 	}
+
+	@Override
+	public ResponseEntity<Object> deleteVillageById(int id) 
+	{
+		try {
+			Village village = villageRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Village id not found for id: "+id));
+			villageRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body(village);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Village by id");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> deleteAreaById(int id) {
+		try {
+			Area area = areaRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("area id not found for id: "+id));
+			areaRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body(area);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch area by id");
+		}
+	}
 }

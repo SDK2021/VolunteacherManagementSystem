@@ -35,6 +35,12 @@ public class NotificationController {
 		return notificationService.notificationList(month,year,userType);
 	}
 	
+	@GetMapping("/users-notifications")
+	public ResponseEntity<Object> getNotificationListByUser(@RequestParam("userType") String userType)
+	{
+		return notificationService.notificationListByUser(userType);
+	}
+	
 	@GetMapping("/notifications/{id}")
 	public ResponseEntity<Object> getNotification(@PathVariable Long id)
 	{
