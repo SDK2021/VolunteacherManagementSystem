@@ -35,11 +35,7 @@ public class ContentServiceImpl implements ContentService {
 	public ResponseEntity<Object> contentList()
 	{
 		try {
-			List<Content> contentList = (List<Content>) contentRepository.findAll();
-			
-			if(contentList.size() < 1)
-				throw new ResourceNotFoundException("Content List not found");
-			
+			List<Content> contentList = (List<Content>) contentRepository.findAll();	
 			return ResponseEntity.status(HttpStatus.CREATED).body(contentList);
 		} 
 		catch (Exception e) {

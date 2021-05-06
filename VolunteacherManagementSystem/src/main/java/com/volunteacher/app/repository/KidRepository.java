@@ -1,7 +1,5 @@
 package com.volunteacher.app.repository;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -14,21 +12,21 @@ import com.volunteacher.app.model.Kid;
 @Repository
 public interface KidRepository extends PagingAndSortingRepository<Kid, Long>{
 	
-	public List<Kid> findAllByGroupGroupId(int group);
+	public Page<Kid> findAllByGroupGroupId(int group,Pageable pageable);
 	
-	public List<Kid> findAllByVillageVillageId(int id);
+	public Page<Kid> findAllByVillageVillageId(int id,Pageable pageable);
 	
-	public List<Kid> findAllByAreaAreaId(int id);
+	public Page<Kid> findAllByAreaAreaId(int id,Pageable pageable);
 	
 	public Page<Kid> findAllByVillageVillageIdAndGroupGroupId(int vid, int gid,Pageable pageable);
 	
-	public List<Kid> findAllByVillageVillageIdAndAreaAreaId(int vid,int aid);
+	public Page<Kid> findAllByVillageVillageIdAndAreaAreaId(int vid,int aid,Pageable pageable);
 	
-	public List<Kid> findAllByAreaAreaIdAndGroupGroupId(int aid,int gid);
+	public Page<Kid> findAllByAreaAreaIdAndGroupGroupId(int aid,int gid,Pageable pageable);
 	
-	public List<Kid> findAllByAreaAreaIdAndGroupGroupIdAndVillageVillageId(int aid,int vid,int gid);
+	public Page<Kid> findAllByAreaAreaIdAndGroupGroupIdAndVillageVillageId(int aid,int vid,int gid,Pageable pageable);
 	
-	public List<Kid> findAllByLevel(int level);
+	public Page<Kid> findAllByLevel(int level,Pageable pageable);
 	
 	@Query(value = "select COUNT(*) from kid",nativeQuery = true)
 	public int totalKids();

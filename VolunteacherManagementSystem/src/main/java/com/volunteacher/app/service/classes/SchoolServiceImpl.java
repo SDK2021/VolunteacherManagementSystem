@@ -1,8 +1,12 @@
 package com.volunteacher.app.service.classes;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,14 +35,11 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public ResponseEntity<Object> schoolList() 
+	public ResponseEntity<Object> schoolList(int page) 
 	{
 		try {
-			List<School> schoolList = (List<School>) schoolRepository.findAll();
-			
-			if(schoolList.size() < 1)
-				throw new ResourceNotFoundException("School list not found");
-			
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<School> schoolList = (Page<School>) schoolRepository.findAll(pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(schoolList);
 		} catch (Exception e) {
 			e.printStackTrace();

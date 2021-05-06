@@ -84,9 +84,6 @@ public class Kid {
 	@ManyToMany(mappedBy = "kids")
 	private List<Event> events;
 	
-	@OneToMany(mappedBy = "kid")
-	private List<EventKidActivity> eka;
-	
 	@OneToMany(mappedBy = "kid", cascade = CascadeType.REMOVE)
 	private List<KidsReport> kidsReport;
 	

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +23,6 @@ import com.volunteacher.app.service.interfaces.VolunteacherService;
 
 @RestController
 @RequestMapping(path = "/vms")
-@CrossOrigin(origins="http://localhost:4200")  
 public class UserController {
 	
 	@Autowired
@@ -34,9 +32,9 @@ public class UserController {
 	VolunteacherService volunteacherService;
 	
 	@GetMapping("/volunteachers")
-	public ResponseEntity<Object> getVolunteacherList()
+	public ResponseEntity<Object> getVolunteacherList(@RequestParam("page") int page)
 	{
-		return volunteacherService.volunteacherList();
+		return volunteacherService.volunteacherList(page);
 	}
 	
 	@PostMapping("/volunteachers")
@@ -130,9 +128,9 @@ public class UserController {
 	}
 	
 	@GetMapping("/new-volunteachers")
-	public ResponseEntity<Object> getNewVolunteachers()
+	public ResponseEntity<Object> getNewVolunteachers(@RequestParam("page") int page)
 	{
-		return volunteacherService.getNewVolunteachers();
+		return volunteacherService.getNewVolunteachers(page);
 	}
 	
 	@GetMapping("/birth-users")

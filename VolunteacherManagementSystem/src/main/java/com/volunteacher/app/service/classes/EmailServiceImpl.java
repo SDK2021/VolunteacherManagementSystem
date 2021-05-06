@@ -220,7 +220,7 @@ public class EmailServiceImpl implements EmailService {
 					+"<br><h2><b>Event Ending Time:</b></h2>" 
 					+ "<b>" +event.getEventEndingTime().get(Calendar.HOUR) + ":" + event.getEventEndingTime().get(Calendar.MINUTE) + " " + endamPm + "</b>"
 					+ "</div>"
-					+ "<br><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;We will also send you a reminder before one day of Event.</span>"
+					+ "<br><span style='float:left;'>&nbsp;&nbsp;&nbsp;&nbsp;We will also send you a reminder before one day of Event. Thank you for registration.</span>"
 					+ "<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span style='float:left;'><b>Regards"
 					+ "<br>&nbsp;&nbsp;&nbsp;&nbsp;VMS TEAM </b></span>"
 					+ "	</div></center>"

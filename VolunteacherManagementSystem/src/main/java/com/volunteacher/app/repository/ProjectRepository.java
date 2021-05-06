@@ -26,6 +26,9 @@ public interface ProjectRepository extends PagingAndSortingRepository<Project, I
 	@Query(value = "select COUNT(*) from project_users where projects_project_id=:projectId",nativeQuery = true)
 	public int TotalVolunteachersByProject(int projectId);
 	
+	@Query(value = "Select COUNT(*) from event where project_project_id =:projectId",nativeQuery = true)
+	int totalEventByProject(int projectId);
+	
 	public Project findByProjectName(String name);
 	
 }

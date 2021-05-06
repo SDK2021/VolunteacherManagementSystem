@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -43,10 +42,6 @@ public class Activity {
 	@ManyToMany(mappedBy = "activities")
 	private List<Event> events;
 	
-	@OneToMany(mappedBy = "activity")
-	private List<EventKidActivity> eka;
-	
-
 	public Activity() {
 		super();
 	}

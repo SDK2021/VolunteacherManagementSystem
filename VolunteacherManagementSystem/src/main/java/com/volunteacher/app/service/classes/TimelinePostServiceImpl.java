@@ -40,10 +40,7 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 		try {
 			Pageable pageable = PageRequest.of(page, 7, Sort.by("creationDate").descending());
 			Page<TimelinePost> postList = (Page<TimelinePost>) timelinePostRepository.findAll(pageable);
-			
-//			if(postList.size() < 1)
-//				throw new ResourceNotFoundException("Timelinepost list not found");
-			return ResponseEntity.status(HttpStatus.OK).body(postList.getContent());
+			return ResponseEntity.status(HttpStatus.OK).body(postList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Timeline post ");
@@ -104,9 +101,10 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 	}
 
 	@Override
-	public ResponseEntity<Object> postListByUser(Long id) {
+	public ResponseEntity<Object> postListByUser(int page, Long id) {
 		try {
-			List<TimelinePost> postList = timelinePostRepository.findAllByCreatedByUserId(id,Sort.by("creationDate").descending());
+			Pageable pageable = PageRequest.of(page, 7,Sort.by("creationDate").descending());
+			Page<TimelinePost> postList = timelinePostRepository.findAllByCreatedByUserId(id,pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(postList);
 		} catch (Exception e) {
 			e.printStackTrace();

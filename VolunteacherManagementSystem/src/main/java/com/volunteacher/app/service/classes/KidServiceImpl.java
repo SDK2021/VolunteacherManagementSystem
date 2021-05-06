@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -45,10 +44,9 @@ public class KidServiceImpl implements KidService {
 	public ResponseEntity<Object> kidList(int page) 
 	{
 		try {
-			Pageable pageable = PageRequest.of(page, 5);
+			Pageable pageable = PageRequest.of(page, 10);
 			Page<Kid> kidList = (Page<Kid>) kidRepository.findAll(pageable);
-			
-			return ResponseEntity.status(HttpStatus.OK).body(kidList.getContent());
+			return ResponseEntity.status(HttpStatus.OK).body(kidList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids");
@@ -68,19 +66,12 @@ public class KidServiceImpl implements KidService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> kidsListByVillageAndGroup(int villageId, int groupId) 
+	public ResponseEntity<Object> kidsListByVillageAndGroup(int page,int villageId, int groupId) 
 	{
-		HttpHeaders headers = new HttpHeaders();
-		System.out.println("Hello VillageGroup");
 		try {
-			Pageable pageable = PageRequest.of(0, 7);
+			Pageable pageable = PageRequest.of(page, 10);
 			Page<Kid> kidsList = (Page<Kid>) kidRepository.findAllByVillageVillageIdAndGroupGroupId(villageId, groupId, pageable);
-			headers.add("totalKids",String.valueOf(kidsList.getTotalElements()));
-		//	List<Kid> kidsList = kidRepository.findAllByVillageVillageIdAndGroupGroupId(villageId, groupId);
-		//	return ResponseEntity.status(HttpStatus.OK).header("Hello", "world").body(kidsList.getContent());
-			 ResponseEntity<Object> responseEntity = new ResponseEntity<>(kidsList.getContent(),headers,HttpStatus.OK);
-			 System.out.println(responseEntity.getHeaders());
-			 return responseEntity;
+			 return ResponseEntity.status(HttpStatus.OK).body(kidsList);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,14 +80,11 @@ public class KidServiceImpl implements KidService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> kidsListByGroup(int groupId)
+	public ResponseEntity<Object> kidsListByGroup(int page,int groupId)
 	{
 		try {
-			List<Kid> kidsList = kidRepository.findAllByGroupGroupId(groupId);
-			
-			if(kidsList.size() < 1)
-				throw new ResourceNotFoundException("Kid List not found for group id: "+ groupId);
-			
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Kid> kidsList = (Page<Kid>) kidRepository.findAllByGroupGroupId(groupId,pageable);	
 			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,10 +135,6 @@ public class KidServiceImpl implements KidService {
 	{
 		try {
 			List<KidsGroup> kidGroupList = (List<KidsGroup>) kidsGroupRepository.findAll();
-			
-			if(kidGroupList.size() < 1)
-				throw new ResourceNotFoundException("Kids Group not found");
-			
 			return ResponseEntity.status(HttpStatus.OK).body(kidGroupList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -172,7 +156,6 @@ public class KidServiceImpl implements KidService {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating KidsGroup");
 		}
-		
 	}
 
 	@Override
@@ -207,13 +190,10 @@ public class KidServiceImpl implements KidService {
 	}
 
 	@Override
-	public ResponseEntity<Object> kidsListByArea(int areaId) {
+	public ResponseEntity<Object> kidsListByArea(int page,int areaId) {
 		try {
-			List<Kid> kidsList = kidRepository.findAllByAreaAreaId(areaId);
-			
-			if(kidsList.size() < 1)
-				throw new ResourceNotFoundException("Kid List not found for area id: "+ areaId);
-			
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Kid> kidsList = (Page<Kid>) kidRepository.findAllByAreaAreaId(areaId,pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -222,13 +202,10 @@ public class KidServiceImpl implements KidService {
 	}
 
 	@Override
-	public ResponseEntity<Object> kidsListByVillage(int villageId) {
+	public ResponseEntity<Object> kidsListByVillage(int page,int villageId) {
 		try {
-			List<Kid> kidsList = kidRepository.findAllByVillageVillageId(villageId);
-			
-			if(kidsList.size() < 1)
-				throw new ResourceNotFoundException("Kid List not found for village id: "+ villageId);
-			
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Kid> kidsList = (Page<Kid>)kidRepository.findAllByVillageVillageId(villageId,pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
 			
 		} catch (Exception e) {
@@ -238,9 +215,10 @@ public class KidServiceImpl implements KidService {
 	}
 
 	@Override
-	public ResponseEntity<Object> kidsListByVillageAndArea(int villageId, int areaId) {
+	public ResponseEntity<Object> kidsListByVillageAndArea(int page,int villageId, int areaId) {
 		try {
-			List<Kid> kidsList = kidRepository.findAllByVillageVillageIdAndAreaAreaId(villageId,areaId);
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Kid> kidsList = (Page<Kid>)kidRepository.findAllByVillageVillageIdAndAreaAreaId(villageId,areaId,pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -249,9 +227,10 @@ public class KidServiceImpl implements KidService {
 	}
 
 	@Override
-	public ResponseEntity<Object> kidsListByAreaAndGroup(int areaId, int groupId) {
+	public ResponseEntity<Object> kidsListByAreaAndGroup(int page,int areaId, int groupId) {
 		try {
-			List<Kid> kidsList = kidRepository.findAllByAreaAreaIdAndGroupGroupId(areaId, groupId);
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Kid> kidsList =(Page<Kid>) kidRepository.findAllByAreaAreaIdAndGroupGroupId(areaId, groupId,pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -260,9 +239,10 @@ public class KidServiceImpl implements KidService {
 	}
 
 	@Override
-	public ResponseEntity<Object> kidsListByAreaAndGroupAndVillage(int areaId, int groupId, int villageId) {
+	public ResponseEntity<Object> kidsListByAreaAndGroupAndVillage(int page,int areaId, int groupId, int villageId) {
 		try {
-			List<Kid> kidsList = kidRepository.findAllByAreaAreaIdAndGroupGroupIdAndVillageVillageId(areaId, groupId, villageId);
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Kid> kidsList = (Page<Kid>)kidRepository.findAllByAreaAreaIdAndGroupGroupIdAndVillageVillageId(areaId, groupId, villageId,pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -271,9 +251,10 @@ public class KidServiceImpl implements KidService {
 	}
 
 	@Override
-	public ResponseEntity<Object> kidsListByLevel(int level) {
+	public ResponseEntity<Object> kidsListByLevel(int page,int level) {
 		try {
-			List<Kid> kidsList = kidRepository.findAllByLevel(level);
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Kid> kidsList = (Page<Kid>)kidRepository.findAllByLevel(level,pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(kidsList);
 		} catch (Exception e) {
 			e.printStackTrace();

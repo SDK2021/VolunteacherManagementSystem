@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +22,6 @@ import com.volunteacher.app.service.interfaces.SessionService;
 
 @RestController
 @RequestMapping(path = "/vms")
-@CrossOrigin(origins="http://localhost:4200")
 public class SessionController {
 	
 	@Autowired
@@ -36,15 +34,15 @@ public class SessionController {
 	}
 	
 	@GetMapping("/sessions")
-	public ResponseEntity<Object> getSessionList(@RequestParam("month") int month, @RequestParam("year") int year)
+	public ResponseEntity<Object> getSessionList(@RequestParam("page") int page, @RequestParam("month") int month, @RequestParam("year") int year)
 	{
-		return sessionService.sessionList(month, year);
+		return sessionService.sessionList(page,month, year);
 	}
 	
 	@GetMapping("/all-sessions")
-	public ResponseEntity<Object> getAllSessionList()
+	public ResponseEntity<Object> getAllSessionList(@RequestParam("page") int page)
 	{
-		return sessionService.allSessionList();
+		return sessionService.allSessionList(page);
 	}
 	
 	@GetMapping("/sessions/{id}")
@@ -78,9 +76,9 @@ public class SessionController {
 	}
 	
 	@GetMapping("/session-reports/{id}")
-	public ResponseEntity<Object> getSessionReport(@PathVariable int id)
+	public ResponseEntity<Object> getSessionReport(@RequestParam("page") int page, @PathVariable int id)
 	{
-		return sessionService.sessionReportsBySession(id);
+		return sessionService.sessionReportsBySession(page,id);
 	}
 	
 	@DeleteMapping("/session-reports/{id}")

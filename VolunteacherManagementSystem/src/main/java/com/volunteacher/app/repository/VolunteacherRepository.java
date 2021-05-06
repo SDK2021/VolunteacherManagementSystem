@@ -2,6 +2,8 @@ package com.volunteacher.app.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -20,5 +22,5 @@ public interface VolunteacherRepository extends PagingAndSortingRepository<Volun
 	public int allVolunteacher();
 	
 	@Query(value = "select * from volunteacher where joining_date < (DATE_ADD(joining_date,INTERVAL 1 YEAR)) ORDER BY joining_date DESC",nativeQuery = true)
-	public List<Volunteacher> newVolunteachers();
+	public Page<Volunteacher> newVolunteachers(Pageable pageable);
 }

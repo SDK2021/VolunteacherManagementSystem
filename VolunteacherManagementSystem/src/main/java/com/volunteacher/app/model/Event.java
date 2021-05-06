@@ -51,12 +51,12 @@ public class Event {
 	private Calendar eventDate;
 	
 	@NotNull
-	@JsonFormat(shape = Shape.STRING)
+	@JsonFormat(shape = Shape.STRING,pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar eventStartingTime;
 	
 	@NotNull
-	@JsonFormat(shape = Shape.STRING)
+	@JsonFormat(shape = Shape.STRING,pattern = "HH:mm:ss")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar eventEndingTime;
 	
@@ -80,9 +80,6 @@ public class Event {
 	
 	@ManyToMany
 	private List<Kid> kids;
-	
-	@OneToMany(mappedBy = "event")
-	private List<EventKidActivity> eka;
 	
 	@ManyToMany
 	private List<Activity> activities;

@@ -85,4 +85,15 @@ public class ReportServiceImpl implements ReportService {
 		}
 	}
 
+	@Override
+	public ResponseEntity<Object> reportByCurrentYear() {
+		try {
+			List<Report> reportList = reportRepository.reportByYear();
+			return ResponseEntity.status(HttpStatus.OK).body(reportList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in fetchind Report By year");
+		}
+	}
+
 }

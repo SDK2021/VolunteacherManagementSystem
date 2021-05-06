@@ -2,7 +2,6 @@ package com.volunteacher.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +20,6 @@ import com.volunteacher.app.service.interfaces.ParticipantService;
 
 @RestController
 @RequestMapping(path = "/vms")
-@CrossOrigin(origins="http://localhost:4200")  
 public class EventController {
 	
 	@Autowired
@@ -43,9 +41,39 @@ public class EventController {
 	}
 	
 	@GetMapping("/events")
-	public ResponseEntity<Object> getEventList(@RequestParam("page") int page)
+	public ResponseEntity<Object> getEventListByMonthAndYear(@RequestParam("page") int page)
 	{
 		return eventService.eventList(page);
+	}
+	
+	@GetMapping("/all-events")
+	public ResponseEntity<Object> getAllEvents(@RequestParam("page") int page)
+	{
+		return eventService.getAllEvents(page);
+	}
+	
+	@GetMapping("/total-participate-kids")
+	public ResponseEntity<Object> getAllParticipantKidsByEvent(@RequestParam("event") int eventId)
+	{
+		return eventService.totalKidsByEvent(eventId);
+	}
+	
+	@GetMapping("/total-participant")
+	public ResponseEntity<Object> getAllParticipantByEvent(@RequestParam("event") int eventId)
+	{
+		return participantService.totalParticipantByEvent(eventId);
+	}
+	
+	@GetMapping("/total-participate-volunteachers")
+	public ResponseEntity<Object> getAllParticipantVolunteacherByEvent(@RequestParam("event") int eventId,@RequestParam("type") int typeId)
+	{
+		return participantService.totalVolunteacherParticipantByEvent(eventId, typeId);
+	}
+	
+	@GetMapping("/total-participate-others")
+	public ResponseEntity<Object> getAllOtherParticipantByEvent(@RequestParam("event") int eventId,@RequestParam("type") int typeId)
+	{
+		return participantService.totalOtherParticipantByEvent(eventId, typeId);
 	}
 	
 	@DeleteMapping("/events/{id}")
@@ -90,5 +118,5 @@ public class EventController {
 	{
 		return eventService.getTotalEvents();
 	}
-	
+
 }

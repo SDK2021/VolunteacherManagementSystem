@@ -1,21 +1,18 @@
 package com.volunteacher.app.service.classes;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.Donor;
 import com.volunteacher.app.model.Payment;
-import com.volunteacher.app.model.PaymentDetails;
 import com.volunteacher.app.repository.DonorRepository;
 import com.volunteacher.app.repository.PaymentRepository;
 import com.volunteacher.app.service.interfaces.PaymentService;
@@ -99,8 +96,8 @@ public class PaymentServiceImpl implements PaymentService {
 	public ResponseEntity<Object> paymentList(int id) 
 	{
 		try {
-			Pageable pageable = PageRequest.of(id, 5);
-			List<Payment> paymentList = (List<Payment>) paymentRepository.findAll();
+			Pageable pageable = PageRequest.of(id, 10,Sort.by("creationDate").descending());
+			Page<Payment> paymentList = (Page<Payment>) paymentRepository.findAll(pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(paymentList);
 		} catch (Exception e) {
 			e.printStackTrace();

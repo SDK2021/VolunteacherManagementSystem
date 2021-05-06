@@ -26,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.paytm.pg.merchant.PaytmChecksum;
 import com.volunteacher.app.model.Donor;
 import com.volunteacher.app.model.Payment;
-import com.volunteacher.app.model.PaymentDetails;
 import com.volunteacher.app.service.interfaces.PaymentService;
 
 @Controller
@@ -35,9 +34,6 @@ public class PaymentController {
 	
 	@Autowired
 	PaymentService paymentService;
-	
-	@Autowired
-	PaymentDetails paymentDetail;
 	
 	@Autowired
 	Payment payment;

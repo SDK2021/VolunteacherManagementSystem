@@ -16,7 +16,7 @@ public interface TimelinePostService {
 	
 	public ResponseEntity<Object> deletePost(Long id);
 	
-	public ResponseEntity<Object> postListByUser(Long id);
+	public ResponseEntity<Object> postListByUser(int page,Long id);
 	
 	public int TotalPostByUser(int id);
 	
