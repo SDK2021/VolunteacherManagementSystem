@@ -1,10 +1,8 @@
 package com.volunteacher.app.service.classes;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -44,17 +42,17 @@ public class NotificationServiceImpl implements NotificationService {
 			}
 			if(notification.getEvent() !=null)
 			{
-				notification.getEvent().setNotified(true);
+				notification.getSession().setNotified(true);
 				eventRepository.save(notification.getEvent());
 			}
 			Notification saveNotification = notificationRepository.save(notification);
 			if(notification.getSession() != null)
 			{
-				emailService.notificationSessionMail(notification.getUserType().toUpperCase(),notification);
+				emailService.notificationSessionMail(notification.getUserType().toUpperCase());
 			}
 			if(notification.getEvent() !=null)
 			{
-				emailService.notificationEventMail(notification.getUserType().toUpperCase(),notification);
+				emailService.notificationEventMail(notification.getUserType().toUpperCase());
 			}
 			
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveNotification);
@@ -65,11 +63,14 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> notificationList(int page,int month, int year, String userType)
+	public ResponseEntity<Object> notificationList(int month, int year, String userType)
 	{
 		try {
-			Pageable pageable = PageRequest.of(page, 7);
-			Page<Notification> notificationList = (Page<Notification>) notificationRepository.notificationByMonthAndYear(month, year, userType,pageable);
+			List<Notification> notificationList = (List<Notification>) notificationRepository.notificationByMonthAndYear(month, year, userType);
+			
+//			if(notificationList.size() < 1)
+//				throw new ResourceNotFoundException("Notification list not found");
+			
 			return ResponseEntity.status(HttpStatus.OK).body(notificationList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,11 +79,14 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> notificationAdminFilter(int page)
+	public ResponseEntity<Object> notificationAdminFilter()
 	{
 		try {
-			Pageable pageable = PageRequest.of(page, 7,Sort.by("createdDate").descending());
-			Page<Notification> notificationList = (Page<Notification>) notificationRepository.findAll(pageable);
+			List<Notification> notificationList = (List<Notification>) notificationRepository.notificationAdminFilter();
+			
+//			if(notificationList.size() < 1)
+//				throw new ResourceNotFoundException("Notification list not found");
+			
 			return ResponseEntity.status(HttpStatus.OK).body(notificationList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,11 +95,14 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> notificationListByUser(int page,String userType)
+	public ResponseEntity<Object> notificationListByUser(String userType)
 	{
 		try {
-			Pageable pageable = PageRequest.of(page, 7,Sort.by("created_date").descending());
-			Page<Notification> notificationList = (Page<Notification>) notificationRepository.notificationByUser(userType,pageable);
+			List<Notification> notificationList = (List<Notification>) notificationRepository.notificationByUser(userType);
+			
+//			if(notificationList.size() < 1)
+//				throw new ResourceNotFoundException("Notification list not found");
+			
 			return ResponseEntity.status(HttpStatus.OK).body(notificationList);
 		} catch (Exception e) {
 			e.printStackTrace();

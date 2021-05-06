@@ -35,11 +35,13 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 		if((userService.userByEmail(request.getEmailId()).getBody() != null) || (this.requestByEmail(request.getEmailId()).getBody() != null))
 		{
 			System.out.println(userService.userByEmail(request.getEmailId()));
+			//throw new EmailAlreadyExistException("You email id already exist");
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
 		if(userService.userByPhoneNumber(request.getPhoneNumber()).getBody() != null || (this.requestByPhoneNumber(request.getPhoneNumber()).getBody() != null))
 		{
+			//throw new EmailAlreadyExistException("You email id already exist");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		
@@ -55,12 +57,16 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> requestList(int page)
+	public ResponseEntity<Object> requestList()
 	{
 		try {
-			Pageable pageable = PageRequest.of(page, 7,Sort.by("requestDate").descending());
+//			Sort sort = Sort.by(
+//					Sort.Order.desc("requestDate"),
+//					Sort.Order.asc("name")	
+//			);
+			Pageable pageable = PageRequest.of(0, 5,Sort.by("requestDate"));
 			Page<ApplicantRequest> requestList = (Page<ApplicantRequest>) applicantRequestRepository.findAll(pageable);
-			return ResponseEntity.status(HttpStatus.OK).body(requestList);
+			return ResponseEntity.status(HttpStatus.OK).body(requestList.getContent());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Applicant request list");

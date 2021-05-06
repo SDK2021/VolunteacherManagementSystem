@@ -2,6 +2,8 @@ package com.volunteacher.app.service.classes;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
@@ -83,10 +85,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Modifying
 	public ResponseEntity<Object> deleteUser(Long id)
 	{
 		userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found for id: " + id));
+		notificationRepository.deleteByCreatedByUserId(id);
 		try {
 			System.out.println(id);
 			userRepository.deleteById(id);
@@ -102,6 +104,10 @@ public class UserServiceImpl implements UserService {
 	{
 		try {
 			List<User> users = (List<User>) userRepository.findAll();
+			
+			if(users.size() < 1)
+				throw new ResourceNotFoundException("User List is empty");
+			
 			return ResponseEntity.status(HttpStatus.OK).body(users);
 		} catch (Exception e) {
 			e.printStackTrace();

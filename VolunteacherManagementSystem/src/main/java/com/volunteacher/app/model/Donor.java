@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -36,15 +36,15 @@ public class Donor {
 	private String donorName;
 
 	@NotNull
-	@Column(length = 10, nullable = false)
+	@Column(length = 10, nullable = false, unique = true)
 	private String donorPhone;
 
 	@NotNull
-	@Column(length = 40, nullable = false)
+	@Column(length = 40, nullable = false, unique = true)
 	private String donorEmail;
 
 	@NotNull
-	@ManyToOne	
+	@OneToOne
 	private UserType userType;
 
 	@OneToMany(cascade = CascadeType.ALL , mappedBy = "donor")
@@ -83,19 +83,11 @@ public class Donor {
 		this.donorEmail = donorEmail;
 	}
 
-	public UserType getUserType() {
+	public UserType getUsertype() {
 		return userType;
 	}
 
-	public void setUserType(UserType userType) {
-		this.userType = userType;
+	public void setUsertype(UserType usertype) {
+		this.userType = usertype;
 	}
-
-	@Override
-	public String toString() {
-		return "Donor [donorId=" + donorId + ", donorName=" + donorName + ", donorPhone=" + donorPhone + ", donorEmail="
-				+ donorEmail + ", userType=" + userType + ", payment=" + payment + "]";
-	}
-
-	
 }

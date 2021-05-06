@@ -2,7 +2,6 @@ package com.volunteacher.app.model;
 
 import java.util.Calendar;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -12,10 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -23,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Component
 public class Payment {
 
 	@Id
@@ -39,10 +37,18 @@ public class Payment {
 	private int paymentId;
 
 	@NotNull
+	//for storing time at first time--upadateOp???
 	@CreatedDate
 	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy")
-	@Column(nullable = false)
-	private Calendar creationDate;
+	@Column(nullable = false, columnDefinition = "DATE")
+	private Calendar paymentDate;
+
+	@NotNull
+	//Search to store time at first time
+	@Column(nullable = false, columnDefinition = "TIME")
+	@JsonFormat(shape = Shape.STRING,pattern = "HH-mm-ss")
+	@CreationTimestamp
+	private Calendar paymentTime;
 
 	@NotNull
 	@Column(nullable = false , length = 20)
@@ -58,7 +64,7 @@ public class Payment {
 	private String transactionId;
 
 	@NotNull
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Donor donor;
 	
 
@@ -70,12 +76,20 @@ public class Payment {
 		return paymentId;
 	}
 
-	public Calendar getCreationDate() {
-		return creationDate;
+	public Calendar getPaymentDate() {
+		return paymentDate;
 	}
 
-	public void setCreationDate(Calendar creationDate) {
-		this.creationDate = creationDate;
+	public void setPaymentDate(Calendar paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+
+	public Calendar getPaymentTime() {
+		return paymentTime;
+	}
+
+	public void setPaymentTime(Calendar paymentTime) {
+		this.paymentTime = paymentTime;
 	}
 
 	public String getPaymentMode() {
@@ -108,11 +122,5 @@ public class Payment {
 
 	public void setDonor(Donor donor) {
 		this.donor = donor;
-	}
-
-	@Override
-	public String toString() {
-		return "Payment [paymentId=" + paymentId + ", creationDate=" + creationDate + ", paymentMode=" + paymentMode
-				+ ", amount=" + amount + ", transactionId=" + transactionId + ", donor=" + donor + "]";
 	}
 }

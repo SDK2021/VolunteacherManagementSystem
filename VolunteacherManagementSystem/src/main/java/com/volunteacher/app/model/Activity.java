@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -30,18 +31,22 @@ public class Activity {
 	private int activityId;
 	
 	@NotNull
-	@Column(nullable = false , length=20, columnDefinition = "Char(20)")
+	@Column(nullable = false , length=20 , columnDefinition = "Char(20)")
 	private String activityName;
 	
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String description;
 	
-	@ManyToMany(mappedBy = "activities")
-	private List<Participant> participants;
+//	@ManyToMany(mappedBy = "activities")
+//	private List<Participant> participants;
 	
 	@ManyToMany(mappedBy = "activities")
 	private List<Event> events;
 	
+//	@OneToMany(mappedBy = "activity")
+//	private List<EventKidActivity> eka;
+	
+
 	public Activity() {
 		super();
 	}

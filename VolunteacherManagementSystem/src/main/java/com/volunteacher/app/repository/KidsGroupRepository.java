@@ -8,5 +8,4 @@ import com.volunteacher.app.model.KidsGroup;
 @Repository
 public interface KidsGroupRepository extends PagingAndSortingRepository<KidsGroup, Integer>{
 
-	KidsGroup findByGroupName(String name);
 }

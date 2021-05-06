@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -42,11 +38,14 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public ResponseEntity<Object> sessionList(int page,int month,int year) 
+	public ResponseEntity<Object> sessionList(int month,int year) 
 	{
 		try {
-			Pageable pageable = PageRequest.of(page, 5);
-			Page<Session> sessionList = (Page<Session>)sessionRepository.sessionByMonthAndYear(month, year,pageable);
+			
+			List<Session> sessionList = (List<Session>)sessionRepository.sessionByMonthAndYear(month, year);
+			
+//			if(sessionList.size() < 1)
+//				throw new ResourceNotFoundException("Session List Not found");
 			return ResponseEntity.status(HttpStatus.OK).body(sessionList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,6 +90,7 @@ public class SessionServiceImpl implements SessionService {
 		sessionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Session not found for id: "+id));
 		
 		try {
+			sessionRepository.deleteSessionsUsers(id);
 			sessionRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
@@ -136,10 +136,9 @@ public class SessionServiceImpl implements SessionService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> sessionReportsBySession(int page,long id) {
+	public ResponseEntity<Object> sessionReportsBySession(long id) {
 		try {
-			Pageable pageable = PageRequest.of(page, 5);
-			Page<SessionReport> sessionReports = (Page<SessionReport>)sessionReportRepository.findAllBySessionSessionId(id,pageable);
+			List<SessionReport> sessionReports = sessionReportRepository.findAllBySessionSessionId(id);
 			return ResponseEntity.status(HttpStatus.OK).body(sessionReports);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -188,10 +187,10 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public ResponseEntity<Object> allSessionList(int page) {
+	public ResponseEntity<Object> allSessionList() {
 		try {
-			Pageable pageable = PageRequest.of(page, 10,Sort.by("creationDate").descending());
-			Page<Session> sessionList = (Page<Session>)sessionRepository.findAll(pageable);
+			
+			List<Session> sessionList = (List<Session>)sessionRepository.findAll();
 			return ResponseEntity.status(HttpStatus.OK).body(sessionList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -213,13 +212,14 @@ public class SessionServiceImpl implements SessionService {
 		}
 	}
 
-	//latest
 	@Override
 	public ResponseEntity<Object> getSessionsRequirements() {
 		List<SessionReport> sessionReports = new ArrayList<>();
+		
 		try {
 			List<Long> sessions = sessionRepository.getPreviousSessions();
 			for (Long sessionId : sessions) {
+			//	System.out.println(sessions.size());
 				List<SessionReport> reportList = sessionReportRepository.findAllBySessionSessionId(sessionId);
 				System.out.println(sessionId);
 				for (SessionReport report : reportList) {

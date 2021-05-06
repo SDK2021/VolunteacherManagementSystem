@@ -2,8 +2,6 @@ package com.volunteacher.app.repository;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -17,5 +15,5 @@ public interface TimelinePostRepository extends PagingAndSortingRepository<Timel
 	@Query(value = "select COUNT(*) from timeline_post where created_by_user_id = :id",nativeQuery = true)
 	int TotalPostByUser(int id);
 	
-	Page<TimelinePost> findAllByCreatedByUserId(Long id,Pageable pageable);
+	List<TimelinePost> findAllByCreatedByUserId(Long id,Sort sort);
 }

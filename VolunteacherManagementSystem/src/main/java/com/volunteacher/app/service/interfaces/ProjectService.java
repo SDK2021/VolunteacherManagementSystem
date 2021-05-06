@@ -24,6 +24,8 @@ public interface ProjectService {
 	
 	public int TotalNumberProjectByUser(int id);
 	
+	public ResponseEntity<Object> allProjectList();
+	
 	public ResponseEntity<Object> projectNumbersByUser(int userId);
 	
 	public ResponseEntity<Object> totalSessionsByProject(int projectId);
@@ -32,10 +34,7 @@ public interface ProjectService {
 	
 	public ResponseEntity<Object> totalVolunteachersByProject(int projectId);
 	
-	public ResponseEntity<Object> totalEventByProject(int projectId);
-	
 	public List<User> createVolunteachersList(String[] ids);
 	
 	public List<Kid> createKidsList(String[] ids);
-	
 }

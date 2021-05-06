@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -45,10 +44,10 @@ public class KidsReport {
 	@Column(nullable = false, columnDefinition = "Date")
 	private Calendar createdDate;
 	
-	@NotNull
-	@CreatedBy
-	@ManyToOne
-	private User createdBy;
+//	@NotNull
+//	@CreatedBy
+//	@ManyToOne
+//	private User createdBy;
 	
 	@NotNull
 	@Column(nullable = false, length = 8)
@@ -144,14 +143,14 @@ public class KidsReport {
 	}
 
 
-	public User getCreatedBy() {
-		return createdBy;
-	}
-
-
-	public void setCreatedBy(User createdBy) {
-		this.createdBy = createdBy;
-	}
+//	public User getCreatedBy() {
+//		return createdBy;
+//	}
+//
+//
+//	public void setCreatedBy(User createdBy) {
+//		this.createdBy = createdBy;
+//	}
 
 
 	public int getDiscipline() {

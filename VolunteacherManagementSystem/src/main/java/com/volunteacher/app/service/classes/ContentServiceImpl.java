@@ -35,7 +35,11 @@ public class ContentServiceImpl implements ContentService {
 	public ResponseEntity<Object> contentList()
 	{
 		try {
-			List<Content> contentList = (List<Content>) contentRepository.findAll();	
+			List<Content> contentList = (List<Content>) contentRepository.findAll();
+			
+			if(contentList.size() < 1)
+				throw new ResourceNotFoundException("Content List not found");
+			
 			return ResponseEntity.status(HttpStatus.CREATED).body(contentList);
 		} 
 		catch (Exception e) {
@@ -72,17 +76,6 @@ public class ContentServiceImpl implements ContentService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Content for id:" +id);
 		}
 		
-	}
-	
-	@Override
-	public ResponseEntity<Object> contentByGroup(int groupId)
-	{
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(contentRepository.findByGroupGroupId(groupId));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in fetching Content By group");
-		}
 	}
 	
 	@Override

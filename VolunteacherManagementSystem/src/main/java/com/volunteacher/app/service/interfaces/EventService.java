@@ -14,11 +14,7 @@ public interface EventService {
 	
 	public ResponseEntity<Object> eventList(int page);
 	
-	public ResponseEntity<Object> getAllEvents(int page);
-	
 	public ResponseEntity<Object> updateEvent(Event event, int id);
-	
-	public ResponseEntity<Object> totalKidsByEvent(int eventId);
 	
 	public ResponseEntity<Object> eventById(int id);
 	

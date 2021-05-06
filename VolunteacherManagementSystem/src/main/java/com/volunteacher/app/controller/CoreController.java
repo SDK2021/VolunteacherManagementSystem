@@ -18,7 +18,8 @@ import com.volunteacher.app.model.Village;
 import com.volunteacher.app.service.interfaces.CoreService;
 
 @RestController
-@RequestMapping("/vms") 
+@RequestMapping("/vms")
+//@CrossOrigin(origins="http://localhost:4200")  
 public class CoreController {
 		
 		@Autowired

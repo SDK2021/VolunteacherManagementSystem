@@ -1,7 +1,5 @@
 package com.volunteacher.app.model;
 
-import java.util.Calendar;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -15,9 +13,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -50,12 +45,6 @@ public class Notification {
 	
 	@OneToOne
 	private Event event;
-	
-	@CreatedBy
-	@NotNull
-	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy HH:mm:ss")
-	@Column(nullable = false)
-	private Calendar createdDate;
 	
 
 	public Notification() {
@@ -104,13 +93,5 @@ public class Notification {
 
 	public void setEvent(Event event) {
 		this.event = event;
-	}
-
-	public Calendar getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Calendar createdDate) {
-		this.createdDate = createdDate;
 	}
 }

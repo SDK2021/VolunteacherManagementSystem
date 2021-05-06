@@ -36,6 +36,9 @@ public class KidsReportServiceImpl implements KidsReportService{
 	{
 		try {
 			List<KidsReport> kidReportList = (List<KidsReport>) kidsReportRepository.findAll();
+			
+			if(kidReportList.size() < 1)
+				throw new ResourceNotFoundException("Kids report not found");
 			return ResponseEntity.status(HttpStatus.OK).body(kidReportList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,6 +63,10 @@ public class KidsReportServiceImpl implements KidsReportService{
 	{
 		try {
 			 List<KidsReport>  kidsReportList = kidsReportRepository.findAllByKidKidId(id,Sort.by("createdDate").descending());
+			
+			if(kidsReportList.size() < 0)
+				throw new ResourceNotFoundException("Kid's reports is not found for kid id: "+ id);
+
 			return ResponseEntity.status(HttpStatus.OK).body(kidsReportList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -114,8 +121,8 @@ public class KidsReportServiceImpl implements KidsReportService{
 	}
 
 	@Override
-	public ResponseEntity<Object> kidReportByYear(Long kid, int year) 
-	{
+	public ResponseEntity<Object> kidReportByYear(Long kid, int year) {
+		
 		List<KidsReport> kidsReportList = kidsReportRepository.KidsReportByYear(kid, year);
 		return ResponseEntity.status(HttpStatus.OK).body(kidsReportList);
 	}

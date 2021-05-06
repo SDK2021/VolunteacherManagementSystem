@@ -59,21 +59,8 @@ public class EventServiceImpl implements EventService{
 	{
 		try {
 			Pageable pageable = PageRequest.of(page, 5, Sort.by("event_date"));
-			Page<Event> eventList = (Page<Event>) eventRepository.eventByMonthAndYear(pageable);
-			return ResponseEntity.status(HttpStatus.OK).body(eventList);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Events");
-		}
-	}
-	
-	@Override
-	public ResponseEntity<Object> getAllEvents(int page)
-	{
-		try {
-			Pageable pageable = PageRequest.of(page, 10, Sort.by("eventDate").descending());
 			Page<Event> eventList = (Page<Event>) eventRepository.findAll(pageable);
-			return ResponseEntity.status(HttpStatus.OK).body(eventList);
+			return ResponseEntity.status(HttpStatus.OK).body(eventList.getContent());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Events");
@@ -179,20 +166,6 @@ public class EventServiceImpl implements EventService{
 		{
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total events");
-		}
-	}
-
-	@Override
-	public ResponseEntity<Object> totalKidsByEvent(int eventId) {
-		try 
-		{
-			Event event = eventRepository.findByEventId(eventId);
-			return ResponseEntity.status(HttpStatus.OK).body(event.getKids().size());
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total Kids by event");
 		}
 	}
 }

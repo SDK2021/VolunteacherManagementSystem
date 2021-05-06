@@ -1,10 +1,8 @@
 package com.volunteacher.app.service.classes;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,16 +19,15 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	AnnouncementRepository announcementRepsitory;
 
 	@Override
-	public ResponseEntity<Object> announcementList(int page) 
+	public ResponseEntity<Object> announcementList() 
 	{
-		Pageable pageable = PageRequest.of(page, 6,Sort.by("creationDate").descending());
 		try {
-			Page<Announcement> announcementList = (Page<Announcement>) announcementRepsitory.findAll(pageable);
+			List<Announcement> announcementList = (List<Announcement>) announcementRepsitory.findAll();
 			return ResponseEntity.status(HttpStatus.OK).body(announcementList);
 	
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch announcement list");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while fetching announcement list");
 		}
 	}
 

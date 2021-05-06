@@ -15,6 +15,4 @@ public interface ReportService {
 	public ResponseEntity<Object> reportById(int id);
 	
 	public ResponseEntity<Object> deleteReport(int id);
-	
-	public ResponseEntity<Object> reportByCurrentYear();
 }

@@ -44,10 +44,6 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public ResponseEntity<Object> addProject(Project project,String[] vIds,String[] kIds) 
 	{
-		if(projectRepository.findByProjectName(project.getProjectName()) != null)
-		{
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Project already Exist");
-		}
 		try {
 			project.setUsers(this.createVolunteachersList(vIds));
 			project.setKids(this.createKidsList(kIds));
@@ -67,8 +63,17 @@ public class ProjectServiceImpl implements ProjectService{
 	{
 		try {
 			List<Project> projectList = (List<Project>) projectRepository.findAll();
+			
+			if(projectList.size() < 1)
+			{
+				throw new ResourceNotFoundException("Project list not found");
+			}
+			else 
+			{
 				return ResponseEntity.status(HttpStatus.OK).body(projectList);
-			} catch (Exception e) {
+			}
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch projects list");
 		}
@@ -77,10 +82,21 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public ResponseEntity<Object> projectList(int page) 
 	{
-		try 
-		{
-			List<Project> pageprojectList = (List<Project>) projectRepository.findAll(Sort.by("creationDate").descending());
-			return ResponseEntity.status(HttpStatus.OK).body(pageprojectList);
+		try {
+			List<Project> projectList = (List<Project>) projectRepository.findAll();
+			
+			if(projectList.size() < 1)
+			{
+				throw new ResourceNotFoundException("Project list not found");
+			}
+			else 
+			{
+				Pageable pageable = PageRequest.of(page, 5, Sort.by("creationDate").descending());
+				Page<Project> pageprojectList = (Page<Project>) projectRepository.findAll(pageable);
+				return ResponseEntity.status(HttpStatus.OK).body(pageprojectList.getContent());
+			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch projects");
@@ -135,6 +151,8 @@ public class ProjectServiceImpl implements ProjectService{
 		projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project is not found for id: "+id));
 		
 		try {
+			projectRepository.deleteProjectsKids(id);
+			projectRepository.deleteProjectsUsers(id);
 			projectRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
@@ -147,6 +165,25 @@ public class ProjectServiceImpl implements ProjectService{
 	public int TotalNumberProjectByUser(int id) 
 	{
 		return projectRepository.TotalProjectByUser(id);
+	}
+
+	@Override
+	public ResponseEntity<Object> allProjectList() 
+	{
+		try {
+			List<Project> projectList = (List<Project>) projectRepository.findAll();
+			
+			if(projectList.size() < 1)
+			{
+				throw new ResourceNotFoundException("Project list not found");
+			}
+			
+			return ResponseEntity.status(HttpStatus.OK).body(projectList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch projects");
+		}
 	}
 
 	@Override
@@ -170,17 +207,6 @@ public class ProjectServiceImpl implements ProjectService{
 		}
 	}
 
-	@Override
-	public ResponseEntity<Object> totalEventByProject(int projectId) {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(projectRepository.totalEventByProject(projectId));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total events of project");
-		}
-	}
-	
-	
 	@Override
 	public ResponseEntity<Object> totalKidsByProject(int projectId) {
 		try {

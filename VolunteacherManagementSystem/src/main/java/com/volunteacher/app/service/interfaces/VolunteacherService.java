@@ -11,7 +11,7 @@ public interface VolunteacherService {
 	
 	public ResponseEntity<Object> addVolunteacher(Volunteacher volunteacher);
 	
-	public ResponseEntity<Object> volunteacherList(int page);
+	public ResponseEntity<Object> volunteacherList();
 	
 	public ResponseEntity<Object> volunteacherById(int id);
 	
@@ -25,5 +25,5 @@ public interface VolunteacherService {
 	
 	public ResponseEntity<Object> getTotalVolunteacher(); 
 	
-	public ResponseEntity<Object> getNewVolunteachers(int page);
+	public ResponseEntity<Object> getNewVolunteachers();
 }

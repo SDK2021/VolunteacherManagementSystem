@@ -76,22 +76,24 @@ public class User {
 	@JsonFormat(shape = Shape.STRING,timezone = "IST", pattern = "HH-mm-ss")
 	private Calendar userOTPTime;
 	
-	@OneToMany(mappedBy = "createdBy")
-	private List<KidsReport> kidsReports;
+//	@OneToMany(mappedBy = "createdBy")
+//	private List<KidsReport> kidsReports;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+	//removed cascade bcz admin will not be deleted ever
+	@OneToMany(mappedBy = "createdBy")
 	private List<Announcement>announcement;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private List<SessionReport> sessionReports;	
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToOne(mappedBy = "user")
 	private Volunteacher volunteacher;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
 	private List<TimelinePost> posts;
 	
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "createdBy")
+	//cascade removed..
+	@OneToMany(mappedBy = "createdBy")
 	private List<Notification> notifications;
 	
 	@ManyToMany(mappedBy = "users")

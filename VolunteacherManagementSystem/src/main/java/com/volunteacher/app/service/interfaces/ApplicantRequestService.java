@@ -8,7 +8,7 @@ public interface ApplicantRequestService {
 	
 	public ResponseEntity<Object> addRequest(ApplicantRequest request);
 	
-	public ResponseEntity<Object> requestList(int page);
+	public ResponseEntity<Object> requestList();
 	
 	public ApplicantRequest requestById(int id);
 	

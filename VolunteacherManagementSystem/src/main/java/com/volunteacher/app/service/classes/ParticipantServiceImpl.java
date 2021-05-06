@@ -40,6 +40,10 @@ public class ParticipantServiceImpl implements ParticipantService {
 	{
 		try {
 			List<Participant> participantList = (List<Participant>) participantRepository.findAll();
+			
+			if(participantList.size() < 1)
+				throw new ResourceNotFoundException("Participant List not found");
+			
 			return ResponseEntity.status(HttpStatus.OK).body(participantList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,41 +82,8 @@ public class ParticipantServiceImpl implements ParticipantService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in updating Participant for id:" +id);
-		}	
-	}
-
-	@Override
-	public ResponseEntity<Object> totalParticipantByEvent(int eventId) {
-		try 
-		{
-			return ResponseEntity.status(HttpStatus.OK).body(participantRepository.totalParticipantByEvent(eventId));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in fetching total Participant");
 		}
+		
 	}
-
-	@Override
-	public ResponseEntity<Object> totalVolunteacherParticipantByEvent(int eventId,int typeId) {
-		try 
-		{
-			return ResponseEntity.status(HttpStatus.OK).body(participantRepository.totalParticipateVolunteacherByEvent(typeId, eventId));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in fetching total Participant");
-		}
-	}
-
-	@Override
-	public ResponseEntity<Object> totalOtherParticipantByEvent(int eventId,int typeId) {
-		try 
-		{
-			return ResponseEntity.status(HttpStatus.OK).body(participantRepository.totalParticipateOtherByEvent(typeId, eventId));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in fetching total Participant");
-		}
-	}
-	
 
 }

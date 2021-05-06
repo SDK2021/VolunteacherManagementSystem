@@ -49,6 +49,10 @@ public class CoreServiceImpl implements CoreService {
 	{
 		try {
 			List<Country> countryList = (List<Country>) countryRepository.findAll();
+			
+			if(countryList.size() < 1)
+				throw new ResourceNotFoundException("Country list not found");
+			
 			return ResponseEntity.status(HttpStatus.OK).body(countryList);
 		} catch (Exception e) {
 			e.printStackTrace();

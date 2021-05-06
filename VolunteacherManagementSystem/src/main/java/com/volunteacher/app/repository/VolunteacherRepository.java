@@ -2,10 +2,12 @@ package com.volunteacher.app.repository;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.volunteacher.app.model.Volunteacher;
@@ -22,5 +24,15 @@ public interface VolunteacherRepository extends PagingAndSortingRepository<Volun
 	public int allVolunteacher();
 	
 	@Query(value = "select * from volunteacher where joining_date < (DATE_ADD(joining_date,INTERVAL 1 YEAR)) ORDER BY joining_date DESC",nativeQuery = true)
-	public Page<Volunteacher> newVolunteachers(Pageable pageable);
+	public List<Volunteacher> newVolunteachers();
+	
+	@Transactional
+	@Modifying
+	@Query(value="DELETE FROM project_users WHERE users_user_id =:id",nativeQuery = true)
+	public void deleteVolunteacherProjects(@Param("id") long id);
+	
+	@Transactional
+	@Modifying
+	@Query(value="DELETE FROM session_users WHERE users_user_id =:id",nativeQuery = true)
+	public void deleteVolunteacherSessions(@Param("id") long id);
 }

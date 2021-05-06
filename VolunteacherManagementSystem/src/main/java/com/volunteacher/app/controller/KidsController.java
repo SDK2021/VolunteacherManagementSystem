@@ -43,9 +43,9 @@ public class KidsController {
 	}
 	
 	@GetMapping("/kids")
-	public ResponseEntity<Object> getKidsList(@RequestParam("page") int page)
+	public ResponseEntity<Object> getKidsList(@RequestParam("page") int id)
 	{
-		return kidService.kidList(page);
+		return kidService.kidList(id);
 	}
 	
 	@GetMapping("/kids/{id}")
@@ -55,51 +55,51 @@ public class KidsController {
 	}
 	
 	@GetMapping("/group-kids")
-	public ResponseEntity<Object> getKidsByGroup(@RequestParam("page") int page,@RequestParam(name = "group") int gid)
+	public ResponseEntity<Object> getKidsByGroup(@RequestParam(name = "group") int gid)
 	{
-			return kidService.kidsListByGroup(page,gid);
+			return kidService.kidsListByGroup(gid);
 	}
 	
 	@GetMapping("/village-kids")
-	public ResponseEntity<Object> getKidsListByVillage(@RequestParam("page") int page,@RequestParam("village") int vid)
+	public ResponseEntity<Object> getKidsListByVillage(@RequestParam("village") int vid)
 	{
-		return kidService.kidsListByVillage(page,vid);
+		return kidService.kidsListByVillage(vid);
 	}
 	
 	@GetMapping("/area-kids")
-	public ResponseEntity<Object> getKidsListByArea(@RequestParam("page") int page, @RequestParam("area") int aid)
+	public ResponseEntity<Object> getKidsListByArea(@RequestParam("area") int aid)
 	{
-		return kidService.kidsListByArea(page,aid);
+		return kidService.kidsListByArea(aid);
 	}
 	
 	@GetMapping("/village-group-kids")
-	public ResponseEntity<Object> getKidsListByGroupAndVillage(@RequestParam("page") int page,@RequestParam("village") int vid, @RequestParam("group") int gid)
+	public ResponseEntity<Object> getKidsListByGroupAndVillage(@RequestParam("village") int vid, @RequestParam("group") int gid)
 	{
-		return kidService.kidsListByVillageAndGroup(page,vid, gid);
+		return kidService.kidsListByVillageAndGroup(vid, gid);
 	}
 	
 	@GetMapping("/village-area-kids")
-	public ResponseEntity<Object> getKidsListByVillageAndArea(@RequestParam("page") int page,@RequestParam("village") int vid, @RequestParam("area") int aid)
+	public ResponseEntity<Object> getKidsListByVillageAndArea(@RequestParam("village") int vid, @RequestParam("area") int aid)
 	{
-		return kidService.kidsListByVillageAndArea(page,vid, aid);
+		return kidService.kidsListByVillageAndArea(vid, aid);
 	}
 	
 	@GetMapping("/area-group-kids")
-	public ResponseEntity<Object> getKidsListByAreaAndGroup(@RequestParam("page") int page, @RequestParam("area") int aid, @RequestParam("group") int gid)
+	public ResponseEntity<Object> getKidsListByAreaAndGroup(@RequestParam("area") int aid, @RequestParam("group") int gid)
 	{
-		return kidService.kidsListByAreaAndGroup(page,aid, gid);
+		return kidService.kidsListByAreaAndGroup(aid, gid);
 	}
 
 	@GetMapping("/area-group-village-kids")
-	public ResponseEntity<Object> getKidsListByVillageAndGroupAndArea(@RequestParam("page") int page, @RequestParam("area") int aid, @RequestParam("group") int gid,@RequestParam("village") int vid)
+	public ResponseEntity<Object> getKidsListByVillageAndGroupAndArea(@RequestParam("area") int aid, @RequestParam("group") int gid,@RequestParam("village") int vid)
 	{
-		return kidService.kidsListByAreaAndGroupAndVillage(page,aid, gid, vid);
+		return kidService.kidsListByAreaAndGroupAndVillage(aid, gid, vid);
 	}
 	
 	@GetMapping("/level-kids")
-	public ResponseEntity<Object> getKidsListByLevel(@RequestParam("page") int page,@RequestParam("level") int level)
+	public ResponseEntity<Object> getKidsListByLevel(@RequestParam("level") int level)
 	{
-		return kidService.kidsListByLevel(page,level);
+		return kidService.kidsListByLevel(level);
 	}
 	
 	@PutMapping("/kids/{id}")
