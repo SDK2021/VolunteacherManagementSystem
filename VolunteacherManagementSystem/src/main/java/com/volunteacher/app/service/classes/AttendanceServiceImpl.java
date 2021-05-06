@@ -14,7 +14,6 @@ import com.volunteacher.app.model.Kid;
 import com.volunteacher.app.repository.AttendanceRepository;
 import com.volunteacher.app.repository.KidRepository;
 import com.volunteacher.app.service.interfaces.AttendanceService;
-import com.volunteacher.app.service.interfaces.KidService;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService{

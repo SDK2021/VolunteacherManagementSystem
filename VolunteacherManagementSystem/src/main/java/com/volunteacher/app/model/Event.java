@@ -51,12 +51,12 @@ public class Event {
 	private Calendar eventDate;
 	
 	@NotNull
-	@JsonFormat(shape = Shape.STRING,pattern = "HH:mm:ss")
+	@JsonFormat(shape = Shape.STRING)
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar eventStartingTime;
 	
 	@NotNull
-	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm:ss")
+	@JsonFormat(shape = Shape.STRING)
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar eventEndingTime;
 	

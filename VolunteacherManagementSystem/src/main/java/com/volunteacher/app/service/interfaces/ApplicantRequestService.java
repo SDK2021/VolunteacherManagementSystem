@@ -10,11 +10,13 @@ public interface ApplicantRequestService {
 	
 	public ResponseEntity<Object> requestList();
 	
-	public ResponseEntity<Object> requestById(int id);
+	public ApplicantRequest requestById(int id);
 	
 	public ResponseEntity<Object> deleteRequest(int id);
 	
 	public ResponseEntity<Object> requestByPhoneNumber(String number);
 	
 	public ResponseEntity<Object> requestByEmail(String email);
+	
+	public boolean successRequest(int requestId);
 }

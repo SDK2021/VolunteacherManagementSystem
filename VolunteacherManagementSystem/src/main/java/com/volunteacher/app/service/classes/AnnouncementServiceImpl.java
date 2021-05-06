@@ -24,6 +24,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		try {
 			List<Announcement> announcementList = (List<Announcement>) announcementRepsitory.findAll();
 			return ResponseEntity.status(HttpStatus.OK).body(announcementList);
+	
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch announcement list");
@@ -67,7 +68,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		
 		try {
 			announcementRepsitory.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Announcement Delete for Id:"+id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on deleting Announcement for id:"+ id);

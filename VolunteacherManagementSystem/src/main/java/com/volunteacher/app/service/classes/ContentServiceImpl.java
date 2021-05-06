@@ -79,13 +79,24 @@ public class ContentServiceImpl implements ContentService {
 	}
 	
 	@Override
+	public ResponseEntity<Object> contentByGroup(int groupId)
+	{
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(contentRepository.findByGroupGroupId(groupId));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in fetching Content By group");
+		}
+	}
+	
+	@Override
 	public ResponseEntity<Object> deleteContent(int id)
 	{
 		contentRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Content is not found for id: "+ id));
 		
 		try {
 			contentRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Content deleted for id: "+id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting content for id:" +id);

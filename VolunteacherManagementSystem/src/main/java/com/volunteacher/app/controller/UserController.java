@@ -62,13 +62,13 @@ public class UserController {
 	{
 		return volunteacherService.updateVolunteacher(volunteacher, id);
 	}
-//	
-//	@DeleteMapping("/volunteachers/{id}")
-//	public ResponseEntity<Object> deleteVolunteacher(@PathVariable int id)
-//	{
-//		return volunteacherService.deleteVolunteacher(id);
-//	}
-//	
+	
+	@DeleteMapping("/volunteachers/{id}")
+	public ResponseEntity<Object> deleteVolunteacher(@PathVariable int id)
+	{
+		return volunteacherService.deleteVolunteacher(id);
+	}
+	
 	@GetMapping("/volunteachers/day")
 	public List<Volunteacher> getVolunteacherByDay()
 	{
@@ -105,7 +105,7 @@ public class UserController {
 		return userService.updateUser(user, id);
 	}
 	
-	@GetMapping("/emailusers")
+	@GetMapping("/email-users")
 	public ResponseEntity<Object> getUserByEmail(@RequestParam("email") String email)
 	{
 		return userService.userByEmail(email);
@@ -123,7 +123,19 @@ public class UserController {
 		return userService.userTypeById(id);
 	}
 	
-	@GetMapping("/birthUsers")
+	@GetMapping("/total-volunteachers")
+	public ResponseEntity<Object> getAllVolunteachers()
+	{
+		return volunteacherService.getTotalVolunteacher();
+	}
+	
+	@GetMapping("/new-volunteachers")
+	public ResponseEntity<Object> getNewVolunteachers()
+	{
+		return volunteacherService.getNewVolunteachers();
+	}
+	
+	@GetMapping("/birth-users")
 	public ResponseEntity<Object> getUserByBirthday()
 	{
 		return userService.usersByBirthday();
@@ -135,7 +147,7 @@ public class UserController {
 		throw new ResourceNotFoundException("No resource found");
 	}
 	
-	@PostMapping("/setProfile")
+	@PostMapping("/set-profile")
 	public boolean setUserProfile(@RequestHeader("profileURL")String url,@RequestHeader("userId") String userId)
 	{
 		return userService.setProfile(url, userId);

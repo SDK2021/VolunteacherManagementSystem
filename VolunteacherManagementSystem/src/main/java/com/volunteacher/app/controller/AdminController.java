@@ -35,17 +35,23 @@ public class AdminController {
 		return applicantRequestService.requestList();
 	}
 	
+	@PostMapping("/request-success/{id}")
+	public boolean requestSuccess(@PathVariable int id)
+	{
+		return applicantRequestService.successRequest(id);
+	}
+	
 	@PostMapping("/applicant-requests")
 	public ResponseEntity<Object> addApplicantRequest(@RequestBody ApplicantRequest applicantRequest)
 	{
 		return applicantRequestService.addRequest(applicantRequest);
 	}
 	
-	@GetMapping("/applicant-requests/{id}")
-	public ResponseEntity<Object> getApplicantRequest(@PathVariable int id)
-	{
-		return applicantRequestService.requestById(id);
-	}
+//	@GetMapping("/applicant-requests/{id}")
+//	public ResponseEntity<Object> getApplicantRequest(@PathVariable int id)
+//	{
+//		return applicantRequestService.requestById(id);
+//	}
 	
 	@DeleteMapping("/applicant-requests/{id}")
 	public ResponseEntity<Object> deleteApplicantRequest(@PathVariable int id)
@@ -67,9 +73,9 @@ public class AdminController {
 	}
 	
 	@GetMapping("/contents/{id}")
-	public ResponseEntity<Object> getContent(@PathVariable int id)
+	public ResponseEntity<Object> getContentByGroup(@PathVariable int id)
 	{
-		return applicantRequestService.requestById(id);
+		return contentService.contentByGroup(id);
 	}
 	
 	@PutMapping("/contents/{id}")

@@ -23,19 +23,19 @@ public class EmailController {
 //		return this.emailService.sendMail();
 //	}
 	
-	@PostMapping("/sendOTP")
+	@PostMapping("/send-otp")
 	public ResponseEntity<Object> sendOTP(@RequestParam("email") String email)
 	{
 		return emailService.sendOTP(email);
 	}
 	
-	@PostMapping("/verifyOTP")
+	@PostMapping("/verify-otp")
 	public boolean verifyOTP(@RequestParam("otp") String OTP,@RequestParam("userid") long userId)
 	{
 		return emailService.verifyOTP(OTP, userId);
 	}
 	
-	@PostMapping("/updatePassword")
+	@PostMapping("/update-password")
 	public ResponseEntity<Object> updatePassword(@RequestParam("password") String password,@RequestParam("userid") long userId)
 	{
 		return emailService.updatePassword(password, userId);

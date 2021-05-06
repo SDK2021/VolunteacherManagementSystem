@@ -89,7 +89,7 @@ public class SchoolServiceImpl implements SchoolService {
 		
 		try {
 			schoolRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("School is deleted for id: "+id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting School for id:" +id);

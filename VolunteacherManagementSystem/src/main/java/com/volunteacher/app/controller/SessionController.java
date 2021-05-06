@@ -41,6 +41,12 @@ public class SessionController {
 		return sessionService.sessionList(month, year);
 	}
 	
+	@GetMapping("/all-sessions")
+	public ResponseEntity<Object> getAllSessionList()
+	{
+		return sessionService.allSessionList();
+	}
+	
 	@GetMapping("/sessions/{id}")
 	public ResponseEntity<Object> getSession(@PathVariable Long id)
 	{
@@ -74,7 +80,7 @@ public class SessionController {
 	@GetMapping("/session-reports/{id}")
 	public ResponseEntity<Object> getSessionReport(@PathVariable int id)
 	{
-		return sessionService.sessionReport(id);
+		return sessionService.sessionReportsBySession(id);
 	}
 	
 	@DeleteMapping("/session-reports/{id}")
@@ -83,15 +89,27 @@ public class SessionController {
 		return sessionService.deleteSessionReport(id);
 	}
 	
-	@GetMapping("/totalSessions/{id}")
+	@GetMapping("/total-sessions/{id}")
 	public ResponseEntity<Object> getTotalSessions(@PathVariable int id)
 	{
 		return sessionService.totalSessionsByUser(id);
 	}
 	
-	@PostMapping("/sessionVolunteachers")
+	@PostMapping("/session-volunteachers")
 	public ResponseEntity<Object> addAllSessionVolunteacher(@RequestBody List<User> users,@RequestHeader("sessionId") String sessionId)
 	{
 		return sessionService.addSessionVolunteachers(users, sessionId);
+	}
+	
+	@GetMapping("/total-sessions")
+	public ResponseEntity<Object> getTotalKids()
+	{
+		return sessionService.getTotalSessions();
+	}
+	
+	@GetMapping("/sessions-requirements")
+	public ResponseEntity<Object> getSessionRequirements()
+	{
+		return sessionService.getSessionsRequirements();
 	}
 }

@@ -15,4 +15,10 @@ public interface VolunteacherRepository extends PagingAndSortingRepository<Volun
 	public List<Volunteacher> findAllByDay();
 	
 	public Volunteacher findByUserUserId(long id); 
+	
+	@Query(value = "select COUNT(*) from volunteacher",nativeQuery = true)
+	public int allVolunteacher();
+	
+	@Query(value = "select * from volunteacher where joining_date < (DATE_ADD(joining_date,INTERVAL 1 YEAR)) ORDER BY joining_date DESC",nativeQuery = true)
+	public List<Volunteacher> newVolunteachers();
 }

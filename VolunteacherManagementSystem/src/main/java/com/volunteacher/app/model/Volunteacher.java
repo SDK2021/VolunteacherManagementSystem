@@ -52,17 +52,17 @@ public class Volunteacher {
 	@Column(nullable = false,columnDefinition = "DATE")
 	private Calendar joiningDate;
 	
-	@NotNull
-	@Column(nullable = false, columnDefinition = "TIME")
-	@JsonFormat(shape = Shape.STRING,pattern = "HH-mm-ss")
-	@CreationTimestamp
-	private Calendar JoiningTime;
+//	@NotNull
+//	@Column(nullable = false, columnDefinition = "TIME")
+//	@JsonFormat(shape = Shape.STRING,pattern = "HH-mm-ss")
+//	@CreationTimestamp
+//	private Calendar JoiningTime;
 	
 	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyy")
 	@Column(columnDefinition = "DATE")
 	private Calendar endingDate;
 
-	@Column(length = 6, nullable = false)
+	@Column(length = 6)
 	private int pincode;
 
 	@Column(length = 20, nullable = false)
@@ -132,14 +132,14 @@ public class Volunteacher {
 	public void setPincode(int pincode) {
 		this.pincode = pincode;
 	}
-
-	public Calendar getJoiningTime() {
-		return JoiningTime;
-	}
-
-	public void setJoiningTime(Calendar joiningTime) {
-		JoiningTime = joiningTime;
-	}
+//
+//	public Calendar getJoiningTime() {
+//		return JoiningTime;
+//	}
+//
+//	public void setJoiningTime(Calendar joiningTime) {
+//		JoiningTime = joiningTime;
+//	}
 
 	public String getEducation() {
 		return education;

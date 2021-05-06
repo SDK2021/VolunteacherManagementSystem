@@ -70,7 +70,7 @@ public class ActivityServiceImpl implements ActivityService{
 		
 		try {
 			activityRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Activity deleted for id: "+id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on deleting activity");

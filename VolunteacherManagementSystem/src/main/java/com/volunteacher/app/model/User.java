@@ -91,6 +91,9 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
 	private List<TimelinePost> posts;
 	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "createdBy")
+	private List<Notification> notifications;
+	
 	@ManyToMany(mappedBy = "users")
 	private List<Project> projects; 
 	

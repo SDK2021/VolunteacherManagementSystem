@@ -78,7 +78,7 @@ public class ReportServiceImpl implements ReportService {
 		
 		try {
 			reportRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Report delete for id:"+id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Report for id:" +id);

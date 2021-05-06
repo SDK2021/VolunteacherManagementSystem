@@ -6,6 +6,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -33,8 +34,7 @@ public class Notification {
 	private String notificationType;
 	
 	@NotNull
-	@CreatedBy
-	@OneToOne
+	@ManyToOne
 	private User createdBy;
 	
 	@NotNull

@@ -1,5 +1,6 @@
 package com.volunteacher.app.service.classes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +91,7 @@ public class SessionServiceImpl implements SessionService {
 		
 		try {
 			sessionRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Session deleted for id:" + id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Session for id:" +id);
@@ -132,6 +133,17 @@ public class SessionServiceImpl implements SessionService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Session report for id: "+ id);
 		}
 	}
+	
+	@Override
+	public ResponseEntity<Object> sessionReportsBySession(long id) {
+		try {
+			List<SessionReport> sessionReports = sessionReportRepository.findAllBySessionSessionId(id);
+			return ResponseEntity.status(HttpStatus.OK).body(sessionReports);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Session report by session id: "+ id);
+		}
+	}
 
 	@Override
 	public ResponseEntity<Object> deleteSessionReport(int id) 
@@ -140,7 +152,7 @@ public class SessionServiceImpl implements SessionService {
 		
 		try {
 			sessionReportRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Session Report deleted for id:" + id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Session Report for id:" +id);
@@ -172,4 +184,56 @@ public class SessionServiceImpl implements SessionService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in add volunteacher for session:");
 		}
 	}
+
+	@Override
+	public ResponseEntity<Object> allSessionList() {
+		try {
+			
+			List<Session> sessionList = (List<Session>)sessionRepository.findAll();
+			return ResponseEntity.status(HttpStatus.OK).body(sessionList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Sessions");
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> getTotalSessions() 
+	{
+		try 
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(sessionRepository.allSessions());
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total Sessions");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> getSessionsRequirements() {
+		List<SessionReport> sessionReports = new ArrayList<>();
+		
+		try {
+			List<Long> sessions = sessionRepository.getPreviousSessions();
+			for (Long sessionId : sessions) {
+			//	System.out.println(sessions.size());
+				List<SessionReport> reportList = sessionReportRepository.findAllBySessionSessionId(sessionId);
+				System.out.println(sessionId);
+				for (SessionReport report : reportList) {
+					if(report.getRequirements() != null)
+					{
+						sessionReports.add(report);
+					}
+				}
+			}
+			return ResponseEntity.status(HttpStatus.OK).body(sessionReports);
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching Requirements");
+		}
+	}
+	
+	
 }

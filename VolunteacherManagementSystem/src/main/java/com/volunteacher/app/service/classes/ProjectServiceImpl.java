@@ -18,6 +18,7 @@ import com.volunteacher.app.model.Project;
 import com.volunteacher.app.model.User;
 import com.volunteacher.app.repository.KidRepository;
 import com.volunteacher.app.repository.ProjectRepository;
+import com.volunteacher.app.repository.SessionRepository;
 import com.volunteacher.app.repository.UserRepository;
 import com.volunteacher.app.service.interfaces.ProjectService;
 
@@ -33,6 +34,9 @@ public class ProjectServiceImpl implements ProjectService{
 	@Autowired
 	KidRepository kidRepository;
 	
+	@Autowired
+	SessionRepository sessionRepository;
+	
 	List<User> users;
 	
 	List<Kid> kids;
@@ -40,9 +44,16 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public ResponseEntity<Object> addProject(Project project,String[] vIds,String[] kIds) 
 	{
+		if(projectRepository.findByProjectName(project.getProjectName()) != null)
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Project already Exist");
+		}
 		try {
 			project.setUsers(this.createVolunteachersList(vIds));
 			project.setKids(this.createKidsList(kIds));
+			project.setTotalKids(this.createKidsList(kIds).size());
+			project.setTotalVolunteachers(this.createVolunteachersList(vIds).size());
+			project.setTotalSessions(sessionRepository.totalSessionByProject(project.getProjectId()));
 			Project saveProject = projectRepository.save(project);
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveProject);
 		} catch (Exception e) {
@@ -145,7 +156,7 @@ public class ProjectServiceImpl implements ProjectService{
 		
 		try {
 			projectRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Project is deleted for id: "+id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Project for id:" +id);

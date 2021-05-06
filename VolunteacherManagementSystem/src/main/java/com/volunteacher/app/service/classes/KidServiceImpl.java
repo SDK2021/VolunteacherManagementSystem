@@ -34,8 +34,6 @@ public class KidServiceImpl implements KidService {
 			
 			Kid saveKid = kidRepository.save(kid);
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveKid);
-			
-			
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -137,7 +135,7 @@ public class KidServiceImpl implements KidService {
 		
 		try {
 			kidRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Kid deleted for id: " + id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Kid for id:" +id);
@@ -163,6 +161,10 @@ public class KidServiceImpl implements KidService {
 	@Override
 	public ResponseEntity<Object> addKidsGroup(KidsGroup kidsGroup) 
 	{
+		if(kidsGroupRepository.findByGroupName(kidsGroup.getGroupName()) != null)
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Kids Group Already Exist");
+		}
 		try {
 			KidsGroup savekidsGroup = kidsGroupRepository.save(kidsGroup);
 			return ResponseEntity.status(HttpStatus.CREATED).body(savekidsGroup);
@@ -197,7 +199,7 @@ public class KidServiceImpl implements KidService {
 		
 		try {
 			kidsGroupRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Delete kids Group id: "+id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Kids Group for id:" +id);
@@ -287,6 +289,16 @@ public class KidServiceImpl implements KidService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching Kids Group");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> getTotalKids() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(kidRepository.totalKids());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on get total kids");
 		}
 	}
 	

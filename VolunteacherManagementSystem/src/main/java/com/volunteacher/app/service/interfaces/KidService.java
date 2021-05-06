@@ -1,7 +1,5 @@
 package com.volunteacher.app.service.interfaces;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 
 import com.volunteacher.app.model.Kid;
@@ -32,6 +30,8 @@ public interface KidService {
 	public ResponseEntity<Object> kidsListByLevel(int level);
 	
 	public ResponseEntity<Object> updateKid(Kid kid, Long id);
+	
+	public ResponseEntity<Object> getTotalKids();
 	
 	public ResponseEntity<Object> deleteKid(Long id);
 	

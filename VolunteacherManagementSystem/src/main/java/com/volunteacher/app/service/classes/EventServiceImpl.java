@@ -19,6 +19,7 @@ import com.volunteacher.app.model.Kid;
 import com.volunteacher.app.repository.ActivityRepository;
 import com.volunteacher.app.repository.EventRepository;
 import com.volunteacher.app.repository.KidRepository;
+import com.volunteacher.app.service.interfaces.EmailService;
 import com.volunteacher.app.service.interfaces.EventService;
 
 @Service
@@ -36,6 +37,9 @@ public class EventServiceImpl implements EventService{
 	
 	@Autowired
 	KidRepository kidRepository;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@Override
 	public ResponseEntity<Object> addEvent(Event event,String[] activityIds)
@@ -92,7 +96,7 @@ public class EventServiceImpl implements EventService{
 		
 		try {
 			eventRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Event deleted for id: "+id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Event for id:" +id);
@@ -140,7 +144,8 @@ public class EventServiceImpl implements EventService{
 	}
 	
 	@Override
-	public List<Activity> createActivityList(String[] ids) {
+	public List<Activity> createActivityList(String[] ids) 
+	{
 		this.activities = new ArrayList<Activity>();
 		for(int i =0; i<ids.length;i++)
 		{
@@ -148,5 +153,19 @@ public class EventServiceImpl implements EventService{
 			this.activities.add(activity);
 		}
 		return this.activities;
+	}
+	
+	@Override
+	public ResponseEntity<Object> getTotalEvents() 
+	{
+		try 
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(eventRepository.allEvents());
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total events");
+		}
 	}
 }

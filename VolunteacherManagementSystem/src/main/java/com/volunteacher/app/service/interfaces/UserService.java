@@ -1,5 +1,7 @@
 package com.volunteacher.app.service.interfaces;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import com.volunteacher.app.model.User;
@@ -17,6 +19,8 @@ public interface UserService {
 	public ResponseEntity<Object> deleteUser(Long id);
 	
 	public ResponseEntity<Object> userByEmail(String email);
+	
+	public List<User> userByType(int type);
 	
 	public ResponseEntity<Object> userByPhoneNumber(String email);
 	

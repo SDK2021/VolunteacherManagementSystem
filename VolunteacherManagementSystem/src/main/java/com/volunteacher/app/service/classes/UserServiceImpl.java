@@ -2,7 +2,10 @@ package com.volunteacher.app.service.classes;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.User;
 import com.volunteacher.app.model.UserType;
+import com.volunteacher.app.repository.NotificationRepository;
 import com.volunteacher.app.repository.UserRepository;
 import com.volunteacher.app.repository.UserTypeRepository;
 import com.volunteacher.app.service.interfaces.UserService;
@@ -23,6 +27,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	UserTypeRepository userTypeRepository;
+	
+	@Autowired
+	NotificationRepository notificationRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -78,13 +85,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Modifying
 	public ResponseEntity<Object> deleteUser(Long id)
 	{
 		userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found for id: " + id));
-
+	//	notificationRepository.deleteByCreatedByUserId(id);
 		try {
+			System.out.println(id);
 			userRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("User deleted for id: " + id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting user for id:" +id);
@@ -175,6 +184,17 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	@Override
+	public List<User> userByType(int type) {
+		try {
+			List<User> userList = userRepository.findAllByTypeTypeId(type);
+			return userList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return List.of();
 		}
 	}
 	

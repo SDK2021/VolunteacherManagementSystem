@@ -2,7 +2,6 @@ package com.volunteacher.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,49 +54,49 @@ public class KidsController {
 		return kidService.kidById(id);
 	}
 	
-	@GetMapping("/groupKids")
+	@GetMapping("/group-kids")
 	public ResponseEntity<Object> getKidsByGroup(@RequestParam(name = "group") int gid)
 	{
 			return kidService.kidsListByGroup(gid);
 	}
 	
-	@GetMapping("/villageKids")
+	@GetMapping("/village-kids")
 	public ResponseEntity<Object> getKidsListByVillage(@RequestParam("village") int vid)
 	{
 		return kidService.kidsListByVillage(vid);
 	}
 	
-	@GetMapping("/areaKids")
+	@GetMapping("/area-kids")
 	public ResponseEntity<Object> getKidsListByArea(@RequestParam("area") int aid)
 	{
 		return kidService.kidsListByArea(aid);
 	}
 	
-	@GetMapping("/vAndgKids")
+	@GetMapping("/village-group-kids")
 	public ResponseEntity<Object> getKidsListByGroupAndVillage(@RequestParam("village") int vid, @RequestParam("group") int gid)
 	{
 		return kidService.kidsListByVillageAndGroup(vid, gid);
 	}
 	
-	@GetMapping("/vAndaKids")
+	@GetMapping("/village-area-kids")
 	public ResponseEntity<Object> getKidsListByVillageAndArea(@RequestParam("village") int vid, @RequestParam("area") int aid)
 	{
 		return kidService.kidsListByVillageAndArea(vid, aid);
 	}
 	
-	@GetMapping("/aAndgKids")
+	@GetMapping("/area-group-kids")
 	public ResponseEntity<Object> getKidsListByAreaAndGroup(@RequestParam("area") int aid, @RequestParam("group") int gid)
 	{
 		return kidService.kidsListByAreaAndGroup(aid, gid);
 	}
 
-	@GetMapping("/aAndgAndavKids")
+	@GetMapping("/area-group-village-kids")
 	public ResponseEntity<Object> getKidsListByVillageAndGroupAndArea(@RequestParam("area") int aid, @RequestParam("group") int gid,@RequestParam("village") int vid)
 	{
 		return kidService.kidsListByAreaAndGroupAndVillage(aid, gid, vid);
 	}
 	
-	@GetMapping("/levelKids")
+	@GetMapping("/level-kids")
 	public ResponseEntity<Object> getKidsListByLevel(@RequestParam("level") int level)
 	{
 		return kidService.kidsListByLevel(level);
@@ -113,6 +112,12 @@ public class KidsController {
 	public ResponseEntity<Object> deleteKid(@PathVariable Long id)
 	{
 		return kidService.deleteKid(id);
+	}
+	
+	@GetMapping("/total-kids")
+	public ResponseEntity<Object> getTotalKids()
+	{
+		return kidService.getTotalKids();
 	}
 	
 	@GetMapping("/kids-reports")
@@ -206,7 +211,7 @@ public class KidsController {
 		return attendanceService.updateAttendance(attendance, id);
 	}
 	
-	@PostMapping("/addKidsAttendance")
+	@PostMapping("/add-kids-attendance")
 	public ResponseEntity<Object> createKidsAttendance(@RequestBody Attendance attendance,@RequestHeader("KidsIds") String[] kidsIds)
 	{
 		return this.attendanceService.addKidsAttendance(attendance, kidsIds);

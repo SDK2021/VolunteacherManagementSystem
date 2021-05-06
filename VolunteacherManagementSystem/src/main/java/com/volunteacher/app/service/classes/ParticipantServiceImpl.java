@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.Participant;
 import com.volunteacher.app.repository.ParticipantRepository;
+import com.volunteacher.app.service.interfaces.EmailService;
 import com.volunteacher.app.service.interfaces.ParticipantService;
 
 @Service
@@ -18,11 +19,15 @@ public class ParticipantServiceImpl implements ParticipantService {
 	@Autowired
 	ParticipantRepository participantRepository;
 	
+	@Autowired
+	EmailService emailService;
+	
 	@Override
 	public ResponseEntity<Object> addParticipant(Participant participant)
 	{
 		try {
 			Participant saveParticipant = participantRepository.save(participant);
+			emailService.participantSuccessfullyMail(participant.getEmail(), participant.getName(), participant.getEvent());
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveParticipant);
 		} catch (Exception e) {
 			e.printStackTrace();

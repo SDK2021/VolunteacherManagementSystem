@@ -91,7 +91,7 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 	
 		try {
 			timelinePostRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("post deleted for id: "+id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Timeline Post for id:" +id);

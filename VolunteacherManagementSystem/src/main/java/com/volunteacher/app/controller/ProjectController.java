@@ -62,37 +62,37 @@ public class ProjectController {
 		return projectService.deleteProject(id);
 	}
 	
-	@GetMapping("/projectNumber/{id}")
+	@GetMapping("/project-number/{id}")
 	public int totalProjectByUser(@PathVariable int id)
 	{
 		return projectService.TotalNumberProjectByUser(id);
 	}
 	
-	@GetMapping("/projectslist")
+	@GetMapping("/projects-list")
 	public ResponseEntity<Object> getAllProject()
 	{
 		return projectService.allProjectList();
 	}
 	
-	@GetMapping("/projectNumbers/{id}")
+	@GetMapping("/project-numbers/{id}")
 	public ResponseEntity<Object> getAllProjectNumbers(@PathVariable int id)
 	{
 		return projectService.projectNumbersByUser(id);
 	}
 	
-	@GetMapping("/sessionsProjects")
+	@GetMapping("/sessions-projects")
 	public ResponseEntity<Object> getAllSessionsByProject(@RequestParam("project") int id)
 	{
 		return projectService.totalSessionsByProject(id);
 	}
 	
-	@GetMapping("/kidsProjects")
+	@GetMapping("/kids-projects")
 	public ResponseEntity<Object> getAllKidsByProject(@RequestParam("project") int id)
 	{
 		return projectService.totalKidsByProject(id);
 	}
 	
-	@GetMapping("/volunteachersProjects")
+	@GetMapping("/volunteachers-projects")
 	public ResponseEntity<Object> getAllVolunteachersByProject(@RequestParam("project") int id)
 	{
 		return projectService.totalVolunteachersByProject(id);

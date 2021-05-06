@@ -2,6 +2,7 @@ package com.volunteacher.app.service.interfaces;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 
 import com.volunteacher.app.model.Volunteacher;
@@ -21,4 +22,8 @@ public interface VolunteacherService {
 	public ResponseEntity<Object> deleteVolunteacher(int id);
 	
 	public List<Volunteacher> vtByToday();
+	
+	public ResponseEntity<Object> getTotalVolunteacher(); 
+	
+	public ResponseEntity<Object> getNewVolunteachers();
 }

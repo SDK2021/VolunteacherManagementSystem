@@ -41,6 +41,12 @@ public class NotificationController {
 		return notificationService.notificationListByUser(userType);
 	}
 	
+	@GetMapping("/admin-notifications")
+	public ResponseEntity<Object> getNotificationAdminFilter()
+	{
+		return notificationService.notificationAdminFilter();
+	}
+
 	@GetMapping("/notifications/{id}")
 	public ResponseEntity<Object> getNotification(@PathVariable Long id)
 	{

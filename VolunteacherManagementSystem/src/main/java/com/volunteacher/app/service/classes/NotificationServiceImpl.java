@@ -12,6 +12,7 @@ import com.volunteacher.app.model.Notification;
 import com.volunteacher.app.repository.EventRepository;
 import com.volunteacher.app.repository.NotificationRepository;
 import com.volunteacher.app.repository.SessionRepository;
+import com.volunteacher.app.service.interfaces.EmailService;
 import com.volunteacher.app.service.interfaces.NotificationService;
 
 @Service
@@ -26,6 +27,9 @@ public class NotificationServiceImpl implements NotificationService {
 	@Autowired 
 	EventRepository eventRepository;
 	
+	@Autowired
+	EmailService emailService;
+	
 	@Override
 	public ResponseEntity<Object> addNotification(Notification notification)
 	{
@@ -38,10 +42,19 @@ public class NotificationServiceImpl implements NotificationService {
 			}
 			if(notification.getEvent() !=null)
 			{
-				notification.getSession().setNotified(true);
+				notification.getEvent().setNotified(true);
 				eventRepository.save(notification.getEvent());
 			}
 			Notification saveNotification = notificationRepository.save(notification);
+			if(notification.getSession() != null)
+			{
+				emailService.notificationSessionMail(notification.getUserType().toUpperCase(),notification);
+			}
+			if(notification.getEvent() !=null)
+			{
+				emailService.notificationEventMail(notification.getUserType().toUpperCase(),notification);
+			}
+			
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveNotification);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -54,6 +67,22 @@ public class NotificationServiceImpl implements NotificationService {
 	{
 		try {
 			List<Notification> notificationList = (List<Notification>) notificationRepository.notificationByMonthAndYear(month, year, userType);
+			
+//			if(notificationList.size() < 1)
+//				throw new ResourceNotFoundException("Notification list not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(notificationList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Notifications");
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> notificationAdminFilter()
+	{
+		try {
+			List<Notification> notificationList = (List<Notification>) notificationRepository.notificationAdminFilter();
 			
 //			if(notificationList.size() < 1)
 //				throw new ResourceNotFoundException("Notification list not found");
@@ -92,11 +121,6 @@ public class NotificationServiceImpl implements NotificationService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Notofications");
 		}
 	}
-	
-//	@Override
-//	public ResponseEntity<Object> updateNotification(Notification notification, Long id) {
-//		return null;
-//	}
 	 
 	@Override
 	public ResponseEntity<Object> deleteNotification(Long id)
@@ -105,7 +129,7 @@ public class NotificationServiceImpl implements NotificationService {
 		
 		try {
 			notificationRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Notification deleted for id: "+id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Notification for id:" +id);

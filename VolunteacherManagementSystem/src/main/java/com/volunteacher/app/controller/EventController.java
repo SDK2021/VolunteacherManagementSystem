@@ -79,10 +79,16 @@ public class EventController {
 		return participantService.participantById(id);
 	}
 	
-	@PostMapping("/kidsParticipants")
+	@PostMapping("/kids-participants")
 	public ResponseEntity<Object> addAllKidsParticipants(@RequestHeader("kidsIds")String [] kidsIds,@RequestHeader("eventId") String eventId)
 	{
 		return this.eventService.addKidsParticipants(kidsIds, eventId);
+	}
+	
+	@GetMapping("/total-events")
+	public ResponseEntity<Object> getTotalEvents()
+	{
+		return eventService.getTotalEvents();
 	}
 	
 }

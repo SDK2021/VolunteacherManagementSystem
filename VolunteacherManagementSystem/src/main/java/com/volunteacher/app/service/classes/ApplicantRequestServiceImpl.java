@@ -1,9 +1,5 @@
 package com.volunteacher.app.service.classes;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.ApplicantRequest;
-import com.volunteacher.app.model.User;
 import com.volunteacher.app.repository.ApplicantRequestRepository;
 import com.volunteacher.app.service.interfaces.ApplicantRequestService;
+import com.volunteacher.app.service.interfaces.EmailService;
 import com.volunteacher.app.service.interfaces.UserService;
 
 @Service
@@ -28,6 +24,9 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@Override
 	public ResponseEntity<Object> addRequest(ApplicantRequest request)
@@ -47,9 +46,10 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 		}
 		
 		try {
-			
 			ApplicantRequest saveRequest = applicantRequestRepository.save(request);
+			this.emailService.registerSuccessfullyMail(request.getEmailId(), request.getName());
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveRequest);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating applicant Request");
@@ -74,14 +74,14 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> requestById(int id)
+	public ApplicantRequest requestById(int id)
 	{
 		try {
 			ApplicantRequest request = applicantRequestRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Applicant Request not found for id: "+ id));
-			return ResponseEntity.status(HttpStatus.OK).body(request);
+			return request;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Applicant request of id:" +id);
+			return null;
 		}
 	}
 	
@@ -92,7 +92,7 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 		
 		try {
 			applicantRequestRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Applicant deleted for id:" + id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Applicant Request for id:" +id);
@@ -120,6 +120,20 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching Request by Phonenumber");
+		}
+	}
+	
+	@Override
+	public boolean successRequest(int requestId) {
+		try {
+			ApplicantRequest request = applicantRequestRepository.findById(requestId).orElseThrow(()->new ResourceNotFoundException("Error on sending zccepted mail"));;
+			request.setStatus(1);
+			applicantRequestRepository.save(request);
+			emailService.acceptRequestMail(request);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

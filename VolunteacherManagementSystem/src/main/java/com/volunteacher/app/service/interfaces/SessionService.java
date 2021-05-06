@@ -14,6 +14,8 @@ public interface SessionService {
 	
 	public ResponseEntity<Object> sessionList(int month,int year);
 	
+	public ResponseEntity<Object> allSessionList();
+	
 	public ResponseEntity<Object> sessionById(Long id);
 	
 	public ResponseEntity<Object> updateSession(Session session, Long id);
@@ -24,6 +26,10 @@ public interface SessionService {
 	
 	public ResponseEntity<Object> sessionReportList();
 	
+	public ResponseEntity<Object> getSessionsRequirements();
+	
+	public ResponseEntity<Object> sessionReportsBySession(long id);
+	
 	public ResponseEntity<Object> totalSessionsByUser(int id);
 	
 	public ResponseEntity<Object> sessionReport(int id);
@@ -31,4 +37,6 @@ public interface SessionService {
 	public ResponseEntity<Object> deleteSessionReport(int id);
 	
 	public ResponseEntity<Object> addSessionVolunteachers(List<User> users,String sessionId);
+	
+	public ResponseEntity<Object> getTotalSessions();
 }

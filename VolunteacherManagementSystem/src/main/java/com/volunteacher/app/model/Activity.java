@@ -31,7 +31,7 @@ public class Activity {
 	private int activityId;
 	
 	@NotNull
-	@Column(nullable = false , length=20, unique = true , columnDefinition = "Char(20)")
+	@Column(nullable = false , length=20, columnDefinition = "Char(20)")
 	private String activityName;
 	
 	@Column(nullable = false, columnDefinition = "TEXT")

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -28,4 +29,7 @@ public interface KidRepository extends PagingAndSortingRepository<Kid, Long>{
 	public List<Kid> findAllByAreaAreaIdAndGroupGroupIdAndVillageVillageId(int aid,int vid,int gid);
 	
 	public List<Kid> findAllByLevel(int level);
+	
+	@Query(value = "select COUNT(*) from kid",nativeQuery = true)
+	public int totalKids();
 }

@@ -26,6 +26,6 @@ public interface EventService {
 	
 	public List<Activity> createActivityList(String[] ids);
 	
-	
+	public ResponseEntity<Object> getTotalEvents();
 	
 }

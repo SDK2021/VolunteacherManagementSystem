@@ -113,7 +113,7 @@ public class KidsReportServiceImpl implements KidsReportService{
 		
 		try {
 			kidsReportRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Kid report deleted for id: " + id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Kids Report for id:" +id);

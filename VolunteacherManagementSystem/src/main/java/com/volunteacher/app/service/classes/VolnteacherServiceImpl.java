@@ -79,7 +79,7 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 		updateVolunteacher.setSchool(volunteacher.getSchool());
 		updateVolunteacher.setStatus(volunteacher.getStatus());
 		updateVolunteacher.setVillage(volunteacher.getVillage());
-		updateVolunteacher.setJoiningTime(volunteacher.getJoiningTime());
+//		updateVolunteacher.setJoiningTime(volunteacher.getJoiningTime());
 	
 		try {
 			volunteacherRepository.save(updateVolunteacher);
@@ -97,7 +97,7 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 		
 		try {
 			volunteacherRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Volunteacher Delete for id: "+id);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Volunteacher for id:" +id);
@@ -112,6 +112,31 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching volunteacher by user Id");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> getTotalVolunteacher() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(volunteacherRepository.allVolunteacher());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total volunteacher");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> getNewVolunteachers() {
+		try {
+			List<Volunteacher> volunteacherList = (List<Volunteacher>) volunteacherRepository.newVolunteachers();
+			
+			if(volunteacherList.size() < 1)
+				throw new ResourceNotFoundException("Volunteacher List not found");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(volunteacherList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch new Volunteachers");
 		}
 	}
 }

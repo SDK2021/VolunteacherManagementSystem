@@ -22,4 +22,5 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long>{
 	@Query(value = "select * from user where user_id=:userId",nativeQuery = true)
 	public User findByUserId(Long userId);
 
+	public List<User> findAllByTypeTypeId(int id);
 }

@@ -48,13 +48,13 @@ public class TimelinePostController {
 		return timelinePostService.deletePost(id);
 	}
 	
-	@GetMapping("/totalPosts/{id}")
+	@GetMapping("/total-posts/{id}")
 	public int getAllPostByUser(@PathVariable int id)
 	{
 		return timelinePostService.TotalPostByUser(id);
 	}
 	
-	@GetMapping("/userPosts")
+	@GetMapping("/user-posts")
 	public ResponseEntity<Object> getAllPostByUser(@RequestParam("user") Long id)
 	{
 		return timelinePostService.postListByUser(id);
