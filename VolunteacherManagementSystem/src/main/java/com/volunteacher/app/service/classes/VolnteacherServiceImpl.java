@@ -1,9 +1,12 @@
 package com.volunteacher.app.service.classes;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,14 +23,11 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 	VolunteacherRepository volunteacherRepository;	
 	
 	@Override
-	public ResponseEntity<Object> volunteacherList()
+	public ResponseEntity<Object> volunteacherList(int page)
 	{
 		try {
-			List<Volunteacher> volunteacherList = (List<Volunteacher>) volunteacherRepository.findAll();
-			
-			if(volunteacherList.size() < 1)
-				throw new ResourceNotFoundException("Volunteacher List not found");
-			
+			Pageable pageable = PageRequest.of(page, 9);
+			Page<Volunteacher> volunteacherList = (Page<Volunteacher>) volunteacherRepository.findAll(pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(volunteacherList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,21 +69,20 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 	@Override
 	public ResponseEntity<Object> updateVolunteacher(Volunteacher volunteacher, int id) 
 	{
-		Volunteacher updateVolunteacher = volunteacherRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Volunteacher not found for id: " + id));
-		
-		updateVolunteacher.setDistrict(volunteacher.getDistrict());
-		updateVolunteacher.setEducation(volunteacher.getEducation());
-		updateVolunteacher.setEmployerName(volunteacher.getEmployerName());
-		updateVolunteacher.setEndingDate(volunteacher.getEndingDate());
-		updateVolunteacher.setJoiningDate(volunteacher.getJoiningDate());
-		updateVolunteacher.setPincode(volunteacher.getPincode());
-		updateVolunteacher.setSchool(volunteacher.getSchool());
-		updateVolunteacher.setStatus(volunteacher.getStatus());
-		updateVolunteacher.setVillage(volunteacher.getVillage());
-//		updateVolunteacher.setJoiningTime(volunteacher.getJoiningTime());
-	
 		try {
+			Volunteacher updateVolunteacher = volunteacherRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Volunteacher not found for id: " + id));
+			
+			updateVolunteacher.setDistrict(volunteacher.getDistrict());
+			updateVolunteacher.setEducation(volunteacher.getEducation());
+			updateVolunteacher.setEmployerName(volunteacher.getEmployerName());
+			updateVolunteacher.setEndingDate(volunteacher.getEndingDate());
+			updateVolunteacher.setJoiningDate(volunteacher.getJoiningDate());
+			updateVolunteacher.setPincode(volunteacher.getPincode());
+			updateVolunteacher.setSchool(volunteacher.getSchool());
+			updateVolunteacher.setStatus(volunteacher.getStatus());
+			updateVolunteacher.setVillage(volunteacher.getVillage());
 			volunteacherRepository.save(updateVolunteacher);
+			
 			return ResponseEntity.status(HttpStatus.OK).body(updateVolunteacher);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,17 +92,13 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 
 	@Override
 	public ResponseEntity<Object> deleteVolunteacher(int id) 
-	{
-		volunteacherRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Volunteacher not found for id: " + id));
-		
+	{	
 		try {
-			Optional<Volunteacher> volunteacher= volunteacherRepository.findById(id);
-			Volunteacher v= volunteacher.get();
+			Volunteacher v= volunteacherRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Volunteacher not found for id: " + id));
 			volunteacherRepository.deleteVolunteacherProjects(v.getUser().getUserId());
+			System.out.println(v);
 			volunteacherRepository.deleteVolunteacherSessions(v.getUser().getUserId());
 			volunteacherRepository.deleteById(id);
-			
-			
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,9 +120,7 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 	@Override
 	public ResponseEntity<Object> getTotalVolunteacher() {
 		try {
-			//throw new Exception();
 			return ResponseEntity.status(HttpStatus.OK).body(volunteacherRepository.allVolunteacher());
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total volunteacher");
@@ -135,10 +128,10 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 	}
 
 	@Override
-	public ResponseEntity<Object> getNewVolunteachers() {
+	public ResponseEntity<Object> getNewVolunteachers(int page) {
 		try {
-			List<Volunteacher> volunteacherList = (List<Volunteacher>) volunteacherRepository.newVolunteachers();
-				
+			Pageable pageable = PageRequest.of(page, 5,Sort.by("joining_date").descending());
+			Page<Volunteacher> volunteacherList = (Page<Volunteacher>) volunteacherRepository.newVolunteachers(pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(volunteacherList);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -17,6 +17,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -38,27 +39,15 @@ public class TimelinePost {
 	@Column(nullable = false)
 	private String postPhoto;
 	
-//	@NotNull
-//	@Column(nullable = false, length = 100)
-//	private String postTitle;
-	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "Text")
 	private String postDescription;
 	
 	@NotNull
 	@CreatedDate
-	@JsonFormat(pattern = "MM-dd-yyyy")
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy")
 	@Column(nullable = false)
 	private Calendar creationDate;
-	
-//	@NotNull
-//	@Column(nullable = false, columnDefinition = "TIME")
-//	@JsonFormat(pattern = "HH-mm-ss")
-//	@CreationTimestamp
-//	private Calendar creationTime;
-	
-	private int likes;
 	
 	@NotNull
 	@ManyToOne
@@ -93,14 +82,6 @@ public class TimelinePost {
 		this.postPhoto = postPhoto;
 	}
 
-//	public String getPostTitle() {
-//		return postTitle;
-//	}
-//
-//	public void setPostTitle(String postTitle) {
-//		this.postTitle = postTitle;
-//	}
-
 	public String getPostDescription() {
 		return postDescription;
 	}
@@ -115,21 +96,5 @@ public class TimelinePost {
 
 	public void setCreationDate(Calendar creationDate) {
 		this.creationDate = creationDate;
-	}
-
-//	public Calendar getCreationTime() {
-//		return creationTime;
-//	}
-//
-//	public void setCreationTime(Calendar creationTime) {
-//		this.creationTime = creationTime;
-//	}
-
-	public int getLikes() {
-		return likes;
-	}
-
-	public void setLikes(int likes) {
-		this.likes = likes;
 	}	
 }

@@ -2,7 +2,6 @@ package com.volunteacher.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,16 +11,9 @@ import com.volunteacher.app.service.interfaces.EmailService;
 
 @RestController
 @RequestMapping(path = "/vms")
-@CrossOrigin(origins="http://localhost:4200") 
 public class EmailController {
 	@Autowired
 	EmailService emailService;
-	
-//	@GetMapping("/email")
-//	public boolean sendEmail()
-//	{
-//		return this.emailService.sendMail();
-//	}
 	
 	@PostMapping("/send-otp")
 	public ResponseEntity<Object> sendOTP(@RequestParam("email") String email)

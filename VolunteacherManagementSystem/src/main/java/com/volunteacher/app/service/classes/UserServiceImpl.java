@@ -2,8 +2,6 @@ package com.volunteacher.app.service.classes;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
@@ -65,17 +63,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ResponseEntity<Object> updateUser(User user, Long id)
 	{
-		User updateuser = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found for id: "+ id));
-		updateuser.setEmail(user.getEmail());
-		updateuser.setGender(user.getGender());
-		updateuser.setPassword(user.getPassword());
-		updateuser.setPhoneNumber(user.getPhoneNumber());
-		updateuser.setUserName(user.getUserName());
-		updateuser.setDob(user.getDob());
-		updateuser.setType(user.getType());
-		
-		
 		try {
+			User updateuser = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found for id: "+ id));
+			
+			updateuser.setEmail(user.getEmail());
+			updateuser.setGender(user.getGender());
+			updateuser.setPassword(user.getPassword());
+			updateuser.setPhoneNumber(user.getPhoneNumber());
+			updateuser.setUserName(user.getUserName());
+			updateuser.setDob(user.getDob());
+			updateuser.setType(user.getType());
+			
 			userRepository.save(updateuser);
 			return ResponseEntity.status(HttpStatus.OK).body(updateuser);
 		} catch (Exception e) {
@@ -85,10 +83,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Modifying
 	public ResponseEntity<Object> deleteUser(Long id)
 	{
 		userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found for id: " + id));
-		notificationRepository.deleteByCreatedByUserId(id);
 		try {
 			System.out.println(id);
 			userRepository.deleteById(id);
@@ -104,10 +102,6 @@ public class UserServiceImpl implements UserService {
 	{
 		try {
 			List<User> users = (List<User>) userRepository.findAll();
-			
-			if(users.size() < 1)
-				throw new ResourceNotFoundException("User List is empty");
-			
 			return ResponseEntity.status(HttpStatus.OK).body(users);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,7 +134,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ResponseEntity<Object> userByEmail(String email) {
-		System.out.println(email);
 		try {
 			User user = userRepository.findByEmail(email);
 			return ResponseEntity.status(HttpStatus.OK).body(user);
@@ -152,7 +145,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ResponseEntity<Object> userByPhoneNumber(String number) {
-		System.out.println(number);
 		try {
 			User user = userRepository.findByPhoneNumber(number);
 			return ResponseEntity.status(HttpStatus.OK).body(user);

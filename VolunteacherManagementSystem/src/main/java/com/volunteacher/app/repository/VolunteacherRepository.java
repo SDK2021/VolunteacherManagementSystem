@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -24,7 +26,7 @@ public interface VolunteacherRepository extends PagingAndSortingRepository<Volun
 	public int allVolunteacher();
 	
 	@Query(value = "select * from volunteacher where joining_date < (DATE_ADD(joining_date,INTERVAL 1 YEAR)) ORDER BY joining_date DESC",nativeQuery = true)
-	public List<Volunteacher> newVolunteachers();
+	public Page<Volunteacher> newVolunteachers(Pageable pageable);
 	
 	@Transactional
 	@Modifying

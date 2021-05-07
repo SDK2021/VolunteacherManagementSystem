@@ -25,14 +25,15 @@ public class SessionReport {
 	@Column(length=8)
 	private int sessionReportId;
 	
-	@Column(columnDefinition = "TEXT")
+	@NotNull
+	@Column(columnDefinition = "TEXT",nullable = false)
 	private String description;
 	
 	@Column(columnDefinition = "TEXT")
 	private String suggestions;
 	
 	@NotNull
-	@Column(length = 20, nullable = false, columnDefinition = "TEXT")
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String experience;
 	
 	@Column(columnDefinition = "TEXT")

@@ -24,4 +24,5 @@ public interface AttendanceService {
 	public ResponseEntity<Object> addKidsAttendance(Attendance attendance,String[] kidsIds);
 	
 	public List<Kid> createKidsList(String [] kidsIds);
+	
 }

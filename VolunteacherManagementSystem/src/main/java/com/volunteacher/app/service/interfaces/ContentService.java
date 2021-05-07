@@ -14,5 +14,7 @@ public interface ContentService {
 	
 	public ResponseEntity<Object> updateContent(Content content, int id);
 	
+	public ResponseEntity<Object> contentByGroup(int id);
+	
 	public ResponseEntity<Object> deleteContent(int id);
 }

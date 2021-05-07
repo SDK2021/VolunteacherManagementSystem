@@ -30,6 +30,10 @@ public interface ProjectRepository extends PagingAndSortingRepository<Project, I
 	@Query(value = "select COUNT(*) from project_users where projects_project_id=:projectId",nativeQuery = true)
 	public int TotalVolunteachersByProject(int projectId);
 	
+	@Query(value = "Select COUNT(*) from event where project_project_id =:projectId",nativeQuery = true)
+	int totalEventByProject(int projectId);
+	
+
 	@Transactional
 	@Modifying
 	@Query(value="DELETE FROM project_users WHERE projects_project_id =:id",nativeQuery = true)
@@ -39,4 +43,7 @@ public interface ProjectRepository extends PagingAndSortingRepository<Project, I
 	@Modifying
 	@Query(value="DELETE FROM project_kids WHERE projects_project_id =:id",nativeQuery = true)
 	public void deleteProjectsKids(@Param("id") long id);
+	
+	public Project findByProjectName(String name);
+	
 }

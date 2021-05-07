@@ -8,7 +8,7 @@ public interface SchoolService {
 	
 	public ResponseEntity<Object> addSchool(School school);
 	
-	public ResponseEntity<Object> schoolList();
+	public ResponseEntity<Object> schoolList(int page);
 	
 	public ResponseEntity<Object> schoolById(int id);
 	

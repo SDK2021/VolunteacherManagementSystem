@@ -1,8 +1,10 @@
 package com.volunteacher.app.service.classes;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,15 +21,16 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	AnnouncementRepository announcementRepsitory;
 
 	@Override
-	public ResponseEntity<Object> announcementList() 
+	public ResponseEntity<Object> announcementList(int page) 
 	{
+		Pageable pageable = PageRequest.of(page, 6,Sort.by("creationDate").descending());
 		try {
-			List<Announcement> announcementList = (List<Announcement>) announcementRepsitory.findAll();
+			Page<Announcement> announcementList = (Page<Announcement>) announcementRepsitory.findAll(pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(announcementList);
 	
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while fetching announcement list");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch announcement list");
 		}
 	}
 
@@ -45,13 +48,13 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Override
 	public ResponseEntity<Object> updateAnnouncement(Announcement announcement, Long id) 
-	{
-		Announcement updateAnnouncement = announcementRepsitory.findById(id).orElseThrow(()-> new ResourceNotFoundException("Announcement not foud for id:"+id));
-		
-		updateAnnouncement.setData(announcement.getData());
-		updateAnnouncement.setCreationDate(announcement.getCreationDate());
-		updateAnnouncement.setCreationTime(announcement.getCreationTime());
+	{		
 		try {
+			Announcement updateAnnouncement = announcementRepsitory.findById(id).orElseThrow(()-> new ResourceNotFoundException("Announcement not foud for id:"+id));
+			
+			updateAnnouncement.setData(announcement.getData());
+			updateAnnouncement.setCreationDate(announcement.getCreationDate());
+			updateAnnouncement.setCreationTime(announcement.getCreationTime());
 			announcementRepsitory.save(updateAnnouncement);
 			return ResponseEntity.status(HttpStatus.OK).body(updateAnnouncement);
 		} catch (Exception e) {
@@ -64,9 +67,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	@Override
 	public ResponseEntity<Object> deleteAnnouncement(Long id)
 	{
-		announcementRepsitory.findById(id).orElseThrow(()-> new ResourceNotFoundException("Announcement not foud for id:"+id));
-		
 		try {
+			announcementRepsitory.findById(id).orElseThrow(()-> new ResourceNotFoundException("Announcement not foud for id:"+id));
 			announcementRepsitory.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {

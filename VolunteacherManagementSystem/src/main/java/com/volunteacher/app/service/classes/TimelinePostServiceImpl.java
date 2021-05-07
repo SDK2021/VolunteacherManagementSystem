@@ -1,7 +1,5 @@
 package com.volunteacher.app.service.classes;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,10 +38,7 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 		try {
 			Pageable pageable = PageRequest.of(page, 7, Sort.by("creationDate").descending());
 			Page<TimelinePost> postList = (Page<TimelinePost>) timelinePostRepository.findAll(pageable);
-			
-//			if(postList.size() < 1)
-//				throw new ResourceNotFoundException("Timelinepost list not found");
-			return ResponseEntity.status(HttpStatus.OK).body(postList.getContent());
+			return ResponseEntity.status(HttpStatus.OK).body(postList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Timeline post ");
@@ -65,16 +60,13 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 	@Override
 	public ResponseEntity<Object> updatePost(TimelinePost post, Long id)
 	{
-		TimelinePost updatePost = timelinePostRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Timeline Post not found for id: "+id));
-		
-//		updatePost.setPostTitle(post.getPostTitle());
-		updatePost.setPostDescription(post.getPostDescription());
-		updatePost.setPostPhoto(post.getPostPhoto());
-		updatePost.setCreationDate(post.getCreationDate());
-//		updatePost.setCreationTime(post.getCreationTime());
-		updatePost.setLikes(post.getLikes());
-		
 		try {
+			TimelinePost updatePost = timelinePostRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Timeline Post not found for id: "+id));
+			
+			updatePost.setPostDescription(post.getPostDescription());
+			updatePost.setPostPhoto(post.getPostPhoto());
+			updatePost.setCreationDate(post.getCreationDate());
+			
 			timelinePostRepository.save(updatePost);
 			return ResponseEntity.status(HttpStatus.OK).body(updatePost);
 		} catch (Exception e) {
@@ -87,9 +79,8 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 	@Override
 	public ResponseEntity<Object> deletePost(Long id)
 	{
-		timelinePostRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("TimelinePost is not found for id: "+ id));
-	
 		try {
+			timelinePostRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("TimelinePost is not found for id: "+ id));
 			timelinePostRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
@@ -104,9 +95,10 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 	}
 
 	@Override
-	public ResponseEntity<Object> postListByUser(Long id) {
+	public ResponseEntity<Object> postListByUser(int page, Long id) {
 		try {
-			List<TimelinePost> postList = timelinePostRepository.findAllByCreatedByUserId(id,Sort.by("creationDate").descending());
+			Pageable pageable = PageRequest.of(page, 7,Sort.by("creationDate").descending());
+			Page<TimelinePost> postList = timelinePostRepository.findAllByCreatedByUserId(id,pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(postList);
 		} catch (Exception e) {
 			e.printStackTrace();

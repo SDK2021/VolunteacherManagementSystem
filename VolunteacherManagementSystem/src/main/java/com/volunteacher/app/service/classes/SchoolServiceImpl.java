@@ -1,8 +1,10 @@
 package com.volunteacher.app.service.classes;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,14 +33,11 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public ResponseEntity<Object> schoolList() 
+	public ResponseEntity<Object> schoolList(int page) 
 	{
 		try {
-			List<School> schoolList = (List<School>) schoolRepository.findAll();
-			
-			if(schoolList.size() < 1)
-				throw new ResourceNotFoundException("School list not found");
-			
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<School> schoolList = (Page<School>) schoolRepository.findAll(pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(schoolList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,19 +60,19 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	public ResponseEntity<Object> updateSchool(School school, int id) 
 	{
-		School updateSchool = schoolRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("School is not found for id: "+id));
-		
-		updateSchool.setSchoolName(school.getSchoolName());
-		updateSchool.setPhoneNumber(school.getPhoneNumber());
-		updateSchool.setPincode(school.getPincode());
-		updateSchool.setStartingDate(school.getStartingDate());
-		updateSchool.setStatus(school.getStatus());
-		updateSchool.setStream(school.getStream());
-		updateSchool.setTotalLabs(school.getTotalLabs());
-		updateSchool.setTotalStudent(school.getTotalStudent());
-		updateSchool.setVillage(school.getVillage());
-		
 		try {
+			School updateSchool = schoolRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("School is not found for id: "+id));
+			
+			updateSchool.setSchoolName(school.getSchoolName());
+			updateSchool.setPhoneNumber(school.getPhoneNumber());
+			updateSchool.setPincode(school.getPincode());
+			updateSchool.setStartingDate(school.getStartingDate());
+			updateSchool.setStatus(school.getStatus());
+			updateSchool.setStream(school.getStream());
+			updateSchool.setTotalLabs(school.getTotalLabs());
+			updateSchool.setTotalStudent(school.getTotalStudent());
+			updateSchool.setVillage(school.getVillage());
+			
 			schoolRepository.save(updateSchool);
 			return ResponseEntity.status(HttpStatus.OK).body(updateSchool);
 		} catch (Exception e) {
@@ -85,9 +84,8 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	public ResponseEntity<Object> deleteSchool(int id) 
 	{
-		schoolRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("School is not found for id: "+id));
-		
 		try {
+			schoolRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("School is not found for id: "+id));
 			schoolRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {

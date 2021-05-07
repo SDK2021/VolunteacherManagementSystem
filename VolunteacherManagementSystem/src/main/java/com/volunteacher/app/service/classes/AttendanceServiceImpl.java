@@ -77,10 +77,10 @@ public class AttendanceServiceImpl implements AttendanceService{
 	@Override
 	public ResponseEntity<Object> updateAttendance(Attendance attendance, Long id)
 	{
-		Attendance updateAttendance = attendanceRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Attendance not found for id: "+id));
-		
-		updateAttendance.setKids(attendance.getKids());
 		try {
+			Attendance updateAttendance = attendanceRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Attendance not found for id: "+id));
+			
+			updateAttendance.setKids(attendance.getKids());
 			attendanceRepository.save(updateAttendance);
 			return ResponseEntity.status(HttpStatus.OK).body(updateAttendance);
 		} catch (Exception e) {

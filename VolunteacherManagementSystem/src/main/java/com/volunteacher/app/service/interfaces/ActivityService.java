@@ -8,7 +8,7 @@ public interface ActivityService
 {
 	public ResponseEntity<Object> addActivity(Activity activities);
 	
-	public ResponseEntity<Object> activitiesList();
+	public ResponseEntity<Object> activitiesList(int page);
 
 	public ResponseEntity<Object> updateActivity(Activity activity, int id);
 	

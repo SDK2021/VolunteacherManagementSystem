@@ -59,8 +59,21 @@ public class EventServiceImpl implements EventService{
 	{
 		try {
 			Pageable pageable = PageRequest.of(page, 5, Sort.by("event_date"));
+			Page<Event> eventList = (Page<Event>) eventRepository.eventByMonthAndYear(pageable);
+			return ResponseEntity.status(HttpStatus.OK).body(eventList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Events");
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> getAllEvents(int page)
+	{
+		try {
+			Pageable pageable = PageRequest.of(page, 10, Sort.by("eventDate").descending());
 			Page<Event> eventList = (Page<Event>) eventRepository.findAll(pageable);
-			return ResponseEntity.status(HttpStatus.OK).body(eventList.getContent());
+			return ResponseEntity.status(HttpStatus.OK).body(eventList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Events");
@@ -69,18 +82,18 @@ public class EventServiceImpl implements EventService{
 	
 	public ResponseEntity<Object> updateEvent(Event event, int id)
 	{
-		Event updateEvent = eventRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Event not found for id: " + id));
-		
-		updateEvent.setTitle(event.getTitle());
-		updateEvent.setEventData(event.getEventData());
-		updateEvent.setEventDate(event.getEventDate());
-		updateEvent.setKids(event.getKids());
-		updateEvent.setProject(event.getProject());
-		updateEvent.setVillage(event.getVillage());
-		updateEvent.setEventEndingTime(event.getEventEndingTime());
-		updateEvent.setEventStartingTime(event.getEventStartingTime());
-		updateEvent.setActivities(event.getActivities());
 		try {
+			Event updateEvent = eventRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Event not found for id: " + id));
+			
+			updateEvent.setTitle(event.getTitle());
+			updateEvent.setEventData(event.getEventData());
+			updateEvent.setEventDate(event.getEventDate());
+			updateEvent.setKids(event.getKids());
+			updateEvent.setProject(event.getProject());
+			updateEvent.setVillage(event.getVillage());
+			updateEvent.setEventEndingTime(event.getEventEndingTime());
+			updateEvent.setEventStartingTime(event.getEventStartingTime());
+			updateEvent.setActivities(event.getActivities());
 			eventRepository.save(updateEvent);
 			return ResponseEntity.status(HttpStatus.OK).body(updateEvent);
 		} catch (Exception e) {
@@ -92,9 +105,8 @@ public class EventServiceImpl implements EventService{
 	@Override
 	public ResponseEntity<Object> deleteEvent(int id)
 	{
-		eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event not found for id: "+id));
-		
 		try {
+			eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event not found for id: "+id));
 			eventRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
@@ -166,6 +178,20 @@ public class EventServiceImpl implements EventService{
 		{
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total events");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> totalKidsByEvent(int eventId) {
+		try 
+		{
+			Event event = eventRepository.findByEventId(eventId);
+			return ResponseEntity.status(HttpStatus.OK).body(event.getKids().size());
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total Kids by event");
 		}
 	}
 }

@@ -8,4 +8,5 @@ import com.volunteacher.app.model.Content;
 @Repository
 public interface ContentRepository extends PagingAndSortingRepository<Content, Integer>{
 
+	Content findByGroupGroupId(int id);
 }

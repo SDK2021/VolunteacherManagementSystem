@@ -76,10 +76,9 @@ public class User {
 	@JsonFormat(shape = Shape.STRING,timezone = "IST", pattern = "HH-mm-ss")
 	private Calendar userOTPTime;
 	
-//	@OneToMany(mappedBy = "createdBy")
-//	private List<KidsReport> kidsReports;
+	@OneToMany(mappedBy = "createdBy")
+	private List<KidsReport> kidsReports;
 	
-	//removed cascade bcz admin will not be deleted ever
 	@OneToMany(mappedBy = "createdBy")
 	private List<Announcement>announcement;
 	
@@ -92,7 +91,6 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
 	private List<TimelinePost> posts;
 	
-	//cascade removed..
 	@OneToMany(mappedBy = "createdBy")
 	private List<Notification> notifications;
 	

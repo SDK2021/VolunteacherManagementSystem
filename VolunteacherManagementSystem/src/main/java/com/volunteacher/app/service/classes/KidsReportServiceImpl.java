@@ -36,9 +36,6 @@ public class KidsReportServiceImpl implements KidsReportService{
 	{
 		try {
 			List<KidsReport> kidReportList = (List<KidsReport>) kidsReportRepository.findAll();
-			
-			if(kidReportList.size() < 1)
-				throw new ResourceNotFoundException("Kids report not found");
 			return ResponseEntity.status(HttpStatus.OK).body(kidReportList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,10 +60,6 @@ public class KidsReportServiceImpl implements KidsReportService{
 	{
 		try {
 			 List<KidsReport>  kidsReportList = kidsReportRepository.findAllByKidKidId(id,Sort.by("createdDate").descending());
-			
-			if(kidsReportList.size() < 0)
-				throw new ResourceNotFoundException("Kid's reports is not found for kid id: "+ id);
-
 			return ResponseEntity.status(HttpStatus.OK).body(kidsReportList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,28 +68,26 @@ public class KidsReportServiceImpl implements KidsReportService{
 	}
 
 	@Override
-	public ResponseEntity<Object> updateKidReport(KidsReport kidReport, int id) {
-		KidsReport updateKidReport = kidsReportRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Kid report not found for id: "+ id));
-		
-		updateKidReport.setAbhivyakti(kidReport.getAbhivyakti());
-		updateKidReport.setArtCraft(kidReport.getArtCraft());
-		updateKidReport.setAttendance(kidReport.getAttendance());
-		updateKidReport.setDiscipline(kidReport.getDiscipline());
-		updateKidReport.setEnglish(kidReport.getEnglish());
-		updateKidReport.setGames(kidReport.getGames());
-		updateKidReport.setGoshthi(kidReport.getGames());
-		updateKidReport.setGoshthi(kidReport.getGoshthi());
-		updateKidReport.setGujarati(kidReport.getGujarati());
-		updateKidReport.setInterestArea(kidReport.getInterestArea());
-		updateKidReport.setLiterature(kidReport.getLiterature());
-		updateKidReport.setMaths(kidReport.getMaths());
-		updateKidReport.setPrayer(kidReport.getPrayer());
-		updateKidReport.setRemarks(kidReport.getRemarks());
-		updateKidReport.setSports(kidReport.getSports());
-		updateKidReport.setVolunteaching(kidReport.getVolunteaching());
-//Needed?		updateKidReport.setCreatedDate(kidReport.getCreatedDate());
-		
+	public ResponseEntity<Object> updateKidReport(KidsReport kidReport, int id) {	
 		try {
+			KidsReport updateKidReport = kidsReportRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Kid report not found for id: "+ id));
+			
+			updateKidReport.setAbhivyakti(kidReport.getAbhivyakti());
+			updateKidReport.setArtCraft(kidReport.getArtCraft());
+			updateKidReport.setAttendance(kidReport.getAttendance());
+			updateKidReport.setDiscipline(kidReport.getDiscipline());
+			updateKidReport.setEnglish(kidReport.getEnglish());
+			updateKidReport.setGames(kidReport.getGames());
+			updateKidReport.setGoshthi(kidReport.getGames());
+			updateKidReport.setGoshthi(kidReport.getGoshthi());
+			updateKidReport.setGujarati(kidReport.getGujarati());
+			updateKidReport.setInterestArea(kidReport.getInterestArea());
+			updateKidReport.setLiterature(kidReport.getLiterature());
+			updateKidReport.setMaths(kidReport.getMaths());
+			updateKidReport.setPrayer(kidReport.getPrayer());
+			updateKidReport.setRemarks(kidReport.getRemarks());
+			updateKidReport.setSports(kidReport.getSports());
+			updateKidReport.setVolunteaching(kidReport.getVolunteaching());
 			kidsReportRepository.save(updateKidReport);
 			return ResponseEntity.status(HttpStatus.OK).body(updateKidReport);
 		} catch (Exception e) {
@@ -109,9 +100,8 @@ public class KidsReportServiceImpl implements KidsReportService{
 	@Override
 	public ResponseEntity<Object> deleteKidReport(int id) 
 	{	
-		kidsReportRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("KidReport Not found for id: "+ id));
-		
 		try {
+			kidsReportRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("KidReport Not found for id: "+ id));
 			kidsReportRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
@@ -121,8 +111,8 @@ public class KidsReportServiceImpl implements KidsReportService{
 	}
 
 	@Override
-	public ResponseEntity<Object> kidReportByYear(Long kid, int year) {
-		
+	public ResponseEntity<Object> kidReportByYear(Long kid, int year) 
+	{
 		List<KidsReport> kidsReportList = kidsReportRepository.KidsReportByYear(kid, year);
 		return ResponseEntity.status(HttpStatus.OK).body(kidsReportList);
 	}

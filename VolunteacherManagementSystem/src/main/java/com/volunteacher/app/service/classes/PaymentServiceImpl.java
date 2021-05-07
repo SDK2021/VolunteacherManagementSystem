@@ -1,11 +1,11 @@
 package com.volunteacher.app.service.classes;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,9 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired
 	PaymentRepository paymentRepository;
+	
+	@Autowired
+	Environment env;
 	
 	@Override
 	public ResponseEntity<Object> addDonor(Donor donor) 
@@ -93,8 +96,8 @@ public class PaymentServiceImpl implements PaymentService {
 	public ResponseEntity<Object> paymentList(int id) 
 	{
 		try {
-			Pageable pageable = PageRequest.of(id, 5);
-			List<Payment> paymentList = (List<Payment>) paymentRepository.findAll();
+			Pageable pageable = PageRequest.of(id, 10,Sort.by("creationDate").descending());
+			Page<Payment> paymentList = (Page<Payment>) paymentRepository.findAll(pageable);
 			return ResponseEntity.status(HttpStatus.OK).body(paymentList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -121,9 +124,8 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public ResponseEntity<Object> deletePayment(int id) 
 	{
-		paymentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Payment is not found for id: "+id));
-		
 		try {
+			paymentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Payment is not found for id: "+id));
 			paymentRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {

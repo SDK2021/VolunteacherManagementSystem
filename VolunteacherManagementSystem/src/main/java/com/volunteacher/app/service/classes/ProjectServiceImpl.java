@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +41,10 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public ResponseEntity<Object> addProject(Project project,String[] vIds,String[] kIds) 
 	{
+		if(projectRepository.findByProjectName(project.getProjectName()) != null)
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Project already Exist");
+		}
 		try {
 			project.setUsers(this.createVolunteachersList(vIds));
 			project.setKids(this.createKidsList(kIds));
@@ -63,17 +64,8 @@ public class ProjectServiceImpl implements ProjectService{
 	{
 		try {
 			List<Project> projectList = (List<Project>) projectRepository.findAll();
-			
-			if(projectList.size() < 1)
-			{
-				throw new ResourceNotFoundException("Project list not found");
-			}
-			else 
-			{
 				return ResponseEntity.status(HttpStatus.OK).body(projectList);
-			}
-			
-		} catch (Exception e) {
+			} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch projects list");
 		}
@@ -82,21 +74,10 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public ResponseEntity<Object> projectList(int page) 
 	{
-		try {
-			List<Project> projectList = (List<Project>) projectRepository.findAll();
-			
-			if(projectList.size() < 1)
-			{
-				throw new ResourceNotFoundException("Project list not found");
-			}
-			else 
-			{
-				Pageable pageable = PageRequest.of(page, 5, Sort.by("creationDate").descending());
-				Page<Project> pageprojectList = (Page<Project>) projectRepository.findAll(pageable);
-				return ResponseEntity.status(HttpStatus.OK).body(pageprojectList.getContent());
-			}
-			
-			
+		try 
+		{
+			List<Project> pageprojectList = (List<Project>) projectRepository.findAll(Sort.by("creationDate").descending());
+			return ResponseEntity.status(HttpStatus.OK).body(pageprojectList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch projects");
@@ -119,24 +100,23 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public ResponseEntity<Object> updateProject(Project project, int id) 
 	{
-		Project updateProject = projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project is not found for id: "+id));
-		
-		updateProject.setProjectName(project.getProjectName());
-		updateProject.setProjectData(project.getProjectData());
-		updateProject.setStartingDate(project.getStartingDate());
-		updateProject.setCreationDate(project.getCreationDate());
-		updateProject.setCreationTime(project.getCreationTime());
-		updateProject.setUsers(project.getUsers());
-		updateProject.setKids(project.getKids());
-		updateProject.setEndingDate(project.getCreationDate());
-		updateProject.setPhoto(project.getPhoto());
-		
 		try {
+			Project updateProject = projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project is not found for id: "+id));
+			
+			updateProject.setProjectName(project.getProjectName());
+			updateProject.setProjectData(project.getProjectData());
+			updateProject.setStartingDate(project.getStartingDate());
+			updateProject.setCreationDate(project.getCreationDate());
+			updateProject.setCreationTime(project.getCreationTime());
+			updateProject.setUsers(project.getUsers());
+			updateProject.setKids(project.getKids());
+			updateProject.setEndingDate(project.getCreationDate());
+			updateProject.setPhoto(project.getPhoto());
+			
 			projectRepository.save(updateProject);
 			updateProject.setTotalKids(projectRepository.TotalKidsByProject(id));
 			updateProject.setTotalSessions(projectRepository.TotalSessionByProject(id));
 			updateProject.setTotalVolunteachers(projectRepository.TotalVolunteachersByProject(id));
-			System.out.println(projectRepository.TotalSessionByProject(id));
 			projectRepository.save(updateProject);
 			return ResponseEntity.status(HttpStatus.OK).body(updateProject);
 		} catch (Exception e) {
@@ -148,9 +128,8 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public ResponseEntity<Object> deleteProject(int id) 
 	{
-		projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project is not found for id: "+id));
-		
 		try {
+			projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project is not found for id: "+id));
 			projectRepository.deleteProjectsKids(id);
 			projectRepository.deleteProjectsUsers(id);
 			projectRepository.deleteById(id);
@@ -165,25 +144,6 @@ public class ProjectServiceImpl implements ProjectService{
 	public int TotalNumberProjectByUser(int id) 
 	{
 		return projectRepository.TotalProjectByUser(id);
-	}
-
-	@Override
-	public ResponseEntity<Object> allProjectList() 
-	{
-		try {
-			List<Project> projectList = (List<Project>) projectRepository.findAll();
-			
-			if(projectList.size() < 1)
-			{
-				throw new ResourceNotFoundException("Project list not found");
-			}
-			
-			return ResponseEntity.status(HttpStatus.OK).body(projectList);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch projects");
-		}
 	}
 
 	@Override
@@ -207,6 +167,17 @@ public class ProjectServiceImpl implements ProjectService{
 		}
 	}
 
+	@Override
+	public ResponseEntity<Object> totalEventByProject(int projectId) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(projectRepository.totalEventByProject(projectId));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total events of project");
+		}
+	}
+	
+	
 	@Override
 	public ResponseEntity<Object> totalKidsByProject(int projectId) {
 		try {

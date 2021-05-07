@@ -8,7 +8,7 @@ public interface ApplicantRequestService {
 	
 	public ResponseEntity<Object> addRequest(ApplicantRequest request);
 	
-	public ResponseEntity<Object> requestList();
+	public ResponseEntity<Object> requestList(int page);
 	
 	public ApplicantRequest requestById(int id);
 	
@@ -18,5 +18,7 @@ public interface ApplicantRequestService {
 	
 	public ResponseEntity<Object> requestByEmail(String email);
 	
-	public boolean successRequest(int requestId);
+	public ResponseEntity<Object> successRequest(int requestId);
+	
+	public ResponseEntity<Object> rejectRequest(int requestId);
 }

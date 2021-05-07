@@ -44,13 +44,11 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public ResponseEntity<Object> updateReport(Report report, int id) {
-		
-		Report updateReport = reportRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Report is not found for id: "+id));
-		
-		updateReport.setTitle(report.getTitle());
-		updateReport.setDescription(report.getDescription());
-	
 		try {
+			Report updateReport = reportRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Report is not found for id: "+id));
+			
+			updateReport.setTitle(report.getTitle());
+			updateReport.setDescription(report.getDescription());
 			reportRepository.save(updateReport);
 			return ResponseEntity.status(HttpStatus.OK).body(updateReport);
 		} catch (Exception e) {
@@ -82,6 +80,17 @@ public class ReportServiceImpl implements ReportService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in Deleting Report for id:" +id);
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> reportByCurrentYear() {
+		try {
+			List<Report> reportList = reportRepository.reportByYear();
+			return ResponseEntity.status(HttpStatus.OK).body(reportList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in fetchind Report By year");
 		}
 	}
 

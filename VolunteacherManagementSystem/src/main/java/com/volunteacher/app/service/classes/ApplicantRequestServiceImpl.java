@@ -35,13 +35,11 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 		if((userService.userByEmail(request.getEmailId()).getBody() != null) || (this.requestByEmail(request.getEmailId()).getBody() != null))
 		{
 			System.out.println(userService.userByEmail(request.getEmailId()));
-			//throw new EmailAlreadyExistException("You email id already exist");
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
 		if(userService.userByPhoneNumber(request.getPhoneNumber()).getBody() != null || (this.requestByPhoneNumber(request.getPhoneNumber()).getBody() != null))
 		{
-			//throw new EmailAlreadyExistException("You email id already exist");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		
@@ -57,16 +55,12 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	}
 	
 	@Override
-	public ResponseEntity<Object> requestList()
+	public ResponseEntity<Object> requestList(int page)
 	{
 		try {
-//			Sort sort = Sort.by(
-//					Sort.Order.desc("requestDate"),
-//					Sort.Order.asc("name")	
-//			);
-			Pageable pageable = PageRequest.of(0, 5,Sort.by("requestDate"));
+			Pageable pageable = PageRequest.of(page, 7,Sort.by("request_date").descending());
 			Page<ApplicantRequest> requestList = (Page<ApplicantRequest>) applicantRequestRepository.findAll(pageable);
-			return ResponseEntity.status(HttpStatus.OK).body(requestList.getContent());
+			return ResponseEntity.status(HttpStatus.OK).body(requestList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Applicant request list");
@@ -88,9 +82,8 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	@Override
 	public ResponseEntity<Object> deleteRequest(int id)
 	{
-		applicantRequestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Applicant Request Not found for Id: "+id));
-		
 		try {
+			applicantRequestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Applicant Request Not found for Id: "+id));
 			applicantRequestRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
@@ -101,7 +94,6 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	
 	@Override
 	public ResponseEntity<Object> requestByEmail(String email) {
-		System.out.println(email);
 		try {
 			ApplicantRequest request = applicantRequestRepository.findByEmailId(email);
 			return ResponseEntity.status(HttpStatus.OK).body(request);
@@ -113,7 +105,6 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 
 	@Override
 	public ResponseEntity<Object> requestByPhoneNumber(String number) {
-		System.out.println(number);
 		try {
 			ApplicantRequest request = applicantRequestRepository.findByPhoneNumber(number);
 			return ResponseEntity.status(HttpStatus.OK).body(request);
@@ -124,16 +115,29 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	}
 	
 	@Override
-	public boolean successRequest(int requestId) {
+	public ResponseEntity<Object> successRequest(int requestId) {
 		try {
 			ApplicantRequest request = applicantRequestRepository.findById(requestId).orElseThrow(()->new ResourceNotFoundException("Error on sending zccepted mail"));;
 			request.setStatus(1);
 			applicantRequestRepository.save(request);
 			emailService.acceptRequestMail(request);
-			return true;
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on accept request");
+		}
+	}
+	
+	public ResponseEntity<Object> rejectRequest(int requestId)
+	{
+		try {
+			ApplicantRequest request = applicantRequestRepository.findById(requestId).orElseThrow(()->new ResourceNotFoundException("Error on sending zccepted mail"));;
+			request.setStatus(2);
+			applicantRequestRepository.save(request);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on denied request");
 		}
 	}
 }
