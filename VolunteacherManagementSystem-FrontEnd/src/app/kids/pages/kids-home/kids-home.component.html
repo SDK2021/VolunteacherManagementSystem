@@ -1,0 +1,130 @@
+<div class="header bg-gradient-danger pb-8 pt-4 pt-md-8">
+    <div class="container-fluid">
+        <div class="header-body">
+            <h1 class=" text-white title">Kids</h1>
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7" style="background-color: #172b4d;">
+    <div class="row">
+        <div class="col p-0">
+            <div class="card shadow border-0 pb-8">
+                <!-- <div class="card card-header mb-4">
+                    <h5 class="h3 mb-0">Create and View reports</h5>
+                </div>
+                <div class="px-xl-6 px-lg-4 px-md-4 px-sm-4 p-3">
+                    <h3>View Reports</h3>
+                    <div class="row justify-content-center px-xl-4 py-4">
+                        <div class="col-10 col-xl-6 col-lg-7 col-md-9 col-sm-8 shadow m-4 p-4" style="background-image: url('../../../../assets/img/banners/report-bg.jpg');background-size: cover;background-position-y: top;">
+                          
+                            <p class=" mb-0 text-dark text-center"><span class=" bg-white display-4  ">Progress Reports</span></p>
+
+                            <p class=" pt-0 text-dark text-center"><span class=" bg-white "> View the reports of kids </span></p>
+                            <div class="text-center mb-2">
+                                <a href="user/kids/kids-list"  class="btn bg-default text-white">View Report</a>
+                            </div>
+                 
+                        </div>
+                       
+                    </div>
+                    <hr class=" m-xl-4 m-2">
+
+                </div> -->
+                <!-- <div class="px-xl-6 px-lg-4 px-md-4 px-sm-4 p-3 ">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-xl-6 col-lg-6 ">
+                            <div class="p-4 mb-4"
+                                style="background-color: rgba(162, 220, 238, 0.384);border-radius: 10px;">
+                                <h3>Create Reports</h3>
+                                <div class="row justify-content-center px-xl-4 py-4">
+                                    <div class="col-12 col-xl-10 col-lg-10 col-md-8 " style="border-radius: 30px;">
+                                        <div class="row justify-content-center">
+
+                                            <div class="col-auto px-3 bg-white" style="border-radius: 10px;">
+                                                
+                                                <div class="row justify-content-center">
+
+                                                    <a class="text-dark" href="user/kids/create-report/kids-list"><div class="col-auto py-2 px-4 bg-white" style="border-radius: 10px;">
+                                                        <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                                            <i class="fas fa-plus"></i>
+                                                        </div>
+                                                        <span class="card-title mb-4 ml-2">Create Report</span>
+                                                    </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-xl-6 col-lg-6 ">
+                            <div class="p-4 mb-4"
+                                style="background-color: rgba(236, 178, 238, 0.267);border-radius: 10px;">
+                                <h3>Add Kids</h3>
+                                <div class="row justify-content-center px-xl-4 py-4">
+                                    <div class="col-12 col-xl-10 col-lg-10 col-md-8 " style="border-radius: 30px;">
+                                        <div class="row justify-content-center">
+
+                                            <a class="text-dark" href="user/kids/add-kid"><div class="col-auto py-2 px-4 bg-white" style="border-radius: 10px;">
+                                                <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                                    <i class="fas fa-plus"></i>
+                                                </div>
+                                                <span class=" px-4 mb-4">Add Kid</span>
+                                            </div>
+                                            </a>
+                                        </div>
+                               
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div> -->
+
+                <div class="px-xl-6 px-lg-4 px-md-4 px-sm-4 p-3 mt-5">
+                    <h3>Event Registration</h3>
+                </div>
+                <ng-container *ngIf="showSpinner">
+                    <mat-spinner class="mx-auto mt-5" color="primary" [diameter]="40">
+                    </mat-spinner>
+                  </ng-container>
+                  <ng-container *ngIf="noEvents">
+                    <div class="col-12 col-xl-10 mx-auto d-block my-xl-5 my-6 py-xl-7 py-6">
+                        <p class="text-center text-xl"><i class="fas fa-calendar"></i></p>
+                        <p class="text-xl text-center text-lg"><b>No events this month.</b></p>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="eLength">
+                    <div class="row justify-content-center p-4">
+                        <div *ngFor="let e of events" class="col-12 col-xl-6 col-lg-8  ">
+                            <div class="container card p-2 mb-4 bg-primary"
+                                style=" box-shadow: 2px 2px 50px rgba(163, 160, 160, 0.2);">
+                                <div class="col-auto">
+    
+                                    <div class=" justify-content-center">
+                                        <img alt="Image placeholder" class="mx-auto d-block"
+                                            src="../../../../assets/img/banners/event-1.png"
+                                            style="min-width:20%;height:150px">
+                                    </div>
+                                </div>
+                                <p class="display-4 text-center fw-normal mb-0 text-white">{{e.title}}</p>
+    
+                                <p class="text-center pt-0  text-white">On {{e.eventDate | date:'mediumDate'}} at {{e.village.villageName}} , {{e.village.taluka.district.districtName}} , {{e.village.taluka.district.state.stateName}}</p>
+                                <div class="text-center mb-2">
+                                    <a routerLink="/user/kids/event/{{e.eventId}}/add-participants"  class="btn btn-white">Kids Participation</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

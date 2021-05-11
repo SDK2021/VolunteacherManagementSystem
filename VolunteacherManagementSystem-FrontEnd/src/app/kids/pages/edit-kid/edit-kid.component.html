@@ -1,0 +1,284 @@
+<div class="header bg-gradient-danger pb-7 pt-3 pt-md-8">
+    <div class="container-fluid">
+        <div class="header-body">
+            <h1 class=" text-white text-center text-md-left">Edit Kid</h1>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
+<!-- Page content -->
+<div class="container-fluid mt--6" style="background-color: #172b4d;">
+    <div class="">
+        <div class="col p-0">
+            <div class="card shadow border-0 pb-8">
+              
+
+                <div class="row justify-content-center mt-4">
+                    <ng-container *ngIf="edit">
+                        <div class="container">
+                            <app-upload-img [baseUrl]="baseUrl" [isPost]="false" (show)="show($event)"></app-upload-img>
+                        </div>
+                    </ng-container>
+                    <div *ngIf="showForm" class="col-xl-10 col-lg-11 col-md-11 col-sm-10 col-11 p-0">
+
+                        <div class="card shadow mt-5">
+                            <!-- Card body -->
+                            <div class="card-body">
+                                <a style="cursor: pointer;" (click)="editPhoto()">
+                                    <img src="{{imageURL}}"
+                                        class="mt--6 rounded-circle img-center img-fluid shadow shadow-lg--hover"
+                                        style="width: 140px;">
+                                </a>
+                                <form class="mt-5" #form="ngForm">
+                                    <div class="row justify-content-center  px-lg-6">
+                                        <div class="col-lg-6 col-md-9 col-sm-10">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-name">Name</label>
+                                                <input #name="ngModel" [(ngModel)]="kid.name" name="name" type="text"
+                                                    id="input-name" class="form-control form-control-alternative"
+                                                    placeholder="name" required pattern="{{namePattern}}" [value]="kid.name">
+                                                <small *ngIf="name.errors?.required && name.touched"
+                                                    class="text-danger">Name is required</small>
+                                                <small *ngIf="name.errors?.pattern" class="text-danger">Invalid
+                                                    Name</small>
+                                            </div>
+                                        </div>
+                                        <br>
+
+
+
+                                        <div class="col-lg-6 col-md-9 col-sm-10">
+                                            <div class="form-group mb-0">
+                                                <label class="form-control-label" for="input-gender">Gender</label>
+
+                                                <div class="px-4">
+                                                    <div class="row">
+                                                        <div class="col-lg-5 col-md-6 col-6 ">
+                                                            <div class="form-group mb-2">
+
+                                                                <input #gender="ngModel" value="1" name="gender"
+                                                                    [(ngModel)]="kid.gender" class="form-check-input"
+                                                                    type="radio" name="flexRadioDefault"  
+                                                                    id="input-male">
+                                                                <label class="form-check-label" for="input-male"                                                      
+                                                                    required>
+                                                                    Male
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-5 col-md-6 col-6">
+                                                            <div class="form-group mb-2">
+                                                                <input #gender="ngModel" value="2" name="gender"
+                                                                    [(ngModel)]="kid.gender" class="form-check-input"
+                                                                    type="radio" name="flexRadioDefault"
+                                                                    id="input-female" required>
+                                                                <label class="form-check-label" for="input-female" >
+                                                                    Female
+                                                                </label><br>
+                                                            </div>
+
+                                                        </div>
+                                                        <small *ngIf="!gender.valid&& form.submitted"
+                                                            class="text-danger">Gender is required</small>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-9 col-sm-10">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-dob">Date Of Birth</label>
+                                                <input #dob="ngModel" name="dob" [(ngModel)]="kid.dob" type="text"
+                                                    id="input-dob" class="form-control form-control-alternative"
+                                                    placeholder="DOB" required onfocus="(this.type = 'date')" [value]="kid.dob">
+                                                <small *ngIf="!dob.valid && dob.touched" class="text-danger">DOB is
+                                                    required</small>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- <div class="col-lg-8 col-md-9 col-sm-10">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-standard">Standard</label>
+                                            <input  #standard="ngModel" name="standard" [(ngModel)]="kid.standard" type="text" id="input-standard" class="form-control form-control-alternative"
+                                                placeholder="Standard" required pattern="[0-9]{1,2}">
+                                                <small *ngIf="standard.errors?.required && standard.touched" class="text-danger">Standard is required</small>
+                                                <small *ngIf="standard.errors?.pattern" class="text-danger">Invalid Standard</small>
+                                        </div>
+                                    </div> -->
+
+
+                                        <div class="col-lg-6 col-md-9 col-sm-10">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-standard">School</label>
+                                                <input #school="ngModel" name="school" [(ngModel)]="kid.school"
+                                                    type="text" id="input-standard"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="School Name" required [value]="kid.school">
+                                                <small *ngIf="school.errors?.required && school.touched"
+                                                    class="text-danger">School name is required</small>
+                                                <!-- <small *ngIf="school.errors?.pattern" class="text-danger">Invalid School Name</small> -->
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row justify-content-center ">
+                                            <div class="col-12 col-lg-6 col-md-6 col-sm-10">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-group">Standard</label>
+                                                    <select #level class="form-control form-control-alternative"
+                                                        id="input-group" name="standard" required [(ngModel)]="kid.standard">
+                                                        <option class="combobox" selected>Select</option>
+                                                        <option class="combobox" [value]="standards.indexOf(s)+1"  [selected] = "kid.standard == standards.indexOf(s)+1"  *ngFor="let s of standards;">
+                                                            {{s}}
+                                                        </option>
+                                                    </select>
+                                                  
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6 col-md-6 col-sm-10">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-group">Select
+                                                        Level</label>
+                                                    <select #level class="form-control form-control-alternative"
+                                                        id="input-group" name="level" required [(ngModel)]="kid.level">
+                                                        <option class="combobox" selected>Select</option>
+                                                        <option class="combobox" [value]="levels.indexOf(l)+1" [selected] = "kid.level == levels.indexOf(l)+1" *ngFor="let l of levels;">
+                                                            {{l}}
+                                                        </option>
+                                                    </select>
+                                                
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-7 col-md-6 col-lg-6 ">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-group">Select
+                                                        Country</label>
+                                                    <select class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedCountry($event)">
+                                                        <option class="combobox" [value]="c.countryId" disabled
+                                                            *ngFor="let c of countries;trackBy: trackCountriesById"
+                                                            [selected]="c.countryId == 8">{{c.countryName}}
+                                                        </option>
+                                                    </select>
+                                                    <!-- <input type="text" value="India" disabled class="form-control"> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-7 col-md-6 col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-group">Select
+                                                        State</label>
+                                                    <select class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedState($event)">
+                                                        <option class="combobox" [value]="s.stateId"
+                                                            *ngFor="let s of states;trackBy: trackStatesById"
+                                                            [selected]="s.stateId==7">{{s.stateName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-7 col-md-6 col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-group">Select
+                                                        District</label>
+                                                    <select class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedDistrict($event)">
+                                                        <option class="combobox" value="0" selected>Select</option>
+                                                        <option class="combobox" [value]="d.districtId"
+                                                            *ngFor="let d of districts;trackBy: trackDistrictsById"
+                                                            [selected]="d.districtId==141&&isShow">{{d.districtName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-7 col-md-6 col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-group">Select
+                                                        Taluka</label>
+                                                    <select class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedTaluka($event)">
+                                                        <option class="combobox" value="0" selected>Select</option>
+                                                        <option class="combobox" [value]="t.talukaId"
+                                                            *ngFor="let t of talukas;trackBy: trackTalukasById"
+                                                            [selected]="t.talukaId==35&&isShow">{{t.talukaName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-7 col-md-6 col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-group">Select
+                                                        Village</label>
+                                                    <select class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedVillage($event)">
+                                                        <option class="combobox" value="0" selected>Select</option>
+                                                        <option class="combobox" [value]="v.villageId" [selected]="kid.village.villageId == v.villageId"
+                                                            *ngFor="let v of villages;trackBy: trackVillagesById">
+                                                            {{v.villageName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-7 col-md-6 col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-group">Select
+                                                        Area</label>
+                                                    <select class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedArea($event)">
+                                                        <option class="combobox" value="0" selected>Select</option>
+                                                        <option class="combobox" [value]="a.areaId" [selected]="kid.area.areaId == a.areaId"
+                                                            *ngFor="let a of areas;trackBy: trackAreasById">
+                                                            {{a.areaName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-7 col-md-6 col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-group">Select
+                                                        Group</label>
+                                                    <select class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedGroup($event)">
+                                                        <option class="combobox" value="0" selected>Select</option>
+                                                        <option class="combobox" [value]="g.groupId" [selected] ="kid.group.groupId == g.groupId"
+                                                            *ngFor="let g of groups;trackBy: trackGroupsById">
+                                                            {{g.groupName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <!-- Model Should be there successfully added or not -->
+                                      
+                                     
+                                        <div class="col-12 text-center mt-4 mb-4 ">
+                                            <button type="button" [disabled]="!form.valid"  (click)="saveKid()"
+                                                class="btn btn-primary">Save</button>
+                                        </div>
+                            </div>
+                                </form>
+
+
+
+
+                                <!--Chart over-->
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

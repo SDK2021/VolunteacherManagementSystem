@@ -1,0 +1,315 @@
+<div class="main-content">
+  <!-- Header -->
+  <div class="header bg-primary pt-5 pb-7">
+    <div class="container">
+      <div class="header-body">
+        <div class="row align-items-center">
+          <h1 class="display-3 text-white font-weight-bold ml-4 mb-2 mt-6">All India Rural Empowerment Program</h1>
+          <div class="col-lg-6">
+
+            <div class="pr-5">
+
+              <h2 class="display-4 text-white font-weight-light mt-0">Share your knowledge and become a Volunteacher
+              </h2>
+              <p class="text-white mt-4">This is a process to provide a platform to youth for contribution towards
+                nation and to understad nation's reality.</p>
+              <div class="mt-5">
+                <a href="register" class="btn btn-white" style="color: black;">Be a Volunteacher</a>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 p-4">
+            <img src="../../assets/img/home/teachers.jpg" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+        xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </div>
+  <section class="py-6 pb-9 bg-white">
+    <div class="row justify-content-center text-center">
+      <div class="col-md-6">
+        <h2 class="display-3">Events {{year}}</h2>
+        <!-- <p class="lead text-dark">
+          Be a part of our events and Shibir. The events are oranised for character building of the kids, to develop
+          leadership
+          and to learn teamwork.
+        </p> -->
+      </div>
+    </div>
+  </section>
+  <section class="section section-lg pt-lg-0 mt--7 bg-white mr-0 p-xs-0">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-12 p-xs-0">
+          <div class="cards-2 section-gray">
+            <div class="container">
+              <!-- <div class="row justify-content-center mb-xl-6">
+                <div class="col-12 ">
+                  <div class="card card-blog p-xl-5">
+                    <div class="card-image mt-xl--7">
+                      <a href="#"> <img class="img img-raised" src="../../assets/img/home/painting.jpg"> </a>
+                      <div class="ripple-cont"></div>
+                    </div>
+                    <div class="table mt-xl-6">
+                      <p class="display-3 text-center text-middle text-dark">ArtFestival 2021</p>
+                      <h3 class="text-center"> <i class="ni ni-square-pin "></i>
+                        <span class="ml-2 mb-0 text-big">Timba, Ahmedabad , Gujarat</span>
+                      </h3>
+                      <h2 class="text-center font-weight-light mt-4">As well as helping children to be more competitive,
+                        school sports day is also a chance to enjoy a day in the sunshine, the weather allowing of
+                        course. It has been shown that physical education and sport is important to the development of
+                        children and young people</h2>
+
+                      <h3 class="text-center text-big m-4">This event will be organised from Jan 26, 2021 to Feb 3,
+                        2021. You can join any day. For joining register your self. You will be notified.</h3>
+                        <hr class="mt-6">
+                        <h3 class="display-3 mt-4">
+                          Activities
+                        </h3>
+                        <div  class="row justify-content-center p-4">
+                          <div class="col-12 col-xl-6 col-lg-8 ">
+                              <div class="container card p-2 mb-4 shadow-dark bg-lightpink">
+                                  <p class="display-4 text-center fw-normal mb-0 text-dark">Painting</p>
+                                 
+                                  <p class="text-center pt-0  text-dark">You can teach kids about basics painting and colorings.</p>
+                                  
+                              </div>
+                          </div>
+                          <div class="col-12 col-xl-6 col-lg-8 ">
+                            <div class="container card p-2 mb-4 shadow-dark bg-lightblue" >
+                                <p class="display-4 text-center fw-normal mb-0 text-dark">Paper Crafts</p>
+                               
+                                <p class="text-center pt-0  text-dark">You can teach kids about basics painting and colorings.</p>
+                                
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-6 col-lg-8 ">
+                          <div class="container card p-2 mb-4 shadow-dark bg-lightyellow" >
+                              <p class="display-4 text-center fw-normal mb-0 text-dark">Sculpting</p>
+                             
+                              <p class="text-center pt-0  text-dark">You can teach kids about basics painting and colorings.</p>
+                              
+                          </div>
+                      </div>
+                          </div>
+
+                          <hr>
+                          <p class="text-center h3 text-muted">Join us to enjoy and to share your incredible knowledge with our kids</p> 
+                      <div class="text-center mt-xl-4"><a [routerLink]="['/event']" class="btn btn-primary m-2"
+                          style="color:white;">JOIN</a></div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              <div *ngFor="let e of events" class="row justify-content-center mb-xl-6">
+                <div class="col-12 ">
+                  <div class="card card-blog p-xl-5">
+                    <div class="card-image mt-xl--7">
+                      <a href="#"> <img class="img img-raised" src="../../assets/img/home/sports.jpg"> </a>
+                      <div class="ripple-cont"></div>
+                    </div>
+                    <div class="table mt-xl-6">
+                      <p class="display-3 text-center text-middle text-dark">{{e.title}}</p>
+                      <h3 class="text-center"> <i class="ni ni-square-pin "></i>
+                        <span class="ml-2 mb-0 text-big">{{e.village.villageName}} {{e.village.taluka.talukaName}},{{e.village.taluka.district.state.stateName}}</span>
+                      </h3>
+                      <h2 class="text-center font-weight-light mt-4">{{e.eventData}}</h2>
+
+                      <h3 class="text-center text-big m-4">This event will be organised on <b> {{e.eventDate | date:"mediumDate"}} </b>.
+                         You can join any day. For joining register your self. You will be notified.</h3>
+                        <hr class="mt-6">
+                        <h3 class="display-3 mt-4" *ngIf = "e.activities.length > 0">
+                          Activities
+                        </h3>
+                        <div  class="row justify-content-center p-2" *ngFor="let a of e.activities;let i=index">
+                          <div class="col-12 col-xl-6 col-lg-8 ">
+                              <div class="container card p-2 mb-2 shadow-dark {{colors[i%3]}}">
+                                  <p class="display-4 text-center fw-normal mb-0 text-dark">{{a.activityName}}</p>
+                                 
+                                  <p class="text-center pt-0  text-dark">{{a.activityName}}</p>
+                                  
+                              </div>
+                          </div>
+                          <!-- <div class="col-12 col-xl-6 col-lg-8 ">
+                            <div class="container card p-2 mb-4 shadow-dark bg-lightblue" >
+                                <p class="display-4 text-center fw-normal mb-0 text-dark">Cricket</p>
+                               
+                                <p class="text-center pt-0  text-dark">You can teach kids about basics cricket.</p>
+                                
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-6 col-lg-8 ">
+                          <div class="container card p-2 mb-4 shadow-dark bg-lightyellow" >
+                              <p class="display-4 text-center fw-normal mb-0 text-dark">FootBall</p>
+                             
+                              <p class="text-center pt-0  text-dark">You can teach kids about basics of football.</p>
+                              
+                          </div> 
+                      </div>-->
+                          </div>
+
+                          <hr>
+                          <p class="text-center h3 text-muted">Join us to enjoy and to share your incredible knowledge with our kids</p> 
+                      <div class="text-center mt-xl-4"><a routerLink="/event/{{e.eventId}}/event-registration" class="btn btn-primary m-2"
+                          style="color:white;">JOIN</a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="py-6" style="background-color:rgb(250, 243, 235);">
+    <div class="container">
+      <div class="row row-grid align-items-center">
+        <div class="col-md-6 order-md-2">
+          <img src="../../assets/img/home/mnmr.jpg" class="img-fluid">
+        </div>
+        <div class="col-md-6 order-md-1">
+          <div class="pr-md-5">
+            <h1>Ek Din Desh K Liye</h1>
+            <h4 class="mt-4" style="color: black;"> You can spend one day and contribute for development of our nation.
+            </h4>
+            <ul class="list-unstyled mt-5">
+              <li class="py-2">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <div class="badge badge-circle badge-success mr-3">
+                      <i class="ni ni-settings-gear-65"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="mb-0">Sunday Is Learning Day</h4>
+                  </div>
+                </div>
+              </li>
+              <li class="py-2">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <div class="badge badge-circle badge-success mr-3">
+                      <i class="ni ni-bulb-61"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="mb-0">Prayer, talk and teaching</h4>
+                  </div>
+                </div>
+              </li>
+              <li class="py-2">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <div class="badge badge-circle badge-success mr-3">
+                      <i class="ni ni-palette"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="mb-0">Learn with games and fun</h4>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="py-6" style="background-color: lavenderblush;">
+    <div class="container">
+      <div class="row row-grid align-items-center">
+        <div class="col-md-6">
+          <img src="../../assets/img/home/tecno.jpg" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+          <div class="pr-md-5">
+            <h1>Techno Tarana</h1>
+            <h4 class="mt-4" style="color: black;">This is a process to provide a platform to youth for contribution
+              towards nation and to understad nation's reality.</h4>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="py-6" style="background-color: linen;">
+    <div class="container">
+      <div class="row row-grid align-items-center">
+        <div class="col-md-6 order-md-2">
+          <img src="../../assets/img/home/ekdin.jpg" class="img-fluid">
+        </div>
+        <div class="col-md-6 order-md-1">
+          <div class="pr-md-5">
+            <h1>My Nation My Responsibility</h1>
+            <h4 class="mt-4" style="color: black;">It is our responsibility for developmentog human beings that can not
+              get education. It is our responsibility to make
+              them independent.</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="py-7 section-nucleo-icons bg-white overflow-hidden" style="background-color: lightcyan;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h2 class="display-3">Contribute</h2>
+          <h4 class="lead">
+            Doing good is a simple and universal vision. Give your helping hand to develop our villages.
+          </h4>
+          <div class="btn-wrapper">
+            <div class="text-center mt-xl-4"><a [routerLink]="['/donate']" class="btn text-white btn-default mt-3 mt-md-0"
+              style="color:white;">Donate</a></div>
+    
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <section class="py-7" style="background-color: lightblue;">
+    <div class="container">
+      <div class="row row-grid justify-content-center">
+        <div class="col-12 text-center">
+          <h2 class="display-3">Contact Us </h2>
+
+          <ul class="list-unstyled mt-5 align-items-center">
+            <li class="py-2 ">
+              <div class="text-center ">
+                <div>
+                  <i class="ni ni-world-2 "></i>
+                  <span class="ml-2 mb-0 text-big">www.volunteacher.in</span>
+                </div>
+              </div>
+            </li>
+            <li class="py-2">
+              <div class="text-center ">
+                <div>
+                  <i class="fa fa-phone "></i>
+                  <span class="ml-2 mb-0 text-big">+91 99250 05837</span>
+                </div>
+              </div>
+            </li>
+            <li class="py-2">
+              <div class="text-center ">
+                <div>
+                  <i class="ni ni-email-83"></i>
+                  <span class="ml-2 mb-0 text-big">aireprogram@gmail.com</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

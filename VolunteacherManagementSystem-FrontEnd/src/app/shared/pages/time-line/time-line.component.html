@@ -1,0 +1,82 @@
+<div class="header bg-gradient-danger pb-8 pt-3 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <h1 class="display-4 text-white title">Let's Appreciate everyone</h1>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7" style="background-color: #172b4d;">
+  <div class="row" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+    <div class="col p-0">
+      <div class="card shadow border-0">
+        <div class="card card-header">
+          <h5 class="h3 mb-0">Activity feed</h5>
+        </div>
+        <div class="map-canvas post-bg justify-content-center">
+          <div class="row justify-content-center px-xl-4 py-4">
+            <div class="col-12 ">
+              <div class="container card p-4 shadow-dark ">
+                <p class="text-center text-lg text-dark"><b>Share your activities with our family </b></p>
+                <div class="text-center"><a href="{{userType}}/posts/create-post" class="btn bg-default m-2"
+                  style="color:white;">Create Post</a></div>
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="showSpinner">
+            <div class="col-12">
+             <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="40">
+             </mat-spinner>
+            </div>
+           </ng-container>
+           <ng-container *ngIf="noPosts">
+             <div class="col-12 col-xl-10 mx-auto d-block  my-xl-4 my-4 py-xl-4 py-4">
+                 <p class="text-center text-xl"><i class="far fa-images"></i></p>
+                 <p class="text-xl text-center text-lg"><b>No activities yet.</b></p>
+             </div>
+           </ng-container>
+         <ng-container *ngIf="pLength>0" >
+          <div *ngFor="let p of posts" class="" >
+            <div class="col-xl-10 mx-auto d-block">
+              <div class="card">
+                <div class="card-header d-flex align-items-center">
+                  <div class="d-flex align-items-center">
+                    <a href="#">
+                      <img src="{{p.createdBy.photo}}" class="avatar">
+                    </a>
+                    <div class="mx-3">
+                      <a href="#" class="text-dark font-weight-600 text-sm">{{p.createdBy.userName}}</a>
+                      <small class="d-block text-common">{{p.creationDate | date : mediumDate }}</small>
+                    </div>
+                  </div>
+
+                </div>
+            
+
+                  <div class=" post-image" style="margin-bottom: 1rem;"><img alt="Image placeholder"
+                      src="{{p.postPhoto}}" class="img-fluid" height="700px" width="900px"></div>
+
+                  <div class="container-fluid mt-3 mb-3">
+                    <p class="text-md " style="border-left: 1px solid rgba(0, 0, 0, .5);padding-left: 15px;">
+                      <b>{{p.postDescription}}</b>
+                    </p>
+                  </div>
+                <!-- 
+                  <div class="row align-items-center m-3">
+                    <div class="col-sm-6">
+                      <div class="icon-actions">
+                        <i class="ni ni-like-2 {{liked}}" (click)="like(p.postId);"></i>
+                        <span class="text-sm">{{p.likes}} people appreciated</span>
+                      </div>
+                    </div>
+                   
+                  </div> -->
+              </div>
+            </div>
+          </div>
+         </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

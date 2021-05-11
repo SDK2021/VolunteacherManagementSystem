@@ -1,0 +1,99 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-gradient-danger ">
+    <div class="container-fluid mb-0">
+        
+    </div>
+    
+</div>
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
+<div class=" row justify-content-center mx-0 mt-0 py-4"  style=" background-color: #f8fcfd;">
+  <div class="col-12 col-xl-10 ">
+    <div class="card shadow p-4">
+        <!-- Card header -->
+        <div class="card-header border-0">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="mb-0 text-center">Areas</h1>
+                    <hr>
+                </div>
+                <div class="col-12 text-right mt-3 ">
+                <button class="btn btn-primary btn-round btn-icon" (click)="show()">
+                    
+                        <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                        <span class="btn-inner--text ">Add area</span>
+                </button>
+                </div>
+             <ng-container *ngIf="isShow">
+                <div class="col-12 justify-content-center">
+                    <form (ngSubmit)="addArea(form)" #form="ngForm">
+                       
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-activity-name">Area</label>
+                                    <input type="text" id="input-village-name"
+                                        class="form-control form-control-alternative" required name="area" [(ngModel)]="area.areaName" >
+                                   
+                                </div>
+                            </div>
+                          
+                            <div class="col-12 mt-4 mb-2 ">
+                                <button type="submit" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
+                    
+                                    <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                                    <span class="btn-inner--text ">Add</span>
+                                </button>
+                           
+                               
+                            </div>
+                        </div>
+                    </form>
+                </div>
+             </ng-container>
+            </div>
+        </div>
+        <!-- Light table -->
+        <div class="table-responsive">
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>
+                                <h4>No</h4>
+                            </th>
+                            <th>
+                                <h4>Area</h4>
+                            </th>
+                            <th>
+                                <h4 class="ml-3">Edit</h4>
+                            </th>
+                         
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let a of areas;let index=index">
+                            <td class="table-user">
+                                <h3>{{index+1}}</h3>
+                            </td>
+                            <td>
+                               <h3>{{a.areaName}}</h3>
+                            </td>
+                            <td>
+                                <div class="col-3 text-right ">
+                                   <i class="fas fa-edit text-lg text-primary"></i>
+                                </div>
+                            </td>
+                          
+                         
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+    </div>

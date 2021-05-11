@@ -1,0 +1,204 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary">
+    <div class="container-fluid mb-0">
+
+    </div>
+
+</div>
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
+<div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
+    <div class="col-12 col-xl-10 ">
+        <div class="card shadow p-4">
+            <!-- Card header -->
+            <div class="card-header border-0">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mb-0 text-center">Villages</h1>
+                        <hr>
+                    </div>
+                    <div class="col-12">
+                        <app-tabs (showTab_1)="showTab1($event)" (showTab_2)="showTab2($event)"></app-tabs>
+
+                    </div>
+
+                    <ng-container *ngIf="tab1">
+                        <div class="col-12 justify-content-center">
+                            <form (ngSubmit)="addVillage(form)" #form="ngForm">
+                                <div class="row justify-content-center mt-4 px-xl-4 px-lg-6">
+                                    <div class="col-12 col-sm-7 col-md-6 col-lg-6 col-xl-5">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Country</label>
+                                            <select class="form-control form-control-alternative" id="input-group">
+                                                <option class="combobox" [value]="c.countryId"
+                                                    [selected]="c.countryId == 8" (change)="selectedCountry($event)"
+                                                    *ngFor="let c of countries;trackBy: trackCountriesById">
+                                                    {{c.countryName}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6 col-lg-6 col-xl-5">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select State</label>
+                                            <select class="form-control form-control-alternative" id="input-group"
+                                                (change)="selectedState($event)">
+                                                <option class="combobox" [value]="s.stateId" [selected]="s.stateId == 7"
+                                                    *ngFor="let s of states;trackBy: trackStatesById">{{s.stateName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6 col-lg-6 col-xl-5">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select District</label>
+                                            <select class="form-control form-control-alternative" id="input-group"
+                                                (change)="selectedDistrict($event)">
+                                                <option class="combobox" [value]="d.districtId"
+                                                    [selected]="d.districtId==141&&Show"
+                                                    *ngFor="let d of districts;trackBy: trackDistrictsById">
+                                                    {{d.districtName}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6 col-lg-6 col-xl-5">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Taluka</label>
+                                            <select class="form-control form-control-alternative" id="input-group"
+                                                (change)="selectedTaluka($event)">
+                                                <option class="combobox" [value]="t.talukaId"
+                                                    [selected]="t.talukaId==35&&Show"
+                                                    *ngFor="let t of talukas;trackBy: trackTalukasById">{{t.talukaName}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-village-name">Village
+                                                Name</label>
+                                            <input type="text" id="input-village-name"
+                                                class="form-control form-control-alternative" placeholder="Village Name"
+                                                value="Timba" #name="ngModel" name="villageName"
+                                                [(ngModel)]="village.villageName" required>
+                                            <small *ngIf="name.errors?.required && name.touched"
+                                                class="text-danger">Village name is required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-center mt-4 mb-2 ">
+                                        <button type="submit" [disabled]="!form.valid"
+                                            class="btn btn-primary btn-round btn-icon">
+                                            <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                                            <span class="btn-inner--text " (click)="show()">Add </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <!-- Light table -->
+            <ng-container *ngIf="tab2">
+                <ng-container *ngIf="showSpinner">
+                    <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
+                    </mat-spinner>
+                  </ng-container>
+                <ng-container *ngIf="noVillages">
+                    <div class="col-12 col-xl-10 mx-auto d-block my-xl-6 my-4 py-xl-7 py-6">
+                        <!-- <p class="text-center text-xl"><i class="fas fa-child"></i></p> -->
+                        <p class="text-xl text-center text-lg"><b>No villages yet.</b></p>
+                    </div>
+                  </ng-container>
+                <ng-container *ngIf="vLength">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-10 mx-auto d-block">
+
+                            <form class="example-container ">
+                                <div class="col-lg-6 col-md-7 col-sm-7 mx-auto d-block">
+                                    <div class="form-group mb-0">
+                                        <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
+                                            <div class="input-group input-group-alternative p-0 border border-primary"
+                                                style="border-radius: 30px; ">
+                                                <div class="input-group-prepend  ">
+                                                    <span class="input-group-text p-0 m-2"><i
+                                                            class="fas fa-search"></i></span>
+                                                </div>
+                                                <input class="form-control p-0 " style="border-radius: 30px;"
+                                                    placeholder="Search" type="text" (focus)="focus = true"
+                                                    (blur)="focus = false" [(ngModel)]="search" name="search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-4">
+                        <!-- <button (click)="update()">Update</button> -->
+                        <table class="table align-items-center table-flush table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>
+                                        <h4>No.</h4>
+                                    </th>
+                                    <th>
+                                        <h4>Village Name</h4>
+                                    </th>
+                                    <th>
+                                        <h4>Add Areas</h4>
+                                    </th>
+                                    <th>
+                                        <h4 class="ml-3">Edit</h4>
+                                    </th>
+                                    <!-- <th>
+                                        <h4 class="ml-3">Delete</h4>
+                                    </th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let v of villages | village : search ;let i=index; trackBy:trackById">
+                                    <td class="table-user" style="font-size: 17px;">
+                                        <b>{{i+1}}</b>
+                                    </td>
+                                    <ng-container>
+                                        <td style="font-size: 17px;">
+                                            {{v.villageName}}
+                                        </td>
+                                    </ng-container>
+
+                                    <td>
+                                        <a routerLink="/admin/villages/{{v.villageId}}/areas"
+                                            class="btn btn-outline-info text-primary btn-sm">Add areas</a>
+                                    </td>
+                                    <td style="cursor: pointer;" routerLink="/admin/villages/{{v.villageId}}/edit">
+                                        <div class="col-3 text-right ">
+                                            <i class="fas fa-edit text-lg text-primary"></i>
+                                        </div>
+                                    </td>
+                                    <!-- <td>
+                                        <div class="col-3 text-right ">
+                                            <i mat-button (click)="openDialog()"
+                                                class="fas fa-trash text-lg text-danger"></i>
+                                        </div>
+                                    </td> -->
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+
+</div>

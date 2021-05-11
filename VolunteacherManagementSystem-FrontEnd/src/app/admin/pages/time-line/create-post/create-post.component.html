@@ -1,0 +1,55 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary px-0 ">
+  <div class="container-fluid mb-0">
+
+  </div>
+
+</div>
+<ng-container *ngIf="showProgressbar">
+  <div style="z-index: 100;position: -webkit-sticky;position:sticky;top:0;">
+      <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+  </div>
+</ng-container>
+<div class="p-0 row mx-0 justify-content-center mx-0 mt-0 py-4 pb-8" style=" background-color: #dde3f3cc;">
+  <div class="col-12 col-xl-10 p-0 m-0">
+
+    <div class=" border-0 pb-8">
+      <div class="container">
+        <app-upload-img [baseUrl]="baseUrl" [isPost]="true" (show)="show($event)"></app-upload-img>
+      </div>
+
+      <div *ngIf="showForm" class="p-2 justify-content-center">
+        <div class=" p-0">
+
+          <div class="card m-0 p-0 shadow ">
+            <div class="row justify-content-center mt-5">
+              <div class="col-xl-5 col-7 ">
+                <img src="{{imageURL}}" style="width:100%;" >
+              </div>
+
+
+            </div>
+            <form (ngSubmit)="createPost()" #form="ngForm">
+              <div class="col-xl-8 col-10 mt-5 mx-auto d-block">
+                <div class="form-group">
+                  <input [(ngModel)]="post.postDescription" name="caption" #caption="ngModel" type="text"
+                    class="form-control caption" placeholder="Enter Caption" style="border-radius: 0px;" required>
+                </div>
+                <small *ngIf="caption.errors?.required && caption.touched" class="text-danger">Caption is
+                  required</small>
+              </div>
+
+
+              <div class="text-center mt-4 mb-4">
+                <button  class="btn btn-primary">Post</button>
+              </div>
+
+            </form>
+
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
