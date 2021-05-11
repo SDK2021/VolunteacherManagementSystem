@@ -1,3 +1,5 @@
+import { group } from '@angular/animations';
+import { NumberSymbol } from '@angular/common';
 import { Component, Injectable, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Kid } from 'src/app/core/model/kid';
@@ -20,12 +22,17 @@ export class AdminKidsListComponent implements OnInit {
   groups:Array<string>
   villages:Array<string>
   userType:string
+  selectedVillage:number
+  selectedArea:number
+  selectedGroup:number
+  totalKidsPages:number
 
   showSpinner:boolean=false
   noVillages:boolean=false
   kLength:number;
 
   page:number=0
+  filter:string
   @Input() label:string 
 
   kidslist: Array<Kid>=new Array()
@@ -45,7 +52,7 @@ export class AdminKidsListComponent implements OnInit {
   ngOnInit() 
   {
     this.page=0
-    this.getkids(this.page)
+    this.getkids(this.page,"all")
   }
 
   handleError(error)
@@ -63,11 +70,74 @@ export class AdminKidsListComponent implements OnInit {
     }
   }
 
-  getkids(page:number)
+  onScroll() {
+    console.log("Hello");
+    
+    if(this.page < this.totalKidsPages - 1)
+    {
+      this.page += 1
+      this.getPageableKids(this.page);
+    }
+  }
+  getPageableKids(page: number) {
+    if(this.filter === "all")
+    {
+      this.kidsService.getkidslist(page).subscribe(data =>{
+        data['content'].forEach(kid => {
+          this.kidslist.push(kid)
+        });
+      })
+    }
+    if(this.filter === "v")
+    {
+      this.kidsService.getAllKidsByVillage(this.page,this.selectedVillage).subscribe(data=>{
+        data['content'].forEach(kid => {
+          this.kidslist.push(kid)
+        });
+      })
+    }
+    if(this.filter === "g")
+    {
+      this.kidsService.getAllKidsByGroup(this.page,this.selectedGroup).subscribe(data=>{
+        data['content'].forEach(kid => {
+          this.kidslist.push(kid)
+        });
+      })
+    }
+    if(this.filter === "a")
+    {
+      this.kidsService.getAllKidsByArea(this.page,this.selectedArea).subscribe(data=>{
+        data['content'].forEach(kid => {
+          this.kidslist.push(kid)
+        });
+      })
+    }
+    if(this.filter === "vg")
+    {
+      this.kidsService.getAllKidsByVillageAndGroup(this.page,this.selectedVillage, this.selectedGroup).subscribe(data=>{
+        data['content'].forEach(kid => {
+          this.kidslist.push(kid)
+        });
+      })
+    }
+    if(this.filter === "vga")
+    {
+      this.kidsService.getAllKidsByAreaAndGroupAndVillage(this.page,this.selectedArea,this.selectedGroup,this.selectedVillage).subscribe(data=>{
+        data['content'].forEach(kid => {
+          this.kidslist.push(kid)
+        });
+      })
+    }
+  }
+
+  getkids(page:number,filter:string)
   {
+    this.page=0
+    this.filter = filter
     this.showSpinner=true
     this.kidsService.getkidslist(page).subscribe(data =>{
       this.kidslist=data['content'];
+      this.totalKidsPages = data['totalPages']
       this.kLength=this.kidslist.length
       this.showSpinner=false
       this.kidslist=this.calculateAge(this.kidslist)
@@ -78,6 +148,7 @@ export class AdminKidsListComponent implements OnInit {
 
   getKidsByTaluka(talukaId:number)
   {
+    this.page =0
     this.kidsService.getkidslist(0).subscribe(data =>{
       for(var kid of this.kidslist)
       {
@@ -91,8 +162,11 @@ export class AdminKidsListComponent implements OnInit {
     });
   }
 
-  getKidsByVillage(villageId:number)
+  getKidsByVillage(villageId:number,filter:string)
   {
+    this.page = 0
+    this.filter = filter
+    this.selectedVillage = villageId
     this.kidsService.getAllKidsByVillage(0,villageId).subscribe(data=>{
       this.kidslist = data['content']
       this.kidslist=this.calculateAge(this.kidslist)
@@ -102,8 +176,11 @@ export class AdminKidsListComponent implements OnInit {
     })
   }
 
-  getKidsByArea(areaId:number)
+  getKidsByArea(areaId:number,filter:string)
   {
+    this.page= 0;
+    this.filter= filter
+    this.selectedArea = areaId
     this.kidsService.getAllKidsByArea(0,areaId).subscribe(data=>{
       this.kidslist = data['content']
       this.kidslist=this.calculateAge(this.kidslist)
@@ -111,8 +188,12 @@ export class AdminKidsListComponent implements OnInit {
     })
   }
 
-  getKidsByVillageAndGroup(villageId:number, groupId:number)
+  getKidsByVillageAndGroup(villageId:number, groupId:number,filter:string)
   {
+    this.page = 0;
+    this.filter = filter
+    this.selectedVillage = villageId
+    this.selectedGroup = groupId
     this.kidsService.getAllKidsByVillageAndGroup(0,villageId, groupId).subscribe(data=>{
       this.kidslist = data['content']
       this.kidslist=this.calculateAge(this.kidslist)
@@ -120,8 +201,13 @@ export class AdminKidsListComponent implements OnInit {
     })
   }
 
-  getKidsByAreaAndGroupAndVillage(areaId:number, groupId:number, villageId:number)
+  getKidsByAreaAndGroupAndVillage(areaId:number, groupId:number, villageId:number,filter:string)
   {
+    this.page = 0
+    this.filter = filter
+    this.selectedVillage = villageId
+    this.selectedArea = areaId
+    this.selectedGroup = groupId
     this.kidsService.getAllKidsByAreaAndGroupAndVillage(0,areaId,groupId,villageId).subscribe(data=>{
       this.kidslist = data['content']
       this.kidslist=this.calculateAge(this.kidslist)
@@ -129,8 +215,11 @@ export class AdminKidsListComponent implements OnInit {
     })
   }
 
-  getKidsByGroup(groupId:number)
+  getKidsByGroup(groupId:number,filter:string)
   {
+    this.selectedGroup = groupId
+    this.filter = filter
+    this.page = 0
     this.kidsService.getAllKidsByGroup(this.page,groupId).subscribe(data=>{
       this.kidslist = data['content']
     })

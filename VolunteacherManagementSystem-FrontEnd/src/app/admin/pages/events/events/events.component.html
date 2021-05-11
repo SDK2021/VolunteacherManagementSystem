@@ -248,13 +248,13 @@
                             <div class="row justify-content-center mb-2">
 
                                 <div class="text-center m-2">
-                                    <button class="btn btn-primary btn-sm mt-2 p-2"  value="1" (click)="notifyEvent(e.eventId,$event)">Notify All</button>
+                                    <button class="btn btn-primary btn-sm mt-2 p-2" [disabled] = "e.notified == 1" value="1" (click)="notifyEvent(e.eventId,$event)">Notify All</button>
                                 </div>
                                 <div class="text-center m-2">
-                                    <button class="btn btn-primary btn-sm mt-2 p-2"  value="2"  (click)="notifyEvent(e.eventId,$event)">Notify LVT</button>
+                                    <button class="btn btn-primary btn-sm mt-2 p-2"  [disabled] = "e.notified == 1"  value="2"  (click)="notifyEvent(e.eventId,$event)">Notify LVT</button>
                                 </div>
                                 <div class="text-center m-2">
-                                    <button class="btn btn-primary btn-sm mt-2 p-2"  value="3" (click)="notifyEvent(e.eventId,$event)">Notify
+                                    <button class="btn btn-primary btn-sm mt-2 p-2"   [disabled] = "e.notified == 1" value="3" (click)="notifyEvent(e.eventId,$event)">Notify
                                         VolunTeacher</button>
                                 </div>
                             </div>

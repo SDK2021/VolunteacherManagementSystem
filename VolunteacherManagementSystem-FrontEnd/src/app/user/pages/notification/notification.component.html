@@ -1,3 +1,9 @@
+
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
 <!-- <div class="header bg-gradient-danger pb-8 pt-4 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
@@ -101,7 +107,7 @@
             
                                                         <p class="text-center">Please confirm are you joining?</p>
                                                         <div class="text-center my-4">
-                                                            <button 
+                                                            <button [disabled]="n.session.disable == true" 
                                                                 class="btn btn-primary mx-4 text-white justify-content-between rounded px-4 py-2"
                                                                 (click)="openSessionDialog(n.session.sessionId)">Attend</button>
                                                         
@@ -125,7 +131,7 @@
                                                             on {{n.event.eventDate | date:'mediumDate'}} {{n.event.eventStartingTime}} to {{n.event.eventEndingTime}} at
                                                             {{n.event.village.villageName}}</p>
                                                         <div class="text-center my-4">
-                                                            <button
+                                                            <button [disabled]="n.event.disable == true"
                                                                 class="btn btn-primary mx-4 text-white justify-content-between rounded px-4 py-2"
                                                                 (click)="openEventDialog(n.event.eventId)">Join</button>
                                                         </div>

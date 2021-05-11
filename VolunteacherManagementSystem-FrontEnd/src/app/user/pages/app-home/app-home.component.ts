@@ -66,7 +66,7 @@ export class AppHomeComponent implements OnInit {
 
   slides: String[] = new Array()
 
-  constructor(private _snackBar: MatSnackBar,private postService: TimeLineService, private router: Router, private _sharedservice: AppHomeService, private authService: authentication, private userService: UsersService, private notiService: NotificationsService, private eventService: EventsService) {
+  constructor(private _snackBar: MatSnackBar,private postService: TimeLineService, private router: Router, private sharedservice: AppHomeService, private authService: authentication, private userService: UsersService, private notiService: NotificationsService, private eventService: EventsService) {
 
   }
 
@@ -75,6 +75,7 @@ export class AppHomeComponent implements OnInit {
   ngOnInit(): void {
     // this.slides['image']=new String()
     this.page=0
+    this.events = []
     this.getUser()
     this.showSpinner = true
     this.getAnnouncements()
@@ -131,7 +132,7 @@ export class AppHomeComponent implements OnInit {
     }
   }
   getPageableAnnouncements(page: number) {
-    this._sharedservice.getAnnouncements(page).subscribe(data => {
+    this.sharedservice.getAnnouncements(page).subscribe(data => {
       data['content'].forEach(announcement => {
         this.announcements.push(announcement)
       });
@@ -152,7 +153,7 @@ export class AppHomeComponent implements OnInit {
     });
   }
   getAnnouncements() {
-    this._sharedservice.getAnnouncements(this.page).subscribe(data => {
+    this.sharedservice.getAnnouncements(this.page).subscribe(data => {
       this.announcements = data['content']
       this.totalAnnouncementPages = data['totalPages']
       if (data != null) {
@@ -166,7 +167,7 @@ export class AppHomeComponent implements OnInit {
 
   getUsersByDob() {
     this.showNewVolunteacher = true
-    this._sharedservice.getUsersByDob().subscribe(
+    this.sharedservice.getUsersByDob().subscribe(
       data => {
         this.users = data
         console.log(this.users)
@@ -182,18 +183,41 @@ export class AppHomeComponent implements OnInit {
   }
 
   getEvents() {
-    this._sharedservice.getEvents(0).subscribe(
+    this.sharedservice.getEvents(0).subscribe(
       data => {
         this.events = data['content']
         console.log(this.events)
-        this.displayEvent(this.events)
+        this.eLength=this.events.length
+        let authUser:string[]
+      let userId:number
+      authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ")
+      this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(()=>{    
+
+          for (let i=0;i<this.events.length;i++)
+          {
+            for(let user of this.events[i].users)
+            {
+              if(user.userId == userId)
+              {
+                this.events[i].disable = true
+                break
+              }
+            }
+          }
+    })).subscribe(data=>{
+      userId = data.userId
+
+    })
+   
+
+     //   this.displayEvent(this.events)
       }, error => {
         this.handleError(error)
       })
   }
 
   getNewUsers() {
-    this._sharedservice.getNewUsers().subscribe(
+    this.sharedservice.getNewUsers().subscribe(
       data => {
         this.newUsers = data
         //console.log(this.newUsers)
@@ -206,68 +230,59 @@ export class AppHomeComponent implements OnInit {
       })
   }
 
-  displayEvent(events: Array<Event>) {
-    let currentDate: Date = new Date()
+  // displayEvent(events: Array<Event>) {
+  //   let currentDate: Date = new Date()
 
-    for (let i = 0; i < events.length; i++) {
-      let eDate: string = events[i]["eventDate"]
+  //   for (let i = 0; i < events.length; i++) {
+  //     let eDate: string = events[i]["eventDate"]
 
-      let d: Date = new Date(eDate)
+  //     let d: Date = new Date(eDate)
 
-      if (currentDate.getDate() == d.getDate()) {
-        this.classBlink = true
-      }
-      else {
-        this.classBlink = false
-      }
+  //     if (currentDate.getDate() == d.getDate()) {
+  //       this.classBlink = true
+  //     }
+  //     else {
+  //       this.classBlink = false
+  //     }
 
-      if (!(currentDate.getDate() > d.getDate())) {
-        this.displayEvents[this.count] = events[i]
-        this.count++;
-        console.log(this.displayEvents);
+  //     if (!(currentDate.getDate() > d.getDate())) {
+  //       this.displayEvents[this.count] = events[i]
+  //       this.count++;
+  //       console.log(this.displayEvents);
 
-      }
-
-    }
-
-    this.eLength = this.displayEvents.length
-
-
-
-  }
+  //     }
+  //   }
+  //       this.eLength = this.displayEvents.length
+  // }
 
   addEventVolunteacher(value) {
     this.showProgressbar=true
-    this.participantUser = new Participant();
     console.log(value)
     let authuser: string[];
     let email: string;
+    let users:User[] = []
 
     if (this.authService.isUserLogin) {
       localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME);
       authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
       email = atob(authuser[0]);
       this.userService.getUserByEmail(email).pipe(finalize(() => {
-        this.eventService.getEventById(value).pipe(finalize(() => {
-          this.notiService.addVTParticipant(this.participantUser, value).subscribe(data => {
-            console.log(data)
-            this.showProgressbar=false
-            this.openSnackBar()
-          }, error => {
-            this.handleError(error)
-          })
-        })).subscribe(data => {
-          this.participantUser.event = data
+        console.log(users);
+        
+        this.notiService.addVTParticipant(users, value).subscribe(data => {
+          console.log(data)
+          this.showProgressbar=false
+          this.openSnackBar()
+          setTimeout(() => {
+            console.log("Hello Krunal #TheProjectPartner");
+              this.getEvents()
+          }, 1000);
+        }, error => {
+          this.handleError(error)
         })
       })).subscribe(
         (data) => {
-          console.log(data)
-          this.participantUser.name = data.userName
-          this.participantUser.dob = data.dob
-          this.participantUser.email = data.email
-          this.participantUser.gender = data.gender
-          this.participantUser.phoneNumber = data.phoneNumber
-          this.participantUser.type = data.type
+          users.push(data)
         })
     }
   }

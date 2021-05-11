@@ -205,7 +205,7 @@
               </h2><br>
               <div class="row justify-content-center">
 
-                <div *ngFor="let e of displayEvents" class="col-xl-6 col-lg-10 mt-4 ">
+                <div *ngFor="let e of events" class="col-xl-6 col-lg-10 mt-4 ">
                   <div>
                     <div class="card">
 
@@ -234,7 +234,7 @@
                         </p>
 
                         <div class="text-center mt-4 mb-4">
-                          <a  (click) = "addEventVolunteacher(e.eventId)"  class="btn btn-info">Register now</a>
+                          <button  class="btn btn-primary" [disabled]="e.disable == true" (click) = "addEventVolunteacher(e.eventId)">Register now</button>
                         </div>
 
 

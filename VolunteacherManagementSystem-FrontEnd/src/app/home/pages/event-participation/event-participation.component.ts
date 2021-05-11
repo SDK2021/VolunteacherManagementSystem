@@ -49,37 +49,23 @@ export class EventParticipationComponent implements OnInit {
 
   onSubmit()
   {
+    let dob:string = this.eventParticipant.dob
+    let pdob:string[] = dob.split("-")
+    this.eventParticipant.dob = pdob[1] +"-" + pdob[2] + "-" + pdob[0]
     console.log(this.eventParticipant);
     let eventid:number  = this.route.snapshot.params['id'];
     this.eventService.getEventById(eventid).pipe(finalize(()=>{
-      console.log(this.authService.isUserLogin())
-      if(this.authService.isUserLogin())
-      {
-        let username:string;
-        let authuser:string[];
-  
-        authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
-        username = atob(authuser[0]);
-        this.userService.getUserByEmail(username).pipe(finalize(()=>{
           this.eventService.addParticipant(this.eventParticipant).subscribe(data=>{
             console.log(data)
           },error=>{
             this.handleError(error)
           })
-        })).subscribe(data=>{
-          this.eventParticipant.type = data.type
-        })
-      }
-      else
-      {
-        let userType:Usertype = new Usertype()
-        userType.type = "OTHER";
-        userType.typeId = 4
-        this.eventParticipant.type = userType
-      }
 
-      console.log(this.eventParticipant)
     })).subscribe(data=>{
+    let userType = new Usertype()
+    userType.typeId = 4
+    userType.type = "OTHER"
+    this.eventParticipant.type = userType
       this.eventParticipant.event = data
     },error=>{
       this.handleError(error)

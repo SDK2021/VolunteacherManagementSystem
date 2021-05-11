@@ -32,4 +32,6 @@ export class Session {
 	//convert to boolean
 	notified: boolean;
 
+	disable:boolean
+
 }

@@ -16,6 +16,7 @@ import {
 } from '@angular/material/snack-bar';
 import { DialogBoxComponent } from 'src/app/admin/components/dialog-box/dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Event } from 'src/app/core/model/event';
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
@@ -26,15 +27,16 @@ export class NotificationComponent implements OnInit {
   notifications: Array<Notification>
   user: User
   usertype: String;
-  attendedUsers:User[] = [];
-  events:Event[] =[]
-  participantUser:Participant;
-  today:Date=new Date()
-  showProgressbar:boolean=false
+  attendedUsers: User[] = [];
+  events: Event[] = []
+  sessions:Session[] = []
+  participantUser: Participant;
+  today: Date = new Date()
+  showProgressbar: boolean = false
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  constructor(private dialog:MatDialog,private _snackBar: MatSnackBar,private router: Router,private eventService:EventsService,private notiService:NotificationsService,private authService: authentication, private userService: UsersService, private notificationService: NotificationsService) { }
+  constructor(private dialog: MatDialog, private _snackBar: MatSnackBar, private router: Router, private eventService: EventsService, private notiService: NotificationsService, private authService: authentication, private userService: UsersService, private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.getAllNotifications()
@@ -42,24 +44,21 @@ export class NotificationComponent implements OnInit {
     this.participantUser = new Participant()
   }
 
-  handleError(error)
-  {
+  handleError(error) {
     console.log(error);
     console.log(error.status);
-    
-    if(error.status===500)
-    {
+
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
 
 
   getAllNotifications() {
-   
+
     let authuser: string[];
     let email: string;
 
@@ -73,14 +72,51 @@ export class NotificationComponent implements OnInit {
           this.user = data
           this.usertype = this.user.type.type;
           console.log(this.usertype);
-          this.notificationService.getNotifications(0,this.usertype).subscribe(data => {
+          this.notificationService.getNotifications(0, this.usertype).subscribe(data => {
 
             this.notifications = data['content'];
-            this.notificationService.getNotifications(0,"ALL").subscribe(data => {
+            this.notificationService.getNotifications(0, "ALL").subscribe(data => {
               this.notifications = this.notifications.concat(data['content']);
+              for (let notification of this.notifications) {
+                if(notification.event !=null)
+                {
+                  this.events.push(notification.event)
+                }
+                if(notification.session !=null)
+                {
+                  this.sessions.push(notification.session)
+                }
+              }
+              let authUser: string[]
+              let userId: number
+              authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ")
+              this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(() => {
               
+                for (let i = 0; i < this.events.length; i++) {
+                  for (let user of this.events[i].users) {
+                    if (user.userId == userId) {
+                      this.events[i].disable = true
+                      break
+                    }
+                  }
+                }
+
+                for (let i = 0; i < this.sessions.length; i++) {
+                  for (let user of this.sessions[i].users) {
+                    if (user.userId == userId) {
+                      this.sessions[i].disable = true
+                      break
+                    }
+                  }
+                }
+              })).subscribe(data => {
+                userId = data.userId
+              })
+
+
+
               console.log(data);
-            },error=>{
+            }, error => {
               this.handleError(error)
             });
             console.log(data);
@@ -99,90 +135,82 @@ export class NotificationComponent implements OnInit {
     });
   }
 
-  addSessionVolunteacher(value)
-  {
-    this.showProgressbar=true
+  addSessionVolunteacher(value) {
+    this.showProgressbar = true
     console.log(value)
-    let authuser:string[];
-    let email:string;
-    
-        if(this.authService.isUserLogin)
-        {
-          localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME);
-          authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
-          email = atob(authuser[0]);
-          this.userService.getUserByEmail(email).pipe(finalize(()=>{
-            this.notiService.addVolunteacher(this.attendedUsers,value).subscribe(data=>{
-              console.log(data)
-              this.showProgressbar=false
-              this.openSnackBar()
-              this.attendedUsers = []
-            },error=>{
-              this.handleError(error)
-            })
-          })).subscribe(
-            (data)=>{
-            console.log(data)
-            this.attendedUsers.push(data)
-            
-          })
-        }
+    let authuser: string[];
+    let email: string;
+
+    if (this.authService.isUserLogin) {
+      localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME);
+      authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
+      email = atob(authuser[0]);
+      this.userService.getUserByEmail(email).pipe(finalize(() => {
+        this.notiService.addVolunteacher(this.attendedUsers, value).subscribe(data => {
+          console.log(data)
+          this.showProgressbar = false
+          this.openSnackBar()
+          this.attendedUsers = []
+          setTimeout(() => {
+            console.log("Hello Krunal #TheProjectPartner");
+            this.getAllNotifications()
+          }, 1000);
+        }, error => {
+          this.handleError(error)
+        })
+      })).subscribe(
+        (data) => {
+          console.log(data)
+          this.attendedUsers.push(data)
+
+        })
+    }
   }
 
-  addEventVolunteacher(value)
-  {
-    this.showProgressbar=true
-    this.participantUser = new Participant();
+  addEventVolunteacher(value) {
+    this.showProgressbar = true
     console.log(value)
-    let authuser:string[];
-    let email:string;
-    
-        if(this.authService.isUserLogin)
-        {
-          localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME);
-          authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
-          email = atob(authuser[0]);
-          this.userService.getUserByEmail(email).pipe(finalize(()=>{
-           this.eventService.getEventById(value).pipe(finalize(()=>{
-            this.notiService.addVTParticipant(this.participantUser,value).subscribe(data=>{
-              console.log(data)
-              this.showProgressbar=false
-              this.openSnackBar()
-            },error=>{
-              this.handleError(error)
-            })
-           })).subscribe(data=>{
-             this.participantUser.event = data
-           })
-          })).subscribe(
-            (data)=>{
-            console.log(data)
-            this.participantUser.name = data.userName
-            this.participantUser.dob = data.dob
-            this.participantUser.email = data.email
-            this.participantUser.gender = data.gender
-            this.participantUser.phoneNumber = data.phoneNumber
-            this.participantUser.type = data.type
-          })
-        }
+    let authuser: string[];
+    let email: string;
+    let users: User[] = []
+
+    if (this.authService.isUserLogin) {
+      localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME);
+      authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
+      email = atob(authuser[0]);
+      this.userService.getUserByEmail(email).pipe(finalize(() => {
+        console.log(users);
+
+        this.notiService.addVTParticipant(users, value).subscribe(data => {
+          console.log(data)
+          this.showProgressbar = false
+          this.openSnackBar()
+          setTimeout(() => {
+            console.log("Hello Krunal #TheProjectPartner");
+            this.getAllNotifications()
+          }, 1000);
+        }, error => {
+          this.handleError(error)
+        })
+      })).subscribe(
+        (data) => {
+          users.push(data)
+        })
+    }
   }
 
-  openSessionDialog(id:number)
-  {
-    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
-       console.log(data.delete)
-      if(data.delete)
-      { 
+  openSessionDialog(id: number) {
+    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
+      console.log(data.delete)
+      if (data.delete) {
         this.addSessionVolunteacher(id)
       }
     })
   }
-  openEventDialog(id:number)
-  {
-    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
-       console.log(data.delete)
-      if(data.delete)
-      { 
+  openEventDialog(id: number) {
+    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
+      console.log(data.delete)
+      if (data.delete) {
         this.addEventVolunteacher(id)
       }
     })

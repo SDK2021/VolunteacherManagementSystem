@@ -201,7 +201,7 @@ export class AddressComponent implements OnInit {
       }
       if(this.url.endsWith("/kids"))
       {
-      //  this.adminKids.getkids(0,"all");
+        this.adminKids.getkids(0,"all");
       }
     }
   }
@@ -239,7 +239,7 @@ export class AddressComponent implements OnInit {
           }
           if(this.url.endsWith("/kids"))
           {
-            this.adminKids.getKidsByVillageAndGroup(this.villageSelected,this.groupSelected)
+            this.adminKids.getKidsByVillageAndGroup(this.villageSelected,this.groupSelected,"vg")
           }
         }
         else
@@ -258,7 +258,7 @@ export class AddressComponent implements OnInit {
           }
           if(this.url.endsWith("/kids"))
           {
-            this.adminKids.getKidsByVillage(event.target.value)
+            this.adminKids.getKidsByVillage(event.target.value,"v")
           }
         }
       },error=>{
@@ -285,7 +285,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByGroup(this.groupSelected)
+          this.adminKids.getKidsByGroup(this.groupSelected,"g")
         }
       }
       else
@@ -304,7 +304,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-        //  this.adminKids.getkids(0,"all");
+          this.adminKids.getkids(0,"all");
         }
       }
     }
@@ -332,7 +332,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,this.groupSelected,this.villageSelected)
+          this.adminKids.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,this.groupSelected,this.villageSelected,"vga")
         } 
       }
       else
@@ -351,7 +351,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByArea(event.target.value)
+          this.adminKids.getKidsByArea(event.target.value,"a")
         }
       }
     }
@@ -373,7 +373,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByVillageAndGroup(this.villageSelected,this.groupSelected)
+          this.adminKids.getKidsByVillageAndGroup(this.villageSelected,this.groupSelected,"vg")
         }
       }
       else
@@ -392,7 +392,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByVillage(this.villageSelected);
+          this.adminKids.getKidsByVillage(this.villageSelected,"v");
         }
       }
     }
@@ -431,7 +431,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,event.target.value,this.villageSelected)
+          this.adminKids.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,event.target.value,this.villageSelected,"vga")
         } 
       }
       else if(this.villageSelected !=0)
@@ -450,7 +450,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByVillageAndGroup(this.villageSelected,event.target.value)
+          this.adminKids.getKidsByVillageAndGroup(this.villageSelected,event.target.value,"vg")
         }
       }
       else
@@ -469,7 +469,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByGroup(event.target.value)
+          this.adminKids.getKidsByGroup(event.target.value,"g")
         }
       }
     }
@@ -491,7 +491,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByArea(this.areaSelecetd)
+          this.adminKids.getKidsByArea(this.areaSelecetd,"a")
         }
       }
       else if(this.villageSelected !=0)
@@ -510,7 +510,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByVillage(this.villageSelected)
+          this.adminKids.getKidsByVillage(this.villageSelected,"v")
         }
       }
       else{
@@ -528,7 +528,7 @@ export class AddressComponent implements OnInit {
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getkids(0);
+          this.adminKids.getkids(0,"all");
         }
       }
     }

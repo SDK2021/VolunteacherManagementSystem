@@ -3,6 +3,7 @@ import { Activity } from "./activity";
 import { Kid } from "./kid";
 import { Participant } from "./participant";
 import { Project } from "./project";
+import { User } from "./user";
 import { Village } from "./village";
 
 
@@ -26,10 +27,16 @@ export class Event {
 
 	kids: Kid[];
 
+	users:User[]
+
 	notification: Notification;
 
 	activities: Activity[];
 
 	photo:string;
+
+	notified:boolean
+
+	disable:boolean
 
 }

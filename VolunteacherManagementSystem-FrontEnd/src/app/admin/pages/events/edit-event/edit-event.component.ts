@@ -276,6 +276,7 @@ export class EditEventComponent implements OnInit {
     let sdate:string[] = eventdate.split("-")
     let eventDate = sdate[0] + "-" +  sdate[1] + "-" + sdate[2]
     this.event.eventDate = eventDate
+    this.event.notified = false
     console.log( this.event.eventDate);
 
     this.event.eventStartingTime = this.event.eventStartingTime + ":00"

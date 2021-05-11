@@ -44,9 +44,9 @@ export class NotificationsService {
     return this._httpclient.post<Session>(`${"http://localhost:9090/vms/session-volunteachers"}`,users,header).pipe(retry(3),catchError(this.handleError));;
   }
 
-  addVTParticipant(participant:Participant,eventId:number):Observable<Participant>
+  addVTParticipant(users:User[],eventId:number):Observable<Participant>
   {
-    return this._httpclient.post<Participant>(`${"http://localhost:9090/vms/participants"}`,participant).pipe(retry(3),catchError(this.handleError));;
+    return this._httpclient.post<Participant>(`${"http://localhost:9090/vms/user-participants?event="}${eventId}`,users).pipe(retry(3));
   }
 
   addNotification(notification:Notification):Observable<Notification>

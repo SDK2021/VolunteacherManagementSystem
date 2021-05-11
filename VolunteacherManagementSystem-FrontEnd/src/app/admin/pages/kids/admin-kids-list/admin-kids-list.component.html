@@ -16,7 +16,7 @@
                 </div>
                 <app-address></app-address>
                 <div class="p-xl-5">
-                    <div class="card "  style=" background-color: #dde3f3cc;">
+                    <div class="card "  style=" background-color: #dde3f3cc;" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
                         
                         <!-- Card header -->
                         <div class="card-header">

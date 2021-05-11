@@ -208,6 +208,7 @@ export class EventsComponent implements OnInit {
     let sdate:string[] = eventdate.split("-")
     let eventDate = sdate[1] + "-" +  sdate[2] + "-" + sdate[0]
     this.event.eventDate = eventDate
+    this.event.notified = true
 
     this.event.eventStartingTime = this.event.eventStartingTime + ":00"
     this.event.eventEndingTime = this.event.eventEndingTime + ":00"
