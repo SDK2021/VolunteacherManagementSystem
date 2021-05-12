@@ -70,42 +70,42 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th>
-                                            <h4 class="text-center">No.</h4>
+                                            <h3 >No.</h3>
                                         </th>
-                                        <th class="text-center">
-                                            <h4>Photo </h4>
+                                        <th>
+                                            <h3>Photo </h3>
                                         </th>
-                                        <th class="text-center">
-                                            <h4>Name</h4>
+                                        <th>
+                                            <h3>Name</h3>
                                         </th>
-                                        <th class="text-center">
-                                            <h4>gender</h4>
+                                        <th>
+                                            <h3>gender</h3>
                                         </th>
-                                        <th class="text-center">
-                                            <h4>Dob</h4>
+                                        <th>
+                                            <h3>Dob</h3>
                                         </th>
-                                        <th class="text-center">
-                                            <h4>standard</h4>
+                                        <th>
+                                            <h3>standard</h3>
                                         </th>
-                                        <th class="text-center">
-                                            <h4>level</h4>
+                                        <th>
+                                            <h3>level</h3>
                                         </th>
-                                        <th class="text-center">
-                                            <h4>Area</h4>
+                                        <th>
+                                            <h3>Area</h3>
                                         </th>
-                                        <th class="text-center">
-                                            <h4>group</h4>
+                                        <th>
+                                            <h3>group</h3>
                                         </th>
-                                        <th class="text-center">
-                                            <h4>village</h4>
-                                        </th>
-    
-                                        <th class="text-center">
-                                            <h4>school</h4>
+                                        <th>
+                                            <h3>village</h3>
                                         </th>
     
-                                        <th class="text-center">
-                                            <h4>Delete</h4>
+                                        <th>
+                                            <h3>school</h3>
+                                        </th>
+    
+                                        <th>
+                                            <h3 class="text-center">Delete</h3>
                                         </th>
     
                                     </tr>
@@ -124,49 +124,49 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <h3 class="text-center">{{k.name}}</h3>
+                                            <h3>{{k.name}}</h3>
                                         </td>
     
                                         <td>
-                                            <h3 class="text-center" *ngIf="k.gender == 1">Male</h3>
-                                            <h3 class="text-center" *ngIf="k.gender == 2">Female</h3>
+                                            <h3 *ngIf="k.gender == 1">Male</h3>
+                                            <h3 *ngIf="k.gender == 2">Female</h3>
                                         </td>
     
-                                        <td class="text-center">
+                                        <td>
                                             <h3>{{k.dob | date:'mediumDate'}}</h3>
                                         </td>
     
-                                        <td class="text-center">
-                                            <h3 class="text-center">{{k.standard}}</h3>
+                                        <td>
+                                            <h3>{{k.standard}}</h3>
                                         </td>
     
                                         <td>
-                                            <h3 class="text-center" *ngIf="k.level == 1">Aatma Shiksha</h3>
+                                            <h3 *ngIf="k.level == 1">Aatma Shiksha</h3>
                                             <h3 *ngIf="k.level == 2">Aatma Shodh</h3>
                                             <h3 *ngIf="k.level == 3">Aatma Vishesh</h3>
                                         </td>
     
                                         <td>
-                                            <h3 class="text-center">{{k.area.areaName}}</h3>
+                                            <h3>{{k.area.areaName}}</h3>
                                         </td>
     
                                         <td>
-                                            <h3 class="text-center">{{k.group.groupName}}</h3>
+                                            <h3>{{k.group.groupName}}</h3>
                                         </td>
     
                                         <td>
-                                            <h3 class="text-center">{{k.village.villageName}}</h3>
+                                            <h3>{{k.village.villageName}}</h3>
                                         </td>
     
                                         <td>
-                                            <h3 class="text-center">{{k.school}}</h3>
+                                            <h3>{{k.school}}</h3>
                                         </td>
     
     
     
     
     
-                                        <td style="cursor: pointer;" (click)="delete(k.kidId)">
+                                        <td style="cursor: pointer;" (click)="delete(k.kidId)" class="text-center">
                                             <p class="text-center mb-0" mat-button> <i
                                                     class="fas fa-trash text-danger text-lg"></i></p>
                                         </td>

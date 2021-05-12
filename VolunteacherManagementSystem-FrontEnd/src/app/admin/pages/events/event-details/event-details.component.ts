@@ -14,12 +14,15 @@ export class EventDetailsComponent implements OnInit {
 
   event:Event=new Event()
   showSpinner:boolean=false
+  totalParticipant:number
+
 
   colors:string[]=['bg-lightpink','bg-lightblue','bg-lightyellow']
   ngOnInit(): void {
       let eventId:number=this.route.snapshot.params['id']
       console.log(eventId);
       this.getEvent(eventId)
+      this.getParticipants(eventId)
   }
 
   handleError(error)
@@ -44,6 +47,16 @@ export class EventDetailsComponent implements OnInit {
       this.event=data
       this.showSpinner=false
       console.log(this.event);    
+    }, error => {
+      this.handleError(error)
+    })
+  }
+
+  getParticipants(id:number)
+  {
+    this.eventService.getAllParticipantsByEvent(id).subscribe(data=>{
+      console.log(data);
+      this.totalParticipant = data
     }, error => {
       this.handleError(error)
     })

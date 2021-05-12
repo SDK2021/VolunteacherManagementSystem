@@ -18,19 +18,19 @@
       <!-- <p>This is the annual report of the year 2021.</p> -->
       <div class="row justify-content-center mt-6">
         <div class="col-lg-2 col-sm-4 p-2 m-2 ">
-          <p class="display-1 text-center text-primary">100</p>
+          <p class="display-1 text-center text-primary">{{totalVolunteachers}}</p>
           <p class=" h4 text-center">Volunteachers</p>
         </div>
         <div class="col-lg-2 col-sm-4 p-2 m-2">
-          <p class="display-1 text-center text-yellow">200</p>
+          <p class="display-1 text-center text-yellow">{{totalKids}}</p>
           <p class="h4 text-center">Kids</p>
         </div>
         <div class="col-lg-2 col-sm-4 p-2 m-2">
-          <p class="display-1 text-center text-danger">40</p>
+          <p class="display-1 text-center text-danger">{{totalSessions}}</p>
           <p class="h4 text-center">Sessions</p>
         </div>
         <div class="col-lg-2 col-sm-4 p-2 m-2">
-          <p class="display-1 text-center text-success">10</p>
+          <p class="display-1 text-center text-success">{{totalEvents}}</p>
           <p class="h4 text-center">Events</p>
         </div>
       </div>
@@ -41,11 +41,11 @@
 
         <div class="col-4 px-4 py-4  rounded">
           <h3><i class="fas fa-users mr-2 text-md text-danger"></i>New Volunteachers</h3>
-          <p class="mb-0">This year 100 new Volunteachers 10 local volunteachers have joined AIREP. </p>
+          <p class="mb-0">This year <b>{{totalVTS}}</b> new Volunteachers <b>{{totalLVTS}}</b> local volunteachers have joined AIREP. </p>
         </div>
         <div class="col-4 px-4 py-4  rounded">
           <h3><i class="fas fa-child mr-2 text-md text-danger"></i>New Kids</h3>
-          <p class="mb-0">This year 100 new students have joined. </p>
+          <p class="mb-0">This year {{totalNewKids}} new students have joined. </p>
         </div>
         <div class="col-4 px-4 py-4  rounded">
           <h3><i class="fas fa-clock mr-2 text-md text-danger"></i>Total hours</h3>

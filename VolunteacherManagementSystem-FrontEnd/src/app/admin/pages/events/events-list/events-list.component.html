@@ -71,31 +71,31 @@
                                 <tr>
 
                                     <!-- <th>
-                                    <h4>Village Name</h4>
+                                    <h3>Village Name</h3>
                                 </th> -->
                                     <th>
-                                        <h4>No</h4>
+                                        <h3>No</h3>
                                     </th>
                                     <th>
-                                        <h4>Event Title</h4>
-                                    </th>
-
-                                    <th>
-                                        <h4>Event Date</h4>
-                                    </th>
-                                    <th>
-                                        <h4>Event Time</h4>
+                                        <h3>Event Title</h3>
                                     </th>
 
                                     <th>
-                                        <h4>View</h4>
+                                        <h3>Event Date</h3>
+                                    </th>
+                                    <th>
+                                        <h3>Event Time</h3>
                                     </th>
 
                                     <th>
-                                        <h4 class="ml-4">Edit</h4>
+                                        <h3 class="text-center">View</h3>
+                                    </th>
+
+                                    <th>
+                                        <h3 class="text-center">Edit</h3>
                                     </th>
                                     <th>
-                                        <h4 class="ml-3">Delete</h4>
+                                        <h3 class="text-center">Delete</h3>
                                     </th>
 
                                 </tr>
@@ -120,16 +120,16 @@
                                     <td class="table-user">
                                         <h3>{{e.eventStartingTime}}</h3>
                                     </td>
-                                    <td class="table-user">
+                                    <td class="table-user text-center">
                                        <button routerLink="/admin/events/{{e.eventId}}/event-details" class="btn text-white " style="background-color: #5b46cf;">View Details</button>
                                     </td>
                                     <td>
-                                        <div class="col-3 text-right ">
+                                        <div class=" text-center ">
                                             <i class="fas fa-edit text-lg text-primary"></i>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="col-3 text-right ">
+                                        <div class=" text-center ">
                                             <i mat-button (click)="delete(e.eventId,e.photo)"
                                                 class="fas fa-trash text-lg text-danger"></i>
                                         </div>

@@ -62,37 +62,37 @@
                                     <tr>
     
                                         <th>
-                                            <h4>No</h4>
+                                            <h3>No</h3>
                                         </th>
                                         <th>
-                                            <h4>Donor Name</h4>
+                                            <h3>Donor Name</h3>
                                         </th>
                                         <th>
-                                            <h4>Donor Type </h4>
+                                            <h3>Donor Type </h3>
                                         </th>
                                         <th>
-                                            <h4>Email</h4>
+                                            <h3>Email</h3>
                                         </th>
                                         <th>
-                                            <h4>Phone No</h4>
+                                            <h3>Phone No</h3>
                                         </th>
                                         <th>
-                                            <h4>Payment Date</h4>
-                                        </th>
-                                        <!-- <th>
-                                            <h4>Payment Time</h4>
-                                        </th>
-                                        <th>
-                                            <h4>Payment Mode</h4>
-                                        </th> -->
-                                        <th>
-                                            <h4>Ammount</h4>
+                                            <h3>Payment Date</h3>
                                         </th>
                                         <!-- <th>
-                                            <h4>Transaction Id</h4>
+                                            <h3>Payment Time</h3>
+                                        </th>
+                                        <th>
+                                            <h3>Payment Mode</h3>
                                         </th> -->
                                         <th>
-                                            <h4 class="ml-3">Delete</h4>
+                                            <h3>Ammount</h3>
+                                        </th>
+                                        <!-- <th>
+                                            <h3>Transaction Id</h3>
+                                        </th> -->
+                                        <th>
+                                            <h3 class="text-center">Delete</h3>
                                         </th>
     
                                     </tr>
@@ -100,21 +100,21 @@
                                 <tbody>
                                     <tr *ngFor="let p of payments | donation:search ;let i=index;">
                                         <td>
-                                            {{i+1}}
+                                           <h3>{{i+1}}</h3>
                                         </td>
                                         
                                          <td>
-                                             <h4>{{p.donor.donorName}}</h4>
+                                             <h3>{{p.donor.donorName}}</h3>
                                          </td>
                                          <td class="table-user">
-                                            <h4>{{p.donor.userType.type}}</h4>
+                                            <h3>{{p.donor.userType.type}}</h3>
                                          </td>
                                          
                                          <td>
-                                             <h4>{{p.donor.donorEmail}}</h4>
+                                             <h3>{{p.donor.donorEmail}}</h3>
                                          </td>
                                          <td>
-                                             <h4>{{p.donor.donorPhone}}</h4>
+                                             <h3>{{p.donor.donorPhone}}</h3>
                                          </td>
     
                                         <td>
@@ -133,7 +133,7 @@
                                             <h3>{{p.transactionid}}</h3>
                                         </td> -->
                                         <td style="cursor: pointer;">
-                                            <div class="col-3 text-right ">
+                                            <div class="col-3 text-center ">
                                                <i mat-button (click)="delete(p.paymentId)" class="fas fa-trash text-lg text-danger"></i>
                                             </div>
                                         </td>

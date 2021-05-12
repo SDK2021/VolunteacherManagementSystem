@@ -257,37 +257,37 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>
-                                        <h4>No</h4>
+                                        <h3>No</h3>
                                     </th>
                                     <th>
-                                        <h4>School Name</h4>
+                                        <h3>School Name</h3>
                                     </th>
                                     <th>
-                                        <h4>phone No</h4>
+                                        <h3>phone No</h3>
                                     </th>
                                     <th>
-                                        <h4>Pincode</h4>
+                                        <h3>Pincode</h3>
                                     </th>
                                     <th>
-                                        <h4>Starting Date</h4>
+                                        <h3>Starting Date</h3>
                                     </th>
                                     <th>
-                                        <h4>Stream</h4>
+                                        <h3>Stream</h3>
                                     </th>
                                     <th>
-                                        <h4>Total labs</h4>
+                                        <h3>Total labs</h3>
                                     </th>
                                     <th>
-                                        <h4>Total Students</h4>
+                                        <h3>Total Students</h3>
                                     </th>
                                     <th>
-                                        <h4>Status</h4>
+                                        <h3>Status</h3>
                                     </th>
                                     <th>
-                                        <h4 class="ml-4">Edit</h4>
+                                        <h3 class="text-center">Edit</h3>
                                     </th>
                                     <th>
-                                        <h4 class="ml-3">Delete</h4>
+                                        <h3 class="text-center">Delete</h3>
                                     </th>
     
                                 </tr>
@@ -324,12 +324,12 @@
                                         <h3 *ngIf="s.status === 3">Under construction</h3>
                                     </td>
                                     <td routerLink="/admin/schools/{{s.schoolId}}/edit">
-                                        <div class="col-3 text-right ">
+                                        <div class=" text-center ">
                                             <i  class="fas fa-edit text-lg text-primary"></i>
                                         </div>
                                     </td>
                                     <td  (click)="delete(s.schoolId)">
-                                        <div class="col-3 text-right ">
+                                        <div class="text-center ">
                                             <i mat-button
                                                 class="fas fa-trash text-lg text-danger"></i>
                                         </div>

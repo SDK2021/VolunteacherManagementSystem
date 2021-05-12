@@ -148,16 +148,16 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>
-                                        <h4>No.</h4>
+                                        <h3>No.</h3>
                                     </th>
                                     <th>
-                                        <h4>Village Name</h4>
+                                        <h3>Village Name</h3>
                                     </th>
                                     <th>
-                                        <h4>Add Areas</h4>
+                                        <h3 class=" text-center">Add Areas</h3>
                                     </th>
                                     <th>
-                                        <h4 class="ml-3">Edit</h4>
+                                        <h3 class=" text-center">Edit</h3>
                                     </th>
                                     <!-- <th>
                                         <h4 class="ml-3">Delete</h4>
@@ -167,21 +167,21 @@
                             <tbody>
                                 <tr *ngFor="let v of villages | village : search ;let i=index; trackBy:trackById">
                                     <td class="table-user" style="font-size: 17px;">
-                                        <b>{{i+1}}</b>
+                                        <h3>{{i+1}}</h3>
                                     </td>
                                     <ng-container>
                                         <td style="font-size: 17px;">
-                                            {{v.villageName}}
+                                         <h3>{{v.villageName}}</h3>
                                         </td>
                                     </ng-container>
 
-                                    <td>
+                                    <td class="text-center mx-auto d-block">
                                         <a routerLink="/admin/villages/{{v.villageId}}/areas"
                                             class="btn btn-outline-info text-primary btn-sm">Add areas</a>
                                     </td>
-                                    <td style="cursor: pointer;" routerLink="/admin/villages/{{v.villageId}}/edit">
-                                        <div class="col-3 text-right ">
-                                            <i class="fas fa-edit text-lg text-primary"></i>
+                                    <td style="cursor: pointer;" routerLink="/admin/villages/{{v.villageId}}/edit" class= "text-center">
+                                        <div class=" mx-auto d-block ">
+                                            <i class="fas fa-edit text-lg text-primary "></i>
                                         </div>
                                     </td>
                                     <!-- <td>

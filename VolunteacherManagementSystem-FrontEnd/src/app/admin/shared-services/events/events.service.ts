@@ -92,4 +92,8 @@ export class EventsService {
       .pipe(retry(3))
   }
 
+  getAllParticipantsByEvent(eventId:number):Observable<number>
+  {
+    return this.http.get<number>(`${"http://localhost:9090/vms/total-participate-others?event="}${eventId}`)
+  }
 }
