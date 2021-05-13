@@ -1,5 +1,6 @@
 package com.volunteacher.app.controller;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.TotalDigitsDocument.TotalDigits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -120,10 +121,22 @@ public class KidsController {
 		return kidService.getTotalKids();
 	}
 	
+	@GetMapping("/total-new-kids")
+	public ResponseEntity<Object> getAllNewKids()
+	{
+		return kidService.getAllNewKids();
+	}
+	
 	@GetMapping("/kids-reports")
 	public ResponseEntity<Object> getKidReportList()
 	{
 		return kidReportService.kidReportList();
+	}
+	
+	@GetMapping("/total-village-kids")
+	public ResponseEntity<Object> totalKidsbyVillage(@RequestParam("village") int villageId)
+	{
+		return kidService.totalKidsByVillage(villageId);
 	}
 	
 	@PostMapping("/kids-reports")

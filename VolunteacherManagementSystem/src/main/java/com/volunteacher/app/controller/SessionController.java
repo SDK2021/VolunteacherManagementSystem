@@ -104,4 +104,16 @@ public class SessionController {
 	{
 		return sessionService.getSessionsRequirements();
 	}
+	
+	@GetMapping("/total-sessions-hours")
+	public ResponseEntity<Object> getTotalHours()
+	{
+		return sessionService.getTotalHoursSessions();
+	}
+	
+	@GetMapping("/total-village-sessions")
+	public ResponseEntity<Object> getTotalSessionByVillage(@RequestParam("village") int villageId)
+	{
+		return sessionService.totalSessionsByVillage(villageId);
+	}
 }

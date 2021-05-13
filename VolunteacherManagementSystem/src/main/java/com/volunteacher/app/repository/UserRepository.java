@@ -23,4 +23,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long>{
 	public User findByUserId(Long userId);
 
 	public List<User> findAllByTypeTypeId(int id);
+	
+	@Query(value = "SELECT * FROM user where user_id in (SELECT distinct users_user_id FROM session_users where sessions_session_id in (SELECT session_id FROM session where village_village_id=:villageId ));",nativeQuery = true)
+	List<User> totalVolunteacherBySessionVillage(int villageId);
 }

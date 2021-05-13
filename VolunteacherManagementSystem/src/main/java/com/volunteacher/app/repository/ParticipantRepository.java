@@ -15,6 +15,8 @@ public interface ParticipantRepository extends PagingAndSortingRepository<Partic
 	@Query(nativeQuery = true,value = "Select COUNT(*) from participant where user_type_type_id=:typeId and event_event_id=:eventId")
 	int totalParticipateVolunteacherByEvent(int typeId,int eventId);
 	
-	@Query(nativeQuery = true,value = "Select COUNT(*) from participant where user_type_type_id=:typeId and event_event_id=:eventId")
-	int totalParticipateOtherByEvent(int typeId,int eventId);
+	@Query(nativeQuery = true,value = "Select COUNT(*) from participant where event_event_id=:eventId")
+	int totalParticipateOtherByEvent(int eventId);
+	
+	Participant findByEventEventIdAndEmail(int eventId,String email);
 }

@@ -95,6 +95,7 @@ public class EventServiceImpl implements EventService{
 			updateEvent.setEventEndingTime(event.getEventEndingTime());
 			updateEvent.setEventStartingTime(event.getEventStartingTime());
 			updateEvent.setActivities(this.createActivityList(activityIds));
+			updateEvent.setNotified(event.isNotified());
 			eventRepository.save(updateEvent);
 			return ResponseEntity.status(HttpStatus.OK).body(updateEvent);
 		} catch (Exception e) {

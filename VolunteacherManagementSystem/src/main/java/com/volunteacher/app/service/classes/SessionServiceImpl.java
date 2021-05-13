@@ -75,6 +75,7 @@ public class SessionServiceImpl implements SessionService {
 		updateSession.setSessionDate(session.getSessionDate());
 		updateSession.setStartingTime(session.getStartingTime());
 		updateSession.setVillage(session.getVillage());
+		updateSession.setNotified(session.isNotified());
 		
 		try {
 			sessionRepository.save(updateSession);
@@ -236,4 +237,32 @@ public class SessionServiceImpl implements SessionService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching Requirements");
 		}
 	}
+	
+	@Override
+	public ResponseEntity<Object> getTotalHoursSessions() {
+		int totalHours = 0;
+		try {
+			List<Session> sessions = (List<Session>) sessionRepository.findAll();
+			for (Session session : sessions) {
+				totalHours +=  sessionRepository.getHours(session.getSessionId());
+			}
+			System.out.println(totalHours);
+			return ResponseEntity.status(HttpStatus.OK).body(totalHours);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total hours");
+		}
+	}
+	
+	public ResponseEntity<Object> totalSessionsByVillage(int villageId)
+	{
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(sessionRepository.totalSessionsByVillage(villageId));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total hours");
+		}
+		
+	}
+
 }

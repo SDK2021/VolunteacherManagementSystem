@@ -29,11 +29,15 @@ public interface KidService {
 	
 	public ResponseEntity<Object> kidsListByLevel(int page,int level);
 	
+	public ResponseEntity<Object> getAllNewKids();
+	
 	public ResponseEntity<Object> updateKid(Kid kid, Long id);
 	
 	public ResponseEntity<Object> getTotalKids();
 	
 	public ResponseEntity<Object> deleteKid(Long id);
+	
+	public ResponseEntity<Object> totalKidsByVillage(int villageId);
 	
 	public ResponseEntity<Object> kidGroupList();
 	

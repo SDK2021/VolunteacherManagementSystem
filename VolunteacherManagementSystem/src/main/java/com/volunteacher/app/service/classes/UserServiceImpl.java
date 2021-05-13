@@ -188,5 +188,16 @@ public class UserServiceImpl implements UserService {
 			return List.of();
 		}
 	}
+
+	@Override
+	public ResponseEntity<Object> totalVolunteacherBySessionVillage(int villageId) {
+		try {
+			List<User> users = userRepository.totalVolunteacherBySessionVillage(villageId);
+			return ResponseEntity.status(HttpStatus.OK).body(users);
+		} catch (Exception e) {
+			 e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on total User by session village");
+		}
+	}
 	
 }

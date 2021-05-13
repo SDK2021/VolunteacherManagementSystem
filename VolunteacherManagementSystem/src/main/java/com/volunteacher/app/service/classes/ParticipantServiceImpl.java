@@ -8,7 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
+import com.volunteacher.app.model.Event;
 import com.volunteacher.app.model.Participant;
+import com.volunteacher.app.model.User;
+import com.volunteacher.app.repository.EventRepository;
 import com.volunteacher.app.repository.ParticipantRepository;
 import com.volunteacher.app.service.interfaces.EmailService;
 import com.volunteacher.app.service.interfaces.ParticipantService;
@@ -21,6 +24,9 @@ public class ParticipantServiceImpl implements ParticipantService {
 	
 	@Autowired
 	EmailService emailService;
+	
+	@Autowired
+	EventRepository eventRepository;
 	
 	@Override
 	public ResponseEntity<Object> addParticipant(Participant participant)
@@ -103,13 +109,27 @@ public class ParticipantServiceImpl implements ParticipantService {
 	}
 
 	@Override
-	public ResponseEntity<Object> totalOtherParticipantByEvent(int eventId,int typeId) {
+	public ResponseEntity<Object> totalOtherParticipantByEvent(int eventId) {
 		try 
 		{
-			return ResponseEntity.status(HttpStatus.OK).body(participantRepository.totalParticipateOtherByEvent(typeId, eventId));
+			return ResponseEntity.status(HttpStatus.OK).body(participantRepository.totalParticipateOtherByEvent(eventId));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in fetching total Participant");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> addUserParticipant(List<User> users, int eventId) {
+		try {
+			Event event = eventRepository.findByEventId(eventId);
+			event.setUsers(users);
+			eventRepository.save(event);
+			return ResponseEntity.status(HttpStatus.OK).body(event);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error on add user participant");
 		}
 	}
 	

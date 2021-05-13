@@ -35,4 +35,10 @@ public interface SessionRepository extends PagingAndSortingRepository<Session, L
 	@Modifying
 	@Query(value="DELETE FROM session_users WHERE sessions_session_id =:id",nativeQuery = true)
 	public void deleteSessionsUsers(@Param("id") long id);
+	
+	@Query(value = "SELECT  HOUR(TIMEDIFF(starting_time,ending_time)) FROM session where session_id = :sessionId",nativeQuery = true)
+	int getHours(long sessionId);
+	
+	@Query(value = "select COUNT(*) from session where village_village_id =:villageId",nativeQuery = true)
+	int totalSessionsByVillage(int villageId);
 }

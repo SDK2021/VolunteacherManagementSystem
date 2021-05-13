@@ -82,6 +82,9 @@ public class Event {
 	private List<Kid> kids;
 	
 	@ManyToMany
+	private List<User> users;
+	
+	@ManyToMany
 	private List<Activity> activities;
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "event")
@@ -181,6 +184,14 @@ public class Event {
 
 	public void setNotified(boolean notified) {
 		this.notified = notified;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.volunteacher.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.volunteacher.app.model.Event;
 import com.volunteacher.app.model.Participant;
+import com.volunteacher.app.model.User;
 import com.volunteacher.app.service.interfaces.EventService;
 import com.volunteacher.app.service.interfaces.ParticipantService;
 
@@ -71,9 +74,9 @@ public class EventController {
 	}
 	
 	@GetMapping("/total-participate-others")
-	public ResponseEntity<Object> getAllOtherParticipantByEvent(@RequestParam("event") int eventId,@RequestParam("type") int typeId)
+	public ResponseEntity<Object> getAllOtherParticipantByEvent(@RequestParam("event") int eventId)
 	{
-		return participantService.totalOtherParticipantByEvent(eventId, typeId);
+		return participantService.totalOtherParticipantByEvent(eventId);
 	}
 	
 	@DeleteMapping("/events/{id}")
@@ -93,6 +96,13 @@ public class EventController {
 	{
 		System.out.println(participant);
 		return participantService.addParticipant(participant);
+	}
+	
+	@PostMapping("/user-participants")
+	public ResponseEntity<Object> addUserParticipant(@RequestBody List<User> users,@RequestParam("event") int eventId)
+	{
+		System.out.println(users + "Hrllo");
+		return participantService.addUserParticipant(users,eventId);
 	}
 	
 	@GetMapping("/participants")

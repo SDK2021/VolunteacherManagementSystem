@@ -32,4 +32,6 @@ public interface UserService {
 	
 	public boolean setProfile(String url,String userId);
 	
+	public ResponseEntity<Object> totalVolunteacherBySessionVillage(int villageId);
+	
 }

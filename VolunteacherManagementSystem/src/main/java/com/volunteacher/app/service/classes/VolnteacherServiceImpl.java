@@ -139,4 +139,15 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch new Volunteachers");
 		}
 	}
+	
+	@Override
+	public ResponseEntity<Object> getAllNewVolunteachers() {
+		try {
+			List<Volunteacher> volunteacherList = (List<Volunteacher>) volunteacherRepository.newAllVolunteachers();
+			return ResponseEntity.status(HttpStatus.OK).body(volunteacherList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch new Volunteachers");
+		}
+	}
 }

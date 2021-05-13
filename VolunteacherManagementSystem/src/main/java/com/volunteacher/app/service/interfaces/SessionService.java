@@ -39,4 +39,8 @@ public interface SessionService {
 	public ResponseEntity<Object> addSessionVolunteachers(List<User> users,String sessionId);
 	
 	public ResponseEntity<Object> getTotalSessions();
+	
+	public ResponseEntity<Object> getTotalHoursSessions();
+	
+	public ResponseEntity<Object> totalSessionsByVillage(int villageId);
 }

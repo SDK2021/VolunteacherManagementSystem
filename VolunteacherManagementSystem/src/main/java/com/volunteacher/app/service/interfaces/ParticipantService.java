@@ -1,8 +1,11 @@
 package com.volunteacher.app.service.interfaces;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import com.volunteacher.app.model.Participant;
+import com.volunteacher.app.model.User;
 
 public interface ParticipantService {
 	
@@ -18,6 +21,8 @@ public interface ParticipantService {
 	
 	public ResponseEntity<Object> totalVolunteacherParticipantByEvent(int eventId,int typeId);
 		
-	public ResponseEntity<Object> totalOtherParticipantByEvent(int eventId,int typeId);
+	public ResponseEntity<Object> totalOtherParticipantByEvent(int eventId);
+	
+	public ResponseEntity<Object> addUserParticipant(List<User> users,int eventId);
 
 }

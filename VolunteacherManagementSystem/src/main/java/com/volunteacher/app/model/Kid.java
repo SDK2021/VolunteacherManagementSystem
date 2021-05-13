@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,11 +18,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Kid {
 	
 	@Id
@@ -65,6 +69,12 @@ public class Kid {
 	private String photo;
 	
 	private String school;
+	
+	@NotNull
+	@CreatedDate
+	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyyy")
+	@Column(nullable = false)
+	private Calendar creationDate;
 	
 	@NotNull
 	@OneToOne
@@ -185,6 +195,12 @@ public class Kid {
 	public void setTotalSessions(int totalSessions) {
 		this.totalSessions = totalSessions;
 	}
-	
 
+	public Calendar getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Calendar creationDate) {
+		this.creationDate = creationDate;
+	}
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.Kid;
 import com.volunteacher.app.model.KidsGroup;
+import com.volunteacher.app.model.Volunteacher;
 import com.volunteacher.app.repository.KidRepository;
 import com.volunteacher.app.repository.KidsGroupRepository;
 import com.volunteacher.app.service.interfaces.KidService;
@@ -282,4 +283,24 @@ public class KidServiceImpl implements KidService {
 		}
 	}
 	
+	@Override
+	public ResponseEntity<Object> getAllNewKids() 
+	{
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(kidRepository.newAllKids());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch new Kids");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> totalKidsByVillage(int villageId) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(kidRepository.totalKidsVillage(villageId));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Total Kids");
+		}
+	}
 }

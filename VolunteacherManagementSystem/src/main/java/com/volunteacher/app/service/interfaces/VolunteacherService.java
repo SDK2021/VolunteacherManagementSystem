@@ -25,4 +25,6 @@ public interface VolunteacherService {
 	public ResponseEntity<Object> getTotalVolunteacher(); 
 	
 	public ResponseEntity<Object> getNewVolunteachers(int page);
+	
+	public ResponseEntity<Object> getAllNewVolunteachers();
 }

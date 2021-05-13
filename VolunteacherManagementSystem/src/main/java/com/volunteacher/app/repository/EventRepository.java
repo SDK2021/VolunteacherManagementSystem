@@ -11,7 +11,7 @@ import com.volunteacher.app.model.Event;
 @Repository
 public interface EventRepository extends PagingAndSortingRepository<Event, Integer> {
 
-	@Query(value = "SELECT * FROM event WHERE MONTH(event_date) = MONTH(NOW()) and YEAR(event_date) = YEAR(NOW())", nativeQuery = true )
+	@Query(value = "SELECT * FROM event WHERE MONTH(event_date) = MONTH(NOW()) and YEAR(event_date) = YEAR(NOW()) and DATE(event_date) > DATE(NOW())", nativeQuery = true )
 	Page<Event> eventByMonthAndYear(Pageable pageable);
 	
 	@Query(value = "select COUNT(*) from event",nativeQuery = true)

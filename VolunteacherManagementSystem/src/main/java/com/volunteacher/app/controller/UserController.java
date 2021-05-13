@@ -133,6 +133,12 @@ public class UserController {
 		return volunteacherService.getNewVolunteachers(page);
 	}
 	
+	@GetMapping("/all-new-volunteachers")
+	public ResponseEntity<Object> getAllNewVolunteachers()
+	{
+		return volunteacherService.getAllNewVolunteachers();
+	}
+	
 	@GetMapping("/birth-users")
 	public ResponseEntity<Object> getUserByBirthday()
 	{
@@ -149,5 +155,11 @@ public class UserController {
 	public boolean setUserProfile(@RequestHeader("profileURL")String url,@RequestHeader("userId") String userId)
 	{
 		return userService.setProfile(url, userId);
+	}
+	
+	@GetMapping("/users-session-village")
+	public ResponseEntity<Object> getUserByBirthday(@RequestParam("village") int villageId)
+	{
+		return userService.totalVolunteacherBySessionVillage(villageId);
 	}
 }

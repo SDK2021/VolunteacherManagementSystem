@@ -98,6 +98,9 @@ public class User {
 	@ManyToMany(mappedBy = "users")
 	private List<Session> sessions; 
 	
+	@ManyToMany(mappedBy = "users")
+	private List<Event> event; 
+	
 	
 	public User() {
 		super();
