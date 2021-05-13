@@ -36,10 +36,12 @@
                   <div class="col-lg-7">
                     <div class="form-group">
                       <label class="form-control-label" for="input-group-name">Group Name</label>
-                      <input #groupName="ngModel" name="groupName" [(ngModel)]="kidsGroup.groupName" type="text" id="input-group-name" 
+                      <input #groupName="ngModel" name="groupName" [ngClass]="{'ng-invalid':isError}" [(ngModel)]="kidsGroup.groupName" type="text" id="input-group-name" 
                       class="form-control form-control-alternative" required maxlength="20">
                       <small *ngIf="groupName.errors?.required && groupName.touched"
                       class="text-danger">Name is required</small>
+                      <small *ngIf="isError"
+                      class="text-danger">Kids group is already exists</small>
                     </div>
                   </div>
 

@@ -38,6 +38,8 @@ export class GroupListComponent implements OnInit {
   showSpinner:boolean=false
   showProgressbar: boolean = false
 
+  isError:boolean=false
+
   constructor(private addressService:AddressService,private router:Router,private kids: KidService, private kidsService: KidsService, private route: ActivatedRoute, private _snackBar: MatSnackBar) {
     this.colors = ["bg-deeppink","bg-info","bg-danger", "bg-yellow", "bg-purple"];
   }
@@ -54,6 +56,11 @@ export class GroupListComponent implements OnInit {
     if(error.status===500)
     {
       this.router.navigate(['internal-server-error'])
+    }
+    else if(error.status===400)
+    {
+        this.isError=true
+        this.showProgressbar=false
     }
     else
     {

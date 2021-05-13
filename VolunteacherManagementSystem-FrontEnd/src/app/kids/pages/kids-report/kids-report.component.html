@@ -20,50 +20,51 @@
                             <div class="card">
                                 <!-- Card body -->
                                 <div class="card-body">
-                                    <a href="#!">
-                                        <img src="{{kid.photo}}"
+                                  
+                                        <img src="{{kidReport.kid.photo}}"
                                             class="rounded-circle img-center img-fluid shadow shadow-lg--hover"
                                             style="width: 140px;">
-                                    </a>
+                                  
                                     <div class="pt-4 text-center">
                                         <h5 class="h3 title">
-                                            <span class="d-block mb-1">{{kid.name}}</span>
-                                            <small *ngIf="kid.level==1" class="h4 px-3 text-white py-1 font-weight-bold bg-gradient-default font-weight-light text-muted" style="border-radius: 15px;">Aatma Shiksha</small>
-                                            <small  *ngIf="kid.level==2" class="h4 px-3 text-white py-1 font-weight-bold bg-gradient-default font-weight-light text-muted" style="border-radius: 15px;">Aatma Shodh</small>
-                                            <small  *ngIf="kid.level==3" class="h4 px-3 text-white py-1 font-weight-bold bg-gradient-default font-weight-light text-muted" style="border-radius: 15px;">Aatma Vishesh</small>
+                                            <span class="d-block mb-1">{{kidReport.kid.name}}</span>
+                                            <small *ngIf="kidReport.kid.level==1" class="h4 px-3 text-white py-1 font-weight-bold bg-gradient-default font-weight-light text-muted" style="border-radius: 15px;">Aatma Shiksha</small>
+                                            <small  *ngIf="kidReport.kid.level==2" class="h4 px-3 text-white py-1 font-weight-bold bg-gradient-default font-weight-light text-muted" style="border-radius: 15px;">Aatma Shodh</small>
+                                            <small  *ngIf="kidReport.kid.level==3" class="h4 px-3 text-white py-1 font-weight-bold bg-gradient-default font-weight-light text-muted" style="border-radius: 15px;">Aatma Vishesh</small>
                                         </h5>
+            
                                         <hr>
                                  
                                     </div>
                                     <h5>Personal Details</h5>
                                     <div class="row">
                                         <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
-                                           Age: {{kid.age}}
+                                            Age : {{kidReport.kid.age}}
                                         </div>
-                                        <ng-container *ngIf="kid.gender===1">
+                                        <ng-container *ngIf="kidReport.kid.gender===1">
                                             <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
                                                 Gender : Male
                                             </div>
                                         </ng-container>
-                                        <ng-container *ngIf="kid.gender===2">
+                                        <ng-container *ngIf="kidReport.kid.gender===2">
                                             <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
                                                 Gender : Female
                                             </div>
                                         </ng-container>
                                         <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
-                                            DOB:{{kid.dob | date:'mediumDate'}}
+                                            DOB : {{kidReport.kid.dob | date:'mediumDate'}}
                                         </div>
                                         <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
-                                           Standard:{{kid.standard}}
-                                         </div>
-                                        <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
-                                            Area:{{kid.area.areaName}}
+                                            Standard : {{kidReport.kid.standard}}
                                         </div>
                                         <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
-                                            Sessions : {{kid.totalSessions}}
+                                            Area : {{kidReport.kid.area.areaName}}
                                         </div>
-                                        <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-6 mb-2">
-                                            School:{{kid.school}}
+                                        <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
+                                            Sessions : {{kidReport.kid.totalSessions}}
+                                        </div>
+                                        <div class="col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-6 mb-2">
+                                            School : {{kidReport.kid.school}}
                                         </div>
                                     </div>
                                     <br>

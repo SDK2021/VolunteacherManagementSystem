@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Chart from 'chart.js';
 import { Area } from 'src/app/core/model/area';
 import { Kid } from 'src/app/core/model/kid';
+import { Kidsreport } from 'src/app/core/model/kidsreport';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
 import { chartExample1, chartExample2, chartExample3, chartOptions, parseOptions } from 'src/app/variables/charts';
 import { KidsService } from '../../shared-services/kids.service';
@@ -18,9 +19,11 @@ export class KidsReportComponent implements OnInit {
   public salesChart;
   public clicked: boolean = true;
   public clicked1: boolean = false;
-  kid:Kid
   
-  constructor(private _auth:authentication,private router:Router,private kidService:KidsService, private route:ActivatedRoute) {}
+  kidReport:Kidsreport=new Kidsreport()
+  showSpinner:boolean=false
+  
+  constructor(private kidsService:KidsService,private router:Router,private kidService:KidsService, private route:ActivatedRoute) {}
 
   handleError(error)
   {
@@ -37,21 +40,25 @@ export class KidsReportComponent implements OnInit {
     }
   }
   
-  getKidById(kidId: number) {
-    this.kidService.kidById(kidId).subscribe(data=>{
-      this.kid = data
-      this.kid=this.calculateAge(data)
-      console.log(this.kid);
+  getKidReportById(id: number) {
+    this.showSpinner=true
+    this.kidsService.kidReportById(id).subscribe(data=>{
+      this.kidReport = data
+      this.showSpinner=false
+      this.kidReport.kid=this.calculateAge(this.kidReport.kid)
+      console.log(this.kidReport);
       
     },error=>{
       this.handleError(error)
     })
   }
 
+
   ngOnInit(): void {
-    this.kid = new Kid()
-    this.kid.area=new Area()
-    this.getKidById( this.route.snapshot.params['id']);
+    this.kidReport.kid=new Kid()
+    this.kidReport.kid.area=new Area()
+
+    this.getKidReportById(this.route.snapshot.params['rid'])
     this.datasets = [
       [0, 20, 10, 30, 15, 40, 20, 60, 60],
       [0, 20, 5, 25, 10, 30, 15, 40, 40]
