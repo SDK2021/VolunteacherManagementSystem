@@ -21,6 +21,7 @@ import { AttendanceModule } from './kids/pages/attendance/attendance.module';
 import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { RoleCanActivateGuard } from './core/guards/role-can-activate.guard';
 @NgModule({
   imports: [
     BrowserModule,
@@ -53,7 +54,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     provide:HTTP_INTERCEPTORS,
     useClass:httpinterceptor,
     multi:true
-  }
+  },RoleCanActivateGuard
   ],
   bootstrap: [AppComponent]
 })

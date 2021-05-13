@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, retry, take } from 'rxjs/operators';
 import { Applicantrequest } from 'src/app/core/model/applicantrequest';
 import { Participant } from 'src/app/core/model/participant';
 import { User } from 'src/app/core/model/user';
@@ -31,8 +31,10 @@ export class UsersService {
   getUserByEmail(email:string):Observable<User>
   {
     console.log(email);
-    return this._httpclient.get<User>(`${"http://localhost:9090/vms/email-users?email="}${email}`)
+    return this._httpclient.get<User>(`${"http://localhost:9090/vms/email-users?email="}${email}`).pipe(take(1))
   }
+
+  
 
   registration(registerUser:Applicantrequest):Observable<Applicantrequest>
   {

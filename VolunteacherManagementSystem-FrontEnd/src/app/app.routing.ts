@@ -8,6 +8,7 @@ import { AuthLayoutComponent } from './core/layouts/auth-layout/auth-layout.comp
 import { UserLayoutComponent } from './core/layouts/user-layout/user-layout/user-layout.component';
 import { ErrorComponent } from './core/components/error/error.component';
 import { InternalServerErrorComponent } from './core/components/internal-server-error/internal-server-error.component';
+import { RoleCanActivateGuard } from './core/guards/role-can-activate.guard';
 
 const routes: Routes =[
   {
@@ -35,6 +36,7 @@ const routes: Routes =[
   }, {
       path: 'user',
       component: UserLayoutComponent,
+      canActivate:[RoleCanActivateGuard],
       children: [
         {
           path: '',
