@@ -9,6 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { DialogBoxComponent } from 'src/app/admin/components/dialog-box/dialog-box.component';
+import { VolunteacherPipe } from 'src/app/admin/filters/volunteacher.pipe';
 import { VolunteachersService } from 'src/app/admin/shared-services/volunteachers.service';
 import { Volunteacher } from 'src/app/core/model/volunteacher';
 
@@ -54,6 +55,7 @@ export class VolunteachersListComponent implements OnInit {
     }
   }
 
+  
   blob:Blob = new Blob()
   download()
   {

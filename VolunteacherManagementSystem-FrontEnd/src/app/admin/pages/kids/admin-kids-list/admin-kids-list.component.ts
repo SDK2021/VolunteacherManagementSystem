@@ -35,6 +35,8 @@ export class AdminKidsListComponent implements OnInit {
   filter:string
   @Input() label:string 
 
+  search:string=''
+
   kidslist: Array<Kid>=new Array()
   constructor(private kidsService:KidsService,private _auth:authentication,private router:Router) {
     

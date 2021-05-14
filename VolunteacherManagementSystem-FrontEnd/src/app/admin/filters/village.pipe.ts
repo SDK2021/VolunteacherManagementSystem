@@ -12,7 +12,11 @@ export class VillagePipe implements PipeTransform {
         return value
     }
     return value.filter(function(search){
-        return search.villageName.toLowerCase().indexOf(searchKey.toLowerCase()) > -1
+
+     
+        return search.villageName.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 
+       
+        
     });
   }
 

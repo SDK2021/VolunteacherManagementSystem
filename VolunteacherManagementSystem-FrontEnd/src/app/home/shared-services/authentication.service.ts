@@ -69,6 +69,7 @@ export class authentication {
     this.username = null;
     this.passsword = null;
     localStorage.removeItem(this.LOCAL_STORAGE_ATTRIBUTE_USERNAME);
+
   }
   
 }

@@ -9,6 +9,8 @@ import {
 import { Kid } from 'src/app/core/model/kid';
 import { KidService } from 'src/app/admin/shared-services/kid.service';
 import { Router } from '@angular/router';
+import { Village } from 'src/app/core/model/village';
+import { Area } from 'src/app/core/model/area';
 @Component({
   selector: 'app-kids-table',
   templateUrl: './kids-table.component.html',
@@ -44,6 +46,9 @@ export class KidsTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.page=0
+    this.kids['village']=new Village()
+    this.kids['area']=new Area()
+    
     this.getAllKids(this.page)
     this.deletesuccess = false
     // console.log("Hello");

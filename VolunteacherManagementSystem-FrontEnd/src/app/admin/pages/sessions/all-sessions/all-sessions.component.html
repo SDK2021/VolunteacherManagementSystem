@@ -67,6 +67,12 @@
                                             <h3>Session Date</h3>
                                         </th>
                                         <th>
+                                            <h3>Village</h3>
+                                        </th>
+                                        <th>
+                                            <h3>Project</h3>
+                                        </th>
+                                        <th>
                                             <h3 class=" text-center">Attendance</h3>
                                         </th>
                                         <th>
@@ -90,6 +96,14 @@
                                         <td style="font-size: 17px;">
                                           <h3>{{s.sessionDate | date : 'mediumDate'}}</h3>
                                         </td>
+
+                                        <td style="font-size: 17px;">
+                                            <h3>{{s.village.villageName}}</h3>
+                                          </td>
+
+                                          <td style="font-size: 17px;">
+                                            <h3>{{s.project.projectName}}</h3>
+                                          </td>
     
                                         <td>
                                             <div class="col-1 text-center">

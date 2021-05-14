@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RoleCanActivateGuard } from './role-can-activate.guard';
+import { UserCanActivateGuard } from './user-can-activate.guard';
 
-describe('RoleCanActivateGuard', () => {
-  let guard: RoleCanActivateGuard;
+describe('UserCanActivateGuard', () => {
+  let guard: UserCanActivateGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(RoleCanActivateGuard);
+    guard = TestBed.inject(UserCanActivateGuard);
   });
 
   it('should be created', () => {

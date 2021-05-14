@@ -15,11 +15,10 @@ import { SendOtpComponent } from '../../components/send-otp/send-otp.component';
 export const AuthLayoutRoutes: Routes = [
     { path: 'login',          component: LoginComponent },
     { path: 'register',       component: RegisterComponent },
-    { path: 'home',           component: HomeComponent },
+    { path: '',           component: HomeComponent },
     { path: 'donate',         component: DonateComponent},
     { path: 'change-password', component: ChangePasswordComponent},
     { path: 'event/:id/event-registration',           component: EventParticipationComponent},
-    { path: 'error',           component:PageNotFoundComponent},
     { path: 'forgot-password',           component:ForgotPasswordComponent},
     { path: 'forgot-password/send-otp',           component:SendOtpComponent},
     { path: 'volunteacher-registration',           component:VolunteacherFormComponent},

@@ -8,7 +8,13 @@ import { AuthLayoutComponent } from './core/layouts/auth-layout/auth-layout.comp
 import { UserLayoutComponent } from './core/layouts/user-layout/user-layout/user-layout.component';
 import { ErrorComponent } from './core/components/error/error.component';
 import { InternalServerErrorComponent } from './core/components/internal-server-error/internal-server-error.component';
-import { RoleCanActivateGuard } from './core/guards/role-can-activate.guard';
+
+import { UserCanActivateGuard } from './core/guards/user-can-activate.guard';
+
+import { AdminCanActivateGuard } from './core/guards/admin-can-activate.guard';
+import { AdminActivateChildGuard } from './core/guards/admin-activate-child.guard';
+import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
+
 
 const routes: Routes =[
   {
@@ -18,7 +24,8 @@ const routes: Routes =[
   }, {
     path: 'admin',
     component: AdminLayoutComponent,
-    children: [
+    canActivate:[AdminCanActivateGuard],
+        children: [
       {
         path: '',
         loadChildren: './core/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
@@ -36,18 +43,20 @@ const routes: Routes =[
   }, {
       path: 'user',
       component: UserLayoutComponent,
-      canActivate:[RoleCanActivateGuard],
+      canActivate:[UserCanActivateGuard],
       children: [
         {
           path: '',
           loadChildren: './core/layouts/user-layout/user-layout.module#UserLayoutModule'
         }
       ]
-    },
-    {
+    },{
       path: 'error-page',
       component:ErrorComponent
     }, {
+        path: 'error',
+        component:PageNotFoundComponent
+      }, {
         path: 'internal-server-error',
         component:InternalServerErrorComponent
       }, {
