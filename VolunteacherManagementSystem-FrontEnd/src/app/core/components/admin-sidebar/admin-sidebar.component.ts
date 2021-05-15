@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { authentication } from 'src/app/home/shared-services/authentication.service';
+import { UsersService } from 'src/app/user/services/users.service';
+import { User } from '../../model/user';
 
 
 declare interface RouteInfo {
@@ -13,7 +16,7 @@ declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-  { path: 'dashboard', title: 'Dashboard',  icon: 'ni ni-shop text-primary', class: '' ,children:[], showChild:false,adjustment:''},
+  { path: '', title: 'Dashboard',  icon: 'ni ni-shop text-primary', class: '' ,children:[], showChild:false,adjustment:''},
   { path: 'post', title: 'Timeline',  icon: 'fas fa-images text-danger', class: '' ,children:[],showChild:false,adjustment:''},
   { path: 'volunteachers', title: 'Volunteachers',  icon:'fas fa-users text-yellow', class: '',children:[],showChild:false ,adjustment:''},
   { path: 'kids-list', title: 'Kids',  icon:'fas fa-child text-info', class: 'fas fa-chevron-right text-muted' ,children:[
@@ -82,17 +85,47 @@ export class AdminSidebarComponent implements OnInit {
   public menuItems: any[];
   public isCollapsed = true;
 
- 
+  user:User=new User()
+  userType:string=''
   
-  constructor(private router: Router) {
+  constructor(private userService:UsersService,private authService:authentication,private router: Router) {
    // this.showChildren(3)
    }
-
+   handleError(error)
+   {
+     console.log(error);
+     console.log(error.status);
+     
+     if(error.status===500)
+     {
+       this.router.navigate(['internal-server-error'])
+     }
+     else
+     {
+       this.router.navigate(['error-page'])
+     }
+   }
   ngOnInit(): void {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
    });
+
+   let user:Array<string>
+   user=localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
+
+   this.userService.getUserByEmail(atob(user[0])).subscribe(data=>{
+     this.user=data
+     if(data.type.typeId==1)
+       this.userType='admin'
+     else
+       this.userType='user'
+       
+     console.log(this.user);
+        
+   },error=>{
+     this.handleError(error)
+   })
   }
 
   showChildren(index:number)

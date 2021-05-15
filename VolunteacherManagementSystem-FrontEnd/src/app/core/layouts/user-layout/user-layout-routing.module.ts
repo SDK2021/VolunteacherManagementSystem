@@ -25,7 +25,7 @@ import { ResetPasswordComponent } from 'src/app/user/pages/reset-password/reset-
 import { EditKidComponent } from 'src/app/kids/pages/edit-kid/edit-kid.component';
 
 export const routes1: Routes = [
-    { path: 'home',       component: AppHomeComponent },
+    { path: '',       component: AppHomeComponent },
     { path: 'profile',   component: ProfileComponent, 
     children: [
           {

@@ -26,7 +26,7 @@
                 </a>
               </ng-container>
               <ng-container *ngIf="!isVt">
-                <a href="user/set-profile-pic">
+                <a routerLink="/{{userType}}/profile/set-profile">
                   <img src="{{user.photo}}" class="rounded-circle">
                 </a>
               </ng-container>

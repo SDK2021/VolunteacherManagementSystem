@@ -10,7 +10,7 @@
     </div>
 </ng-container>
 <div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
-    <div class="col-12 col-xl-10 ">
+    <div class="col-12 col-xl-10 p-0">
         <div class="card shadow p-4">
             <!-- Card header -->
             <div class="card-header border-0">
@@ -50,7 +50,7 @@
                                                         <span class="input-group-text p-0 m-2"><i
                                                                 class="fas fa-search"></i></span>
                                                     </div>
-                                                    <input class="form-control p-0 " style="border-radius: 30px;"
+                                                    <input autocomplete="off" class="form-control p-0 " style="border-radius: 30px;"
                                                         placeholder="Search" type="text" (focus)="focus = true"
                                                         (blur)="focus = false" [(ngModel)]="search" name="search">
                                                 </div>
@@ -62,7 +62,10 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <p style="cursor: pointer;" class="text-right mr-3 text-primary text-xl" (click)="download()">  <i class="fas fa-download "></i></p>
+                        <div class="text-center mb-2">
+                            <small class="text-muted text-sm">Search by event name, project, village , month or year</small>
+                        </div>
+                        <p  class="text-right mr-3 text-primary text-xl">  <i  (click)="download()" style="cursor: pointer;" class="fas fa-download icon-btn "></i></p>
                     </div>
                     <div class="table-responsive">
 
@@ -77,7 +80,7 @@
                                         <h3>No</h3>
                                     </th>
                                     <th>
-                                        <h3>Event Title</h3>
+                                        <h3>Event</h3>
                                     </th>
 
                                     <th>
@@ -85,6 +88,14 @@
                                     </th>
                                     <th>
                                         <h3>Event Time</h3>
+                                    </th>
+
+                                    <th>
+                                        <h3>Village</h3>
+                                    </th>
+
+                                    <th>
+                                        <h3>Project</h3>
                                     </th>
 
                                     <th>
@@ -120,6 +131,12 @@
                                     <td class="table-user">
                                         <h3>{{e.eventStartingTime}}</h3>
                                     </td>
+                                    <td class="table-user">
+                                        <h3>{{e.village.villageName}}</h3>
+                                    </td>
+                                    <td class="table-user">
+                                        <h3>{{e.project.projectName}}</h3>
+                                    </td>
                                     <td class="table-user text-center">
                                        <button routerLink="/admin/events/{{e.eventId}}/event-details" class="btn text-white " style="background-color: #5b46cf;">View Details</button>
                                     </td>
@@ -139,16 +156,18 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="row pl-0">
-                        <div style="cursor: pointer;" class="col-6 mt-1">
-                            <div  *ngIf="!previousDisabled" class="icon icon-shape bg-primary text-white rounded-circle shadow"  (click)="previousPage()">
-                              <i class="fas fa-angle-double-left"></i>
+                    <div class="col-6 pl-0 mx-auto d-block">
+                        <div class="row justify-content-center">
+                            <div style="cursor: pointer;" class="col-auto mt-1">
+                                <div  *ngIf="!previousDisabled" class="icon  icon-shape bg-primary text-white rounded-circle shadow"  (click)="previousPage()">
+                                  <i class="fas fa-angle-double-left"></i>
+                                </div>
+                              </div>
+                            <div style="cursor: pointer;" class="col-auto  mt-1" >
+                              <div *ngIf="!nextDisabled" class="icon icon-shape bg-primary text-white rounded-circle shadow" (click)="nextPage()">
+                                <i  class="fas fa-angle-double-right"></i>
+                              </div>
                             </div>
-                          </div>
-                        <div style="cursor: pointer;" class="col-6 mt-1" >
-                          <div *ngIf="!nextDisabled" class="icon icon-shape bg-primary text-white rounded-circle shadow" (click)="nextPage()">
-                            <i  class="fas fa-angle-double-right"></i>
-                          </div>
                         </div>
                         
                      </div> 

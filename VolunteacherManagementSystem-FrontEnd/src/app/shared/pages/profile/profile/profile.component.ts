@@ -31,6 +31,8 @@ export class ProfileComponent implements OnInit {
   subHeading:boolean=true
   heading:boolean=false
 
+  userType:string=''
+
   isVt:boolean=false
   show:boolean=true
   constructor(private vtService:VolunteachersService,private route:ActivatedRoute,private authService:authentication,private userService:UsersService,private profileService:ProfileService,private router:Router) {
@@ -70,12 +72,16 @@ export class ProfileComponent implements OnInit {
         this.totalPosts = 0;
           let username:string;
           let authuser:string[];
-          let userId:number;
+          
       
           authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
           username = atob(authuser[0]);
           this.userService.getUserByEmail(username).subscribe(data=>{
           this.user=data
+            if(data.type.typeId==1)
+              this.userType='admin'
+            else
+              this.userType='user'
             this.getTotalPosts(this.user.userId)
           })
         // this.getTotalProjectByUser();

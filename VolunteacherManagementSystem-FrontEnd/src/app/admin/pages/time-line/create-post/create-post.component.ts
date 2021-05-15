@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { Timelinepost } from 'src/app/core/model/timelinepost';
 import { User } from 'src/app/core/model/user';
+import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
 import { TimeLineService } from 'src/app/shared/shared-services/time-line.service';
 import { UsersService } from 'src/app/user/services/users.service';
@@ -31,10 +32,37 @@ export class CreatePostComponent implements OnInit {
   isShow:boolean=false
   showForm:boolean=false
   timeLinePost:Timelinepost;
-  constructor(private router:Router,private timelineService:TimeLineService, private _snackBar: MatSnackBar,private _authService:authentication,private userSerice:UsersService) { }
+
+  isPostCreated:boolean=false
+
+  constructor(private fileService:FileUploadService,private router:Router,private timelineService:TimeLineService, private _snackBar: MatSnackBar,private _authService:authentication,private userSerice:UsersService) { }
 
   ngOnInit(): void {
-    this.imageURL=null
+
+    this.imageURL = localStorage.getItem("imageURL")
+   
+    if(this.imageURL!=null)
+    {
+      this.fileService.delete(this.imageURL)
+      console.log("deleted");
+      localStorage.removeItem("imageURL")
+      
+    }
+  }
+
+  ngOnDestroy()
+  {
+    if(this.isPostCreated==false)
+    {
+      if(this.imageURL!=null)
+      {
+        this.fileService.delete(this.imageURL)
+        localStorage.removeItem("imageURL")
+      }
+       
+      console.log("Bye Bye");
+      
+    }
   }
 
   
@@ -45,7 +73,7 @@ export class CreatePostComponent implements OnInit {
     console.log(this.imageURL);
     
     this.imageURL = localStorage.getItem("imageURL")
-    localStorage.removeItem("imageURL")
+   
     
   }
   openSnackBar() {
@@ -73,8 +101,10 @@ export class CreatePostComponent implements OnInit {
           console.log(this.timeLinePost)
           this.timelineService.createTimelinePost(this.timeLinePost).subscribe(data=>{
             console.log(data)
+            this.isPostCreated=true
             this.showProgressbar=false
             this.openSnackBar()
+            localStorage.removeItem("imageURL")
             this.router.navigate(['/admin/post'])
           },error=>{
             console.log(error);

@@ -9,6 +9,9 @@ import { ProfileModule } from './pages/profile/profile.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [CreatePostComponent, AddressComponent, TimeLineComponent,],
@@ -19,7 +22,10 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     FormsModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
-    InfiniteScrollModule
+    MatProgressBarModule,
+    InfiniteScrollModule,
+    BrowserModule,
+    BrowserAnimationsModule
   ],
   exports:[
     AddressComponent

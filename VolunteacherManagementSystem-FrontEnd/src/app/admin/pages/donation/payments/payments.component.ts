@@ -39,6 +39,7 @@ export class PaymentsComponent implements OnInit {
   ngOnInit(): void {
     this.payments['donor']=new Donor()
     this.payments['donor']['userType']=new Usertype()
+    
     this.getDonations(this.page)
   }
 

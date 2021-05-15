@@ -12,8 +12,8 @@ import { InternalServerErrorComponent } from './core/components/internal-server-
 import { UserCanActivateGuard } from './core/guards/user-can-activate.guard';
 
 import { AdminCanActivateGuard } from './core/guards/admin-can-activate.guard';
-import { AdminActivateChildGuard } from './core/guards/admin-activate-child.guard';
 import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
+import { AuthCanActivateGuard } from './core/guards/auth-can-activate.guard';
 
 
 const routes: Routes =[
@@ -34,6 +34,7 @@ const routes: Routes =[
   }, {
     path: '',
     component: AuthLayoutComponent,
+    canActivate:[AuthCanActivateGuard],
     children: [
       {
         path: '',

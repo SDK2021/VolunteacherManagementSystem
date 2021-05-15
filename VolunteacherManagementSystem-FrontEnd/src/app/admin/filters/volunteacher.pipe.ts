@@ -16,7 +16,7 @@ export class VolunteacherPipe implements PipeTransform {
 
        let exp1=new RegExp('^a[ctive]?[ctive]?[ctive]?[ctive]?[ctive]?$')
        let exp2=new RegExp('^i[nactive]?[nactive]?[nactive]?[nactive]?[nactive]?$')
-    
+      
       if(exp1.test(searchKey.toLowerCase()))
         return search.status==1
 
@@ -26,12 +26,14 @@ export class VolunteacherPipe implements PipeTransform {
       if(search.user.type.type=='VOLUNTEACHER')
         return search.district.districtName.toLowerCase().indexOf(searchKey.toLowerCase())>-1 || 
         search.user.userName.toLowerCase().indexOf(searchKey.toLowerCase())>-1 || 
-        search.employerName.toLowerCase().indexOf(searchKey.toLowerCase())>-1 
+        search.employerName.toLowerCase().indexOf(searchKey.toLowerCase())>-1 || 
+        search.user.type.type.toLowerCase().startsWith(searchKey.toLowerCase())
 
       if(search.user.type.type=='LOCAL VOLUNTEACHER')
         return search.village.villageName.toLowerCase().indexOf(searchKey.toLowerCase())>-1 ||
         search.user.userName.toLowerCase().indexOf(searchKey.toLowerCase())>-1 || 
-        search.school.toLowerCase().indexOf(searchKey.toLowerCase())>-1  
+        search.school.toLowerCase().indexOf(searchKey.toLowerCase())>-1 ||
+        search.user.type.type.toLowerCase().startsWith(searchKey.toLowerCase())
 
         
 

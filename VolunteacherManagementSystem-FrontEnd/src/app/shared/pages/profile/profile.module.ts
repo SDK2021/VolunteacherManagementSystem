@@ -12,6 +12,7 @@ import { ComponentsModule } from '../../../core/components/components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [ProfileComponent,ChangePasswordComponent, PostsComponent, EditProfileComponent, ProjectsComponent, SetProfileComponent],
@@ -23,7 +24,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MatProgressSpinnerModule
   ],
   exports:[
     ProfileComponent

@@ -41,7 +41,7 @@ export class AttendanceComponent implements OnInit {
   ngOnInit(): void {
     this.getUsersBySession(this.route.snapshot.params['id'])
     this.getkidsgroup()
-    
+    //this.getAllKidsByGroup(1,this.route.snapshot.params['id'])
   }
 
   handleError(error)
@@ -120,6 +120,7 @@ export class AttendanceComponent implements OnInit {
   {
     this.kidsService.getkidsgrouplist().subscribe(data =>{
       this.groups=data;
+      this.groupId=data[0].groupId
     },error=>{
       this.handleError(error)
      });
@@ -150,10 +151,12 @@ export class AttendanceComponent implements OnInit {
 
   getAllKidsByGroup(page:number,villageId:number,groupId:number)
   {
+    this.showSpinner=true
     this.sessionService.getKidsAttendance(this.groupId,this.route.snapshot.params['id']).pipe(finalize(()=>{
       this.kidsService.getAllKidsByVillageAndGroup(page,villageId,groupId).pipe(finalize(()=>{
 
       })).subscribe(data=>{
+        this.showSpinner=false
           this.allKids=data['content']
           console.log(this.allKids);
           for(let k of this.allKids)
@@ -170,6 +173,16 @@ export class AttendanceComponent implements OnInit {
                 k.attendance=false
               }
             }
+          }
+         
+          if (data != null) {
+            this.kLength = this.allKids.length
+            this.noKids=false
+          }
+          //this.kLength=0
+          if(this.kLength==0)
+          {
+            this.noKids=true
           }
         });
     })).subscribe(k=>{

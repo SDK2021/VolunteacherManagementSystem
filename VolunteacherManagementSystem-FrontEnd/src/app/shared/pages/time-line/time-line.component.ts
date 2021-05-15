@@ -32,6 +32,10 @@ export class TimeLineComponent implements OnInit {
     this.userType=this.getUserType()
   }
 
+  hello()
+  {
+    alert("hello")
+  }
   handleError(error)
   {
     console.log(error);

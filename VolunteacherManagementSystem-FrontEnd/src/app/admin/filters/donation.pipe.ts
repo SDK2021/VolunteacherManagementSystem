@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'donation'
+  name: 'donation',
+  pure:false
 })
 export class DonationPipe implements PipeTransform {
 
@@ -11,6 +12,7 @@ export class DonationPipe implements PipeTransform {
       return value
     }
     return value.filter(function(search){
+      
       return search.donor.userType.type.toLowerCase().indexOf(searchKey.toLowerCase())>-1  ||
      search.donor.donorName.toLowerCase().indexOf(searchKey.toLowerCase())>-1 
     });

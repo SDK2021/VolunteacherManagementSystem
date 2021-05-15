@@ -10,7 +10,7 @@
     </div>
 </ng-container>
 <div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
-    <div class="col-12 col-xl-10 ">
+    <div class="col-12 col-xl-10 p-0">
         <div class="card shadow p-4">
             <!-- Card header -->
             <div class="card-header border-0">
@@ -239,7 +239,7 @@
                                                     <span class="input-group-text p-0 m-2"><i
                                                             class="fas fa-search"></i></span>
                                                 </div>
-                                                <input class="form-control p-0 " style="border-radius: 30px;"
+                                                <input autocomplete="off" class="form-control p-0 " style="border-radius: 30px;"
                                                     placeholder="Search" type="text" (focus)="focus = true"
                                                     (blur)="focus = false" [(ngModel)]="search" name="search">
                                             </div>
@@ -250,7 +250,10 @@
                             </form>
                         </div>
                     </div>
-                    <div> <p style="cursor: pointer;" class="text-right text-primary mr-3 " (click)="download()">  <i class="fas fa-download text-xl"></i></p></div>
+                    <div class="text-center mb-2">
+                        <small class="text-muted text-sm">Search by school name, stream or status</small>
+                    </div>
+                    <div> <p  class="text-right text-primary mr-3 ">  <i  (click)="download()" style="cursor: pointer;" class="fas fa-download icon-btn text-xl"></i></p></div>
                     <div class="table-responsive mt-4">
                        
                         <table class="table align-items-center table-flush table-hover">

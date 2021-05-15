@@ -68,7 +68,7 @@ export class SessionReportingComponent implements OnInit {
           this.sessionService.addSessionReporting(this.feedback).subscribe(data=>{
             this.showProgressbar=false
             this.openSnackBar()
-            this.router.navigate(['/user/home'])
+            this.router.navigate(['/user'])
           console.log(data);
         
       },error=>{

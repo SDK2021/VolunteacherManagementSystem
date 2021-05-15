@@ -67,6 +67,8 @@ export class EventsComponent implements OnInit {
   selectedActivities:Array<Number>
   projects:Array<Project> = []
 
+  isEventCreated:boolean=false
+
   page:number=0
 
   baseUrl:string="/vms/events"
@@ -80,6 +82,16 @@ export class EventsComponent implements OnInit {
   constructor(private fileService:FileUploadService,private dialog:MatDialog,private router:Router,private notiService:NotificationsService,private userService:UsersService, private authService:authentication, private projectService:ProjectsService, private addressService: AddressService,private _snackBar: MatSnackBar, private eventService:EventsService) { }
 
   ngOnInit(): void {
+
+    this.imageURL = localStorage.getItem("imageURL")
+   
+    if(this.imageURL!=null)
+    {
+      this.fileService.delete(this.imageURL)
+      console.log("deleted");
+      localStorage.removeItem("imageURL")
+      
+    }
   
     let date:Date = new Date()
     console.log(date)
@@ -95,6 +107,21 @@ export class EventsComponent implements OnInit {
     this.getProjects();
     this.getAllEvent(this.page);
     
+  }
+
+  ngOnDestroy()
+  {
+    if(this.isEventCreated==false)
+    {
+      if(this.imageURL!=null)
+      {
+        this.fileService.delete(this.imageURL)
+        localStorage.removeItem("imageURL")
+      }
+       
+      console.log("Bye Bye");
+      
+    }
   }
   
   handleError(error)
@@ -218,6 +245,7 @@ export class EventsComponent implements OnInit {
         this.eventService.addEvent(this.event,this.selectedActivities).subscribe(data=>{
           console.log(data)
           this.showProgressbar=false
+          localStorage.removeItem("imageURL")
           this.openAddSnackBar()
           form.reset()
           setTimeout(()=>{
@@ -418,7 +446,7 @@ export class EventsComponent implements OnInit {
     console.log(this.imageURL);
     
     this.imageURL = localStorage.getItem("imageURL")
-    localStorage.removeItem("imageURL")
+    
     
   }
 

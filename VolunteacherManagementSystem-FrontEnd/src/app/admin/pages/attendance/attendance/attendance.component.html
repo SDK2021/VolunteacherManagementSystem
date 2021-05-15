@@ -4,12 +4,12 @@
     </div>
 
 </div>
-<div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
-    <div class="col-12 col-xl-10 ">
+<div class=" row justify-content-center mx-0 mt-0 py-4" >
+    <div class="col-12 col-xl-10 p-0">
         <div class="card shadow p-xl-4">
             <!-- Card header -->
             <div class="card-header border-0">
-                <div class="row">
+                <div class="row pb-8 mb-5">
 
                     <div class="col-12 p-0">
                         <h1 class="mb-0 text-center">Attendance</h1>
@@ -20,7 +20,7 @@
 
                     </div>
                     <div class="col-12" *ngIf="tab1">
-                        <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-4">
+                        <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-4 mx-auto d-block">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-group">Select Group</label>
                                 <select class="form-control form-control-alternative" id="input-group" (change)="selectedGroup($event)">
@@ -30,6 +30,20 @@
                                 </select>
                             </div>
                         </div>
+                        <ng-container *ngIf="showSpinner">
+                            <div class="col-12 my-8 ">
+                                <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="40">
+                                </mat-spinner>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="noKids">
+                            <div class="col-12 col-xl-10 mx-auto d-block my-xl-6 my-4 py-xl-7 py-6">
+                                <p class="text-center text-xl"><i class="fas fa-child"></i></p>
+                                <p class="text-xl text-center text-lg"><b>No kids have attended of this group.</b></p>
+                            </div>
+                        </ng-container>
+                       <ng-container *ngIf='kLength'>
                         <div class="col-12 mt-5">
                             <div class="row justify-content-center mb-4">
                                 <div class="col-xl-10 mx-auto d-block">
@@ -98,6 +112,7 @@
                                 </tbody>
                             </table>
                         </div>
+                       </ng-container>
                     </div>
                     <div class="col-12 mb-4" *ngIf="tab2">
                         <ng-container *ngIf="showVtSpinner">

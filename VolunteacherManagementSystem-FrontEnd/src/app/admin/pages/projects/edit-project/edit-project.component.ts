@@ -187,6 +187,7 @@ export class EditProjectComponent implements OnInit {
         this.fileService.delete(this.oldImage)
         localStorage.removeItem("imageURL")
       }
+      
       this.showProgressbar = false
       this.openEditSnackBar()
       this.router.navigate(['/admin/projects'])

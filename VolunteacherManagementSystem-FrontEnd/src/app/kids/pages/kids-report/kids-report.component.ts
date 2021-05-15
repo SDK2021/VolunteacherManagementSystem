@@ -58,7 +58,11 @@ export class KidsReportComponent implements OnInit {
     this.kidReport.kid=new Kid()
     this.kidReport.kid.area=new Area()
 
-    this.getKidReportById(this.route.snapshot.params['rid'])
+    alert(this.route.snapshot.params['rid'])
+    
+    //this.getKidReportById(this.route.snapshot.params['id'])
+
+
     this.datasets = [
       [0, 20, 10, 30, 15, 40, 20, 60, 60],
       [0, 20, 5, 25, 10, 30, 15, 40, 40]

@@ -51,6 +51,8 @@ export class EditEventComponent implements OnInit {
   selectedActivities:Array<number> = new Array()
   projects:Array<Project> = []
 
+  isEventEdited:boolean=false
+
 
   hover:boolean=false
 
@@ -60,6 +62,16 @@ export class EditEventComponent implements OnInit {
   constructor(private projectService:ProjectsService,private addressService:AddressService,private fileService:FileUploadService,private _snackBar: MatSnackBar,private route:ActivatedRoute,private router:Router,private eventService:EventsService) { }
 
   ngOnInit(): void {
+
+    this.imageURL = localStorage.getItem("imageURL")
+   
+    if(this.imageURL!=null)
+    {
+      this.fileService.delete(this.imageURL)
+      console.log("deleted");
+      localStorage.removeItem("imageURL")
+      
+    }
     this.event.village=new Village()
     this.event.project=new Project()
     let date:Date = new Date()
@@ -74,6 +86,21 @@ export class EditEventComponent implements OnInit {
     this.getEvent(this.route.snapshot.params['id'])
   }
 
+  ngOnDestroy()
+  {
+    if(this.isEventEdited==false)
+    {
+      if(this.imageURL!=null)
+      {
+        this.fileService.delete(this.imageURL)
+        localStorage.removeItem("imageURL")
+      }
+       
+      console.log("Bye Bye");
+      
+    }
+  }
+
   edit() {
       this.isEdit=true
       this.showForm=false
@@ -83,7 +110,6 @@ export class EditEventComponent implements OnInit {
   {
     this.showForm=isShow
     this.imageURL = localStorage.getItem("imageURL")
-    localStorage.removeItem("imageURL")
     this.hover=false
   }
 
@@ -286,10 +312,13 @@ export class EditEventComponent implements OnInit {
       this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
         this.eventService.editEvent(this.event.eventId,this.event,this.selectedActivities).subscribe(data=>{
           console.log(data)
+          this.isEventEdited=true
           if(this.oldImage!=null)
           {
             this.fileService.delete(this.oldImage)
+            localStorage.removeItem("imageURL")
           }
+          
           this.showProgressbar=false
           this.openEditSnackBar()
           setTimeout(()=>{

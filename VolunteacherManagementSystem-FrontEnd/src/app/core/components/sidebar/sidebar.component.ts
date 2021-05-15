@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
+import { UsersService } from 'src/app/user/services/users.service';
+import { User } from '../../model/user';
 
 declare interface RouteInfo {
     path: string;
@@ -11,7 +13,7 @@ declare interface RouteInfo {
     showChild:boolean
 }
 export const ROUTES: RouteInfo[] = [
-    { path: 'home', title: 'Home',  icon: 'ni ni-shop text-primary', class: '',children:[],showChild:false },
+    { path: '', title: 'Home',  icon: 'ni ni-shop text-primary', class: '',children:[],showChild:false },
     { path: 'posts', title: 'Timeline',  icon: 'fas fa-images text-danger', class: '' ,children:[],showChild:false},
     { path: 'content', title: 'Content',  icon: ' ni ni-ruler-pencil text-info', class: '' ,children:[],showChild:false},
     { path: 'sessions/sessions-list', title: 'Sessions',  icon: 'fas fa-book-reader text-primary', class: '' ,children:[],showChild:false},
@@ -39,14 +41,45 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   public isCollapsed = true;
 
-  constructor(private router: Router,private _auth:authentication) { }
+  user:User=new User()
+  userType:string=''
+  constructor(private userService:UsersService,private router: Router,private _auth:authentication) { }
 
+  handleError(error)
+  {
+    console.log(error);
+    console.log(error.status);
+    
+    if(error.status===500)
+    {
+      this.router.navigate(['internal-server-error'])
+    }
+    else
+    {
+      this.router.navigate(['error-page'])
+    }
+  }
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
    });
    
+   let user:Array<string>
+   user=localStorage.getItem(this._auth.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
+
+   this.userService.getUserByEmail(atob(user[0])).subscribe(data=>{
+     this.user=data
+     if(data.type.typeId==1)
+       this.userType='admin'
+     else
+       this.userType='user'
+       
+     console.log(this.user);
+        
+   },error=>{
+     this.handleError(error)
+   })
   }
 
   logout()

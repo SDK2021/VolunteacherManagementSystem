@@ -17,6 +17,7 @@ import { Taluka } from 'src/app/core/model/taluka';
 import { Village } from 'src/app/core/model/village';
 import { KidsGroup } from 'src/app/core/model/kids-group';
 import { finalize } from 'rxjs/operators';
+import { FileUploadService } from 'src/app/core/services/file-upload.service';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class AddKidsComponent implements OnInit {
   isShow:boolean=true
   showForm:boolean=false
   
+  isKidAdded:boolean=false
 
   countries:Array<Country>
   states:Array<State>
@@ -68,10 +70,20 @@ export class AddKidsComponent implements OnInit {
   namePattern:string="[a-zA-Z ]{3,20}"
 
 
-  constructor(private route:ActivatedRoute,private router:Router,private _snackBar: MatSnackBar,private kidsService:KidsService,private addressService : AddressService) {}
+  constructor(private fileService:FileUploadService,private route:ActivatedRoute,private router:Router,private _snackBar: MatSnackBar,private kidsService:KidsService,private addressService : AddressService) {}
 
   ngOnInit() {
-    this.imageURL=null
+   
+    this.imageURL = localStorage.getItem("imageURL")
+   
+    if(this.imageURL!=null)
+    {
+      this.fileService.delete(this.imageURL)
+      console.log("deleted");
+      localStorage.removeItem("imageURL")
+      
+    }
+
     this.getkidsgroup()
     this.getAllCountries();
     this.getAllStates();
@@ -111,6 +123,21 @@ export class AddKidsComponent implements OnInit {
     // }
   }
 
+  ngOnDestroy()
+  {
+    if(this.isKidAdded==false)
+    {
+      if(this.imageURL!=null)
+      {
+        this.fileService.delete(this.imageURL)
+        localStorage.removeItem("imageURL")
+      }
+       
+      console.log("Bye Bye");
+      
+    }
+  }
+
   handleError(error)
   {
     console.log(error);
@@ -131,7 +158,7 @@ export class AddKidsComponent implements OnInit {
   {
     this.showForm=isShow
     this.imageURL = localStorage.getItem("imageURL")
-    localStorage.removeItem("imageURL")
+    
   }
   
   addKid()
@@ -152,7 +179,9 @@ export class AddKidsComponent implements OnInit {
         this.kidsService.villageById(areadata.village.villageId).pipe(finalize(()=>{
           this.kidsService.addKid(this.kid).subscribe(data=>{
             console.log(data)
+            this.isKidAdded=true
             this.showProgressbar=false
+            localStorage.removeItem("imageURL")
             this.openSnackBar();
           },error=>{
             this.handleError(error)

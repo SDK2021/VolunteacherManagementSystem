@@ -10,7 +10,7 @@
     </div>
 </ng-container>
 <div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
-    <div class="col-12 col-xl-10 ">
+    <div class="col-12 col-xl-10 p-0 ">
         <div class="card shadow p-4">
             <!-- Card header -->
             <div class="card-header border-0">
@@ -30,7 +30,7 @@
                         </div>
                       </ng-container>
                       <ng-container *ngIf="sLength">
-                        <div class="table-responsive mt-4">
+                          <div class="col-12">
                             <div class="row justify-content-center">
                                 <div class="col-xl-10 mx-auto d-block">
     
@@ -44,8 +44,8 @@
                                                             <span class="input-group-text p-0 m-2"><i
                                                                     class="fas fa-search"></i></span>
                                                         </div>
-                                                        <input class="form-control p-0 " style="border-radius: 30px;"
-                                                            placeholder="Search " type="text" (focus)="focus = true"
+                                                        <input autocomplete="off" class="form-control p-0 " style="border-radius: 30px;"
+                                                            placeholder="Search here " type="text" (focus)="focus = true"
                                                             (blur)="focus = false" [(ngModel)]="search" name="search">
                                                     </div>
                                                 </div>
@@ -55,12 +55,18 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="col-12"><p style="cursor: pointer;" class="text-right text-primary mr-3" (click)="download()">  <i class="fas fa-download text-xl"></i></p></div>
+                            <div class="text-center mb-2">
+                                <small class="text-muted text-sm">Search by project, village , month or year</small>
+                            </div>
+                            <div class="col-12 p-0"><p class="text-right text-primary " >  <i style="cursor: pointer;" (click)="download()"  class="fas fa-download text-xl icon-btn"></i></p></div>
+                          </div>
+                        <div class="table-responsive mt-4">
+    
                             <table class="table align-items-center table-flush table-hover">
                                 <thead class="thead-light">
                                     <tr>
                                         <th>
-                                            <h3>Session Id</h3>
+                                            <h3 class="text-center">Session Id</h3>
                                         </th>
     
                                         <th>
@@ -89,7 +95,7 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let s of sessions | session : search;index as i;trackBy:trackById">
-                                        <td class="table-user" style="font-size: 17px;">
+                                        <td class="table-user text-center" style="font-size: 17px;">
                                             <h3>{{i+1}}</h3>
                                         </td>
     
@@ -134,16 +140,18 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="row pl-0">
-                            <div style="cursor: pointer;" class="col-6 mt-1">
-                                <div  *ngIf="!previousDisabled" class="icon icon-shape bg-primary text-white rounded-circle shadow"  (click)="previousPage()">
-                                  <i class="fas fa-angle-double-left"></i>
+                        <div class="col-6 pl-0 mx-auto d-block">
+                            <div class="row justify-content-center">
+                                <div style="cursor: pointer;" class="col-auto mt-1">
+                                    <div  *ngIf="!previousDisabled" class="icon  icon-shape bg-primary text-white rounded-circle shadow"  (click)="previousPage()">
+                                      <i class="fas fa-angle-double-left"></i>
+                                    </div>
+                                  </div>
+                                <div style="cursor: pointer;" class="col-auto  mt-1" >
+                                  <div *ngIf="!nextDisabled" class="icon icon-shape bg-primary text-white rounded-circle shadow" (click)="nextPage()">
+                                    <i  class="fas fa-angle-double-right"></i>
+                                  </div>
                                 </div>
-                              </div>
-                            <div style="cursor: pointer;" class="col-6 mt-1" >
-                              <div *ngIf="!nextDisabled" class="icon icon-shape bg-primary text-white rounded-circle shadow" (click)="nextPage()">
-                                <i  class="fas fa-angle-double-right"></i>
-                              </div>
                             </div>
                             
                          </div> 

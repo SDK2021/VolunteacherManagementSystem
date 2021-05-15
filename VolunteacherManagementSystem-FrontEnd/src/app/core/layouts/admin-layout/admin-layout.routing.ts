@@ -3,8 +3,6 @@ import { Routes } from '@angular/router';
 
 import { ProfileComponent } from '../../../shared/pages/profile/profile/profile.component';
 import { TimeLineComponent } from 'src/app/admin/pages/time-line/time-line/time-line.component';
-import { KidsListComponent } from 'src/app/admin/pages/kids/kids-list/kids-list.component'
-
 import { GroupListComponent } from 'src/app/admin/pages/core/groups/group-list/group-list.component';
 import { DashboardComponent } from 'src/app/admin/pages/core/dashboard/dashboard.component';
 import { VolunteachersListComponent } from 'src/app/admin/pages/volunteachers/volunteachers-list/volunteachers-list.component';
@@ -37,11 +35,12 @@ import { EditSchoolComponent } from 'src/app/admin/pages/core/school/edit-school
 import { EditVillageComponent } from 'src/app/admin/pages/core/edit-village/edit-village.component';
 import { EditSessionComponent } from 'src/app/admin/pages/sessions/edit-session/edit-session.component';
 import { AdminKidsListComponent } from 'src/app/admin/pages/kids/admin-kids-list/admin-kids-list.component';
+import { ResetPasswordComponent } from 'src/app/user/pages/reset-password/reset-password.component';
+import { SetProfileComponent } from 'src/app/shared/pages/profile/set-profile/set-profile.component';
 
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',       component: DashboardComponent },
-    // { path: 'volunteachers/:id/profile',         component: ProfileComponent },
+    { path: '',       component: DashboardComponent },
     { path: 'volunteachers/:id/profile',   component: ProfileComponent, 
     children: [
           {
@@ -51,6 +50,8 @@ export const AdminLayoutRoutes: Routes = [
         ] 
     },
     { path: 'post',      component: TimeLineComponent},
+    { path: 'reset-password', component: ResetPasswordComponent},
+    { path: 'profile/set-profile', component: SetProfileComponent},
     { path: 'volunteachers', component: VolunteachersListComponent},
     { path: 'villages', component: VillagesComponent},
     { path: 'villages/:id/edit', component: EditVillageComponent},

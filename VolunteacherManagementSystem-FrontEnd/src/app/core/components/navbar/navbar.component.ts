@@ -15,11 +15,12 @@ export class NavbarComponent implements OnInit {
   public focus;
   public listTitles: any[];
   public location: Location;
+  userType:string=''
   user:User = new User()
   constructor(location: Location,  private element: ElementRef, private router: Router,private authService:authentication, private userService:UsersService) {
     this.location = location;
   }
-
+  oldImage:string=null
   handleError(error)
   {
     console.log(error);
@@ -34,7 +35,6 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['error-page'])
     }
   }
-
   ngOnInit() {
     this.listTitles = ROUTES.filter(listTitle => listTitle);
     let user:Array<string>
@@ -42,6 +42,11 @@ export class NavbarComponent implements OnInit {
 
     this.userService.getUserByEmail(atob(user[0])).subscribe(data=>{
       this.user=data
+      if(data.type.typeId==1)
+        this.userType='admin'
+      else
+        this.userType='user'
+        
       console.log(this.user);
          
     },error=>{
