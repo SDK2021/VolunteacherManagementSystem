@@ -65,7 +65,7 @@ public class ActivityServiceImpl implements ActivityService{
 			Activity updateActivity = activityRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Activity is not found for id: "+ id));
 			
 			updateActivity.setActivityName(activity.getActivityName());
-			updateActivity.setDescription(activity.getActivityName());
+			updateActivity.setDescription(activity.getDescription());
 			activityRepository.save(updateActivity);
 			return ResponseEntity.status(HttpStatus.OK).body(updateActivity);
 		} catch (Exception e) {
@@ -85,6 +85,17 @@ public class ActivityServiceImpl implements ActivityService{
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on deleting activity");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> getActivityById(int id) {
+		try {
+			Activity activity= activityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Activity is not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(activity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch activity for id: "+ id);
 		}
 	}
 }

@@ -18,6 +18,8 @@ export class AdminCanActivateGuard implements CanActivate {
   }
 
   authenticateUser() {
+    console.log("Helo");
+    
     if (this.authService.isUserLogin()) {
       let authuser: string[];
       authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");

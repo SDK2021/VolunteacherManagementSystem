@@ -52,4 +52,10 @@ public class ActivityController {
 	{
 		return activityService.deleteActivity(id);
 	}
+	
+	@GetMapping("/activities/{id}")
+	public ResponseEntity<Object> getActivity(@PathVariable int id)
+	{
+		return activityService.getActivityById(id);
+	}
 }

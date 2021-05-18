@@ -85,4 +85,9 @@ export class AddressService {
   {
     return this.http.put<Village>(`${"http://localhost:9090/vms/villages/"}${villageId}`,village)
   }
+
+  saveArea(areaId:number,area:Area):Observable<Area>
+  {
+    return this.http.put<Area>(`${"http://localhost:9090/vms/areas/"}${areaId}`,area)
+  }
 }

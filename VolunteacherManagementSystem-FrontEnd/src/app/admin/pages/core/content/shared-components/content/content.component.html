@@ -18,10 +18,12 @@
             <div class="col-12 col-sm-8 col-md-7 col-lg-5 col-xl-5 mx-auto d-block">
               <div class="form-group">
                   <label class="form-control-label" for="input-group">Select group</label>
-                  <select class="form-control form-control-alternative" id="input-group" (click)="groupSelected($event)">
+                  <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':groupId==0}" id="input-group" (click)="groupSelected($event)">
+                    <option value="0" selected>Select</option>
                       <option class="combobox" [selected] = "c.group.groupId==1" [value]="c.group.groupId" *ngFor="let c of contents">
                           {{c.group.groupName}}</option>
                   </select>
+                  <small *ngIf = "groupId==0" class="text-danger">Group is required</small>
               </div>
           </div>
           </div>

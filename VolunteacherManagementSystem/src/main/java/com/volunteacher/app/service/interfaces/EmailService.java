@@ -16,7 +16,7 @@ public interface EmailService {
 	
 	public boolean verifyOTP(String OTP,long userId);
 	
-	public ResponseEntity<Object> updatePassword(String newPassword,long userId);
+	public ResponseEntity<Object> updatePassword(String newPassword,long userId,String oldPassword);
 	
 	public boolean registerSuccessfullyMail(String mail,String name);
 	

@@ -37,7 +37,7 @@ export class EditSchoolComponent implements OnInit {
 
   
 
-  Show:boolean=false;
+  Show:boolean=true;
 
   villageSelected:number;
   stateSelected:number;
@@ -49,6 +49,13 @@ export class EditSchoolComponent implements OnInit {
   districts:Array<District>
   talukas:Array<Taluka>
   villages:Array<Village>
+
+  // stateTouched:boolean = false
+  // districtTouched:boolean = false
+  // talukaTouched:boolean = false
+  // villageTouched:boolean = false
+  // streamTouched:boolean = false
+  // statusTouched:boolean = false
 
   status:Array<string>=["Good","Better","Under Construction"]
 
@@ -90,6 +97,24 @@ export class EditSchoolComponent implements OnInit {
     this.getSchool(this.route.snapshot.params['id'])
   }
   
+  // touched(value)
+  // {
+  //   if(value==0)
+  //     this.stateTouched = true
+    
+  //   if(value==0)
+  //     this.stateTouched = true
+  //   if(value==1)
+  //     this.districtTouched = true
+  //   if(value==2)
+  //     this.talukaTouched = true
+  //   if(value==3)
+  //     this.villageTouched = true
+  //   if(value==4)
+  //     this.streamTouched = true
+  //   if(value==5)
+  //     this.statusTouched = true
+  // }
 
 
   openEditSnackBar() {
@@ -102,8 +127,7 @@ export class EditSchoolComponent implements OnInit {
 
   onSubmit()
   {
-    console.log(this.school);
-    
+    console.log(this.school); 
   }
 
  

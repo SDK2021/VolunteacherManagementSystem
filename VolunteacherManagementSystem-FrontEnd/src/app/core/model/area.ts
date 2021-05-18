@@ -6,4 +6,6 @@ export class Area {
     areaName:string
     village:Village;
     kids:Kid[];
+
+    isEdit:boolean=false
 }

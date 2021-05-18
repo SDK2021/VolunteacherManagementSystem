@@ -22,7 +22,7 @@ export class EventsService {
   getAllEvents(page:number):Observable<Event[]>
   {
     return this.http.get<Event[]>(`${"http://localhost:9090/vms/all-events?page="}${page}`).pipe(retry(3))
-    .pipe(retry(3))
+    
   }
 
   downloadEvents():Observable<Object>
@@ -94,6 +94,16 @@ export class EventsService {
 
   getAllParticipantsByEvent(eventId:number):Observable<number>
   {
-    return this.http.get<number>(`${"http://localhost:9090/vms/total-participate-others?event="}${eventId}`)
+    return this.http.get<number>(`${"http://localhost:9090/vms/total-participate-others?event="}${eventId}`).pipe(retry(3))
+  }
+
+  getActivityById(id:number):Observable<Activity>
+  {
+    return this.http.get<Activity>(`${"http://localhost:9090/vms/activities/"}${id}`).pipe(retry(3))
+  }
+
+  updateActivity(activityId:number,activity:Activity):Observable<Activity>
+  {
+    return this.http.put<Activity>(`${"http://localhost:9090/vms/activities/"}${activityId}`,activity).pipe(retry(3))
   }
 }

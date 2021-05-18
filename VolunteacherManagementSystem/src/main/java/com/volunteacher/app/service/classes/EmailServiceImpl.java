@@ -136,13 +136,21 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
-	public ResponseEntity<Object> updatePassword(String newPassword,long userId) {
-		User user = userRepository.findByUserId(userId);
-		
-		if(user == null)
-			throw new UsernameNotFoundException("Username not found when update the password");	
-		
+	public ResponseEntity<Object> updatePassword(String newPassword,long userId,String oldPassword) {
 		try {
+			System.out.println(oldPassword);
+			User user = userRepository.findByUserId(userId);
+			
+			if(user == null)
+				throw new UsernameNotFoundException("Username not found when update the password");	
+			
+			if(oldPassword !=null)
+			{
+				if(!(passwordEncoder.matches(oldPassword, user.getPassword())))
+				{
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+				}
+			}
 			String encodedPassword = passwordEncoder.encode(newPassword);
 			user.setPassword(encodedPassword);
 			userRepository.save(user);

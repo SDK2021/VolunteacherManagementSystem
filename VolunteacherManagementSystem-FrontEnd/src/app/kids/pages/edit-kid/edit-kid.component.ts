@@ -11,7 +11,6 @@ import { State } from 'src/app/core/model/state';
 import { Taluka } from 'src/app/core/model/taluka';
 import { Village } from 'src/app/core/model/village';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
-import { authentication } from 'src/app/home/shared-services/authentication.service';
 import { AddressService } from 'src/app/shared/shared-services/address.service';
 import { KidsService } from '../../shared-services/kids.service';
 
@@ -119,7 +118,6 @@ export class EditKidComponent implements OnInit {
   show(isShow): void {
     this.showForm = isShow
     this.imageURL = localStorage.getItem("imageURL")
-
   }
   getKidById(kidId: number) {
     this.kid = new Kid()
@@ -170,12 +168,18 @@ export class EditKidComponent implements OnInit {
             this.showProgressbar = false
             this.openEditSnackBar();
             this.router.navigate(['/user/kids/edit-kids/kids-list'])
+          },error=>{
+            this.handleError(error)
           })
         })).subscribe(data => {
           this.kid.village = data
+        },error=>{
+          this.handleError(error)
         })
       })).subscribe(data => {
         this.kid.group = data
+      },error=>{
+        this.handleError(error)
       })
     })
   }
@@ -312,10 +316,18 @@ export class EditKidComponent implements OnInit {
       verticalPosition: this.verticalPosition,
     });
   }
-
+ 
   editPhoto() {
-    this.edit = true
-    this.showForm = false
+    if(this.edit==false)
+    {
+      this.edit = true
+      this.showForm = false  
+    }   
+    else 
+    {
+      this.showForm=true
+    }   
+    
   }
-
+  
 }

@@ -41,7 +41,14 @@ export class SchoolsComponent implements OnInit {
   tab2:boolean=true
 
   isShow:boolean=false;
-  Show:boolean=false;
+  Show:boolean=true;
+
+  stateTouched:boolean = false
+  districtTouched:boolean = false
+  talukaTouched:boolean = false
+  villageTouched:boolean = false
+  streamTouched:boolean = false
+  statusTouched:boolean = false
 
   villageSelected:number;
   stateSelected:number;
@@ -78,6 +85,11 @@ export class SchoolsComponent implements OnInit {
       "Higher Secondary School",
     ]
     
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    this.stateSelected = 0
+    this.districtSelected = 0
+
     this.getAllCountries();
     this.getAllStates();
     this.getAllDistricts();
@@ -161,10 +173,28 @@ export class SchoolsComponent implements OnInit {
  
   onSubmit()
   {
-    console.log(this.school);
-    
+    console.log(this.school); 
   }
 
+   
+  touched(value)
+  {
+  
+  console.log("Hello");
+  
+    if(value==0)
+      this.stateTouched = true
+    if(value==1)
+      this.districtTouched = true
+    if(value==2)
+      this.talukaTouched = true
+    if(value==3)
+      this.villageTouched = true
+    if(value==4)
+      this.streamTouched = true
+    if(value==5)
+      this.statusTouched = true
+  }
   addSchool(form:NgForm)
   {
     this.showProgressbar=true

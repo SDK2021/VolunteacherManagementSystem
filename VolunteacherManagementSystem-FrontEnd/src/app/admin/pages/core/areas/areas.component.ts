@@ -43,6 +43,16 @@ export class AreasComponent implements OnInit {
       this.areas = data
     })
   }
+  editArea(index:number) {
+    
+    console.log(this.areas.filter(post=>post));
+    
+    console.log(this.areas[index]["isEdit"]=!this.areas[index]["isEdit"])
+    this.area.areaName=this.areas[index]["areaName"]
+    console.log(this.areas[index]["areaId"]);
+    
+   
+  }
   addArea(form:NgForm)
   {
     this.showProgressbar=true
@@ -51,6 +61,7 @@ export class AreasComponent implements OnInit {
         console.log(data)
         this.openAddSnackBar()
         form.reset()
+        this.show()
         setTimeout(()=>{
           this.getAllArea()
           this.showProgressbar=false
@@ -59,11 +70,12 @@ export class AreasComponent implements OnInit {
         console.log(error);        
           if(error.status===500)
           {
-            this.router.navigate(['error'])
+            this.router.navigate(['internal-server-error'])
+            
           }
           else
           {
-            this.router.navigate(['internal-server-error'])
+            this.router.navigate(['error-page'])
           }
       })
     })).subscribe(data=>{
@@ -84,11 +96,32 @@ export class AreasComponent implements OnInit {
       verticalPosition: this.verticalPosition,
     });
   }
+  openEditSnackBar() {
+    this._snackBar.open('Edited successfully..', 'close', {
+      duration: 2000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
+  }
   openAddSnackBar() {
     this._snackBar.open('Added successfully..', 'close', {
       duration: 2000,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
+  }
+
+  saveArea(index:number)
+  {
+    this.openEditSnackBar()
+    this.areas[index]["isEdit"]=false
+    console.log(this.area);
+    this.addressService.saveArea(this.areas[index]["areaId"],this.area).subscribe(data=>{
+      console.log(data);
+      setTimeout(() => {
+        this.getAllArea()
+      }, 1000);
+    })
+    
   }
 }

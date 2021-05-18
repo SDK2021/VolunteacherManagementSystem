@@ -62,9 +62,16 @@ export class SetProfileComponent implements OnInit {
   }
 
   onShow(isShow) {
-    this.showSpinner=true
+    console.log("Hello i am first");
     this.imageURL = localStorage.getItem("imageURL")
+    console.log(isShow);
+    if(isShow)
+      this.uploadPhoto()
+  }
 
+  uploadPhoto()
+  {
+    this.showSpinner=true
     let user: Array<string>
     user = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
 

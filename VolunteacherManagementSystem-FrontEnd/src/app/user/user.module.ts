@@ -12,7 +12,7 @@ import { MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { DonationComponent } from './pages/donation/donation.component';
-import { MatStepperModule } from '@angular/material/stepper';
+
 import { MatInputModule } from '@angular/material/input';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -36,12 +36,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
-    MatStepperModule,
     MatInputModule,
     InfiniteScrollModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-    MatStepperModule
+   
   ]
 })
 export class UserModule { }

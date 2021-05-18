@@ -102,8 +102,16 @@ export class EditEventComponent implements OnInit {
   }
 
   edit() {
-      this.isEdit=true
-      this.showForm=false
+    if(this.isEdit==false)
+    {
+      this.isEdit = true
+      this.showForm = false  
+    }   
+    else 
+    {
+      this.showForm=true
+    }   
+    
   }
 
   show(isShow):void
@@ -115,7 +123,14 @@ export class EditEventComponent implements OnInit {
 
   mouseEvent()
   {
-    this.hover=!this.hover
+    if(this.isEdit)
+    {
+      this.hover=false
+    }
+    else
+    {
+      this.hover=true
+    }
   }
 
   handleError(error)

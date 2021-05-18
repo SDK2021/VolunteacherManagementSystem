@@ -3,8 +3,13 @@
     <div class="card shadow border-0" style="overflow:scroll;height:70vh;scrollbar-width: 3px;" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"  [scrollWindow]="false" >
 
 
-
-      <ng-container *ngIf="posts.length==0 && urlType=== 'admin' ">
+      <ng-container *ngIf="showSpinner">
+        <div class="col-12 py-8">
+            <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="40">
+            </mat-spinner>
+        </div>
+    </ng-container>
+      <ng-container *ngIf="pLength==0 && urlType=== 'admin' ">
           <div class="mx-auto d-block mt-8">
             <img src="../../../../../assets/img/banners/adminPost.png" class="img-fluid" height="200px" width="200px" alt="">
           </div>
@@ -16,7 +21,7 @@
 
       </ng-container>
 
-      <ng-container *ngIf="posts.length==0  && urlType=== 'user' ">
+      <ng-container *ngIf="pLength==0  && urlType=== 'user' ">
         <div style="cursor: pointer;"  routerLink="/{{urlType}}/posts/create-post" class="mx-auto d-block mt-8">
           <img src="../../../../../assets/img/banners/createPost.png" class="img-fluid" height="200px" width="200px" alt="">
         </div>
@@ -26,7 +31,8 @@
         </div>
 
     </ng-container>
-      <div *ngFor="let p of posts;trackBy:trackByID" id="map-canvas" class="map-canvas post-bg">
+    <ng-container *ngIf="pLength">
+      <div *ngFor="let p of posts;trackBy:trackByID;let i=index" id="map-canvas" class="map-canvas post-bg">
         <div class="col-xl-12">
 
           <div class="card">
@@ -35,9 +41,9 @@
                 <p class="d-block text-common text-right mt-2 mr-4 mb-0 h1"><b><i
                       class="fas fa-ellipsis-v text-muted"></i></b></p>
               </a>
-              <div class="p-2 dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
+              <div style="cursor: pointer;" class="p-2 dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
                 <h4 (click)="editPost(i)" class="text-center">Edit</h4>
-                <h4 class="mb- text-center" (click)="deletePost(p.postId)">Delete</h4>
+                <h4 class="mb- text-center" (click)="delete(p.postId,p.postPhoto)">Delete</h4>
               </div>
             </li>
 
@@ -91,6 +97,8 @@
           </div>
         </div>
       </div>
+    </ng-container>
+     
     </div>
   </div>
 </div>

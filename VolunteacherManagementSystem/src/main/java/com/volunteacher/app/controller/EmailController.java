@@ -28,8 +28,8 @@ public class EmailController {
 	}
 	
 	@PostMapping("/update-password")
-	public ResponseEntity<Object> updatePassword(@RequestParam("password") String password,@RequestParam("userid") long userId)
+	public ResponseEntity<Object> updatePassword(@RequestParam("password") String password,@RequestParam("userid") long userId,@RequestParam(value = "oldpassword",required = false) String oldPassword)
 	{
-		return emailService.updatePassword(password, userId);
+		return emailService.updatePassword(password, userId,oldPassword);
 	}
 }

@@ -45,40 +45,60 @@
                                     <div class="col-12 col-sm-7 col-md-10 col-lg-6 col-xl-4">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select State</label>
-                                            <select class="form-control form-control-alternative" id="input-group" (change)= "selectedState($event)">
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':stateSelected==0&&stateTouched}" 
+                                            id="input-group" (change)= "selectedState($event)" >
+                                                <option selected value="0">Select</option>
                                                 <option class="combobox" [value]="s.stateId" [selected]="s.stateId == 7"
                                                     *ngFor="let s of states;trackBy: trackStatesById">{{s.stateName}}</option>
-                                            </select>
+                                            </select>                                            
+                                            <div class="invalid-feedback">
+                                                Please select a valid state.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-7 col-md-10 col-lg-6 col-xl-4">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select District</label>
-                                            <select class="form-control form-control-alternative" id="input-group" (change)= "selectedDistrict($event)">
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':districtSelected==0&&districtTouched}" 
+                                            id="input-group" (change)= "selectedDistrict($event)">
+                                                <option selected value="0">Select</option>
                                                 <option class="combobox" [value]="d.districtId"  [selected]="d.districtId==141&&Show"
                                                     *ngFor="let d of districts;trackBy: trackDistrictsById">{{d.districtName}}
                                                 </option>
-                                            </select>
+                                            </select>                                            
+                                            <div class="invalid-feedback">
+                                                Please select a valid District.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-7 col-md-10 col-lg-6 col-xl-4">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select Taluka</label>
-                                            <select class="form-control form-control-alternative" id="input-group" (change)= "selectedTaluka($event)">
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':talukaSelected==0&&talukaTouched}" 
+                                            id="input-group" (change)= "selectedTaluka($event)" >
+                                                <option selected value="0">Select</option>
                                                 <option class="combobox" [value]="t.talukaId" [selected]="t.talukaId==35&&Show"
                                                     *ngFor="let t of talukas;trackBy: trackTalukasById">{{t.talukaName}}
                                                 </option>
-                                            </select>
+                                            </select>                                            
+                                            <div class="invalid-feedback">
+                                                Please select a valid Taluka.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-7 col-md-10 col-lg-6 col-xl-4">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select Village</label>
-                                            <select class="form-control form-control-alternative" id="input-group" (change)= "selectedVillage($event)">
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':villageSelected==0&&villageTouched}" 
+                                            id="input-group" (change)= "selectedVillage($event)">
+                                                <option selected value="0">Select</option>
                                                 <option class="combobox" [value]="v.villageId"
                                                     *ngFor="let v of villages;trackBy: trackTalukasById">{{v.villageName}}
                                                 </option>
-                                            </select>
+                                            </select>                                           
+                                            <div class="invalid-feedback">
+                                                Please select a valid Village.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10">
@@ -168,21 +188,29 @@
                                     <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10 ">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-stream">Stream</label>
-                                            <select [(ngModel)]="school.stream" class="form-control form-control-alternative" id="input-stream"
+                                            <select required [(ngModel)]="school.stream" [ngClass]="{'ng-invalid':school.stream==0&&streamTouched}" class="form-control form-control-alternative" id="input-stream"
                                                 name="stream">
+                                                <option selected value="0">Select</option>
                                                 <option *ngFor="let s of stream" [value]='s' [selected]="s =='Primary School'">{{s}}</option>
                                             </select>
+                                            <div class="invalid-feedback">
+                                                Please select a valid Stream.
+                                            </div>                                           
                                         </div>
                                     </div>
 
                                     <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10 ">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-status">Status</label>
-                                            <select class="form-control form-control-alternative" id="input-status"
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':school.status==0&&statusTouched}" id="input-status"
                                                 name="status" [(ngModel)]="school.status" >
-                                                <option value="select" >Select</option>
+                                                <option value="0" selected>Select</option>
                                                 <option *ngFor="let s of status"  [value]="status.indexOf(s)">{{s}}</option>
                                             </select>
+                                
+                                            <div class="invalid-feedback">
+                                                Please select a valid Status.
+                                            </div>
                                         </div>
                                     </div>
 

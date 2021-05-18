@@ -34,14 +34,14 @@
                             <div class="col-lg-7">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-activity-name">Area</label>
-                                    <input type="text" id="input-village-name"
+                                    <input type="text" id="input-village-name" #name="ngModel"
                                         class="form-control form-control-alternative" required name="area" [(ngModel)]="area.areaName" >
-                                   
+                                   <small *ngIf="name.errors?.required && name.touched" class="text-danger">Area name is required</small>
                                 </div>
                             </div>
                           
                             <div class="col-12 mt-4 mb-2 ">
-                                <button type="submit" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
+                                <button  [disabled]="!form.valid" type="submit" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
                     
                                     <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
                                     <span class="btn-inner--text ">Add</span>
@@ -78,12 +78,26 @@
                             <td class="table-user">
                                 <h3>{{index+1}}</h3>
                             </td>
-                            <td>
-                               <h3>{{a.areaName}}</h3>
+                            <td class="p-0">
+                                <ng-container *ngIf="a.isEdit">
+                                    <form #form="ngForm">
+                                        <div class="col-xl-8 col-10 mt-2 pl-0 ">
+                                          <div class="form-group">
+                                            <input (keyup.enter)="saveArea(index)" autocomplete="off" class="text-lg" [(ngModel)]="area.areaName" name="area" #name="ngModel" type="text"
+                                              class="form-control border-0 m-0 "   style="border-radius: 0px;font-size: 17px;color:#32325d" required>
+                                          </div>
+                                          <small *ngIf="name.errors?.required && name.touched" class="text-danger">Area name is
+                                            required</small>
+                                        </div>
+                                      </form>
+                                </ng-container>
+                              <ng-container *ngIf="!a.isEdit">
+                                <h3>{{a.areaName}}</h3>
+                              </ng-container>
                             </td>
                             <td class="text-center">
                                 <div class="col-3 mx-auto d-block ">
-                                   <i class="fas fa-edit text-lg text-primary"></i>
+                                   <i class="icon-btn" style="cursor: pointer;" (click)="editArea(index)" class="fas fa-edit text-lg text-primary"></i>
                                 </div>
                             </td>
                           

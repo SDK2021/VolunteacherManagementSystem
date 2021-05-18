@@ -27,6 +27,8 @@ public interface CoreService {
 	
 	public ResponseEntity<Object> updateVillage(int id,Village village);
 	
+	public ResponseEntity<Object>updateArea(int areaId,Area area);
+	
 	public ResponseEntity<Object> areaList();
 	
 	public ResponseEntity<Object> areaById(int id);

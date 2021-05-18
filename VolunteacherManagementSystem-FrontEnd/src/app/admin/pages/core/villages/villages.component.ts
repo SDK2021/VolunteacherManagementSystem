@@ -43,7 +43,7 @@ export class VillagesComponent implements OnInit {
 
   search:string=''
 
-  stateSelected:number;_
+  stateSelected:number;
   districtSelected:number;
   talukaSelected:number;
  
@@ -66,13 +66,12 @@ export class VillagesComponent implements OnInit {
     this.getAllDistricts();
     this.getAllTalukas();
 
-    this.stateSelected = 0;
-    this.districtSelected = 0;
-    this.talukaSelected = 0;
  
     this.getAllVillages();
 
   }
+  
+  
   handleError(error)
   {
     console.log(error);

@@ -28,7 +28,7 @@ public interface SessionRepository extends PagingAndSortingRepository<Session, L
 	@Query(value = "select COUNT(*) from session",nativeQuery = true)
 	public int allSessions();
 	
-	@Query(value = "Select session_id from session where session_date > DATE_SUB(NOW(),INTERVAL 15 DAY)",nativeQuery = true)
+	@Query(value = "Select session_id from session where session_date > DATE_SUB(NOW(),INTERVAL 15 DAY) ORDER BY session_date DESC",nativeQuery = true)
 	public List<Long> getPreviousSessions();
 	
 	@Transactional

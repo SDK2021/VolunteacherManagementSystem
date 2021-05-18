@@ -28,6 +28,8 @@ export class EditProjectComponent implements OnInit {
   kids:Kid[] = new Array()
   selectedVolunteacher: Array<Number> = []
   selectedKids: Array<Number> = []
+  projectStartingDate:string
+  projectEndingDate:string
 
   baseUrl:string="/vms/projects"
   oldImage:string=null
@@ -42,6 +44,7 @@ export class EditProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageURL = localStorage.getItem("imageURL")
+    this.oldImage = null
    
     if(this.imageURL!=null)
     {
@@ -72,13 +75,28 @@ export class EditProjectComponent implements OnInit {
 
 
   edit() {
-      this.isEdit=true
-      this.showForm=false
+    if(this.isEdit==false)
+    {
+      this.isEdit = true
+      this.showForm = false  
+    }   
+    else 
+    {
+      this.showForm=true
+    }   
+    
   }
 
   mouseEvent()
   {
-    this.hover=!this.hover
+    if(this.isEdit)
+    {
+      this.hover=false
+    }
+    else
+    {
+      this.hover=true
+    }
   }
 
   handleError(error)
@@ -115,6 +133,17 @@ export class EditProjectComponent implements OnInit {
    
     this.projectService.getProject(id).subscribe(data => {
       this.project = data
+      this.projectStartingDate = this.project.startingDate
+      this.projectEndingDate = this.project.startingDate
+
+      for (let user of this.project.users) {
+        this.selectedVolunteacher.push(user.userId)
+      }
+
+      for (const kid of this.project.kids) {
+        this.selectedKids.push(kid.kidId)
+      }
+
       this.imageURL=this.project.photo
       console.log(this.project);
 
@@ -170,28 +199,36 @@ export class EditProjectComponent implements OnInit {
     let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
     this.project.creationTime = time
     this.project.photo = this.imageURL
-    let startdate: string = this.project.startingDate
-    let sdate: string[] = startdate.split("-")
-    let startingdate = sdate[0] + "-" + sdate[1] + "-" + sdate[2]
-    this.project.startingDate = startingdate
+    if(!(this.project.startingDate === this.projectStartingDate))
+    {
+      let startdate: string = this.project.startingDate
+      let sdate: string[] = startdate.split("-")
+      let startingdate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
+      this.project.startingDate = startingdate
+    }
 
-    let enddate: string = this.project.endingDate
-    let edate: string[] = enddate.split("-")
-    let endingdate = edate[1] + "-" + edate[2] + "-" + edate[0]
-    this.project.endingDate = endingdate
+    if(!(this.project.endingDate === this.projectEndingDate))
+    {
+      let enddate: string = this.project.endingDate
+      let edate: string[] = enddate.split("-")
+      let endingdate = edate[1] + "-" + edate[2] + "-" + edate[0]
+      this.project.endingDate = endingdate
+    }
     this.projectService.editProject(this.route.snapshot.params['id'],this.project, this.selectedVolunteacher, this.selectedKids).subscribe(data => {
       console.log(data)
       this.isProjectEdited=true
-      if(this.oldImage!=null)
-      {
-        this.fileService.delete(this.oldImage)
-        localStorage.removeItem("imageURL")
-      }
+      // console.log(this.oldImage);
+      
+      // if(this.oldImage!=null)
+      // {
+      //   this.fileService.delete(this.oldImage)
+      //   localStorage.removeItem("imageURL")
+      // }
       
       this.showProgressbar = false
       this.openEditSnackBar()
       this.router.navigate(['/admin/projects'])
-    },error=>{
+        },error=>{
       this.handleError(error)
     })
 

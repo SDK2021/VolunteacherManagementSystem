@@ -23,12 +23,16 @@
                         <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-4 mx-auto d-block">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-group">Select Group</label>
-                                <select class="form-control form-control-alternative" id="input-group" (change)="selectedGroup($event)">
-                                   
+                                <select class="form-control form-control-alternative"
+                                [ngClass]="{'ng-invalid': groupId == 0 && groupTouched}" 
+                                id="input-group" (change)="selectedGroup($event)" (blur)="touched()">
+                                   <option value="0" selected>Select</option>
                                     <option class="combobox" [value]="g.groupId" *ngFor="let g of groups;trackBy: trackGroupsById" >{{g.groupName}}
-                                    </option>
-                                </select>
-                            </div>
+                                    </option>                                    
+                                </select>                                
+                            </div>   
+                            <small *ngIf="groupId==0&&groupTouched" class="text-danger">Group is
+                                required</small>                       
                         </div>
                         <ng-container *ngIf="showSpinner">
                             <div class="col-12 my-8 ">
@@ -40,7 +44,7 @@
                         <ng-container *ngIf="noKids">
                             <div class="col-12 col-xl-10 mx-auto d-block my-xl-6 my-4 py-xl-7 py-6">
                                 <p class="text-center text-xl"><i class="fas fa-child"></i></p>
-                                <p class="text-xl text-center text-lg"><b>No kids have attended of this group.</b></p>
+                                <p class="text-xl text-center text-lg"><b>N kids have attended of this group.</b></p>
                             </div>
                         </ng-container>
                        <ng-container *ngIf='kLength'>

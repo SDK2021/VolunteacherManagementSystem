@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
@@ -29,6 +30,7 @@ export class AttendanceComponent implements OnInit {
   showSpinner:boolean=false
   noUsers:boolean=false
   noKids:boolean=false
+  groupTouched:boolean = false
   uLength:number
   kLength:number
  
@@ -41,6 +43,8 @@ export class AttendanceComponent implements OnInit {
   ngOnInit(): void {
     this.getUsersBySession(this.route.snapshot.params['id'])
     this.getkidsgroup()
+    this.groupId = 0
+    this.groupTouched = false
     //this.getAllKidsByGroup(1,this.route.snapshot.params['id'])
   }
 
@@ -99,15 +103,26 @@ export class AttendanceComponent implements OnInit {
       })
   }
 
-  selectedGroup(event)
+  touched()
   {
+    console.log("Touched");
+
+    this.groupTouched = true
+    console.log(this.groupTouched);
+    
+  }
+
+  selectedGroup(event)
+  {    
     this.groupId = event.target.value;
+    if(this.groupId==0)
+      this.groupTouched = true
     console.log(this.groupId);
     this.noKids=false
     this.kLength=0
  //   this.getKidsAttendance(this.groupId,this.route.snapshot.params['id'])
-    
-    this.getAllKidsByGroup(0,this.session.village.villageId,this.groupId)
+   if(this.groupId > 0) 
+      this.getAllKidsByGroup(0,this.session.village.villageId,this.groupId)
   }
 
   getSession()

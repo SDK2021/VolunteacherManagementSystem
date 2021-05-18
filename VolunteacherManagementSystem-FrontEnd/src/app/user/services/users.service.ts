@@ -31,7 +31,7 @@ export class UsersService {
   getUserByEmail(email:string):Observable<User>
   {
     console.log(email);
-    return this._httpclient.get<User>(`${"http://localhost:9090/vms/email-users?email="}${email}`).pipe(take(1))
+    return this._httpclient.get<User>(`${"http://localhost:9090/vms/email?email="}${email}`).pipe(take(1))
   }
 
   
@@ -62,8 +62,11 @@ export class UsersService {
     return this._httpclient.post<boolean>(`${"http://localhost:9090/vms/verify-otp?otp="}${otp}${"&userid="}${userId}`,null)
   }
 
-  updatePassword(password:string,userId:number)
+  updatePassword(password:string,userId:number,oldPassword?:string)
   {
+    if(oldPassword !=null)
+      return this._httpclient.post<boolean>(`${"http://localhost:9090/vms/update-password?password="}${password}${"&userid="}${userId}${"&oldpassword="}${oldPassword}`,null)
+    else  
     return this._httpclient.post<boolean>(`${"http://localhost:9090/vms/update-password?password="}${password}${"&userid="}${userId}`,null)
   }
   getAllUserType():Observable<Usertype[]>

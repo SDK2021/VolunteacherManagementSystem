@@ -32,9 +32,9 @@ export class TimeLineComponent implements OnInit {
     this.userType=this.getUserType()
   }
 
-  hello()
+  navigate()
   {
-    alert("hello")
+    this.router.navigate(['/user/posts/create-post'])
   }
   handleError(error)
   {

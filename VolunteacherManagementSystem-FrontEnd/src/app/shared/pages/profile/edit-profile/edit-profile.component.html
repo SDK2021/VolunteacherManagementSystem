@@ -79,6 +79,7 @@
             <div class="form-group">
               <label class="form-control-label" for="input-village">Village</label>
               <select  formControlName="village" class="form-control form-control-alternative" id="input-village">
+                <option selected value="0">Select</option>
                 <option [value]="v.villageId" *ngFor="let v of villages">{{v.villageName}}</option>
               </select>
               <small class="text-danger" *ngIf="(editProfile.get('contactInfo.village').errors?.required && editProfile.get('contactInfo.village').touched)">Village is required </small>

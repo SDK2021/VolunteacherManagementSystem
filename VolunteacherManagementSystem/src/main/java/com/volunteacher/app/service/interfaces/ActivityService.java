@@ -15,4 +15,6 @@ public interface ActivityService
 	public ResponseEntity<Object> deleteActivity(int id);
 	
 	public ResponseEntity<Object> allActivitiesList();
+	
+	public ResponseEntity<Object> getActivityById(int id);
 }

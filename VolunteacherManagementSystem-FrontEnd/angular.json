@@ -36,7 +36,9 @@
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/clipboard/dist/clipboard.min.js"
+              "node_modules/clipboard/dist/clipboard.min.js",
+              "node_modules/pdfmake/build/pdfmake.min.js",
+              "node_modules/pdfmake/build/vfs_fonts.js"
             ]
           },
           "configurations": {

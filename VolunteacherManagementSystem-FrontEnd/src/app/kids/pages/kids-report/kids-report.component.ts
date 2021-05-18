@@ -40,10 +40,12 @@ export class KidsReportComponent implements OnInit {
     }
   }
   
-  getKidReportById(id: number) {
+  getKidReportByKid(id: number) {
     this.showSpinner=true
-    this.kidsService.kidReportById(id).subscribe(data=>{
+    this.kidsService.getLatestKidReport(id).subscribe(data=>{
       this.kidReport = data
+      console.log(data);
+      
       this.showSpinner=false
       this.kidReport.kid=this.calculateAge(this.kidReport.kid)
       console.log(this.kidReport);
@@ -58,7 +60,7 @@ export class KidsReportComponent implements OnInit {
     this.kidReport.kid=new Kid()
     this.kidReport.kid.area=new Area()
 
-    alert(this.route.snapshot.params['rid'])
+   this.getKidReportByKid(this.route.snapshot.params['id'])
     
     //this.getKidReportById(this.route.snapshot.params['id'])
 

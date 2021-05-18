@@ -152,6 +152,12 @@ public class KidsController {
 		return kidReportService.kidReportByKid(id);
 	}
 	
+	@GetMapping("/latest-kid-report")
+	public ResponseEntity<Object> getLatestKidReport(@RequestParam("kid") int kidId)
+	{
+		return kidReportService.getLatestKidReport(kidId);
+	}
+	
 	@GetMapping("kid-reports")
 	public ResponseEntity<Object> kidsReportByYear(@RequestParam("kid") Long kid,@RequestParam("year") int year)
 	{

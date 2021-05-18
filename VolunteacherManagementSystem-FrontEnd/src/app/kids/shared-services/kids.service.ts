@@ -131,4 +131,11 @@ export class KidsService {
   {
     return this._httpclient.put<KidsGroup>(`${"http://localhost:9090/vms/kids-groups/"}${groupId}`,KidsGroup)
   }
+
+  getLatestKidReport(id:number):Observable<Kidsreport>
+  {
+    return this._httpclient.get<Kidsreport>(`${"http://localhost:9090/vms/latest-kid-report?kid="}${id}`);
+  }
+
+
 }

@@ -19,4 +19,6 @@ public interface KidsReportService {
 	public ResponseEntity<Object> deleteKidReport(int id);
 	
 	public ResponseEntity<Object> kidReportByYear(Long kid,int year);
+	
+	public ResponseEntity<Object> getLatestKidReport(long kidId);
 }

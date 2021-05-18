@@ -41,8 +41,9 @@
                                     <div class="col-12 col-sm-7 col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select Country</label>
-                                            <select class="form-control form-control-alternative" id="input-group"
+                                            <select class="form-control form-control-alternative"  disabled  id="input-group"
                                                 (change)="selectedCountry($event)">
+                                                <option selected value="0">Select</option>
                                                 <option class="combobox" [value]="c.countryId" disabled
                                                     *ngFor="let c of countries;trackBy: trackCountriesById"
                                                     [selected]="c.countryId == 8">{{c.countryName}}
@@ -54,18 +55,20 @@
                                     <div class="col-12 col-sm-7 col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select State</label>
-                                            <select class="form-control form-control-alternative" id="input-group"
+                                            <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':stateSelected==0}" id="input-group"
                                                 (change)="selectedState($event)">
+                                                <option selected value="0">Select</option>
                                                 <option class="combobox" [value]="s.stateId"
                                                     *ngFor="let s of states;trackBy: trackStatesById"
                                                     [selected]="s.stateId==7">{{s.stateName}}</option>
                                             </select>
+                                            <small *ngIf = "stateSelected==0" class="text-danger">State is required</small>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-7 col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select District</label>
-                                            <select class="form-control form-control-alternative" id="input-group"
+                                            <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':districtSelected==0}" id="input-group"
                                                 (change)="selectedDistrict($event)">
                                                 <option class="combobox" value="0" selected>Select</option>
                                                 <option class="combobox" [value]="d.districtId"
@@ -73,12 +76,13 @@
                                                     [selected]="d.districtId==141&&Show">{{d.districtName}}
                                                 </option>
                                             </select>
+                                            <small *ngIf = "districtSelected==0" class="text-danger">District is required</small>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-7 col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select Taluka</label>
-                                            <select class="form-control form-control-alternative" id="input-group"
+                                            <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':talukaSelected==0}" id="input-group"
                                                 (change)="selectedTaluka($event)">
                                                 <option class="combobox" value="0" selected>Select</option>
                                                 <option class="combobox" [value]="t.talukaId"
@@ -86,12 +90,13 @@
                                                     [selected]="t.talukaId==35&&Show">{{t.talukaName}}
                                                 </option>
                                             </select>
-                                        </div>
+                                            <small *ngIf = "talukaSelected==0" class="text-danger">Taluka is required</small>
+                                        </div>                                    
                                     </div>
                                     <div class="col-12 col-sm-7 col-md-6 ">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select Village</label>
-                                            <select class="form-control form-control-alternative" id="input-group"
+                                            <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':villageSelected==0}" id="input-group"
                                                 (change)="selectedVillage($event)">
                                                 <option class="combobox" value="0" selected>Select</option>
                                                 <option class="combobox" [selected]="event.village.villageId == v.villageId" [value]="v.villageId"
@@ -99,15 +104,18 @@
                                                     {{v.villageName}}
                                                 </option>
                                             </select>
+                                            <small *ngIf = "villageSelected==0" class="text-danger">Village is required</small>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-7 col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select Project</label>
-                                            <select class="form-control form-control-alternative" id="input-group" (change)="selectedProject($event)">
+                                            <select class="form-control form-control-alternative" id="input-group" [ngClass]="{'ng-invalid':projectSelected==0}" (change)="selectedProject($event)">
+                                                <option selected value="0">Select</option>
                                                 <option class="combobox" [selected] = "event.project.projectId == p.projectId" [value]="p.projectId" *ngFor="let p of projects">{{p.projectName}}
                                                 </option>
                                             </select>
+                                            <small *ngIf = "projectSelected==0" class="text-danger">Project is required</small>
                                         </div>
                                     </div>
 
@@ -175,6 +183,7 @@
                                             <label class="form-control-label" for="input-stream">Activities</label>
                                             <select class="form-control form-control-alternative" id="input-stream"
                                                 name="stream" multiple [(ngModel)]="selectedActivities">
+                                                <option selected value="0">Select</option>
                                                 <option *ngFor="let a of activities" [value]="a.activityId">{{a.activityName}}</option>
                                             </select>
                                         </div>

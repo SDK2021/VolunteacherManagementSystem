@@ -103,7 +103,7 @@ public class UserController {
 		return userService.updateUser(user, id);
 	}
 	
-	@GetMapping("/email-users")
+	@GetMapping("/email")
 	public ResponseEntity<Object> getUserByEmail(@RequestParam("email") String email)
 	{
 		return userService.userByEmail(email);

@@ -6,6 +6,7 @@
                 <div class="form-group">
                     <label class="form-control-label" for="input-group">Select Country</label>
                     <select class="form-control form-control-alternative" id="input-group" (change)="selectedCountry($event)">
+                        <option selected value="0">Select</option>
                         <option class="combobox" [value]="c.countryId" disabled *ngFor="let c of countries;trackBy: trackCountriesById" [selected] = "c.countryId == 8">{{c.countryName}}
                         </option>
                     </select>
@@ -16,6 +17,7 @@
                 <div class="form-group">
                     <label class="form-control-label" for="input-group" >Select State</label>
                     <select class="form-control form-control-alternative" id="input-group"  (change)="selectedState($event)">
+                        <option selected value="0">Select</option>
                         <option class="combobox" [value]="s.stateId" *ngFor="let s of states;trackBy: trackStatesById" [selected]="s.stateId==7" >{{s.stateName}}</option>
                     </select>
                 </div>

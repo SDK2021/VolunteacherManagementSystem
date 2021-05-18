@@ -27,7 +27,7 @@
                             <label class="form-control-label" for="input-status">Year</label>
                             <select (change)="selectedYear($event)" class=" form-control  form-control-alternative" id="input-year"
                                 name="status" >
-                                
+                                <option selected value="0">Select</option>
                                 <option *ngFor="let y of years" [selected] = "year == y" [value]="y">{{y}}</option>
                             </select>
                         </div>

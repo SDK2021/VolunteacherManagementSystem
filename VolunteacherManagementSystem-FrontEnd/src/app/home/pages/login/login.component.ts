@@ -24,7 +24,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   successMessage:string = "Login Successfully"
   invalidLogin:boolean = false;
   successLogin:boolean = false;
-
+  handleError(error)
+  {
+    console.log(error);
+    console.log(error.status);
+    
+    if(error.status===500)
+    {
+      this.router.navigate(['internal-server-error'])
+    }
+   
+  }
   loginAuth(value)
   {
     this.authService.loginAuthentication(value.username,value.password).subscribe(
@@ -56,6 +66,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       console.log(error);
        this.invalidLogin = true;
        this.successLogin = false;
+       this.handleError(error)
       },
     );
     console.log(value);

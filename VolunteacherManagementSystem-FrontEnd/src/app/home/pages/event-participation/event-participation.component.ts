@@ -16,6 +16,8 @@ import { authentication } from '../../shared-services/authentication.service';
 export class EventParticipationComponent implements OnInit {
   eventParticipant:Participant=new Participant();
   event:Event;
+  showProgressbar:boolean=false
+  showForm:boolean=true
   constructor(private router:Router,private route:ActivatedRoute, private eventService:EventsService, private userService:UsersService,private authService:authentication) { }
 
   ngOnInit(): void {
@@ -49,6 +51,7 @@ export class EventParticipationComponent implements OnInit {
 
   onSubmit()
   {
+    this.showProgressbar=true
     let dob:string = this.eventParticipant.dob
     let pdob:string[] = dob.split("-")
     this.eventParticipant.dob = pdob[1] +"-" + pdob[2] + "-" + pdob[0]
@@ -57,6 +60,8 @@ export class EventParticipationComponent implements OnInit {
     this.eventService.getEventById(eventid).pipe(finalize(()=>{
           this.eventService.addParticipant(this.eventParticipant).subscribe(data=>{
             console.log(data)
+            this.showProgressbar=false
+            this.showForm=false
           },error=>{
             this.handleError(error)
           })

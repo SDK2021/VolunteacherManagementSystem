@@ -12,6 +12,7 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(private userService:UsersService,private router:Router) { }
 
   invalidEmail:boolean = false
+  showSpinner:boolean=false
 
   ngOnInit(): void {
     this.invalidEmail = false
@@ -19,9 +20,11 @@ export class ForgotPasswordComponent implements OnInit {
 
   sendOTP(val)
   {
+    this.showSpinner=true
     console.log(val.username);
     this.userService.sendOTP(val.username).subscribe(data=>{
       console.log(data)
+      this.showSpinner=false
       this.router.navigate(['forgot-password/send-otp'])
       this.invalidEmail = false
       localStorage.setItem("username",data.userId.toString() + " " + val.username);
@@ -32,6 +35,13 @@ export class ForgotPasswordComponent implements OnInit {
       {
         this.invalidEmail = true
         this.router.navigate(['forgot-password'])
+      }
+      else if(error.status==500){
+        this.router.navigate(['/internal-server-error'])
+      }
+      else
+      {
+        this.router.navigate(['/error-page'])
       }
      
     })

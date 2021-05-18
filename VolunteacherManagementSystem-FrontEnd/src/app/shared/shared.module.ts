@@ -12,6 +12,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [CreatePostComponent, AddressComponent, TimeLineComponent,],
@@ -25,7 +26,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatProgressBarModule,
     InfiniteScrollModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RouterModule
   ],
   exports:[
     AddressComponent

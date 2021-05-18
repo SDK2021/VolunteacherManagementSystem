@@ -11,8 +11,10 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { finalize } from 'rxjs/operators';
 import { Usertype } from 'src/app/core/model/usertype';
+import { MatDialog } from '@angular/material/dialog';
+import { FileUploadService } from 'src/app/core/services/file-upload.service';
+import { DialogBoxComponent } from 'src/app/admin/components/dialog-box/dialog-box.component';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -31,8 +33,8 @@ export class PostsComponent implements OnInit {
   totalPostsPages:number
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-
-  constructor(private _snackBar: MatSnackBar,private postService:TimeLineService,private route:ActivatedRoute,private router:Router,private authService: authentication, private userService: UsersService, private profileService: ProfileService) { }
+  showSpinner:boolean=false
+  constructor(private dialog:MatDialog,private fileService:FileUploadService,private _snackBar: MatSnackBar,private postService:TimeLineService,private route:ActivatedRoute,private router:Router,private authService: authentication, private userService: UsersService, private profileService: ProfileService) { }
 
   ngOnInit(): void {
 
@@ -67,8 +69,9 @@ export class PostsComponent implements OnInit {
       this.router.navigate(['error-page'])
     }
   }
-  
+  pLength:number
   getposts(page:number) {
+    this.showSpinner=true
     let username: string;
     let authuser: string[];
     let userId: number;
@@ -84,6 +87,12 @@ export class PostsComponent implements OnInit {
       this.profileService.getAllPostByUser(page,userId).subscribe(data => {
         this.posts = data['content']
         this.getPosts(data)
+        this.showSpinner=false
+        if (data != null) {
+          this.pLength = data['content'].length
+          
+        }
+       
         console.log(this.posts);
       },error=>{
         this.handleError(error)
@@ -151,10 +160,11 @@ export class PostsComponent implements OnInit {
   {
       this.tempPost=posts;
   }
-  deletePost(id)
+  deletePost(id:number,image:string)
   {
     this.postService.deleteTimelinePost(id).subscribe(data =>{
       console.log(data)
+      this.fileService.delete(image)
     this.openDeleteSnackBar()
     this.getposts(this.page)
 
@@ -162,6 +172,17 @@ export class PostsComponent implements OnInit {
       this.handleError(error)
     })
 
+  }
+
+  delete(id:number,image:string)
+  {
+    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
+       console.log(data.delete)
+      if(data.delete)
+      { 
+        this.deletePost(id,image)
+      }
+    })
   }
 
   openDeleteSnackBar() {

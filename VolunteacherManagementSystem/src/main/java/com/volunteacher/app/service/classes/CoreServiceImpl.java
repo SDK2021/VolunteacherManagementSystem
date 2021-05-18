@@ -219,6 +219,20 @@ public class CoreServiceImpl implements CoreService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on updating Village");
 		}
 	}
+	
+	@Override
+	public ResponseEntity<Object>updateArea(int areaId,Area area) 
+	{
+		try {
+			Area updateArea = areaRepository.findById(areaId).orElseThrow(()-> new ResourceNotFoundException("Area not found"));
+			updateArea.setAreaName(area.getAreaName());		
+			areaRepository.save(updateArea);
+			return ResponseEntity.status(HttpStatus.CREATED).body(updateArea);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on updating Area");
+		}
+	}
 
 	@Override
 	public ResponseEntity<Object> areaList() {

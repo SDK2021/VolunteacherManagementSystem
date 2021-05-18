@@ -152,6 +152,12 @@ public class CoreController {
 			return coreService.updateVillage(id, village);
 		}
 		
+		@PutMapping("areas/{id}")
+		public ResponseEntity<Object> updateArea(@PathVariable int id,@RequestBody Area area)
+		{
+			return coreService.updateArea(id, area);
+		}
+		
 		@DeleteMapping("areas/{id}")
 		public ResponseEntity<Object> deletearea(@PathVariable int id)
 		{

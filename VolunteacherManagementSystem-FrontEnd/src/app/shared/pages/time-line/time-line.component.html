@@ -15,14 +15,13 @@
         </div>
         <div class="map-canvas post-bg justify-content-center">
           <div class="row justify-content-center px-xl-4 py-4">
-            <div class="col-12 ">
-              <div class="container card p-4 shadow-dark ">
-                <p class="text-center text-lg text-dark"><b>Share your activities with our family </b></p>
-                <div class="mx-auto d-block col-auto bp2">
-    
-                  <a routerLink="/user/posts/create-post" class="btn btn-primary btn-sm" >View Report</a>
-
-              </div>
+            <div class="col-12 col-xl-10"> 
+              <div class="col-xl-9 col-12 mb-4 mx-auto d-block">
+                <div class="container card p-4 shadow-dark ">
+                  <p class="text-center text-lg text-dark"><b>Share your activities with our family </b></p>
+                  <div class="text-center"><a routerLink="/user/posts/create-post" class="btn bg-default m-2"
+                      style="color:white;">Create Post</a></div>
+                </div>
               </div>
             </div>
           </div>
@@ -44,11 +43,11 @@
               <div class="card">
                 <div class="card-header d-flex align-items-center">
                   <div class="d-flex align-items-center">
-                    <a href="#">
+                   
                       <img src="{{p.createdBy.photo}}" class="avatar">
-                    </a>
+                   
                     <div class="mx-3">
-                      <a href="#" class="text-dark font-weight-600 text-sm">{{p.createdBy.userName}}</a>
+                     <h4> {{p.createdBy.userName}}</h4>
                       <small class="d-block text-common">{{p.creationDate | date : mediumDate }}</small>
                     </div>
                   </div>

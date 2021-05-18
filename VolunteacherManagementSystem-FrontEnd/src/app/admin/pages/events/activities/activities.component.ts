@@ -27,6 +27,7 @@ export class ActivitiesComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
+  isEdit:boolean=false
   activity: Activity=new Activity()
   constructor(private router:Router,private dialog:MatDialog, private _snackBar: MatSnackBar, private eventService:EventsService) { 
   }
@@ -77,6 +78,14 @@ export class ActivitiesComponent implements OnInit {
     });
   }
 
+  openEditSnackBar() {
+    this._snackBar.open('Edited successfully..', 'close', {
+      duration: 2000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
+  }
+
   onSubmit()
   {
     console.log(this.activity);
@@ -100,6 +109,7 @@ export class ActivitiesComponent implements OnInit {
     this.eventService.addActivity(this.activity).subscribe(data=>{
       console.log(data)
       this.openAddedSnackBar()
+      this.show()
       form.reset()
       setTimeout(()=>{
         this.getAllActivities(this.page)
@@ -138,6 +148,22 @@ export class ActivitiesComponent implements OnInit {
       { 
         this.deleteActivity(id)
       }
+    })
+  }
+
+  edit(id:number)
+  {
+    this.isEdit=true
+    this.eventService.getActivityById(id).subscribe(data=>{
+      this.activity=data
+      console.log(data)
+    })
+  }
+
+  saveActivity()
+  {
+    this.eventService.updateActivity(this.activity.activityId,this.activity).subscribe(data=>{
+      console.log(data);
     })
   }
 }

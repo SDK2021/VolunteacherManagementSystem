@@ -3,11 +3,13 @@ package com.volunteacher.app.service.classes;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.validator.internal.metadata.aggregated.rule.ReturnValueMayOnlyBeMarkedOnceAsCascadedPerHierarchyLine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.accept.AbstractMappingContentNegotiationStrategy;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.Kid;
@@ -107,14 +109,15 @@ public class ProjectServiceImpl implements ProjectService{
 	{
 		try {
 			Project updateProject = projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project is not found for id: "+id));
-			
 			updateProject.setProjectName(project.getProjectName());
 			updateProject.setProjectData(project.getProjectData());
 			updateProject.setStartingDate(project.getStartingDate());
 			updateProject.setCreationDate(project.getCreationDate());
 			updateProject.setCreationTime(project.getCreationTime());
-			updateProject.setUsers(this.createVolunteachersList(vIds));
-			updateProject.setKids(this.createKidsList(kIds));
+			if(vIds.length > 0)
+				updateProject.setUsers(this.createVolunteachersList(vIds));
+			if(kIds.length > 0)
+				updateProject.setKids(this.createKidsList(kIds));
 			updateProject.setEndingDate(project.getCreationDate());
 			updateProject.setDescription(project.getDescription());
 			updateProject.setPhoto(project.getPhoto());
