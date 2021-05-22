@@ -1,0 +1,293 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary ">
+    <div class="container-fluid mb-0">
+
+    </div>
+
+</div>
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
+<div class=" row justify-content-center mx-0 mt-0 py-4"style=" background-color: #dde3f3cc;">
+    <div class="col-12 col-xl-10 p-0">
+        <div class="card shadow p-4">
+            <!-- Card header -->
+            <div class="card-header border-0">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mb-0 text-center">Events</h1>
+                        <hr>
+                    </div>
+                    <div class="col-12">
+                        <app-tabs (showTab_1)="showTab1($event)" (showTab_2)="showTab2($event)"></app-tabs>
+
+                    </div>
+
+                    <ng-container *ngIf="tab1">
+                        <div class="container">
+                            <app-upload-img  [baseUrl]="baseUrl" [isPost]="true" (show)="show($event)"></app-upload-img>
+                          </div>
+                      <ng-container *ngIf="showForm">
+                        <div class="col-12 justify-content-center">
+                            <form class="mt-5" (ngSubmit)="addEvent(form)" #form="ngForm">
+                                <div class="mx-auto d-block col-xl-5 col-lg-7 col-10 my-3 ">
+                                    
+                                   
+                                        <div class="container-img" >
+                                            <img src="{{imageURL}}"  style="width:100%;" >
+                                        </div>
+                            
+                                  </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Country</label>
+                                            <select class="form-control form-control-alternative" id="input-group" disabled
+                                                (change)="selectedCountry($event)">
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="c.countryId" disabled
+                                                    *ngFor="let c of countries;trackBy: trackCountriesById"
+                                                    [selected]="c.countryId == 8">{{c.countryName}}
+                                                </option>
+                                            </select>
+                                            <!-- <input type="text" value="India" disabled class="form-control"> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select State</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':stateSelected==0}" id="input-group"
+                                                (change)="selectedState($event)">
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="s.stateId"
+                                                    *ngFor="let s of states;trackBy: trackStatesById"
+                                                    [selected]="s.stateId==7">{{s.stateName}}</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a valid state.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select District</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':districtSelected==0}" id="input-group"
+                                                (change)="selectedDistrict($event)">
+                                                <option class="combobox" value="0" selected>Select</option>
+                                                <option class="combobox" [value]="d.districtId"
+                                                    *ngFor="let d of districts;trackBy: trackDistrictsById"
+                                                    [selected]="d.districtId==141&&Show">{{d.districtName}}
+                                                </option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a valid District.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Taluka</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':talukaSelected==0}" id="input-group"
+                                                (change)="selectedTaluka($event)">
+                                                <option class="combobox" value="0" selected>Select</option>
+                                                <option class="combobox" [value]="t.talukaId"
+                                                    *ngFor="let t of talukas;trackBy: trackTalukasById"
+                                                    [selected]="t.talukaId==35&&Show">{{t.talukaName}}
+                                                </option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a valid Taluka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6 ">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Village</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':villageSelected==0}" id="input-group"
+                                                (change)="selectedVillage($event)">
+                                                <option class="combobox" value="0" selected>Select</option>
+                                                <option class="combobox" [value]="v.villageId"
+                                                    *ngFor="let v of villages;trackBy: trackVillagesById">
+                                                    {{v.villageName}}
+                                                </option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a valid Village.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Project</label>
+                                            <select required class="form-control form-control-alternative" id="input-group" [ngClass]="{'ng-invalid':projectSelected==0}" (change)="selectedProject($event)">
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="p.projectId" *ngFor="let p of projects">{{p.projectName}}
+                                                </option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a valid Project.
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-name">Event Title</label>
+                                            <input type="text" id="input-name"
+                                                class="form-control form-control-alternative" placeholder="Event Title"
+                                                name="name" #name="ngModel"  [(ngModel)]="event.title" required maxlength="50">
+                                                <small *ngIf="!name.valid && name.touched" class="text-danger">Title is
+                                                    required</small>
+                                        </div>
+                                    </div>
+
+                                    
+                                    
+
+                                    <div class="col-12 col-sm-7 col-md-6 ">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-eventdate">Event
+                                                Date</label>
+                                            <input type="text" id="input-eventdate"
+                                                class="form-control form-control-alternative"  placeholder="Event Date"
+                                                name="eventdate" #date="ngModel" [(ngModel)]="event.eventDate" required onfocus="(this.type='date')">
+                                                <small *ngIf="!date.valid && date.touched" class="text-danger" >Date is
+                                                    required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-eventtime">Event Starting
+                                                Time</label>
+                                            <input type="time" id="input-eventtime"
+                                                class="form-control form-control-alternative" placeholder="Event Time"
+                                                name="eventStartingTime" #startingTime="ngModel"  [(ngModel)]="event.eventStartingTime" required>
+                                                <small *ngIf="!startingTime.valid && startingTime.touched" class="text-danger">Starting time is
+                                                    required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-eventtime">Event Ending
+                                                Time</label>
+                                            <input type="time" id="input-eventtime"
+                                                class="form-control form-control-alternative" placeholder="Event Time"
+                                                name="eventEndingTime" #endingTime="ngModel"  [(ngModel)]="event.eventEndingTime" required>
+                                                <small *ngIf="!endingTime.valid && endingTime.touched" class="text-danger">Ending time is
+                                                    required</small>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group  col-12 col-sm-11 col-md-12">
+                                        <label class="form-control-label">Event Data</label>
+                                        <textarea rows="4" class="form-control form-control-alternative" #data="ngModel" name="data" [(ngModel)]="event.eventData" required ></textarea>
+                                        <small *ngIf="!data.valid && data.touched" class="text-danger">Data are
+                                            required</small>
+                                    </div>
+
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-stream">Activities</label>
+                                            <select class="form-control form-control-alternative" id="input-stream"
+                                                name="stream" multiple [(ngModel)]="selectedActivities">                                                
+                                                <option *ngFor="let a of activities" [value]="a.activityId">{{a.activityName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                   
+                                        <div class="col-12 mt-4 mb-2 ">
+                                            <button type="submit" [disabled]="!form.valid" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
+                                                <span class="btn-inner--text ">Submit</span>
+                                            </button>
+                                        </div>
+                                    
+    
+                                    
+                                </div>
+
+                            </form>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+            <!-- Light table -->
+            <ng-container *ngIf="tab2" >
+                <h4 class="pl-4 mb-4 ">
+                    <span class="text-dark py-2 px-3" style="border-radius: 20px;background-color: bisque;">
+                        {{month}},{{year}}</span>
+                </h4>
+                <ng-container *ngIf="showSpinner">
+                    <div class="col-12">
+                        <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="40">
+                        </mat-spinner>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="noEvents">
+                    <div class="col-12 col-xl-10 mx-auto d-block my-xl-5 my-6 py-xl-7 py-6">
+                        <p class="text-center text-xl"><i class="fas fa-calendar"></i></p>
+                        <p class="text-xl text-center text-lg"><b>No events this month.</b></p>
+                    </div>
+                </ng-container>
+               <ng-container *ngIf="eLength">
+                <div class="row justify-content-center p-lg-4"  infiniteScroll [infiniteScrollDistance]="0" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" >
+                    <div *ngFor="let e of events" class="col-12 col-xl-6 col-lg-8 col-md-9 col-sm-9 mb-4">
+                        <div class="card card-profile " style=" box-shadow: 2px 2px 50px rgba(163, 160, 160, 0.2);">
+                            <li class="nav-item" ngbDropdown placement="bottom-right">
+                                <a class="nav-link pr-0" role="button" ngbDropdownToggle>
+                                    <p class="d-block text-common text-right mt-2 mr-4 mb-0 h1"><b><i
+                                                class="fas fa-ellipsis-v text-muted text-sm"></i></b></p>
+                                </a>
+                                <div class="p-2 dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
+                                    <h4 style="cursor: pointer;" class="text-center"  routerLink="/admin/events/{{e.eventId}}/edit">Edit</h4>
+                                    <h4 style="cursor: pointer;" (click)=" delete(e.eventId,e.photo)" class="mb- text-center">Delete</h4>
+                                </div>
+                            </li>
+                            <div class="container-img">
+                                <img src="{{e.photo}}" alt="Snow"
+                                    style="width:100%; filter: brightness(50%);">
+
+                                <div class="centered text-lg"><b>{{e.title}}</b> <br>
+                                    <a routerLink="/admin/events/{{e.eventId}}/event-details"><button  class="btn bg-gradient-danger text-white p-2 mt-3">View Details</button></a>
+                                </div>
+                            </div>
+                            <!-- <img src="../../../../../assets/img/home/mnmr.jpg" alt="Image placeholder" class="card-img-top"> -->
+                            <div class="card-body pb-0 pt-4">
+                                <div class="text-center">
+                                    <h4>This event will be on {{e.eventDate |  date:"mediumDate"}} at {{e.village.villageName}} on {{e.eventStartingTime}}</h4>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mb-2">
+
+                                <div class="text-center m-2">
+                                    <button class="btn btn-primary btn-sm mt-2 p-2" [disabled] = "e.notified == 1" value="1" (click)="notifyEvent(e.eventId,$event)">Notify All</button>
+                                </div>
+                                <div class="text-center m-2">
+                                    <button class="btn btn-primary btn-sm mt-2 p-2"  [disabled] = "e.notified == 1"  value="2"  (click)="notifyEvent(e.eventId,$event)">Notify LVT</button>
+                                </div>
+                                <div class="text-center m-2">
+                                    <button class="btn btn-primary btn-sm mt-2 p-2"   [disabled] = "e.notified == 1" value="3" (click)="notifyEvent(e.eventId,$event)">Notify
+                                        VolunTeacher</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+               </ng-container>
+                <div class="text-center m-2">
+                    <a routerLink="/admin/events/all" style="background-color: rgba(231, 121, 194, 0.26);"
+                        class="btn  text-dark border-0">View All</a>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+</div>

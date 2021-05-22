@@ -62,7 +62,7 @@ export class AddKidsComponent implements OnInit {
   districtSelected:number;
   talukaSelected:number;
   villageSelected:number;
-  areaSelecetd:number;
+  areaSelected:number;
   groupSelected:number;
 
   kid:Kid=new Kid();
@@ -91,11 +91,11 @@ export class AddKidsComponent implements OnInit {
     this.getAllTalukas();
     this.getAllVillages();
 
-    this.stateSelected = 0;
-    this.districtSelected = 0;
-    this.talukaSelected = 0;
+    this.stateSelected = 7;
+    this.districtSelected = 141;
+    this.talukaSelected = 35;
     this.villageSelected = 0;
-    this.areaSelecetd = 0;
+    this.areaSelected = 0;
     this.groupSelected = 0;
     
 
@@ -161,38 +161,43 @@ export class AddKidsComponent implements OnInit {
     
   }
   
-  addKid()
+  addKid(form)
   {
-    this.showProgressbar=true
-    console.log(this.kid);
-    let photoUrl = this.imageURL
-    this.kid.photo = photoUrl;
-    let dob:String = this.kid.dob
-    let dobdate:String[] = dob.split("-")
-    let dateofbirth = dobdate[1] + "-" +  dobdate[2] + "-" + dobdate[0]
-    this.kid.dob = dateofbirth
-    console.log(this.kid.dob);
-    this.kidsService.getAreaById(this.areaSelecetd).subscribe(areadata=>{
-      console.log(areadata)
-      this.kid.area = areadata
-      this.kidsService.kidGroupById(this.groupSelected).pipe(finalize(()=>{
-        this.kidsService.villageById(areadata.village.villageId).pipe(finalize(()=>{
-          this.kidsService.addKid(this.kid).subscribe(data=>{
-            console.log(data)
-            this.isKidAdded=true
-            this.showProgressbar=false
-            localStorage.removeItem("imageURL")
-            this.openSnackBar();
-          },error=>{
-            this.handleError(error)
+    if(this.areaSelected > 0)
+    { 
+      this.kid.level = form.level
+      this.kid.standard = form.standard
+      this.showProgressbar=true
+      console.log(this.kid);
+      let photoUrl = this.imageURL
+      this.kid.photo = photoUrl;
+      let dob:String = this.kid.dob
+      let dobdate:String[] = dob.split("-")
+      let dateofbirth = dobdate[1] + "-" +  dobdate[2] + "-" + dobdate[0]
+      this.kid.dob = dateofbirth
+      console.log(this.kid.dob);
+      this.kidsService.getAreaById(this.areaSelected).subscribe(areadata=>{
+        console.log(areadata)
+        this.kid.area = areadata
+        this.kidsService.kidGroupById(this.groupSelected).pipe(finalize(()=>{
+          this.kidsService.villageById(areadata.village.villageId).pipe(finalize(()=>{
+            this.kidsService.addKid(this.kid).subscribe(data=>{
+              console.log(data)
+              this.isKidAdded=true
+              this.showProgressbar=false
+              localStorage.removeItem("imageURL")
+              this.openSnackBar();
+            },error=>{
+              this.handleError(error)
+            })
+          })).subscribe(data=>{
+            this.kid.village = data
           })
         })).subscribe(data=>{
-          this.kid.village = data
-        })
-      })).subscribe(data=>{
-        this.kid.group = data
-      })    
-    })
+          this.kid.group = data
+        })    
+      })
+    }
   }
 
   
@@ -227,15 +232,22 @@ export class AddKidsComponent implements OnInit {
   selectedState(event)
   {
     this.stateSelected = event.target.value;
-    this.addressService.getDistricts(event.target.value).subscribe(data=>{
     this.isShow = false
-    this.districts = data
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    this.districtSelected = 0
+    this.areaSelected = 0
     this.talukas = []
     this.villages = []
     this.areas = []
-    },error=>{
-      this.handleError(error)
-    })
+    if(event.target.value > 0)
+    {
+      this.addressService.getDistricts(event.target.value).subscribe(data=>{
+      this.districts = data
+      },error=>{
+        this.handleError(error)
+      })
+    }
   }
 
   getAllDistricts() 
@@ -249,14 +261,26 @@ export class AddKidsComponent implements OnInit {
 
   selectedDistrict(event)
   {
-    this.districtSelected = event.target.value;
-    this.addressService.getTalukas(event.target.value).subscribe(data=>{
-    this.talukas = data
-    this.villages = []
-    this.areas = []
-    },error=>{
-      this.handleError(error)
-    })
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    this.areaSelected = 0
+    if(event.target.value > 0)
+    {
+      this.districtSelected = event.target.value;
+      this.addressService.getTalukas(event.target.value).subscribe(data=>{
+      this.talukas = data
+      this.areas=[]
+      this.villages = []
+      },error=>{
+        this.handleError(error)
+      })
+    }
+    else{
+      this.talukas = []
+      this.villages = []
+      this.areas = []
+      this.districtSelected = 0
+    }
   }
 
   getAllTalukas() 
@@ -271,15 +295,20 @@ export class AddKidsComponent implements OnInit {
   selectedTaluka(event)
   {
     this.talukaSelected = event.target.value;
+    this.areaSelected = 0
     console.log(event.target.value);
     if(event.target.value != 0)
     {
-          this.addressService.getVillages(event.target.value).subscribe(data=>{
-          this.villages = data
-          this.areas = []
+        this.addressService.getVillages(event.target.value).subscribe(data=>{
+        this.villages = data
+        this.areas = []
         },error=>{
           this.handleError(error)
         })
+    }
+    else
+    {
+      this.villageSelected = 0
     }
   }
 
@@ -312,7 +341,7 @@ export class AddKidsComponent implements OnInit {
 
   selectedArea(event)
   {
-    this.areaSelecetd = event.target.value;
+    this.areaSelected = event.target.value;
   }
 
   getkidsgroup()

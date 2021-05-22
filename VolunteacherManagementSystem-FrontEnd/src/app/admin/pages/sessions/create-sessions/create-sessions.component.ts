@@ -97,9 +97,9 @@ export class CreateSessionsComponent implements OnInit {
     this.getAllVillages();
     this.getProjects();
 
-    this.stateSelected = 0;
-    this.districtSelected = 0;
-    this.talukaSelected = 0;
+    this.stateSelected = 7
+    this.districtSelected = 141
+    this.talukaSelected = 35
     this.villageSelected = 0;
     this.projectSelected = 0;
   }
@@ -203,37 +203,40 @@ export class CreateSessionsComponent implements OnInit {
  
   addSession(form) {
     //console.log(form)
-    this.showProgressbar = true
-    let sessiondate: string = this.session.sessionDate
-    let sdate: string[] = sessiondate.split("-")
-    let sessionDate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
-    this.session.sessionDate = sessionDate
+    if(this.villageSelected > 0 && this.session.project.projectId >0)
+    {
+      this.showProgressbar = true
+      let sessiondate: string = this.session.sessionDate
+      let sdate: string[] = sessiondate.split("-")
+      let sessionDate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
+      this.session.sessionDate = sessionDate
 
-    this.session.startingTime = this.session.startingTime + ":00"
-    this.session.endingTime = this.session.endingTime + ":00"
-    this.session.notified = false
+      this.session.startingTime = this.session.startingTime + ":00"
+      this.session.endingTime = this.session.endingTime + ":00"
+      this.session.notified = false
 
-    this.projectService.getProject(this.projectSelected).pipe(finalize(() => {
-      this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
-        this.sessionService.addSession(this.session).subscribe(data => {
-          console.log(data)
-          this.showProgressbar = false
-          this.openAddSnackBar()
-          form.reset()
-          setTimeout(()=>{
-            this.getSessionsByMonthAndYear(this.page)
-          },2000)
-        },error=>{
-          this.handleError(error)
+      this.projectService.getProject(this.projectSelected).pipe(finalize(() => {
+        this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
+          this.sessionService.addSession(this.session).subscribe(data => {
+            console.log(data)
+            this.showProgressbar = false
+            this.openAddSnackBar()
+            form.reset()
+            setTimeout(()=>{
+              this.getSessionsByMonthAndYear(this.page)
+            },2000)
+          },error=>{
+            this.handleError(error)
+          })
+        })).subscribe(data => {
+          this.session.village = data
         })
       })).subscribe(data => {
-        this.session.village = data
+        this.session.project = data
       })
-    })).subscribe(data => {
-      this.session.project = data
-    })
 
-    this.isShow = !this.isShow;
+      this.isShow = !this.isShow;
+    }
   }
 
   getProjects() {
@@ -273,12 +276,18 @@ export class CreateSessionsComponent implements OnInit {
 
   selectedState(event) {
     this.stateSelected = event.target.value;
-    this.addressService.getDistricts(event.target.value).subscribe(data => {
-      this.Show = false
+    this.Show = false
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    this.districtSelected = 0
+    this.talukas = []
+    this.villages = []
+    if(event.target.value > 0)
+    {
+      this.addressService.getDistricts(event.target.value).subscribe(data=>{
       this.districts = data
-      this.talukas = []
-      this.villages = []
-    })
+      })
+    }
   }
 
   getAllDistricts() {
@@ -290,11 +299,21 @@ export class CreateSessionsComponent implements OnInit {
   }
 
   selectedDistrict(event) {
-    this.districtSelected = event.target.value;
-    this.addressService.getTalukas(event.target.value).subscribe(data => {
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    if(event.target.value > 0)
+    {
+      this.districtSelected = event.target.value;
+      this.addressService.getTalukas(event.target.value).subscribe(data=>{
       this.talukas = data
       this.villages = []
-    })
+      })
+    }
+    else{
+      this.talukas = []
+      this.villages = []
+      this.districtSelected = 0
+    }
   }
 
   getAllTalukas() {

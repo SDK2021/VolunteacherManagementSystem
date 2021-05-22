@@ -72,9 +72,6 @@ export class EditSchoolComponent implements OnInit {
     
     this.getAllCountries();
     this.getAllStates();
-    this.getAllDistricts();
-    this.getAllTalukas();
-    this.getAllVillages();
   }
 
   handleError(error)
@@ -97,26 +94,6 @@ export class EditSchoolComponent implements OnInit {
     this.getSchool(this.route.snapshot.params['id'])
   }
   
-  // touched(value)
-  // {
-  //   if(value==0)
-  //     this.stateTouched = true
-    
-  //   if(value==0)
-  //     this.stateTouched = true
-  //   if(value==1)
-  //     this.districtTouched = true
-  //   if(value==2)
-  //     this.talukaTouched = true
-  //   if(value==3)
-  //     this.villageTouched = true
-  //   if(value==4)
-  //     this.streamTouched = true
-  //   if(value==5)
-  //     this.statusTouched = true
-  // }
-
-
   openEditSnackBar() {
     this._snackBar.open('Edited successfully..', 'close', {
       duration: 2000,
@@ -161,46 +138,46 @@ export class EditSchoolComponent implements OnInit {
   selectedState(event)
   {
     this.stateSelected = event.target.value;
-    this.addressService.getDistricts(event.target.value).subscribe(data=>{
-    this.Show = false
-    this.districts = data
-    this.talukas = []
-    this.villages = []
-    })
-  }
-
-  getAllDistricts() 
-  {
-    this.addressService.getDistricts(7).subscribe(data=>{
-    this.districts = data;
-    },error=>{
-      this.handleError(error)
-    })
+    if(event.target.value>0)
+    {
+      this.addressService.getDistricts(event.target.value).subscribe(data=>{
+      this.Show = false
+      this.districts = data
+      this.districtSelected =0 
+      this.talukaSelected = 0
+      this.villageSelected = 0 
+      this.talukas = []
+      this.villages = []
+      })
+    }
   }
 
   selectedDistrict(event)
   {
     this.districtSelected = event.target.value;
-    this.addressService.getTalukas(event.target.value).subscribe(data=>{
-    this.talukas = data
-    this.villages = []
-    })
-  }
-
-  getAllTalukas() 
-  {
-    this.addressService.getTalukas(141).subscribe(data=>{
-    this.talukas = data
-    },error=>{
-      this.handleError(error)
-    })
+    this.Show = false
+    if(event.target.value > 0)
+    {
+      this.addressService.getTalukas(event.target.value).subscribe(data=>{
+      this.talukas = data
+      this.talukaSelected = 0
+      this.villageSelected = 0
+      this.villages = []
+      })
+    }
+    else
+    {
+      this.talukaSelected = 0
+      this.villageSelected = 0
+      this.villages = []
+    }
   }
 
   selectedTaluka(event)
   {
     this.talukaSelected = event.target.value;
     console.log(event.target.value);
-    if(event.target.value != 0)
+    if(event.target.value > 0)
     {
           this.addressService.getVillages(event.target.value).subscribe(data=>{
           this.villages = data
@@ -208,32 +185,39 @@ export class EditSchoolComponent implements OnInit {
     }
   }
 
-  getAllVillages() 
-  {
-    this.addressService.getVillages(35).subscribe(data=>{
-    this.villages = data
-    },error=>{
-      this.handleError(error)
-    })
-  }
-
   selectedVillage(event)
   {
     this.villageSelected = event.target.value;
   }
 
-
- 
-
-
-
   getSchool(schoolId)
   {
     console.log(schoolId);
-
-    this.schoolService.getSchoolById(schoolId).subscribe(data=>{
-      let date:string[] = data.startingDate.split("-")
-      this.school.startingDate = date[2] + "-" + date[0] +"-" + date[1]
+    this.schoolService.getSchoolById(schoolId).pipe(finalize(()=>{
+      this.addressService.getVillages(this.school.village.taluka.talukaId).pipe(finalize(()=>{
+          this.addressService.getTalukas(this.districtSelected).pipe(finalize(()=>{
+              this.addressService.getDistricts(this.stateSelected).subscribe(data=>{
+              this.districts = data;             
+            },
+            error=>{
+              this.handleError(error)
+            })
+            
+          })).subscribe(data=>{
+          this.talukas = data
+          },error=>{
+            this.handleError(error)
+          })
+      })).subscribe(data=>{
+        this.villages = data
+        this.stateSelected = this.school.village.taluka.district.state.stateId
+        this.districtSelected = this.school.village.taluka.district.districtId
+        this.talukaSelected = this.school.village.taluka.talukaId
+        this.villageSelected = this.school.village.villageId
+      },error=>{
+        this.handleError(error)
+      })
+    })).subscribe(data=>{      
       this.school = data
       console.log(data);
     })
@@ -241,6 +225,10 @@ export class EditSchoolComponent implements OnInit {
 
   saveSchool()
   {
+    console.log(this.villageSelected);
+    
+    if(this.villageSelected !=0 && this.school.status !=null && this.school.stream !=null)
+    {
     console.log(this.school);
     this.showProgressbar=true
     console.log(this.school)
@@ -249,9 +237,6 @@ export class EditSchoolComponent implements OnInit {
       let sdate:string[] = startdate.split("-")
       let startingdate = sdate[0] + "-" +  sdate[1] + "-" + sdate[2]
       this.school.startingDate = startingdate
-  
-      console.log(this.school)
-
       this.schoolService.editSchool(this.school.schoolId,this.school).subscribe(data=>{
         console.log(data)
         setTimeout(()=>{
@@ -266,6 +251,8 @@ export class EditSchoolComponent implements OnInit {
       this.school.village = data
     })
   }
+
+}
 
 
   

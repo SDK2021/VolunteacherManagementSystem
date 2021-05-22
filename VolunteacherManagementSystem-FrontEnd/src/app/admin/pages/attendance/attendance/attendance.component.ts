@@ -174,22 +174,21 @@ export class AttendanceComponent implements OnInit {
         this.showSpinner=false
           this.allKids=data['content']
           console.log(this.allKids);
-          for(let k of this.allKids)
-          {
-            for(let kid of this.kids)
-              {
-              if(kid.kidId == k.kidId)
-              {
-                k.attendance=true
-                break
-              }
+            for(let k of this.allKids)
+            {
+              for(let kid of this.kids)
+              {                              
+                if(kid.kidId == k.kidId)
+                {
+                  k.attendance=true
+                  break
+                }
               else
-              {
-                k.attendance=false
+                {
+                  k.attendance=false
+                }
               }
-            }
           }
-         
           if (data != null) {
             this.kLength = this.allKids.length
             this.noKids=false
@@ -201,7 +200,14 @@ export class AttendanceComponent implements OnInit {
           }
         });
     })).subscribe(k=>{
-      this.kids=k.kids     
+      console.log(k);
+      
+      if(k!=null)
+      {
+        this.kids=k.kids     
+      }
+      console.log(this.kids);
+      
     })
      
   }

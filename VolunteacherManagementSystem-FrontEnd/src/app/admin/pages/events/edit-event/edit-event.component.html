@@ -60,7 +60,7 @@
                                                 <option selected value="0">Select</option>
                                                 <option class="combobox" [value]="s.stateId"
                                                     *ngFor="let s of states;trackBy: trackStatesById"
-                                                    [selected]="s.stateId==7">{{s.stateName}}</option>
+                                                    [selected]="s.stateId==stateSelected">{{s.stateName}}</option>
                                             </select>
                                             <small *ngIf = "stateSelected==0" class="text-danger">State is required</small>
                                         </div>
@@ -73,7 +73,7 @@
                                                 <option class="combobox" value="0" selected>Select</option>
                                                 <option class="combobox" [value]="d.districtId"
                                                     *ngFor="let d of districts;trackBy: trackDistrictsById"
-                                                    [selected]="d.districtId==141&&Show">{{d.districtName}}
+                                                    [selected]="d.districtId==districtSelected&&Show">{{d.districtName}}
                                                 </option>
                                             </select>
                                             <small *ngIf = "districtSelected==0" class="text-danger">District is required</small>
@@ -87,7 +87,7 @@
                                                 <option class="combobox" value="0" selected>Select</option>
                                                 <option class="combobox" [value]="t.talukaId"
                                                     *ngFor="let t of talukas;trackBy: trackTalukasById"
-                                                    [selected]="t.talukaId==35&&Show">{{t.talukaName}}
+                                                    [selected]="t.talukaId==talukaSelected&&Show">{{t.talukaName}}
                                                 </option>
                                             </select>
                                             <small *ngIf = "talukaSelected==0" class="text-danger">Taluka is required</small>
@@ -99,7 +99,7 @@
                                             <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':villageSelected==0}" id="input-group"
                                                 (change)="selectedVillage($event)">
                                                 <option class="combobox" value="0" selected>Select</option>
-                                                <option class="combobox" [selected]="event.village.villageId == v.villageId" [value]="v.villageId"
+                                                <option class="combobox" [selected]="v.villageId ==villageSelected" [value]="v.villageId"
                                                     *ngFor="let v of villages;trackBy: trackVillagesById">
                                                     {{v.villageName}}
                                                 </option>
@@ -192,8 +192,7 @@
     
                                     
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button type="submit" [disabled]="!form.valid" class=" mx-auto d-block btn btn-primary btn-round btn-icon"
-                                                >
+                                            <button type="submit" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
                                                 <span class="btn-inner--text ">Save</span>
                                             </button>
         

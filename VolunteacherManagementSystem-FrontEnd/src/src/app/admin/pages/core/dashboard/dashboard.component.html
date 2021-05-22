@@ -1,0 +1,424 @@
+<ng-container *ngIf="showProgressbar">
+  <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+    <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+  </div>
+</ng-container>
+<div class="header bg-gradient-danger pb-8 pt-2 pt-md-8">
+  <h1 class="text-white pl-5">Dashboard</h1>
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+
+      <div class="row justify-content-center">
+        <div class="col-xl-5 col-lg-6 mb-3">
+
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Kids</h5>
+                  <ng-container *ngIf="showSpinner">
+                    <mat-spinner [diameter]="25"></mat-spinner>
+                  </ng-container>
+                  <span class="h2 font-weight-bold mb-0">{{totalKids}}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                    <i class="fas fa-child"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-2 mb-0 text-muted text-sm">
+                <!-- <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span> -->
+                <span class="text-nowrap">Since today</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-5 col-lg-6 mb-3">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Volunteachers</h5>
+                  <ng-container *ngIf="showSpinner">
+                    <mat-spinner [diameter]="25"></mat-spinner>
+                  </ng-container>
+                  <span class="h2 font-weight-bold mb-0">{{totalVolunteachers}}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                    <i class="fas fa-users"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-2 mb-0 text-muted text-sm">
+                <!-- <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span> -->
+                <span class="text-nowrap">Since today</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-5 col-lg-6 mb-3">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Sessions</h5>
+                  <ng-container *ngIf="showSpinner">
+                    <mat-spinner [diameter]="25"></mat-spinner>
+                  </ng-container>
+                  <span class="h2 font-weight-bold mb-0">{{totalSessions}}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                    <i class="fas fa-book-reader"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-2 mb-0 text-muted text-sm">
+                <!-- <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span> -->
+                <span class="text-nowrap">Since today</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-5 col-lg-6 mb-3">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Events</h5>
+                  <ng-container *ngIf="showSpinner">
+                    <mat-spinner [diameter]="25"></mat-spinner>
+                  </ng-container>
+                  <span class="h2 font-weight-bold mb-0">{{totalEvents}}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape  text-white rounded-circle shadow" style="background-color: blueviolet;">
+                    <i class="fas fa-calendar-plus"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-2 mb-0 text-muted text-sm">
+                <!-- <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span> -->
+                <span class="text-nowrap">Since today</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7 pb-8">
+  <div class="row">
+    <div class="col-xl-8 mb-5 mb-xl-0">
+      <div class="card bg-white shadow">
+
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col">
+              <h4 class="text-uppercase  ls-1 mb-1">Announcements</h4>
+            </div>
+          </div>
+        </div>
+        <div class="card-header bg-transparent">
+          <ng-container *ngIf="showSpinner">
+            <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
+            </mat-spinner>
+          </ng-container>
+          <ng-container *ngIf="aLength>0">
+            <div class="row justify-content-center px-xl-3 ">
+              <div class="col-12  " style="overflow: auto;height: 30vh;" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false" >
+                
+                  <div >
+                    <div *ngFor="let a of announcements" class=" card p-4 mb-4 shadow ">
+                      <div class="row align-items-center">
+                        <div class="col-auto">
+                          <!-- Avatar -->
+                          <div class="avatar rounded-circle">
+                            <!-- <ng-container *ngIf="a.user.photo==''">
+                              <mat-spinner [diameter]="25"></mat-spinner>
+                            </ng-container> -->
+                            <img alt="Image placeholder" src="{{a.createdBy.photo}}">
+                          </div>
+                        </div>
+                        <div class="col ml--2">
+                          <h4 class="mb-0">
+                            {{a.createdBy.userName}}
+                          </h4>
+                        </div>
+                        <ng-container *ngIf="user.userId===a.createdBy.userId">
+                          <div class="col mr-2 text-right">
+                            <li class="nav-item " ngbDropdown placement="bottom-right">
+                              <a class="nav-link pr-0" role="button" ngbDropdownToggle>
+                                <p class="d-block text-common text-right mt-2 mr-4 mb-0 h1"><b><i
+                                      class="fas fa-ellipsis-v text-muted text-sm"></i></b></p>
+                              </a>
+                              <div style="cursor: pointer;" class="p-2 m-0 dropdown-menu-arrow dropdown-menu-right"
+                                ngbDropdownMenu>
+                                <h4 class="text-center" (click)="isEdit()">Edit</h4>
+                                <h4 (click)=" delete(a.announcementId)" class="mb- text-center">Delete</h4>
+                              </div>
+                            </li>
+                          </div>
+                        </ng-container>
+                      </div>
+                      <h5 class="mt-2 text-muted">
+                        {{a.creationDate | date:'mediumDate'}}
+                      </h5>
+                      <p class="text-justify">
+                        {{a.data}}
+                      </p>
+                      <!-- <div class="icon-actions">
+                          <i class=" display-4 ni ni-like-2 {{liked}}" (click)="like();"></i>
+                          <span class="text-common"></span>
+                        </div> -->
+                    </div>
+                  </div>
+               
+
+
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="noAnnouncement">
+            <div class="bg-secondary my-xl-4 my-3 p-xl-5 p-4">
+                <p class="text-center text-xl"><i class="fas fa-bullhorn"></i></p>
+                <p class="text-xl text-center text-lg"><b>No recent announcements.</b></p>
+            </div>
+          </ng-container>
+        </div>
+        <form #form="ngForm" class="example-container my-3 ">
+
+          <div class="row justify-content-center">
+            <div class="col-8 p-0">
+              <div class="form-group mb-0">
+                <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
+                  <div class="input-group input-group-alternative p-0 border" style="border-radius: 30px; ">
+                    <div class="input-group-prepend  ">
+                      <span class="input-group-text p-0 m-2"><i class="fas fa-plus ml-2"></i></span>
+                    </div>
+                    <input class="form-control p-0 " style="border-radius: 30px;" placeholder="Add announcement"
+                      type="text" (focus)="focus = true" (blur)="focus = false" name="Announcements" [(ngModel)]="announcement.data">
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div style="cursor: pointer;" class="col-auto  pl-0">
+              <i class=" ml-2 fas fa-paper-plane display-4" (click)="addAnnouncement(form)"></i>
+            </div>
+          </div>
+
+
+        </form>
+      </div>
+    </div>
+    <div class="col-xl-4 card shadow ">
+      <div class="">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col">
+              <h4 class="text-uppercase  ls-1 mb-1">Shortcuts</h4>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row pt-xl-4 ">
+            <div routerLink="/admin/volunteachers" style="cursor: pointer;" class="col-xl-6 col-sm-4 col-6 mb-3"
+              [ngClass]="{'p-0':condition}">
+              <div id="shortcuts" class="mx-auto py-2 d-block border  rounded text-center">
+                <i class="fas fa-users display-4 text-danger"></i>
+                <h5 class="m-1 text-muted">VTS</h5>
+              </div>
+            </div>
+            <div routerLink="/admin/requests" style="cursor: pointer;" class="col-xl-6 col-sm-4 col-6  mb-3"
+              [ngClass]="{'p-0':condition}">
+              <div id="shortcuts" class="mx-auto py-2 d-block border  rounded text-center">
+                <i class="fas fa-user display-4 text-yellow"></i>
+                <h5 class="m-1 text-muted">Requests</h5>
+              </div>
+            </div>
+            <div routerLink="/admin/sessions" style="cursor: pointer;" class="col-xl-6 col-sm-4 col-6 mb-3"
+              [ngClass]="{'p-0':condition}">
+              <div id="shortcuts" class="mx-auto py-2 d-block border  rounded text-center">
+                <i class="fas fa-book-reader display-4 text-primary"></i>
+                <h5 class="m-1 text-muted"><i class="fas fa-plus mr-1"></i>Session</h5>
+              </div>
+            </div>
+            <div routerLink="/admin/events" style="cursor: pointer;" class="col-xl-6 col-sm-4 col-6 mb-3"
+              [ngClass]="{'p-0':condition}">
+              <div id="shortcuts" class="mx-auto py-2 d-block border  rounded text-center">
+                <i class="fas fa-calendar-plus display-4 text-success"></i>
+                <h5 class="m-1 text-muted"><i class="fas fa-plus mr-1"></i>Event</h5>
+              </div>
+            </div>
+            <div routerLink="/admin/post" style="cursor: pointer;" class="col-xl-6 col-sm-4 col-6 mb-3"
+              [ngClass]="{'p-0':condition}">
+              <div id="shortcuts" class="mx-auto py-2 d-block border  rounded text-center">
+                <i class="fas fa-images display-4 text-warning"></i>
+                <h5 class="m-1 text-muted">Activities</h5>
+              </div>
+            </div>
+            <div routerLink="/admin/sessions/all" style="cursor: pointer;" class="col-xl-6 col-sm-4 col-6 mb-3 "
+              [ngClass]="{'p-0':condition}">
+              <div id="shortcuts" class="mx-auto py-2 d-block border  rounded text-center">
+                <i class="fas fa-clipboard-list display-4 text-info"></i>
+                <h5 class="m-1 text-muted">Attendance</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-xl-7 mb-5 mb-xl-0">
+      <div class="card p-2 shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">Notifications</h3>
+            </div>
+          </div>
+        </div>
+      
+       <div style="overflow: auto;height: 50vh;" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onNotificationScroll()" [scrollWindow]="false">
+        <ng-container *ngIf="showSpinner">
+          <mat-spinner class="mx-auto mt-8" color="primary" [diameter]="40">
+          </mat-spinner>
+        </ng-container>
+        
+        <ng-container *ngIf="nLength>0" >
+          <div *ngFor="let n of notifications;let i=index" class="row justsify-content-center mx-0">
+            <ng-container>
+              <div  *ngIf="n.session !=null" class="text-justify text-default col-10 p-4 mx-auto d-block mb-4 card shadow {{colors[i%4]}}">
+                The session at {{n.session.village.villageName}} on {{n.session.sessionDate}} at
+                {{n.session.startingTime}} to {{n.session.endingTime}} , is notified to the <b>{{n.userType}}</b>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="n.event!=null">
+              <div class="text-justify text-default col-10 p-4 mx-auto d-block mb-4 card shadow {{colors[i%4]}}">
+                The event at {{n.event.village.villageName}} on {{n.event.eventDate}} at {{n.event.eventStartingTime}} to
+                {{n.event.eventndingTime}} , is notified to the {{n.userType}}
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="noNotifications">
+          <div class="bg-secondary my-xl-4 my-4 py-xl-7 py-7">
+              <p class="text-center text-xl"><i class="far fa-bell"></i></p>
+              <p class="text-xl text-center text-lg"><b>No notifications yet.</b></p>
+          </div>
+        </ng-container>
+       </div>
+
+      </div>
+    </div>
+    <div class="card col-xl-5 p-0">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">New Users</h3>
+            </div>
+            <!-- <div class="col text-right">
+              <a href="#!" class="btn btn-sm btn-primary">See all</a>
+            </div> -->
+          </div>
+        </div>
+        <div style="overflow: auto;height: 50vh;"  infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onUserScroll()" [scrollWindow]="false"  >
+          <ng-container *ngIf="showSpinner">
+            <mat-spinner class="mx-auto mt-8" color="primary" [diameter]="40">
+            </mat-spinner>
+          </ng-container>
+          <ng-container *ngIf="uLength>0">
+            <div *ngFor="let v of newUsers" class="row justify-content-center my-2 mx-0">
+              <div class="col-10 pb-0">
+                <div class="row align-items-center ">
+                  <div class="col-auto">
+                    <!-- Avatar -->
+                    <div class="avatar rounded-circle">
+                      <img alt="Image placeholder" src="{{v.user.photo}}">
+                    </div>
+                  </div>
+                  <div class="col ml--2 p4">
+                    <h5 class="mb-0">
+                      {{v.user.userName}}
+                    </h5>
+                    <span class="text-muted h5">Joined on {{v.joiningDate | date:'mediumDate'}}</span>
+                  </div>
+                  <div class="mx-auto d-block col-auto ">
+                    <h5 routerLink="/admin/volunteachers/{{v.volunteacherId}}/profile/posts" class="px-3 py-2 bg-primary text-white" style="cursor: pointer;border-radius: 20px;">View</h5>
+    
+                  </div>
+                </div>
+                <hr class="mt-4 mb-0">
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="noUsers">
+            <div class="bg-secondary my-xl-4 my-4 py-xl-7 py-7">
+                <p class="text-center text-xl"><i class="fas fa-users"></i></p>
+                <p class="text-xl text-center text-lg"><b>No new users this year.</b></p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5 justify-content-center">
+    <div class="col-xl-10 mb-5 mb-xl-0">
+      <div class="card p-2 shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col mb-3">
+              <h3 class="mb-0">Requirements</h3>
+            </div>
+          </div>
+        </div>
+        <div>
+          <ng-container *ngIf="showSpinner">
+            <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
+            </mat-spinner>
+          </ng-container>
+          <ng-container *ngIf="rLength>0">
+            <div *ngFor="let r of requirements;" class="row justify-content-center mb-4">
+              <div class="text-default col-10 px-2 py-2 mb-4 card border-0 bg-secondary">
+                <div class="row">
+                  <div class="col-auto mt--4 ">
+                    <!-- Avatar -->
+                    <div class="avatar rounded-circle">
+                      <img alt="Image placeholder" src="{{r.user.photo}}">
+                    </div>
+                  </div>
+                  <div class="col ml--3 mt--2 ">
+                    <h4 class="mb-0 ">
+                      <span>{{r.user.userName}}</span>
+                    </h4>
+                  </div>
+                  <div class="col-sm-auto mt--2">
+                    <span class="text-muted  h5"> {{r.session.sessionDate | date:'mediumDate'}}</span>
+                  </div>
+                </div>
+                <p class="ml-sm-6 text-justify"><b>{{r.requirements}}</b></p>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="noRequirements">
+            <div class="bg-secondary my-xl-4 my-4 py-xl-4 py-4">
+                <p class="text-center text-xl"><i class="fas fa-book"></i></p>
+                <p class="text-xl text-center text-lg"><b>No requirements yet.</b></p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

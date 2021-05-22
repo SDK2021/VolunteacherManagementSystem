@@ -1,0 +1,74 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary ">
+    <div class="container-fluid mb-0">
+
+    </div>
+
+</div>
+<div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
+    <div class="col-12 col-xl-10 ">
+        <div class="card shadow p-4">
+            <!-- Card header -->
+            <div class="card-header border-0">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mb-0 text-center">Reports</h1>
+                        <hr>
+                    </div>
+                    <div class="col-12 text-right mt-3 ">
+                        <button class="btn btn-primary btn-round btn-icon">
+
+                            <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                            <span class="btn-inner--text ">Create Report</span>
+                        </button>
+                    </div>
+
+                    <div class="mx-auto d-block col-xl-4 col-lg-4 col-6 col-sm-6 col-md-6 ">
+                        <div class="form-group ">
+                            <label class="form-control-label" for="input-status">Year</label>
+                            <select (change)="selectedYear($event)" class=" form-control  form-control-alternative" id="input-year"
+                                name="status" >
+                                <option selected value="0">Select</option>
+                                <option *ngFor="let y of years" [selected] = "year == y" [value]="y">{{y}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <ng-container *ngIf="showSpinner">
+                <div class="col-12">
+                    <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="40">
+                    </mat-spinner>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="noReports">
+                <div class="col-12 col-xl-10 mx-auto d-block my-xl-5 my-6 py-xl-7 py-6">
+                    <p class="text-center text-xl"><i class="fas fa-file-invoice"></i></p>
+                    <p class="text-xl text-center text-lg"><b>No reports found.</b></p>
+                </div>
+            </ng-container>
+            <!-- Light table -->
+            <ng-container *ngIf="rLength">
+                <div class="container-fluid pb-8">
+                    <div class="row justify-content-center">
+                      
+                        <div *ngFor="let r of reportList" class="card shadow m-2 p-4 col-lg-7 col-md-12 col-sm-12 col-12">
+                            <a href="#" class="p-0 m-0">
+                                <p class="display-4 text-center fw-normal mb-0 text-dark ">{{r.title}}</p>
+                                <h3 class="text-center pt-0 my-3  text-muted">{{r.creationDate | date :'mediumDate'}} by {{r.createdBy.userName}} </h3>
+                                <!-- <p class="text-center">{{r.description}}</p> -->
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-default btn-sm">View Report</a>
+                                </div>
+    
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,90 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary ">
+    <div class="container-fluid mb-0">
+
+    </div>
+
+</div>
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
+<div class=" row justify-content-center mx-0 mt-0 py-4"  >
+    <div class="col-12 col-xl-10 ">
+        <div class="card shadow p-4">
+            <!-- Card header -->
+            <div class="card-header border-0">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mb-0 text-center">Content</h1>
+                        <hr>
+                    </div>
+                    <div class="col-12 text-right mt-3 ">
+                        <button class="btn btn-primary btn-round btn-icon" (click)="show()">
+
+                            <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                            <span class="btn-inner--text ">Upload Content</span>
+                        </button>
+                    </div>
+                    <ng-container *ngIf="isShow">
+                        <div class="col-12 justify-content-center">
+                            <form>
+                                <div class="row justify-content-center">
+
+                                    <div class="col-12 col-sm-8 col-md-7 col-lg-5 col-xl-5">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select group</label>
+                                            <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':groupId==0}" id="input-group" (click)="selectedGroup($event)">
+                                                <option class="combobox" value="0" selected>Select</option>
+                                                <option class="combobox" [value]="g.groupId" *ngFor="let g of groups">
+                                                    {{g.groupName}}</option>
+                                            </select>
+                                            <small *ngIf = "groupId==0" class="text-danger">Group is required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-8 col-md-7 col-lg-5 col-xl-4 ">
+                                        <div class="form-group" style="position: relative;top: 30%;">
+                                            <div class="custom-file">
+                                                <input type="file" accept=".pdf,.doc" class="custom-file-input" id="customFile"
+                                                (change)="selectedFile($event)">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12 text-center mt-3 ">
+                                        <button class="btn btn-primary btn-round btn-icon" (click)="uploadContent()">
+
+                                            <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                                            <span class="btn-inner--text ">Upload </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-12 col-sm-8 col-md-7 col-lg-5 col-xl-5 mx-auto d-block">
+                <div class="form-group">
+                    <label class="form-control-label" for="input-group">Select group</label>
+                    <select class="form-control form-control-alternative" id="input-group" (click)="groupSelected($event)">
+                        <option class="combobox" [selected] = "c.group.groupId==1" [value]="c.group.groupId" *ngFor="let c of contents">
+                            {{c.group.groupName}}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Light table -->
+            <div class="row justify-content-center" *ngIf="shows == true">
+                <div class="col-12 col-lg-10 col-xl-10">
+                <iframe title="Content" width="100%" [src]="pdfSource | safe" height="700px"></iframe>
+                    <!-- <img src="https://firebasestorage.googleapis.com/v0/b/volunteacher-management-50e59.appspot.com/o/vms%2Fusers%2Fprofile%2Fpr2.jpg0KIOO0xx5swDIS343k7mi4smjolrOpw2SbtJbc1T?alt=media&token=d3ad42e5-ca71-4b02-bb1e-701363385231"> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

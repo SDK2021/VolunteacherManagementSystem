@@ -1,0 +1,93 @@
+<ng-container *ngIf="showProgressbar">
+  <div style="z-index: 100;position: -webkit-sticky;position:sticky;top:0;">
+      <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+  </div>
+</ng-container>
+<div class="header pb-5 pt-3 pt-md-8  bg-gradient-danger" >
+  <div class="container-fluid">
+    <div class="header-body">
+      <h1 class="text-white title">Volunteachers</h1>
+      
+      <p style="cursor: pointer;" class="text-right mr-3 text-white" (click)="download()">  <i class="fas fa-download display-4"></i></p>
+     
+        <ng-container *ngIf="showSpinner">
+          <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
+          </mat-spinner>
+        </ng-container>
+        <ng-container *ngIf="vLength">
+          <div class="row justify-content-center my-4">
+            <div class="col-xl-10 mx-auto d-block">
+    
+              <form class="example-container ">
+                <div class="col-lg-6 col-md-7 col-sm-7 mx-auto d-block">
+                  <div class="form-group mb-0">
+                    <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
+                      <div class="input-group bg-white input-group-alternative p-0 border border-white"
+                        style="border-radius: 30px; ">
+                        <div class="input-group-prepend  ">
+                          <span class="input-group-text p-0 m-2"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input class="form-control p-0 " style="border-radius: 30px;" placeholder="Search" type="text"
+                          (blur)="focus = false" [(ngModel)]="search" name="search">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+         <div class="row justify-content-center" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+          <div *ngFor="let v of volunteachers | volunteacher: search ;trackBy:trackById" class="col-xl-4 col-lg-6 col-md-9 col-sm-8 mb-6">
+            <!-- | volunteacher: search;trackBy:trackById -->
+            <div  class="card card-profile profile">
+  
+              <a role="button">
+                <p (click)="delete(v.volunteacherId)" class="d-block text-common text-right mt-0 mr-4 mb-0 h1"><b><i
+                      class="text-sm fas fa-trash text-danger"></i></b></p>
+              </a>
+  
+              <div class="row justify-content-center">
+                <div class="col-lg-3 order-lg-2 ">
+                  <div class="card-profile-image">
+                    <a routerLink="/admin/volunteachers/{{v.user.userId}}/profile/posts">
+                      <img src="{{v.user.photo}}"
+                        class="mt-5 rounded-circle img-center">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"></div>
+              <div class="card-body pt-0 pt-md-4">
+                <div class="row justify-content-center">
+  
+                  <div class="text-center mt-md-8 mt-6">
+                    <span *ngIf='v.status==1' class="bg-success rounded px-2 mb-2 text-white ">Active</span>
+                    <span  *ngIf='v.status==2' class="bg-danger rounded px-2 mb-2 text-white ">Inactive</span>
+                    <h2 class="display-4 mt-2 mb-2">
+                      {{v.user.userName}}
+                    </h2>
+  
+                    <div *ngIf="v.user.type.type==='VOLUNTEACHER'" class=" mb-2">
+                      {{v.district.districtName}}, {{v.district.state.stateName}}
+                    </div>
+                    <div *ngIf="v.user.type.type==='LOCAL VOLUNTEACHER' && v.village!=null" class=" mb-2">
+                      {{v.village.villageName}}, {{v.district.state.stateName}}
+                    </div>
+                    <div class=" mb-2">
+  
+                      {{v.user.email}}
+  
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+         </div>
+        </ng-container>
+      
+    </div>
+  </div>
+  

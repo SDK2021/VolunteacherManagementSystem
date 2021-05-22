@@ -42,11 +42,11 @@ export class AddressComponent implements OnInit {
   districtSelected:number;
   talukaSelected:number;
   villageSelected:number;
-  areaSelecetd:number;
+  areaSelected:number;
   groupSelected:number;
 
   constructor(private  adminKids:AdminKidsListComponent, private attendanceKid:KidsAttendanceComponent, private addKid:AddKidsComponent, private router:Router ,
-    private _addservice:AddressService,private kidsService:KidsService ,private _kids:KidsListComponent,private addParti:AddParticipantsComponent) {
+    private addressService:AddressService,private kidsService:KidsService ,private _kids:KidsListComponent,private addParti:AddParticipantsComponent) {
 
    }
 
@@ -59,11 +59,11 @@ export class AddressComponent implements OnInit {
     this.getAllTalukas();
     this.getAllVillages();
 
-    this.stateSelected = 0;
-    this.districtSelected = 0;
-    this.talukaSelected = 0;
+    this.stateSelected = 7;
+    this.districtSelected = 141;
+    this.talukaSelected = 35;
     this.villageSelected = 0;
-    this.areaSelecetd = 0;
+    this.areaSelected = 0;
     this. groupSelected = 0;
 
     this.url = this.router.url
@@ -86,7 +86,7 @@ export class AddressComponent implements OnInit {
   
   getAllCountries()
   {
-    this._addservice.getCountries().subscribe(data=>{
+    this.addressService.getCountries().subscribe(data=>{
       this.countries = data
     },error=>{
       this.handleError(error)
@@ -95,7 +95,7 @@ export class AddressComponent implements OnInit {
 
   selectedCountry(event)
   {
-    this._addservice.getStates(event.target.value).subscribe(data=>{
+    this.addressService.getStates(event.target.value).subscribe(data=>{
       this.states = data
     },error=>{
       this.handleError(error)
@@ -104,7 +104,7 @@ export class AddressComponent implements OnInit {
 
   getAllStates() 
   {
-    this._addservice.getStates(8).subscribe(data=>{
+    this.addressService.getStates(8).subscribe(data=>{
       this.states = data;
     },error=>{
       this.handleError(error)
@@ -114,20 +114,27 @@ export class AddressComponent implements OnInit {
   selectedState(event)
   {
     this.stateSelected = event.target.value;
-    this._addservice.getDistricts(event.target.value).subscribe(data=>{
     this.isShow = false
-    this.districts = data
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    this.districtSelected = 0
+    this.areaSelected = 0
     this.talukas = []
     this.villages = []
     this.areas = []
-    },error=>{
-      this.handleError(error)
-    })
+    if(event.target.value > 0)
+    {
+      this.addressService.getDistricts(event.target.value).subscribe(data=>{
+      this.districts = data
+      },error=>{
+        this.handleError(error)
+      })
+    }
   }
 
   getAllDistricts() 
   {
-    this._addservice.getDistricts(7).subscribe(data=>{
+    this.addressService.getDistricts(7).subscribe(data=>{
     this.districts = data;
     },error=>{
       this.handleError(error)
@@ -136,19 +143,32 @@ export class AddressComponent implements OnInit {
 
   selectedDistrict(event)
   {
-    this.districtSelected = event.target.value;
-    this._addservice.getTalukas(event.target.value).subscribe(data=>{
-    this.talukas = data
-    this.villages = []
-    this.areas = []
-    },error=>{
-      this.handleError(error)
-    })
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    this.areaSelected = 0
+    this.isShow = false
+    if(event.target.value > 0)
+    {
+      this.districtSelected = event.target.value;
+      this.addressService.getTalukas(event.target.value).subscribe(data=>{
+      this.talukas = data
+      this.areas=[]
+      this.villages = []
+      },error=>{
+        this.handleError(error)
+      })
+    }
+    else{
+      this.talukas = []
+      this.villages = []
+      this.areas = []
+      this.districtSelected = 0
+    }
   }
 
   getAllTalukas() 
   {
-    this._addservice.getTalukas(141).subscribe(data=>{
+    this.addressService.getTalukas(141).subscribe(data=>{
     this.talukas = data
  //   this._kids.getkids(0);
     },error=>{
@@ -160,9 +180,11 @@ export class AddressComponent implements OnInit {
   {
     this.talukaSelected = event.target.value;
     console.log(event.target.value);
+    this.talukaSelected = event.target.value;
+    console.log(event.target.value);
     if(event.target.value != 0)
     {
-          this._addservice.getVillages(event.target.value).subscribe(data=>{
+          this.addressService.getVillages(event.target.value).subscribe(data=>{
           this.villages = data
           this.areas = []
           if(this.url.endsWith("/add-participants"))
@@ -203,12 +225,17 @@ export class AddressComponent implements OnInit {
       {
         this.adminKids.getkids(0,"all");
       }
+      this.talukaSelected = 0
+      this.villageSelected = 0
+      this.areaSelected = 0
+      this.areas = []
+      this.villages = []
     }
   }
 
   getAllVillages() 
   {
-    this._addservice.getVillages(35).subscribe(data=>{
+    this.addressService.getVillages(35).subscribe(data=>{
     this.villages = data
     },error=>{
       this.handleError(error)
@@ -221,7 +248,7 @@ export class AddressComponent implements OnInit {
     console.log(event.target.value);
     if(event.target.value!=0)
     {
-        this._addservice.getAreas(event.target.value).subscribe(data=>{
+        this.addressService.getAreas(event.target.value).subscribe(data=>{
         this.areas = data
         if(this.groupSelected !=0)
         {
@@ -268,7 +295,7 @@ export class AddressComponent implements OnInit {
     else
     {
       this.areas = []
-      this.areaSelecetd = 0
+      this.areaSelected = 0
       if(this.groupSelected !=0)
       {
         if(this.url.endsWith("/add-participants"))
@@ -312,7 +339,7 @@ export class AddressComponent implements OnInit {
 
   selectedArea(event)
   {
-    this.areaSelecetd = event.target.value;
+    this.areaSelected = event.target.value;
     this.addKid.selectedArea =  event.target.value;
     if(event.target.value!=0)
     {
@@ -320,19 +347,19 @@ export class AddressComponent implements OnInit {
       {
         if(this.url.endsWith("/add-participants"))
         {
-          this.addParti.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,this.groupSelected,this.villageSelected,"vga")
+          this.addParti.getKidsByAreaAndGroupAndVillage(this.areaSelected,this.groupSelected,this.villageSelected,"vga")
                }
         if(this.url.endsWith("/kids-list"))
         {
-          this._kids.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,this.groupSelected,this.villageSelected,"vga")
+          this._kids.getKidsByAreaAndGroupAndVillage(this.areaSelected,this.groupSelected,this.villageSelected,"vga")
         } 
         if(this.url.endsWith("/kids-attendance"))
         {
-          this.attendanceKid.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,event.target.value,this.villageSelected,"vga")
+          this.attendanceKid.getKidsByAreaAndGroupAndVillage(this.areaSelected,event.target.value,this.villageSelected,"vga")
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,this.groupSelected,this.villageSelected,"vga")
+          this.adminKids.getKidsByAreaAndGroupAndVillage(this.areaSelected,this.groupSelected,this.villageSelected,"vga")
         } 
       }
       else
@@ -415,23 +442,23 @@ export class AddressComponent implements OnInit {
     this.attendanceKid.groupSelected = event.target.value;
     if(event.target.value != 0)
     {
-      if(this.areaSelecetd !=0)
+      if(this.areaSelected !=0)
       {
         if(this.url.endsWith("/add-participants"))
         {
-          this.addParti.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,event.target.value,this.villageSelected,"vga")
+          this.addParti.getKidsByAreaAndGroupAndVillage(this.areaSelected,event.target.value,this.villageSelected,"vga")
         }
         if(this.url.endsWith("/kids-list"))
         {
-          this._kids.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,event.target.value,this.villageSelected,"vga")
+          this._kids.getKidsByAreaAndGroupAndVillage(this.areaSelected,event.target.value,this.villageSelected,"vga")
         }  
         if(this.url.endsWith("/kids-attendance"))
         {
-          this.attendanceKid.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,event.target.value,this.villageSelected,"vga")
+          this.attendanceKid.getKidsByAreaAndGroupAndVillage(this.areaSelected,event.target.value,this.villageSelected,"vga")
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByAreaAndGroupAndVillage(this.areaSelecetd,event.target.value,this.villageSelected,"vga")
+          this.adminKids.getKidsByAreaAndGroupAndVillage(this.areaSelected,event.target.value,this.villageSelected,"vga")
         } 
       }
       else if(this.villageSelected !=0)
@@ -475,23 +502,23 @@ export class AddressComponent implements OnInit {
     }
     else 
     {
-      if(this.areaSelecetd !=0)
+      if(this.areaSelected !=0)
       {
         if(this.url.endsWith("/add-participants"))
         {
-          this.addParti.getKidsByArea(this.areaSelecetd,"a")
+          this.addParti.getKidsByArea(this.areaSelected,"a")
         }
         if(this.url.endsWith("/kids-list"))
         {
-          this._kids.getKidsByArea(this.areaSelecetd,"a")
+          this._kids.getKidsByArea(this.areaSelected,"a")
         }
         if(this.url.endsWith("/kids-attendance"))
         {
-          this.attendanceKid.getKidsByArea(this.areaSelecetd)
+          this.attendanceKid.getKidsByArea(this.areaSelected)
         }
         if(this.url.endsWith("/kids"))
         {
-          this.adminKids.getKidsByArea(this.areaSelecetd,"a")
+          this.adminKids.getKidsByArea(this.areaSelected,"a")
         }
       }
       else if(this.villageSelected !=0)

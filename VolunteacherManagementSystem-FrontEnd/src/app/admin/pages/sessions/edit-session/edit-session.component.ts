@@ -78,16 +78,7 @@ export class EditSessionComponent implements OnInit {
 
     this.getAllCountries();
     this.getAllStates();
-    this.getAllDistricts();
-    this.getAllTalukas();
-    this.getAllVillages();
     this.getProjects();
-
-    this.stateSelected = 0;
-    this.districtSelected = 0;
-    this.talukaSelected = 0;
-    this.villageSelected = 0;
-    this.projectSelected = 0;
 
     this.getSession(this.route.snapshot.params['id'])
   }
@@ -134,6 +125,29 @@ export class EditSessionComponent implements OnInit {
       this.session = data
       this.sessionDate = data.sessionDate
       console.log(data);
+      this.addressService.getVillages(this.session.village.taluka.talukaId).pipe(finalize(()=>{
+        this.addressService.getTalukas(this.districtSelected).pipe(finalize(()=>{
+            this.addressService.getDistricts(this.stateSelected).subscribe(data=>{
+            this.districts = data;             
+          },
+          error=>{
+            this.handleError(error)
+          })
+          
+        })).subscribe(data=>{
+        this.talukas = data
+        },error=>{
+          this.handleError(error)
+        })
+    })).subscribe(data=>{
+      this.villages = data
+      this.stateSelected = this.session.village.taluka.district.state.stateId
+      this.districtSelected = this.session.village.taluka.district.districtId
+      this.talukaSelected = this.session.village.taluka.talukaId
+      this.villageSelected = this.session.village.villageId
+    },error=>{
+      this.handleError(error)
+    })
     })
   }
 
@@ -144,54 +158,56 @@ export class EditSessionComponent implements OnInit {
   }
   saveSession()
   {
-    console.log(this.sessionDate + " " + this.session.sessionDate+"Uprvali first");
-    
-    this.showProgressbar = true
-    if(!(this.sessionDate === this.session.sessionDate))
+    if(this.villageSelected > 0 && this.projectSelected > 0)
     {
-      console.log("Hello");
+      console.log(this.sessionDate + " " + this.session.sessionDate+"Uprvali first");
       
-      let sessiondate: string = this.session.sessionDate
-      console.log(sessiondate +" Session date ");
+      this.showProgressbar = true
+      if(!(this.sessionDate === this.session.sessionDate))
+      {
+        console.log("Hello");
+        
+        let sessiondate: string = this.session.sessionDate
+        console.log(sessiondate +" Session date ");
+        
+        let sdate: string[] = sessiondate.split("-")
+        let sessionDate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
+        this.session.sessionDate = sessionDate
+        console.log(this.session.sessionDate +" Formated");
+        
+      }
       
-      let sdate: string[] = sessiondate.split("-")
-      let sessionDate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
-      this.session.sessionDate = sessionDate
-      console.log(this.session.sessionDate +" Formated");
+
+      console.log(this.villageSelected + " " + this.projectSelected);
       
-    }
-    
+      if(this.villageSelected == 0)
+        this.villageSelected = this.session.village.villageId
 
-    console.log(this.villageSelected + " " + this.projectSelected);
-    
-    if(this.villageSelected == 0)
-      this.villageSelected = this.session.village.villageId
+      if(this.projectSelected == 0)
+        this.projectSelected = this.session.project.projectId
+      this.session.startingTime = this.session.startingTime + ":00"
+      this.session.endingTime = this.session.endingTime + ":00"
+      this.session.notified = false
 
-    if(this.projectSelected == 0)
-      this.projectSelected = this.session.project.projectId
-    this.session.startingTime = this.session.startingTime + ":00"
-    this.session.endingTime = this.session.endingTime + ":00"
-    this.session.notified = false
-
-    this.projectService.getProject(this.projectSelected).pipe(finalize(() => {
-      this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
-        this.sessionService.editSession(this.session.sessionId,this.session).subscribe(data => {
-          console.log(data)
-          this.showProgressbar = false
-          this.openEditSnackBar()
-          setTimeout(()=>{
-            this.router.navigate(['/admin/sessions'])
-          },2000)
-        },error=>{
-          this.handleError(error)
+      this.projectService.getProject(this.projectSelected).pipe(finalize(() => {
+        this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
+          this.sessionService.editSession(this.session.sessionId,this.session).subscribe(data => {
+            console.log(data)
+            this.showProgressbar = false
+            this.openEditSnackBar()
+            setTimeout(()=>{
+              this.router.navigate(['/admin/sessions'])
+            },2000)
+          },error=>{
+            this.handleError(error)
+          })
+        })).subscribe(data => {
+          this.session.village = data
         })
       })).subscribe(data => {
-        this.session.village = data
+        this.session.project = data
       })
-    })).subscribe(data => {
-      this.session.project = data
-    })
-    
+    }  
   }
  
   getProjects() {
@@ -231,36 +247,37 @@ export class EditSessionComponent implements OnInit {
 
   selectedState(event) {
     this.stateSelected = event.target.value;
-    this.addressService.getDistricts(event.target.value).subscribe(data => {
-      this.Show = false
+    this.Show = false
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    this.districtSelected = 0
+    this.talukas = []
+    this.villages = []
+    if(event.target.value > 0)
+    {
+      this.addressService.getDistricts(event.target.value).subscribe(data=>{
       this.districts = data
-      this.talukas = []
-      this.villages = []
-    })
+      })
+    }
   }
 
-  getAllDistricts() {
-    this.addressService.getDistricts(7).subscribe(data => {
-      this.districts = data;
-    },error=>{
-      this.handleError(error)
-    })
-  }
 
   selectedDistrict(event) {
-    this.districtSelected = event.target.value;
-    this.addressService.getTalukas(event.target.value).subscribe(data => {
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    if(event.target.value > 0)
+    {
+      this.districtSelected = event.target.value;
+      this.addressService.getTalukas(event.target.value).subscribe(data=>{
       this.talukas = data
       this.villages = []
-    })
-  }
-
-  getAllTalukas() {
-    this.addressService.getTalukas(141).subscribe(data => {
-      this.talukas = data
-    },error=>{
-      this.handleError(error)
-    })
+      })
+    }
+    else{
+      this.talukas = []
+      this.villages = []
+      this.districtSelected = 0
+    }
   }
 
   selectedTaluka(event) {
@@ -273,18 +290,8 @@ export class EditSessionComponent implements OnInit {
     }
   }
 
-  getAllVillages() {
-    this.addressService.getVillages(35).subscribe(data => {
-      this.villages = data
-    },error=>{
-      this.handleError(error)
-    })
-  }
-
   selectedVillage(event) {
     this.villageSelected = event.target.value;
     console.log(event.target.value);
   }
-
-
 }

@@ -45,6 +45,8 @@ export class EditVillageComponent implements OnInit {
   talukas:Array<Taluka>
   village:Village = new Village()
   Show:boolean=true
+  loaddata:boolean = false
+  showSpinner: boolean = true
 
 
   constructor(private route:ActivatedRoute,private router:Router,fb: FormBuilder,private projectService:ProjectsService,private addressService:AddressService, private dialog:MatDialog , private _snackBar: MatSnackBar) { 
@@ -52,14 +54,7 @@ export class EditVillageComponent implements OnInit {
       color: this.colorControl,
       fontSize: this.fontSizeControl,
     });
-    this.getAllCountries();
-    this.getAllStates();
-    this.getAllDistricts();
-    this.getAllTalukas();
-
-    this.stateSelected = 0;
-    this.districtSelected = 0;
-    this.talukaSelected = 0;
+  
   }
   handleError(error)
   {
@@ -81,17 +76,29 @@ export class EditVillageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      
+    
     this.getVillage(this.route.snapshot.params['id'])
+    this.getAllCountries();
+    this.getAllStates();
+
   }
 
   saveVillage()
   {
-    this.showProgressbar=true
     if(this.talukaSelected != 0)
     {
+      this.showProgressbar=true
       console.log("Hello");
       
-      this.addressService.getTalukaById(this.talukaSelected).subscribe(data=>{
+      this.addressService.getTalukaById(this.talukaSelected).pipe(finalize(()=>{
+        this.addressService.saveVillage(this.village.villageId,this.village).subscribe(data=>{
+          this.showProgressbar=false
+          this.openSnackBar()
+          this.router.navigate(['/admin/villages'])
+          console.log(data);
+        })
+      })).subscribe(data=>{
         this.village.taluka = data
       },error=>{
         this.handleError(error)
@@ -99,12 +106,6 @@ export class EditVillageComponent implements OnInit {
       console.log(this.village);
       
     }
-    this.addressService.saveVillage(this.village.villageId,this.village).subscribe(data=>{
-      this.showProgressbar=false
-      this.openSnackBar()
-      this.router.navigate(['/admin/villages'])
-      console.log(data);
-    })
   }
  
 
@@ -197,16 +198,11 @@ export class EditVillageComponent implements OnInit {
      this.districts=[]
     this.talukas = []
    }
+   this.talukaSelected = 0
+   this.districtSelected = 0
   }
 
-  getAllDistricts() 
-  {
-    this.addressService.getDistricts(7).subscribe(data=>{
-    this.districts = data;
-    },error=>{
-      this.handleError(error)
-    })
-  }
+ 
 
   selectedDistrict(event)
   {
@@ -219,14 +215,7 @@ export class EditVillageComponent implements OnInit {
     }
   }
 
-  getAllTalukas() 
-  {
-    this.addressService.getTalukas(141).subscribe(data=>{
-    this.talukas = data
-    },error=>{
-      this.handleError(error)
-    })
-  }
+ 
 
   selectedTaluka(event)
   {
@@ -235,7 +224,24 @@ export class EditVillageComponent implements OnInit {
 
   getVillage(id:number)
   {
-      this.addressService.getVillageByid(id).subscribe(data=>{
+      this.addressService.getVillageByid(id).pipe(finalize(()=>{
+          this.addressService.getTalukas(this.districtSelected).pipe(finalize(()=>{
+              this.addressService.getDistricts(this.stateSelected).subscribe(data=>{
+              this.districts = data;
+              },error=>{
+                this.handleError(error)
+              },
+              ()=>{
+                this.loaddata = true
+                this.showSpinner = false
+              })
+            
+          })).subscribe(data=>{
+          this.talukas = data
+          },error=>{
+            this.handleError(error)
+          })
+      })).subscribe(data=>{
         this.village=data
         this.stateSelected = this.village.taluka.district.state.stateId
         this.districtSelected = this.village.taluka.district.districtId

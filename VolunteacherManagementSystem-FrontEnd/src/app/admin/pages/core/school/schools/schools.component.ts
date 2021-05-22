@@ -86,9 +86,9 @@ export class SchoolsComponent implements OnInit {
     ]
     
     this.villageSelected = 0
-    this.talukaSelected = 0
-    this.stateSelected = 0
-    this.districtSelected = 0
+    this.talukaSelected = 35
+    this.stateSelected = 7
+    this.districtSelected = 141
 
     this.getAllCountries();
     this.getAllStates();
@@ -177,24 +177,6 @@ export class SchoolsComponent implements OnInit {
   }
 
    
-  touched(value)
-  {
-  
-  console.log("Hello");
-  
-    if(value==0)
-      this.stateTouched = true
-    if(value==1)
-      this.districtTouched = true
-    if(value==2)
-      this.talukaTouched = true
-    if(value==3)
-      this.villageTouched = true
-    if(value==4)
-      this.streamTouched = true
-    if(value==5)
-      this.statusTouched = true
-  }
   addSchool(form:NgForm)
   {
     this.showProgressbar=true
@@ -266,7 +248,7 @@ export class SchoolsComponent implements OnInit {
 
   getAllDistricts() 
   {
-    this.addressService.getDistricts(7).subscribe(data=>{
+    this.addressService.getDistricts(this.stateSelected).subscribe(data=>{
     this.districts = data;
     },error=>{
       this.handleError(error)
@@ -284,7 +266,7 @@ export class SchoolsComponent implements OnInit {
 
   getAllTalukas() 
   {
-    this.addressService.getTalukas(141).subscribe(data=>{
+    this.addressService.getTalukas(this.districtSelected).subscribe(data=>{
     this.talukas = data
     },error=>{
       this.handleError(error)
@@ -305,7 +287,7 @@ export class SchoolsComponent implements OnInit {
 
   getAllVillages() 
   {
-    this.addressService.getVillages(35).subscribe(data=>{
+    this.addressService.getVillages(this.talukaSelected).subscribe(data=>{
     this.villages = data
     },error=>{
       this.handleError(error)

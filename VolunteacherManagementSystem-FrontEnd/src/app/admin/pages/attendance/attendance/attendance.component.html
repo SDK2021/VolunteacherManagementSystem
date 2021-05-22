@@ -23,15 +23,15 @@
                         <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-4 mx-auto d-block">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-group">Select Group</label>
-                                <select class="form-control form-control-alternative"
-                                [ngClass]="{'ng-invalid': groupId == 0 && groupTouched}" 
-                                id="input-group" (change)="selectedGroup($event)" (blur)="touched()">
-                                   <option value="0" selected>Select</option>
+                                <select required class="form-control form-control-alternative"
+                                [ngClass]="{'ng-invalid': group.invalid&&group.touched}" 
+                                id="input-group" (change)="selectedGroup($event)" name="group" #group="ngModel" ngModel>
+                                   <option value="" selected>Select</option>
                                     <option class="combobox" [value]="g.groupId" *ngFor="let g of groups;trackBy: trackGroupsById" >{{g.groupName}}
                                     </option>                                    
                                 </select>                                
                             </div>   
-                            <small *ngIf="groupId==0&&groupTouched" class="text-danger">Group is
+                            <small *ngIf="group.invalid&&group.touched" class="text-danger">Group is
                                 required</small>                       
                         </div>
                         <ng-container *ngIf="showSpinner">

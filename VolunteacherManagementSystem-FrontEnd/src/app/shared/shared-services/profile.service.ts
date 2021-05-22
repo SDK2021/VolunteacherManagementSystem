@@ -64,5 +64,13 @@ export class ProfileService {
       return this._httpclient.post<boolean>(`${"http://localhost:9090/vms/set-profile"}`,null,header)
     }
 
-    
+    savePost(postId:number,post:Timelinepost):Observable<Timelinepost>
+    {
+      return this._httpclient.put<Timelinepost>(`${"http://localhost:9090/vms/posts/"}${postId}`,post)
+    }
+
+    postById(postId:number):Observable<Timelinepost>
+    {
+      return this._httpclient.get<Timelinepost>(`${"http://localhost:9090/vms/posts/"}${postId}`)
+    }
 }

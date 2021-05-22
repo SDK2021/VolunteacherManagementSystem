@@ -53,7 +53,7 @@
                                         </h5>
                                       </div>
                                       <div class="col-auto">
-                                       <input type="checkbox" (change)="selectedKid($event)" [value]="k.kidId">
+                                       <input type="checkbox" (change)="selectedKid($event)" [checked]="k.checked == 'true'" [value]="k.kidId">
                                       </div>
                                     </div>
                                   </li>

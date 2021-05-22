@@ -30,5 +30,6 @@ export class Kid {
     totalSessions:number;
 
     attendance:boolean=false
+    checked:boolean = false
 }
 

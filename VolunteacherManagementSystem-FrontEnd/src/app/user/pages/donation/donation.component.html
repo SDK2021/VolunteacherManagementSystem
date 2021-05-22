@@ -18,11 +18,7 @@
 
     <div class="row p-0 justify-content-center">
       <div class="col-xl-9 col-lg-9 col-md-10 col-12 bg-white p-4 rounded shadow ">
-        <div class="px-xl-8">
-
-
-
-         
+        <div class="px-xl-8"> 
           <form (ngSubmit)="addPayment(form.value)" #form="ngForm">
 
             <div class="col-lg-12">
@@ -61,13 +57,13 @@
               <div class="form-group">
                 <label class="form-control-label" for="input-group">User type</label>
                 <select  class="form-control form-control-alternative" id="input-group" name="userType"
-                  (change)="selectedUserType($event)" required>
-                  <option value="0" selected>Select</option>
+                  (change)="selectedUserType($event)" required ngModel #type="ngModel">
+                  <option value="" selected>Select</option>
                   <option class="combobox" [value]="u.typeId" *ngFor="let u of userTypes;">
                     {{u.type}}
                   </option>
                 </select>
-                <!-- <small *ngIf="!type.errors?.required && type.touched" class="text-danger">UserType is required</small> -->
+                <small *ngIf="type.invalid && type.touched" class="text-danger">UserType is required</small>
               </div>
             </div>
 
@@ -84,14 +80,14 @@
               <div class="form-group">
                 <label class="form-control-label" for="input-group">Payment Mode</label>
                 <select #mode='ngModel' class="form-control form-control-alternative" id="input-group" name="paymentMode"
-                  required [(ngModel)]="payment.paymentMode">
-                  <option selected value="0">Select</option>
+                  required #paymentMode="ngModel" ngModel>
+                  <option selected value="">Select</option>
                   <option class="combobox" value="Debit Card">Debit Card</option>
                   <option class="combobox" value="Credit Card">Credit Card</option>
                   <option class="combobox" value="Net Banking">Net Banking</option>
                   <option class="combobox" value="Paytm Bank">Paytm Bank</option>
                 </select>
-                <small *ngIf="mode.errors?.required && mode.touched" class="text-danger">Level is required</small>
+                <small *ngIf="mode.errors?.required && mode.touched" class="text-danger">Payment Mode is required</small>
               </div>
             </div>
             <div >
@@ -99,10 +95,6 @@
                 class="btn btn-primary btn-round mx-auto d-block ">Next</button>
             </div>
           </form>
-
-
-
-
         </div>
       </div>
 

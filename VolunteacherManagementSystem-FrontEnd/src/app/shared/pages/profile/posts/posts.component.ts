@@ -143,12 +143,18 @@ export class PostsComponent implements OnInit {
   }
 
   editPost(index:number) {
-    
     console.log(this.posts.filter(post=>post));
     
     console.log(this.posts[index]["isEdit"]=!this.posts[index]["isEdit"])
     this.post.postDescription=this.posts[index]["postDescription"]
    
+  }
+
+  getPost(postId:number)
+  {
+    this.profileService.postById(postId).subscribe(data=>{
+      this.post = data
+    })
   }
 
   trackByID(index,post:Timelinepost)
@@ -191,5 +197,21 @@ export class PostsComponent implements OnInit {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
+  }
+
+  openEditSnackBar() {
+    this._snackBar.open('Post Edited successfully..', 'close', {
+      duration: 2000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
+  }
+
+  savePost(postId:number)
+  {
+    this.profileService.savePost(postId,this.post).subscribe(data=>{
+      console.log(data);
+      this.openEditSnackBar()
+    })
   }
 }

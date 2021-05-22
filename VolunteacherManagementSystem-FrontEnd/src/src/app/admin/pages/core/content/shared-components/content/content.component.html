@@ -1,0 +1,46 @@
+<div class="header bg-gradient-danger pb-8 pt-4 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <h1 class="text-white title">View Content</h1>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7" style="background-color: #172b4d;">
+  <div class="row">
+    <div class="col p-0">
+      <div class="card shadow border-0 pb-8" style=" background-color: #f8fcfd;">
+        <div class="card card-header mb-4">
+          <h5 class="h3 mb-0">Content</h5>
+        </div>
+        <div class="m-2 m-sm-4">
+          <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 col-md-7 col-lg-5 col-xl-5 mx-auto d-block">
+              <div class="form-group">
+                  <label class="form-control-label" for="input-group">Select group</label>
+                  <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':groupId==0}" id="input-group" (click)="groupSelected($event)">
+                    <option value="0" selected>Select</option>
+                      <option class="combobox" [selected] = "c.group.groupId==1" [value]="c.group.groupId" *ngFor="let c of contents">
+                          {{c.group.groupName}}</option>
+                  </select>
+                  <small *ngIf = "groupId==0" class="text-danger">Group is required</small>
+              </div>
+          </div>
+          </div>
+          <div class="row justify-content-center" *ngIf="shows == true">
+            <div class="col-12 col-lg-10 col-xl-10">
+              <ng-container *ngIf="showSpinner">
+                <div class="col-12 my-8">
+                    <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="40">
+                    </mat-spinner>
+                </div>
+            </ng-container>
+            <iframe title="Content" width="100%" [src]="pdfSource | safe" height="700px" (load)="load()"></iframe>        
+            </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

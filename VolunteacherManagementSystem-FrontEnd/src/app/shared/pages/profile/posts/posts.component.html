@@ -42,7 +42,7 @@
                       class="fas fa-ellipsis-v text-muted"></i></b></p>
               </a>
               <div style="cursor: pointer;" class="p-2 dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
-                <h4 (click)="editPost(i)" class="text-center">Edit</h4>
+                <h4 (click)="editPost(i);getPost(p.postId)" class="text-center">Edit</h4>
                 <h4 class="mb- text-center" (click)="delete(p.postId,p.postPhoto)">Delete</h4>
               </div>
             </li>
@@ -88,10 +88,11 @@
 
 
                 <div class="text-center mt-4 mb-4">
-                  <a (click)="openSnackBar()"> <i class="fas fa-check text-lg text-success"></i></a>
+                  <a style="cursor: pointer;"> <i class="fas fa-check text-lg text-success" (click)="savePost(p.postId)" ></i></a>
                 </div>
 
               </form>
+
             </ng-container>
 
           </div>

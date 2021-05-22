@@ -23,6 +23,13 @@ export class ProjectsService {
     return this.http.post<Area>(`${"http://localhost:9090/vms/areas"}`, area).pipe(retry(3))
   }
 
+  saveVillage(villageId:number,village:Village):Observable<Village>
+  {
+    console.log("Hello"+village);
+    
+    return this.http.put<Village>(`${"http://localhost:9090/vms/villages"}${villageId}`, village).pipe(retry(3))
+  }
+
   getAllProjects(): Observable<Project[]> {
     return this.http.get<Project[]>(`${"http://localhost:9090/vms/all-projects"}`).pipe(retry(3))
       

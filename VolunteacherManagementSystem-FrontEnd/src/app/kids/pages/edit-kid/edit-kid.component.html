@@ -133,7 +133,7 @@
                                             <div class="col-12 col-lg-6 col-md-6 col-sm-10">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-group">Standard</label>
-                                                    <select #level class="form-control form-control-alternative"
+                                                    <select required #level class="form-control form-control-alternative"
                                                         id="input-group" name="standard" required [(ngModel)]="kid.standard">
                                                         <option class="combobox" selected>Select</option>
                                                         <option class="combobox" [value]="standards.indexOf(s)+1"  [selected] = "kid.standard == standards.indexOf(s)+1"  *ngFor="let s of standards;">
@@ -147,7 +147,7 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-group">Select
                                                         Level</label>
-                                                    <select #level class="form-control form-control-alternative"
+                                                    <select required #level class="form-control form-control-alternative"
                                                         id="input-group" name="level" required [(ngModel)]="kid.level">
                                                         <option class="combobox" selected>Select</option>
                                                         <option class="combobox" [value]="levels.indexOf(l)+1" [selected] = "kid.level == levels.indexOf(l)+1" *ngFor="let l of levels;">
@@ -161,7 +161,7 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-group">Select
                                                         Country</label>
-                                                    <select class="form-control form-control-alternative"
+                                                    <select required class="form-control form-control-alternative" disabled
                                                         id="input-group" (change)="selectedCountry($event)">
                                                         <option selected value="0">Select</option>
                                                         <option class="combobox" [value]="c.countryId" disabled
@@ -176,82 +176,88 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-group">Select
                                                         State</label>
-                                                    <select class="form-control form-control-alternative"
-                                                        id="input-group" (change)="selectedState($event)">
+                                                    <select required class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedState($event)" [ngClass]="{'ng-invalid':stateSelected}">
                                                         <option selected value="0">Select</option>
                                                         <option class="combobox" [value]="s.stateId"
                                                             *ngFor="let s of states;trackBy: trackStatesById"
-                                                            [selected]="s.stateId==7">{{s.stateName}}</option>
+                                                            [selected]="s.stateId==stateSelected">{{s.stateName}}</option>
                                                     </select>
+                                                    <small class="text-danger" *ngIf="stateSelected==0">State is Required</small>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-7 col-md-6 col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-group">Select
                                                         District</label>
-                                                    <select class="form-control form-control-alternative"
-                                                        id="input-group" (change)="selectedDistrict($event)">
+                                                    <select required class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedDistrict($event)" [ngClass]="{'ng-invalid':districtSelected}">
                                                         <option class="combobox" value="0" selected>Select</option>
                                                         <option class="combobox" [value]="d.districtId"
                                                             *ngFor="let d of districts;trackBy: trackDistrictsById"
-                                                            [selected]="d.districtId==141&&isShow">{{d.districtName}}
+                                                            [selected]="d.districtId==districtSelected&&Show">{{d.districtName}}
                                                         </option>
                                                     </select>
+                                                    <small class="text-danger" *ngIf="districtSelected==0">District is Required</small>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-7 col-md-6 col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-group">Select
                                                         Taluka</label>
-                                                    <select class="form-control form-control-alternative"
+                                                    <select required class="form-control form-control-alternative"
                                                         id="input-group" (change)="selectedTaluka($event)">
                                                         <option class="combobox" value="0" selected>Select</option>
                                                         <option class="combobox" [value]="t.talukaId"
                                                             *ngFor="let t of talukas;trackBy: trackTalukasById"
-                                                            [selected]="t.talukaId==35&&isShow">{{t.talukaName}}
+                                                            [selected]="t.talukaId==talukaSelected&&Show">{{t.talukaName}}
                                                         </option>
                                                     </select>
+                                                    <small class="text-danger" *ngIf="talukaSelected==0">Taluka is Required</small>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-7 col-md-6 col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-group">Select
                                                         Village</label>
-                                                    <select class="form-control form-control-alternative"
-                                                        id="input-group" (change)="selectedVillage($event)">
+                                                    <select required class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedVillage($event)" [ngClass]="{'ng-invalid':villageSelected==0}">
                                                         <option class="combobox" value="0" selected>Select</option>
-                                                        <option class="combobox" [value]="v.villageId" [selected]="kid.village.villageId == v.villageId"
+                                                        <option class="combobox" [value]="v.villageId" [selected]="v.villageId == villageSelected"
                                                             *ngFor="let v of villages;trackBy: trackVillagesById">
                                                             {{v.villageName}}
                                                         </option>
                                                     </select>
+                                                    <small class="text-danger" *ngIf="villageSelected==0">Village is Required</small>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-7 col-md-6 col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-group">Select
                                                         Area</label>
-                                                    <select class="form-control form-control-alternative"
-                                                        id="input-group" (change)="selectedArea($event)">
+                                                    <select required class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedArea($event)" [ngClass]="{'ng-invalid':areaSelected==0}">
                                                         <option class="combobox" value="0" selected>Select</option>
-                                                        <option class="combobox" [value]="a.areaId" [selected]="kid.area.areaId == a.areaId"
+                                                        <option class="combobox" [value]="a.areaId" [selected]="a.areaId==areaSelected"
                                                             *ngFor="let a of areas;trackBy: trackAreasById">
                                                             {{a.areaName}}</option>
                                                     </select>
+                                                    <small class="text-danger" *ngIf="areaSelected==0">Area is Required</small>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-7 col-md-6 col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-group">Select
                                                         Group</label>
-                                                    <select class="form-control form-control-alternative"
-                                                        id="input-group" (change)="selectedGroup($event)">
+                                                    <select required class="form-control form-control-alternative"
+                                                        id="input-group" (change)="selectedGroup($event)" [ngClass]="{'ng-invalid':groupSelected==0}">
                                                         <option class="combobox" value="0" selected>Select</option>
                                                         <option class="combobox" [value]="g.groupId" [selected] ="kid.group.groupId == g.groupId"
                                                             *ngFor="let g of groups;trackBy: trackGroupsById">
                                                             {{g.groupName}}
                                                         </option>
                                                     </select>
+                                                    <small class="text-danger" *ngIf="groupSelected==0">Group is Required</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -260,7 +266,7 @@
                                       
                                      
                                         <div class="col-12 text-center mt-4 mb-4 ">
-                                            <button type="button" [disabled]="!form.valid"  (click)="saveKid()"
+                                            <button type="button" (click)="saveKid()"
                                                 class="btn btn-primary">Save</button>
                                         </div>
                             </div>

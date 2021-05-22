@@ -40,7 +40,7 @@ export class AddParticipantsComponent implements OnInit {
   disabled:boolean=true
 
   eventId: number;
-  kidslist: Array<Kid>
+  kidslist: Array<Kid> = new Array()
   activities: Array<Activity>
   kidsParticipateIds: Array<number> = []
 
@@ -95,13 +95,17 @@ export class AddParticipantsComponent implements OnInit {
 
   }
   selectedKid(event) {
-    if (event.target.checked) {
-      this.kidsParticipateIds.push(event.target.value)
+    if (event.target.checked) 
+    {
+      this.kidsParticipateIds.push(event.target.value)  
     }
-    else {
+    else 
+    {
       let index = this.kidsParticipateIds.indexOf(event.target.value)
       this.kidsParticipateIds.splice(index, 1)
     }
+    console.log(this.kidslist);
+    
     if(this.kidsParticipateIds.length===0)
     {
       this.disabled=true
@@ -170,6 +174,8 @@ export class AddParticipantsComponent implements OnInit {
     },error=>{
       this.handleError(error)
     })
+    console.log(this.kidsParticipateIds.indexOf(1));
+    
   }
 
   getKidsByArea(areaId:number,filter:string)

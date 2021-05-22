@@ -62,8 +62,7 @@ export class DonationComponent implements OnInit {
   }
   addPayment(form)
   {
-    let today:Date = new Date()
- //   this.payment.paymentTime = today.getHours().toString() + "-" +today.getMinutes().toString() + "-" + today.getSeconds().toString()
+    this.payment.paymentMode = form.paymentMode
     this.payment.donor = this.donor
     
     this.userService.getUserType( this.userTypeId).pipe(finalize(()=>{

@@ -79,9 +79,6 @@ export class EditEventComponent implements OnInit {
     this.getAllActivities()
     this.getAllCountries();
     this.getAllStates();
-    this.getAllDistricts();
-    this.getAllTalukas();
-    this.getAllVillages();
     this.getProjects();
     this.getEvent(this.route.snapshot.params['id'])
   }
@@ -155,6 +152,29 @@ export class EditEventComponent implements OnInit {
       this.event = data
       this.imageURL=this.event.photo
       console.log(this.event);
+      this.addressService.getVillages(this.event.village.taluka.talukaId).pipe(finalize(()=>{
+        this.addressService.getTalukas(this.districtSelected).pipe(finalize(()=>{
+            this.addressService.getDistricts(this.stateSelected).subscribe(data=>{
+            this.districts = data;             
+          },
+          error=>{
+            this.handleError(error)
+          })
+          
+        })).subscribe(data=>{
+        this.talukas = data
+        },error=>{
+          this.handleError(error)
+        })
+    })).subscribe(data=>{
+      this.villages = data
+      this.stateSelected = this.event.village.taluka.district.state.stateId
+      this.districtSelected = this.event.village.taluka.district.districtId
+      this.talukaSelected = this.event.village.taluka.talukaId
+      this.villageSelected = this.event.village.villageId
+    },error=>{
+      this.handleError(error)
+    })
     }, error => {
       this.handleError(error)
     })
@@ -212,39 +232,37 @@ export class EditEventComponent implements OnInit {
   selectedState(event)
   {
     this.stateSelected = event.target.value;
-    this.addressService.getDistricts(event.target.value).subscribe(data=>{
     this.Show = false
-    this.districts = data
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    this.districtSelected = 0
     this.talukas = []
     this.villages = []
-    })
-  }
-
-  getAllDistricts() 
-  {
-    this.addressService.getDistricts(7).subscribe(data=>{
-    this.districts = data;
-    }, error => {
-      this.handleError(error)
-    })
+    if(event.target.value > 0)
+    {
+      this.addressService.getDistricts(event.target.value).subscribe(data=>{
+      this.districts = data
+      })
+    }
   }
 
   selectedDistrict(event)
   {
-    this.districtSelected = event.target.value;
-    this.addressService.getTalukas(event.target.value).subscribe(data=>{
-    this.talukas = data
-    this.villages = []
-    })
-  }
-
-  getAllTalukas() 
-  {
-    this.addressService.getTalukas(141).subscribe(data=>{
-    this.talukas = data
-    }, error => {
-      this.handleError(error)
-    })
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    if(event.target.value > 0)
+    {
+      this.districtSelected = event.target.value;
+      this.addressService.getTalukas(event.target.value).subscribe(data=>{
+      this.talukas = data
+      this.villages = []
+      })
+    }
+    else{
+      this.talukas = []
+      this.villages = []
+      this.districtSelected = 0
+    }
   }
 
   selectedTaluka(event)
@@ -257,15 +275,6 @@ export class EditEventComponent implements OnInit {
           this.villages = data
         })
     }
-  }
-
-  getAllVillages() 
-  {
-    this.addressService.getVillages(35).subscribe(data=>{
-    this.villages = data
-    }, error => {
-      this.handleError(error)
-    })
   }
 
   selectedVillage(event)
@@ -287,73 +296,75 @@ export class EditEventComponent implements OnInit {
   
   saveEvent()
   {
-    if(this.imageURL!=null)
+    console.log(this.villageSelected);
+    
+    if(this.villageSelected > 0 && this.projectSelected >0 && this.event.eventData !="")
     {
-        this.oldImage=this.event.photo
-        this.event.photo=this.imageURL
-    }
-    if(this.villageSelected == null)
-    {
-      this.villageSelected = this.event.village.villageId
-    }
-    if(this.projectSelected == null)
-    {
-      this.projectSelected = this.event.project.projectId
-    }
-    this.showProgressbar=true
-    if(this.selectedActivities.length < 1)
-    {
-      for(let activity of this.event.activities)
+      if(this.imageURL!=null)
       {
-        this.selectedActivities.push(activity.activityId)
+          this.oldImage=this.event.photo
+          this.event.photo=this.imageURL
       }
-    }
-    console.log(this.selectedActivities);
-    
-    this.event.photo =this.imageURL
-    let eventdate:string = this.event.eventDate
-    console.log(eventdate);
-    
-    let sdate:string[] = eventdate.split("-")
-    let eventDate = sdate[0] + "-" +  sdate[1] + "-" + sdate[2]
-    this.event.eventDate = eventDate
-    this.event.notified = false
-    console.log( this.event.eventDate);
+      if(this.villageSelected == null)
+      {
+        this.villageSelected = this.event.village.villageId
+      }
+      if(this.projectSelected == null)
+      {
+        this.projectSelected = this.event.project.projectId
+      }
+      this.showProgressbar=true
+      if(this.selectedActivities.length < 1)
+      {
+        for(let activity of this.event.activities)
+        {
+          this.selectedActivities.push(activity.activityId)
+        }
+      }
+      console.log(this.selectedActivities);
+      
+      this.event.photo =this.imageURL
+      let eventdate:string = this.event.eventDate
+      console.log(eventdate);
+      
+      let sdate:string[] = eventdate.split("-")
+      let eventDate = sdate[0] + "-" +  sdate[1] + "-" + sdate[2]
+      this.event.eventDate = eventDate
+      this.event.notified = false
+      console.log( this.event.eventDate);
 
-    this.event.eventStartingTime = this.event.eventStartingTime + ":00"
-    this.event.eventEndingTime = this.event.eventEndingTime + ":00"
+      this.event.eventStartingTime = this.event.eventStartingTime + ":00"
+      this.event.eventEndingTime = this.event.eventEndingTime + ":00"
 
-    this.projectService.getProject(this.projectSelected).pipe(finalize(()=>{
-      this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
-        this.eventService.editEvent(this.event.eventId,this.event,this.selectedActivities).subscribe(data=>{
-          console.log(data)
-          this.isEventEdited=true
-          if(this.oldImage!=null)
-          {
-            this.fileService.delete(this.oldImage)
-            localStorage.removeItem("imageURL")
-          }
-          
-          this.showProgressbar=false
-          this.openEditSnackBar()
-          setTimeout(()=>{
-            this.router.navigate(['/admin/events'])
-          },2000)
-        }, error => {
-          this.handleError(error)
+      this.projectService.getProject(this.projectSelected).pipe(finalize(()=>{
+        this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
+          this.eventService.editEvent(this.event.eventId,this.event,this.selectedActivities).subscribe(data=>{
+            console.log(data)
+            this.isEventEdited=true
+            if(this.oldImage!=null)
+            {
+              this.fileService.delete(this.oldImage)
+              localStorage.removeItem("imageURL")
+            }
+            
+            this.showProgressbar=false
+            this.openEditSnackBar()
+            setTimeout(()=>{
+              this.router.navigate(['/admin/events'])
+            },2000)
+          }, error => {
+            this.handleError(error)
+          })
+        })).subscribe(data=>{
+          this.event.village = data
+        },error=>{
+        console.log(error);
         })
       })).subscribe(data=>{
-        this.event.village = data
+        this.event.project = data
       },error=>{
-       console.log(error);
+        console.log(error);
       })
-    })).subscribe(data=>{
-      this.event.project = data
-    },error=>{
-      console.log(error);
-    })
+    }
   }
-
-
-
 }

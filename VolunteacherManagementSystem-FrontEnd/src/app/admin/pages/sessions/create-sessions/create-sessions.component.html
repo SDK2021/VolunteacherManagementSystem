@@ -28,7 +28,7 @@
                         <div class="col-12 justify-content-center">
                             <form class="mt-5" (ngSubmit)="addSession(form)" #form="ngForm">
                                 <div class="row justify-content-center">
-                                    <div class="col-12 col-sm-7 col-md-6">
+                                    <!-- <div class="col-12 col-sm-7 col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select Country</label>
                                             <select required class="form-control form-control-alternative" id="input-group"
@@ -38,8 +38,7 @@
                                                     *ngFor="let c of countries;trackBy: trackCountriesById"
                                                     [selected]="c.countryId == 8">{{c.countryName}}
                                                 </option>
-                                            </select>
-                                            <!-- <input type="text" value="India" disabled class="form-control"> -->
+                                            </select>                                            
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-7 col-md-6">
@@ -121,8 +120,102 @@
                                                 Please select a valid Project.
                                             </div>
                                         </div>
+                                    </div> -->
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Country</label>
+                                            <select class="form-control form-control-alternative" id="input-group" disabled
+                                                (change)="selectedCountry($event)">
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="c.countryId" disabled
+                                                    *ngFor="let c of countries;trackBy: trackCountriesById"
+                                                    [selected]="c.countryId == 8">{{c.countryName}}
+                                                </option>
+                                            </select>
+                                            <!-- <input type="text" value="India" disabled class="form-control"> -->
+                                        </div>
                                     </div>
-
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select State</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':stateSelected==0}" id="input-group"
+                                                (change)="selectedState($event)">
+                                                <option selected value="">Select</option>
+                                                <option class="combobox" [value]="s.stateId"
+                                                    *ngFor="let s of states;trackBy: trackStatesById"
+                                                    [selected]="s.stateId==7">{{s.stateName}}</option>
+                                            </select>
+                                            <div class="text-danger" *ngIf="stateSelected==0">
+                                                Please select a valid state.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select District</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':districtSelected==0}" id="input-group"
+                                                (change)="selectedDistrict($event)">
+                                                <option class="combobox" value="" selected>Select</option>
+                                                <option class="combobox" [value]="d.districtId"
+                                                    *ngFor="let d of districts;trackBy: trackDistrictsById"
+                                                    [selected]="d.districtId==141&&Show">{{d.districtName}}
+                                                </option>
+                                            </select>
+                                            <div class="text-danger" *ngIf="districtSelected==0">
+                                                Please select a valid District.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Taluka</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':talukaSelected==0}" id="input-group"
+                                                (change)="selectedTaluka($event)">
+                                                <option class="combobox" value="" selected>Select</option>
+                                                <option class="combobox" [value]="t.talukaId"
+                                                    *ngFor="let t of talukas;trackBy: trackTalukasById"
+                                                    [selected]="t.talukaId==35&&Show">{{t.talukaName}}
+                                                </option>
+                                            </select>
+                                            <div class="text-danger" *ngIf="talukaSelected==0">
+                                                Please select a valid Taluka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6 ">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Village</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':village.invalid&&village.touched}" id="input-group"
+                                                (change)="selectedVillage($event)" #village="ngModel" ngModel name="village">
+                                                <option class="combobox" value="" selected>Select</option>
+                                                <option class="combobox" [value]="v.villageId"
+                                                    *ngFor="let v of villages;trackBy: trackVillagesById">
+                                                    {{v.villageName}}
+                                                </option>
+                                            </select>
+                                            <div class="text-danger" *ngIf="((village.invalid&&village.touched) || (village.touched&&villageSelected==0))">
+                                                Please select a valid Village.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Project</label>
+                                            <select required 
+                                            class="form-control form-control-alternative" 
+                                            id="input-group" 
+                                            [ngClass]="{'ng-invalid':project.touched&&project.invalid}" 
+                                            (change)="selectedProject($event)"
+                                            #project="ngModel" name="project" ngModel>
+                                                <option selected value="">Select</option>
+                                                <option class="combobox" [value]="p.projectId" *ngFor="let p of projects">{{p.projectName}}
+                                                </option>
+                                            </select>
+                                            <div class="text-danger" *ngIf="project.touched&&project.invalid">
+                                                Please select a valid Project.
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="col-md-6 col-sm-7">
                                         <div class="form-group">

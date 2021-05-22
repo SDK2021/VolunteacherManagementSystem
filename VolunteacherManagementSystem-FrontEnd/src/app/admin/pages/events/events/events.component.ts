@@ -64,7 +64,7 @@ export class EventsComponent implements OnInit {
   villageSelected:number;
   projectSelected:number;
   activities:Array<Activity>
-  selectedActivities:Array<Number>
+  selectedActivities:Array<Number> =  []
   projects:Array<Project> = []
 
   isEventCreated:boolean=false
@@ -97,6 +97,10 @@ export class EventsComponent implements OnInit {
     console.log(date)
     this.month=this.monthNames[date.getMonth()]
     //console.log("current"+ this.month)
+
+    this.stateSelected = 7
+    this.districtSelected = 141
+    this.talukaSelected = 35
     this.year=date.getFullYear()
     this.getAllActivities()
     this.getAllCountries();
@@ -227,43 +231,46 @@ export class EventsComponent implements OnInit {
 
   addEvent(form:NgForm)
   {
-    this.showProgressbar=true
-    console.log(this.event)
-    console.log(this.selectedActivities)
-    this.event.photo = this.imageURL
-    let eventdate:string = this.event.eventDate
-    let sdate:string[] = eventdate.split("-")
-    let eventDate = sdate[1] + "-" +  sdate[2] + "-" + sdate[0]
-    this.event.eventDate = eventDate
-    this.event.notified = true
+    if(this.villageSelected > 0 && this.event.project !=null)
+    {
+      this.showProgressbar=true
+      console.log(this.event)
+      console.log(this.selectedActivities)
+      this.event.photo = this.imageURL
+      let eventdate:string = this.event.eventDate
+      let sdate:string[] = eventdate.split("-")
+      let eventDate = sdate[1] + "-" +  sdate[2] + "-" + sdate[0]
+      this.event.eventDate = eventDate
+      this.event.notified = true
 
-    this.event.eventStartingTime = this.event.eventStartingTime + ":00"
-    this.event.eventEndingTime = this.event.eventEndingTime + ":00"
+      this.event.eventStartingTime = this.event.eventStartingTime + ":00"
+      this.event.eventEndingTime = this.event.eventEndingTime + ":00"
 
-    this.projectService.getProject(this.projectSelected).pipe(finalize(()=>{
-      this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
-        this.eventService.addEvent(this.event,this.selectedActivities).subscribe(data=>{
-          console.log(data)
-          this.showProgressbar=false
-          localStorage.removeItem("imageURL")
-          this.openAddSnackBar()
-          form.reset()
-          setTimeout(()=>{
-            this.getAllEvent(this.page)
-          },2000)
-        }, error => {
-          this.handleError(error)
+      this.projectService.getProject(this.projectSelected).pipe(finalize(()=>{
+        this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
+          this.eventService.addEvent(this.event,this.selectedActivities).subscribe(data=>{
+            console.log(data)
+            this.showProgressbar=false
+            localStorage.removeItem("imageURL")
+            this.openAddSnackBar()
+            form.reset()
+            setTimeout(()=>{
+              this.getAllEvent(this.page)
+            },2000)
+          }, error => {
+            this.handleError(error)
+          })
+        })).subscribe(data=>{
+          this.event.village = data
+        },error=>{
+        console.log(error);
         })
       })).subscribe(data=>{
-        this.event.village = data
+        this.event.project = data
       },error=>{
-       console.log(error);
-      })
-    })).subscribe(data=>{
-      this.event.project = data
-    },error=>{
-      console.log(error);
-    }) 
+        console.log(error);
+      }) 
+    }
   }
 
   getProjects()
@@ -277,8 +284,11 @@ export class EventsComponent implements OnInit {
 
   selectedProject(event)
   {
-    this.projectSelected = event.target.value;
-    console.log(event.target.value);
+    if(event.target.value > 0)
+    {
+      this.projectSelected = event.target.value;
+      console.log(event.target.value);
+    }
   }
     
   getAllCountries()
@@ -309,12 +319,18 @@ export class EventsComponent implements OnInit {
   selectedState(event)
   {
     this.stateSelected = event.target.value;
-    this.addressService.getDistricts(event.target.value).subscribe(data=>{
     this.Show = false
-    this.districts = data
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    this.districtSelected = 0
     this.talukas = []
     this.villages = []
-    })
+    if(event.target.value > 0)
+    {
+      this.addressService.getDistricts(event.target.value).subscribe(data=>{
+      this.districts = data
+      })
+    }
   }
 
   getAllDistricts() 
@@ -328,11 +344,21 @@ export class EventsComponent implements OnInit {
 
   selectedDistrict(event)
   {
-    this.districtSelected = event.target.value;
-    this.addressService.getTalukas(event.target.value).subscribe(data=>{
-    this.talukas = data
-    this.villages = []
-    })
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    if(event.target.value > 0)
+    {
+      this.districtSelected = event.target.value;
+      this.addressService.getTalukas(event.target.value).subscribe(data=>{
+      this.talukas = data
+      this.villages = []
+      })
+    }
+    else{
+      this.talukas = []
+      this.villages = []
+      this.districtSelected = 0
+    }
   }
 
   getAllTalukas() 
@@ -348,7 +374,7 @@ export class EventsComponent implements OnInit {
   {
     this.talukaSelected = event.target.value;
     console.log(event.target.value);
-    if(event.target.value != 0)
+    if(event.target.value > 0)
     {
           this.addressService.getVillages(event.target.value).subscribe(data=>{
           this.villages = data
@@ -400,6 +426,7 @@ export class EventsComponent implements OnInit {
         this.notiService.addNotification(this.notification).subscribe(data=>{
           console.log(data)
           this.openNotifySnackBar()
+          this.router.navigate['admin/events']
           setTimeout(() => { this.getAllEvent(this.page)
             this.showProgressbar=false }, 1000);
         }, error => {
