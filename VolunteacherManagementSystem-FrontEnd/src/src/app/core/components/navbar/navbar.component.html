@@ -1,0 +1,48 @@
+<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" routerLinkActive="active" [routerLink]="['/user/home']"></a>
+    
+    <!-- User -->
+    <ul class="navbar-nav align-items-center d-none d-md-flex">
+      <a [routerLink]="['/user/notifications']" class="display-4 nav-link nav-link-icon" role="button">
+        <i class="ni ni-bell-55"></i>
+      </a>
+      <li class="nav-item" ngbDropdown placement="bottom-right">
+        <a class="nav-link pr-0" role="button" ngbDropdownToggle>
+          <div class="media align-items-center">
+          
+             <span class="avatar avatar-sm rounded-circle">
+              <img alt="Image placeholder" src="{{user.photo}}">
+            </span>
+            <div class="media-body ml-2 d-none d-md-block">
+              <span class="mb-0 text-sm  font-weight-bold">{{user.userName}}</span>
+            </div>
+          </div>
+        </a>
+        <div class="dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
+          <div class=" dropdown-header noti-title">
+            <h6 class="text-overflow m-0">Welcome!</h6>
+          </div>
+          <a routerLinkActive="active" routerLink="/{{userType}}/profile/posts" class="dropdown-item">
+            <i class="ni ni-single-02"></i>
+            <span>My profile</span>
+          </a>
+          <a routerLinkActive="active" routerLink='/{{userType}}/profile/set-profile' class="dropdown-item">
+            <i class="fas fa-portrait"></i>
+            <span>Set Profile Photo</span>
+          </a>
+          <a routerLinkActive="active" routerLink="/{{userType}}/reset-password" class="dropdown-item">
+            <i class="ni ni-lock-circle-open"></i>
+            <span>Change Password</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)=logout()>
+            <i class="ni ni-user-run"></i>
+            <span>Logout</span>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

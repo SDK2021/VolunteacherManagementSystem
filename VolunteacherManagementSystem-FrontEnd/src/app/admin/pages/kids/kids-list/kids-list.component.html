@@ -1,0 +1,70 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary ">
+    <div class="container-fluid mb-0">
+
+    </div>
+
+</div>
+<div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
+    <div class="col-12 col-xl-10 p-0">
+        <div class="p-xl-4" style=" background-color: #dde3f3cc;">
+            
+            <!-- Card header -->
+            <div class="card-header border-0">
+                <div class="col-12">
+                    <h1 class="mb-0 text-center">Kids Reports</h1>
+                    <hr>
+                </div>
+                <app-address></app-address>
+                <div class="p-xl-5">
+                    <div class="card "  style=" background-color: #dde3f3cc;">
+                        
+                        <!-- Card header -->
+                        <div class="card-header">
+                            <!-- Title -->
+                            <h5 class="h3 mb-0">Kids</h5>
+                        </div>
+                        <!-- Card body -->
+
+                        <ng-container *ngIf="showSpinner">
+                            <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
+                            </mat-spinner>
+                          </ng-container>
+                        <ng-container *ngIf="kLength">
+                            <div class="card-body p-0 p-lg-4 ">
+                                <!-- List group -->
+                                <ul class="list-group list-group-flush list my--3">
+                                    <li *ngFor="let k of kidslist" class=" card list-group-item p4 m-4"
+                                        style=" box-shadow: 0px 3px 15px rgba(0,0,0,0.05);">
+                                        <div class="row align-items-center ">
+                                            <div class="col-auto">
+                                                <!-- Avatar -->
+                                                <div class="avatar rounded-circle">
+                                                    <img alt="Image placeholder"
+                                                        src="{{k.photo}}">
+                                                </div>
+                                            </div>
+                                            <div class="col ml--2 p4">
+                                                <h5 class="mb-0">
+                                                    {{k.name}}
+                                                </h5>
+                                                <span class="text-muted text-sm"><b>Age</b> : {{k.age | number: '0.0-0'}}</span><br>
+                                             
+                                                <span class="text-muted text-sm"><b> Standard</b> : {{k. standard}}</span>
+                                            </div>
+                                            <div class="mx-auto d-block col-auto bp2">
+    
+                                                <button routerLink="/admin/kids/{{k.kidId}}/reports" class="btn btn-primary btn-sm" >View Report</button>
+    
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>

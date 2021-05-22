@@ -1,0 +1,252 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <h1 class=" text-white title">{{wish}} {{user.userName}}!</h1>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="showProgressbar">
+  <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+      <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+  </div>
+</ng-container>
+<!-- Page content -->
+<div class="container-fluid mt--7" style="background-color: #172b4d;">
+  <div class="row">
+    <div class="col p-sm-4 p-3 ">
+      <div class="card shadow border-0 pb-8" style="border-radius:2rem;">
+        <ng-container *ngIf="showSpinner">
+          <mat-spinner class="mx-auto mt-5" color="primary" [diameter]="40">
+          </mat-spinner>
+        </ng-container>
+        <div class="">
+          <div class="col-lg-12 p-4">
+            <h2 class="mt-4 mb-4">
+              Shortcuts
+            </h2>
+
+            <div>
+              <div class="row shortcuts ">
+                <a [routerLink]="['/user/content']" class="col-sm-4 col-md-4 col-lg-2 col-xl-2 col-4  shortcut-item">
+                  <span class="shortcut-media avatar rounded-circle bg-gradient-red"
+                    style="box-shadow:  0px 0px 50px  rgba(140, 140, 240, 0.877);">
+                    <i class="ni ni-ruler-pencil"></i>
+                  </span>
+                  <small>Content</small>
+                </a>
+                <a routerLink="/user/sessions/sessions-list" class="col-sm-4 col-md-4 col-lg-2 col-xl-2 col-4 shortcut-item">
+                  <span class="shortcut-media avatar rounded-circle bg-gradient-yellow"
+                    style="box-shadow:  0px 0px 50px rgba(140, 140, 240, 0.877);">
+                    <i class="fas fa-users"></i>
+                  </span>
+                  <small>Attendance</small>
+                </a>
+                <a routerLink="/user/posts" class="col-sm-4 col-md-4 col-lg-2 col-xl-2 col-4 shortcut-item">
+                  <span class="shortcut-media avatar rounded-circle bg-gradient-info"
+                    style="box-shadow:  0px 0px 50px rgba(140, 140, 240, 0.877);">
+                    <i class="ni ni-camera-compact"></i>
+                  </span>
+                  <small>Posts</small>
+                </a>
+                <a routerLink="/user/kids/add-kid" class="col-sm-4 col-md-4 col-lg-2 col-xl-2 col-4  shortcut-item">
+                  <span class="shortcut-media avatar rounded-circle bg-gradient-green"
+                    style="box-shadow:  0px 0px 50px rgba(140, 140, 240, 0.877);">
+                    <i class="fas fa-plus "></i>
+                  </span>
+                  <small>Add Kid</small>
+                </a>
+                <a routerLink="/user/kids/kids-list" class="col-sm-4 col-md-4 col-lg-2 col-xl-2 col-4 shortcut-item">
+                  <span class="shortcut-media avatar rounded-circle bg-gradient-purple"
+                    style="box-shadow:  0px 0px 50px rgba(140, 140, 240, 0.877);">
+                    <i class="ni ni-books"></i>
+                  </span>
+                  <small>Kids Report</small>
+                </a>
+
+                <a routerLink="/user/kids/create-report/kids-list"
+                  class=" col-sm-4 col-md-4 col-lg-2 col-xl-2 col-4 shortcut-item">
+                  <span class="shortcut-media avatar rounded-circle bg-gradient-orange"
+                    style="box-shadow:  0px 0px 50px rgba(140, 140, 240, 0.877);">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                  <small>Create Reports</small>
+                </a>
+              </div>
+            </div>
+
+            <hr class="m-2">
+
+
+            <div class="row justify-content-center px-xl-4 py-4">
+              <div class="col-12 col-xl-8 col-lg-10 ">
+                <h2 class="mt-4 mb-4">
+                  Recent Activities
+                </h2>
+                <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="2500" color="primary" maxWidth="auto"
+                  proportion="55" slides="5" [loop]="true" [hideArrows]="false" [hideIndicators]="true"
+                  [useKeyboard]="true" [useMouseWheel]="false" orientation="ltr">
+                  <mat-carousel-slide #matCarouselSlide *ngFor="let slide of slides; let i = index"
+                    [image]="slide" overlayColor="#00000040" [hideOverlay]="true"></mat-carousel-slide>
+                </mat-carousel>
+              </div>
+            </div>
+
+            <ng-container *ngIf="aLength>0">
+              <div class="row justify-content-center px-xl-3 py-4" >
+                <div class="col-12 col-xl-8 col-lg-10 " [ngClass]="{'overflow' : aLength>3}" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false" >
+                  <hr class="m-2">
+                  <h2 class="mt-4 mb-4">
+                    Announcements
+                  </h2>
+
+                  <ng-container >
+                    <div *ngFor="let a of announcements" class=" card p-4 mb-4 shadow "  >
+                      <div class="row align-items-center">
+                        <div class="col-auto">
+                          <!-- Avatar -->
+                          <div class="avatar rounded-circle">
+                            <img alt="Image placeholder" src="{{a.createdBy.photo}}">
+                          </div>
+                        </div>
+                        <div class="col ml--2">
+                          <h4 class="mb-0">
+                            {{a.createdBy.userName}}
+                          </h4>
+                        </div>
+                      </div>
+                      <h5 class="mt-2 text-muted">
+                        {{a.creationDate | date:'mediumDate'}}
+                      </h5>
+                      <p>
+                        {{a.data}}
+                      </p>
+                      <!-- <div class="icon-actions">
+                          <i class=" display-4 ni ni-like-2 {{liked}}" (click)="like();"></i>
+                          <span class="text-common"></span>
+                        </div> -->
+                    </div>
+                  </ng-container>
+
+
+                </div>
+              </div>
+            </ng-container>
+
+            <br>
+            
+
+            <ng-container *ngIf="nLength>0">
+              <div class="row justify-content-center">
+                <div class="col-xl-8 col-12 col-sm-12 col-md-12 col-lg-10  mb-4">
+                  <h2 class="mt-4 mb-4">
+                    New volunteachers
+                  </h2>
+                </div>
+              </div>
+
+
+
+              <div *ngFor="let u of newUsers" class="row justify-content-center mb-4">
+                <div class="col-xl-8 col-12 col-sm-12 col-md-12 col-lg-10  mb-4">
+
+                  <div class="card shadow-low text-white border-0">
+
+                    <div class=" pt-5 pb-5  pl-4 pr-4 welcome-bg"
+                      style=" background-image: url('../../assets/img/Headers/greet.gif');">
+                      <div>
+                        <h5 class="h2 card-title text-white mb-2">Welcome {{u.user.userName}}</h5>
+                        <p class="card-text">Thank you so much for joining and for sharing your knowledge with our kids.
+                        </p>
+                        <p class="card-text text-sm font-weight-bold">Joined today</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </ng-container>
+
+            <br>
+           
+
+            <ng-container *ngIf="uLength>0">
+              <div *ngFor="let u of users" class="row justify-content-center">
+                <div class="col-xl-8 col-12 col-sm-12 col-md-12 col-lg-10 mb-4">
+                  <h2 class="mt-4 mb-4">
+                    Happy Birtyhday {{u.userName}}
+                  </h2>
+                  <div class="card shadow-low text-white border-0">
+
+                    <div class=" pt-8 pb-6  pl-4 pr-4 welcome-bg"
+                      style=" background-image: url('../../assets/img/banners/happybirthday.gif');background-position: center;">
+                      <div>
+                        <h5 class="display-4 card-title text-center text-dark mb-2"><b>{{u.userName}}</b></h5>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row justify-content-center mt-4">
+                <div class="col-xl-8 col-12 col-sm-12 col-md-12 col-lg-10">
+                  <hr>
+                </div>
+              </div>
+
+
+            </ng-container>
+
+            <br>
+           
+            <ng-container *ngIf="eLength>0">
+              <h2 class="mt-4 mb-4 text-center display-4">
+                Events
+              </h2><br>
+              <div class="row justify-content-center">
+
+                <div *ngFor="let e of events" class="col-xl-6 col-lg-10 mt-4 ">
+                  <div>
+                    <div class="card">
+
+                      <div class="d-flex align-items-center">
+                        <div><img alt="Image placeholder" src="{{e.photo}}"
+                            class="img-fluid rounded cover"></div>
+                      </div>
+                      <div class="card-body" style="background-color: rgba(243, 243, 243, 0.61);">
+
+
+                        <p class="mb-4 display-4 text-center text-black">
+                          {{e.title}}
+
+                        </p>
+                        <p class="mb-4 display-5 text-center text-black">
+                          <b>
+                            {{e.eventData}}
+                          </b>
+                        </p>
+                        <p class=" h4 text-dark text-center">
+                          Event is on {{e.eventDate | date:'mediumDate'}} from {{e.startingTime}} to {{e.endingTime}} at
+                          {{e.village.villageName}}
+                        </p>
+                        <p class="mb-4 display-5 text-center text-black">
+                          You can be a part of this event. Register yourself.
+                        </p>
+
+                        <div class="text-center mt-4 mb-4">
+                          <button  class="btn btn-primary" [disabled]="e.disable == true" (click) = "addEventVolunteacher(e.eventId)">Register now</button>
+                        </div>
+
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,133 @@
+<div class="card-body">
+    <form  [formGroup]="editProfile" (ngSubmit)="saveProfile()">
+      <h6 class="heading-small text-muted mb-4">User information</h6>
+      <div formGroupName="userInfo" class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-first-name">First name</label>
+              <input  formControlName="fname" type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value={{firstName}}>
+              <!-- <input  formControlName="fname" type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" > -->
+              <small class="text-danger" *ngIf="(editProfile.get('userInfo.fname').errors?.required && editProfile.get('userInfo.fname').touched)">First name is required</small>
+              <small class="text-danger" *ngIf="editProfile.get('userInfo.fname').hasError('pattern')">Invalid name</small>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-last-name">Last name</label>
+              <input  formControlName="lname" type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="{{lastName}}">
+              <small class="text-danger" *ngIf="(editProfile.get('userInfo.lname').errors?.required && editProfile.get('userInfo.lname').touched)">Last name is required</small>
+              <small class="text-danger" *ngIf="(editProfile.get('userInfo.lname').errors?.pattern)">Invalid name</small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-gender">Gender</label>
+              <select  formControlName="gender" class="form-control form-control-alternative" id="input-gender">
+                <option value="Select">Select</option>
+                <option value="1">Male</option>
+                <option value="2">Female</option>
+              </select>
+              <small class="text-danger" *ngIf="(editProfile.get('userInfo.gender').errors?.required && editProfile.get('userInfo.gender').touched)">Gender is required</small>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="input-dob" class="form-control-label">DOB</label>
+              <div class="col-md-12">
+                <input  formControlName="dob" class="form-control form-control-alternative" type="date" value="2018-11-23" id="input-dob">
+                <small class="text-danger" *ngIf="(editProfile.get('userInfo.dob').errors?.required && editProfile.get('userInfo.dob').touched)">DOB is required</small>
+              </div>
+            </div>
+          </div>                
+        </div>
+      </div>
+      <hr class="my-4" />
+      <!-- Address -->
+      <h6 class="heading-small text-muted mb-4">Contact information</h6>
+      <div formGroupName="contactInfo" class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-email">Email address</label>
+              <input  formControlName="email" type="email" id="input-email" class="form-control form-control-alternative" value="jesse@example.com">
+              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.email').errors?.required && editProfile.get('contactInfo.email').touched)">Email is required is required</small>
+              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.email').errors?.email)">Invalid email</small>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-phone">Phone Number</label>
+              <input  formControlName="phone" type="text" id="input-phone" class="form-control form-control-alternative" value="9734653363">
+              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.phone').errors?.required && editProfile.get('contactInfo.phone').touched)">Phone Number is required </small>
+              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.phone').errors?.pattern)">Invalid phone number</small>
+            </div>
+          </div>                
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-pincode">Pincode</label>
+              <input  formControlName="pincode" type="text" id="input-pincode" class="form-control form-control-alternative" value="380061" placeholder="Enter Pincode">
+              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.pincode').errors?.required && editProfile.get('contactInfo.pincode').touched)">Pincode is required </small>
+              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.pincode').errors?.pattern)">Invalid pincode</small>
+            </div>
+          </div>
+          <div class="col-lg-4"  hidden = "{{isShow}}" >
+            <div class="form-group">
+              <label class="form-control-label" for="input-village">Village</label>
+              <select  formControlName="village" class="form-control form-control-alternative" id="input-village">
+                <option selected value="0">Select</option>
+                <option [value]="v.villageId" *ngFor="let v of villages">{{v.villageName}}</option>
+              </select>
+              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.village').errors?.required && editProfile.get('contactInfo.village').touched)">Village is required </small>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-city">District</label>
+              <select  formControlName="city" class="form-control form-control-alternative" id="input-city">
+                <option class="combobox" value="0" selected>Select</option>
+                <option [value]="d.districtId" *ngFor="let d of districts" [selected]="d.districtId==141">{{d.districtName}}</option>
+              </select>
+              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.city').errors?.required && editProfile.get('contactInfo.city').touched)">City is required</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4" />
+      <!-- Description -->
+      <h6 class="heading-small text-muted mb-4">Other information</h6>
+      <div formGroupName="otherInfo" class="pl-lg-4">
+        <div class="form-group">
+          <label>My Education</label>
+          <textarea  formControlName="education" rows="4" class="form-control form-control-alternative" placeholder="Education">Complted M.Sc in AI ML ,currently working at Google. Pursuing PhD in Canada</textarea>
+          <small class="text-danger" *ngIf="(editProfile.get('otherInfo.education').errors?.required && editProfile.get('otherInfo.education').touched)">Education is required</small>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group"> 
+              <label class="form-control-label" for="input-employer">Employer name</label>
+              <input  formControlName="employer" id="input-employer" class="form-control form-control-alternative" placeholder="Employer Name" value="University of Computer Science" type="text">
+              <small class="text-danger" *ngIf="(editProfile.get('otherInfo.employer').errors?.required && editProfile.get('otherInfo.employer').touched)">Employer name is required </small>
+            </div>
+          </div>
+        </div>
+        <div class="row" hidden = "{{isShow}}">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="form-control-label" for="input-school">School Name</label>
+              <input  formControlName="schoolName" id="input-school" class="form-control form-control-alternative" placeholder="School Name" value="Gyanda girls" type="text">
+              <small class="text-danger" *ngIf="(editProfile.get('otherInfo.schoolName').errors?.required && editProfile.get('otherInfo.schoolName').touched)">School Name is required</small>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-4 mb-4">
+          <!-- [disabled]="!editProfile.valid"  -->
+          <button  type="submit" href="#!" class="btn btn-info">Save</button>
+        </div>
+      </div>   
+    </form>
+  </div>

@@ -1,0 +1,150 @@
+<nav class="navbar navbar-vertical navbar-expand-md navbar-light" id="sidenav-main" style="background-color: #0C0032;">
+    <div class="container-fluid">
+      <!-- Toggler -->
+      <button class="navbar-toggler" type="button" (click)="isCollapsed=!isCollapsed"
+        aria-controls="sidenav-collapse-main">
+        <i class="fas fa-bars text-white"></i>
+      </button>
+      <!-- Brand -->
+      <a class="navbar-brand pt-0" routerLinkActive="active" [routerLink]="['/admin/dashboard']">
+        <img src="./assets/img/brand/AIREP-logo_.png" height="" class="navbar-brand-img" alt="...">
+      </a>
+      <!-- User -->
+      <ul class="nav align-items-center d-md-none">
+      
+        <li class="nav-item" ngbDropdown placement="bottom-right">
+          <a class="nav-link" role="button" ngbDropdownToggle>
+            <div class="media align-items-center">
+              <span class="avatar avatar-sm rounded-circle">
+                <img alt="Image placeholder" src="{{user.photo}}">
+              </span>
+            </div>
+          </a>
+          <div class="dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
+            <div class=" dropdown-header noti-title">
+              <h6 class="text-overflow m-0">Welcome!</h6>
+            </div>
+            <a routerLinkActive="active" routerLink="/{{userType}}/profile/posts" class="dropdown-item">
+              <i class="ni ni-single-02"></i>
+              <span>My profile</span>
+            </a>
+            <a routerLinkActive="active" routerLink="/{{userType}}/profile/set-profile" class="dropdown-item">
+              <i class="fas fa-portrait"></i>
+              <span>Set Profile Photo</span>
+            </a>
+            <a routerLinkActive="active" routerLink="/{{userType}}/reset-password" class="dropdown-item">
+              <i class="ni ni-lock-circle-open"></i>
+              <span>Change Password</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#!" class="dropdown-item">
+              <i class="ni ni-user-run"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        </li>
+      </ul>
+      <!-- Collapse -->
+      <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed" id="sidenav-collapse-main">
+        <!-- Collapse header -->
+        <div class="navbar-collapse-header d-md-none">
+          <div class="row">
+            <div class="col-6 collapse-brand">
+              <a routerLinkActive="active" [routerLink]="['/dashboard']">
+                <img src="./assets/img/brand/blue.png">
+              </a>
+            </div>
+            <div class="col-6 collapse-close">
+              <button type="button" class="navbar-toggler" (click)="isCollapsed=!isCollapsed">
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Navigation -->
+        <ul class="navbar-nav">
+          <!-- <li  nav-item>
+            <a routerLinkActive="active" [routerLink]="[dashboard]" class="nav-link">
+              <i class="ni ni-single-02 text-pink"></i>
+             Dashboard
+            </a>
+          </li>
+          <li  nav-item>
+            <a routerLinkActive="active" [routerLink]="[posts]" class="nav-link">
+              <i class="ni ni-single-02 text-pink"></i>
+            Timeline
+            </a>
+          </li>
+          <li  nav-item>
+            <a routerLinkActive="active" [routerLink]="[volunteachers]" class="nav-link">
+              <i class="ni ni-single-02 text-pink"></i>
+              Volunteacher
+            </a>
+          </li>
+
+          <li  nav-item>
+            <a routerLinkActive="active" [routerLink]="[kids-list]" class="nav-link">
+              <i class="ni ni-single-02 text-pink"></i>
+              Kids
+            </a>
+          </li>
+
+          <li  nav-item>
+            <a routerLinkActive="active" [routerLink]="[projects]" class="nav-link">
+              <i class="ni ni-single-02 text-pink"></i>
+             Projects
+            </a>
+          </li>
+
+          <li  nav-item>
+            <a routerLinkActive="active" [routerLink]="[]" class="nav-link">
+              <i class="ni ni-single-02 text-pink"></i>
+             Schedule
+            </a>
+          </li>
+
+          <li  nav-item>
+            <a routerLinkActive="active" [routerLink]="[dashboard]" class="nav-link">
+              <i class="ni ni-single-02 text-pink"></i>
+              School
+            </a>
+          </li>
+
+          <li  nav-item>
+            <a routerLinkActive="active" [routerLink]="[dashboard]" class="nav-link">
+              <i class="ni ni-single-02 text-pink"></i>
+              Donation
+            </a>
+          </li>
+
+          <li  nav-item>
+            <a routerLinkActive="active" [routerLink]="[dashboard]" class="nav-link">
+              <i class="ni ni-single-02 text-pink"></i>
+             Reports
+            </a>
+          </li> -->
+
+          <li *ngFor="let menuItem of menuItems;let i=index " nav-item >
+            <a routerLinkActive="active" (click)="showChildren(i)" [routerLink]="[menuItem.path]" class="nav-link text-white">
+              <i class="{{menuItem.icon}}"></i>
+              {{menuItem.title}} <div class="text-right "> <span style="float: right;"><i class="{{menuItem.adjustment}}  text-sm {{menuItem.class}}" style="float: right;"></i></span></div>
+            </a>
+           
+            <ng-container  *ngIf="menuItem.showChild">
+              <div class="pl-5 pr-0">
+                <li *ngFor="let m of menuItem.children"  nav-item>
+                  <a routerLinkActive="active" [routerLink]="[m.path]" class="nav-link text-white">
+                    <!-- <i class="fas fa-circle text-primary" style="font-size: 7px;"></i> -->
+                    {{m.title}}
+                  </a>
+                </li>
+              </div>
+            </ng-container>
+
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

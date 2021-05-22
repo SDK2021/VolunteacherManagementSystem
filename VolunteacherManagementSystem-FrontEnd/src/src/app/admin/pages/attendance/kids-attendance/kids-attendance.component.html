@@ -1,0 +1,89 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary ">
+    <div class="container-fluid mb-0">
+        
+    </div>
+    
+</div>
+<div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
+  <div class="col-12 col-xl-10 ">
+    <div class="card shadow p-4">
+        <!-- Card header -->
+        <div class="card-header border-0">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="mb-0 text-center">Kids Attendance</h1>
+                    <hr>
+                </div>
+                <div class="col-12">
+                    <div class="row justify-content-center mb-4">
+                        <div class="col-xl-10 mx-auto d-block">
+    
+                            <form class="example-container ">
+                            <div class="col-lg-6 col-md-7 col-sm-7 mx-auto d-block">
+                                <div class="form-group mb-0">
+                                    <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
+                                        <div class="input-group input-group-alternative p-0 border border-primary"
+                                            style="border-radius: 30px; ">
+                                            <div class="input-group-prepend  ">
+                                                <span class="input-group-text p-0 m-2"><i class="fas fa-search"></i></span>
+                                            </div>
+                                            <input class="form-control p-0 " style="border-radius: 30px;"
+                                                placeholder="Search" type="text" (focus)="focus = true"
+                                                (blur)="focus = false" [(ngModel)]="search" name="search">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                
+                                <th>
+                                    <h4>Kid</h4>
+                                </th>
+                                <th>
+                                    <h4>Name</h4>
+                                </th>
+                                <th>
+                                    <h4>Present ?</h4>
+                                </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let a of attendances | kids : search ">
+                                <td class="table-user">
+                                    <div class="col-auto">
+                                        <!-- Avatar -->
+                                        <div class="avatar rounded-circle ">
+                                            <img alt="Image placeholder" class="img-responsive"
+                                                src="../../assets/img/theme/{{a.photo}}">
+                                        </div>
+                                    </div>
+                                </td>
+                                
+                                <td>
+                                    <h3>{{a.name}}</h3>
+                                </td>
+                                <td>
+                                   <i class="display-4 {{a.icon}} {{a.color}}"></i>
+                                </td>
+                                
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        <!-- Light table -->
+        
+    </div>
+  </div>
+  
+    </div>

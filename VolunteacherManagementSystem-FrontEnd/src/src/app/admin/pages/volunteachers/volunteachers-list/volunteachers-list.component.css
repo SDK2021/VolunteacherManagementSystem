@@ -1,0 +1,5 @@
+.profile:hover
+{
+    border: 1px solid blue;
+    transform: scale(1.04,1.04);
+}

@@ -1,0 +1,171 @@
+<ng-container *ngIf="showProgressbar">
+  <div style="z-index: 100;position: -webkit-sticky;position:sticky;top:0;">
+    <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+  </div>
+</ng-container>
+
+<!-- Page content -->
+<ng-container *ngIf="showForm">
+  <div class="header bg-gradient-danger py-7 py-lg-8">
+    <div class="container">
+      <div class="header-body text-center mb-7">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 col-md-6">
+            <h1 class="text-white display-4">Welcome!</h1>
+            <h2 class="text-lead text-light ">Become a volunteacher.</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </div>
+  <div class="container mt--9 pb-5">
+    <!-- Table -->
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-9 ">
+        <div class="card bg-secondary shadow border-0">
+          <div class="card-header bg-transparent pb-5">
+  
+            <div class="card-body px-lg-5 py-lg-5">
+              <div class="text-center text-muted mb-4">
+                <h1>Sign Up</h1>
+              </div>
+              <form (ngSubmit)="register()" #form="ngForm">
+                <div class="alert alert-danger" role="alert" *ngIf="invalidEmail == true">
+                  You have already requested.
+                </div>
+                <div class="alert alert-danger" role="alert"
+                    *ngIf="invalidMobileNumber == true && invalidEmail == false">
+                    You have already requested.
+                  </div>
+                <!-- <div class="input-group input-group-alternative mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-single-02"></i></span>
+                </div>
+                <select  name="type" [(ngModel)]="applicantRequest.userType"  class="form-control form-control-alternative" id="input-gender">
+                  <option value="1">Admin</option>
+                  <option value="2">Volunteacher</option>
+                  <option value="3">Local Volunteacher</option>
+                </select>
+              </div> -->
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-name">Name</label>
+                    <input maxlength="30" #name="ngModel" name="name" [(ngModel)]="applicantRequest.name" type="text"
+                      id="input-name" class="form-control form-control-alternative" placeholder="Name" required
+                      pattern="[a-zA-Z ]{3,30}">
+                    <small *ngIf="name.errors?.required && name.touched" class="text-danger">Name is required</small>
+                    <small *ngIf="name.errors?.pattern" class="text-danger">Invalid Name</small>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Email Address</label>
+                    <input name="email" #email="ngModel" [(ngModel)]="applicantRequest.emailId" type="text"
+                      id="input-email" class="form-control form-control-alternative" placeholder="Email Address" required
+                      email maxlength="40">
+                    <small *ngIf="email.errors?.required && email.touched" class="text-danger">Email is required</small>
+                    <small *ngIf="email.errors?.email || email.errors?.maxlength" class="text-danger">Invalid
+                      Email</small>
+                  </div>
+                 
+                </div> 
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-phone">Contact No</label>
+                    <input #phone="ngModel" name="phone" [(ngModel)]="applicantRequest.phoneNumber" type="text"
+                      id="input-phone" class="form-control form-control-alternative" placeholder="Contact No" required
+                      pattern="[0-9]{10}" maxlength="10">
+                    <small *ngIf="phone.errors?.required && phone.touched" class="text-danger">Contact Number is
+                      required</small>
+                    <small *ngIf="phone.errors?.pattern" class="text-danger">Invalid Contact Number</small>
+                  </div>
+                  
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-gender">Gender</label>
+  
+                    <div class="pl-lg-4">
+                      <div class="row">
+                        <div class="col-lg-3 col-4 ml-4">
+                          <div class="form-group">
+  
+                            <input #gender="ngModel" value="1" [(ngModel)]="applicantRequest.gender" name="gender"
+                              class="form-check-input" type="radio" name="flexRadioDefault" id="input-male" required>
+                            <label class="form-check-label" for="input-male">
+                              Male
+                            </label>
+                          </div>
+                        </div>
+  
+                        <div class="col-lg-3 col-4 ml-4">
+                          <div class="form-group">
+                            <input #gender="ngModel" value="2" [(ngModel)]="applicantRequest.gender" name="gender"
+                              class="form-check-input" type="radio" name="flexRadioDefault" id="input-female" required>
+                            <label class="form-check-label" for="input-female">
+                              Female
+                            </label>
+                          </div>
+                        </div><br>
+                        <small *ngIf="!gender.valid&& form.submitted" class="text-danger">Gender is required</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+  
+                <div class="text-center">
+                  <button [disabled]="!form.valid" type="submit" class="btn btn-primary mt-4">Create account</button>
+                </div>
+              </form>
+            </div>   
+          </div>
+        </div>
+      </div>
+    </div>
+   </div> 
+</ng-container>
+
+<ng-container *ngIf="!showForm">
+  <div class="header bg-gradient-danger py-7 py-lg-8">
+    <div class="container">
+      <div class="header-body text-center mb-7">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 col-md-6">
+            <h1 class="text-white display-4">Thank you for registering !</h1>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </div>
+  <div class="container mt--9 pb-5">
+    <!-- Table -->
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-9 ">
+        <div class="card bg-secondary shadow border-0">
+          <div class="card-header bg-transparent pb-5">
+  
+            <div class="card-body px-lg-5 py-lg-5 p-2">
+              <div class="text-center text-muted mb-4">
+                <h1 class="mb-4">Your request to join has been successfully registered.</h1>
+                <p><strong>You will be notified by email when your request will be accepted.</strong></p>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   </div> 
+</ng-container>

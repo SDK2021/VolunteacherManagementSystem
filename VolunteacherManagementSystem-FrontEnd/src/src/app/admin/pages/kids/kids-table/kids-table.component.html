@@ -1,0 +1,204 @@
+<div class=" pb-0 pt-0 pt-md-6 bg-primary">
+    <!-- style="background-color:#3687f1" -->
+    <div class="container-fluid mb-0">
+
+    </div>
+
+</div>
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
+<div class=" row justify-content-center mx-0 mt-0 py-4" >
+    <div class="col-12 col-xl-10 p-0">
+        <div class="card shadow p-4">
+            <!-- Card header -->
+            <div class="card-header border-0">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mb-0 text-center">Kids</h1>
+                        <hr>
+                    </div>
+
+                    <ng-container *ngIf="showSpinner">
+                        <div class="col-12">
+                         <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="40">
+                         </mat-spinner>
+                        </div>
+                    </ng-container>    
+                    
+                    <ng-container *ngIf="noKids">
+                        <div class="col-12 col-xl-10 mx-auto d-block my-xl-6 my-4 py-xl-7 py-6">
+                            <p class="text-center text-xl"><i class="fas fa-child"></i></p>
+                            <p class="text-xl text-center text-lg"><b>No kids details yet.</b></p>
+                        </div>
+                      </ng-container>
+
+                    <ng-container *ngIf="kLength>0">
+                        <div class="col-12">
+                            <div class="row justify-content-center mb-4">
+                                <div class="col-xl-10 mx-auto d-block">
+    
+                                    <form class="example-container ">
+                                        <div class="col-lg-6 col-md-7 col-sm-7 mx-auto d-block">
+                                            <div class="form-group mb-0">
+                                                <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
+                                                    <div class="input-group input-group-alternative p-0 border border-primary"
+                                                        style="border-radius: 30px; ">
+                                                        <div class="input-group-prepend  ">
+                                                            <span class="input-group-text p-0 m-2"><i
+                                                                    class="fas fa-search"></i></span>
+                                                        </div>
+                                                        <input autocomplete="off" class="form-control p-0 " style="border-radius: 30px;"
+                                                            placeholder="Search" type="text" (focus)="focus = true"
+                                                            (blur)="focus = false" [(ngModel)]="search" name="search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mx-auto d-block text-center mb-2">
+                            <small class=" text-muted text-sm">Search by name, village, area, level, group, school or standard</small>
+                        </div>
+                        <div class="col-12">
+                            <p class="text-right text-primary mr-3"> <i style="cursor: pointer;" (click)="download()"  class="fas fa-download icon-btn text-xl" ></i></p>
+                        </div>
+                        <div class="table-responsive">
+    
+                            <table class="table align-items-center table-flush table-hover" id="kidsTable">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>
+                                            <h3 >No.</h3>
+                                        </th>
+                                        <th>
+                                            <h3>Photo </h3>
+                                        </th>
+                                        <th>
+                                            <h3>Name</h3>
+                                        </th>
+                                        <th>
+                                            <h3>gender</h3>
+                                        </th>
+                                        <th>
+                                            <h3>Dob</h3>
+                                        </th>
+                                        <th>
+                                            <h3>standard</h3>
+                                        </th>
+                                        <th>
+                                            <h3>level</h3>
+                                        </th>
+                                        <th>
+                                            <h3>Area</h3>
+                                        </th>
+                                        <th>
+                                            <h3>group</h3>
+                                        </th>
+                                        <th>
+                                            <h3>village</h3>
+                                        </th>
+    
+                                        <th>
+                                            <h3>school</h3>
+                                        </th>
+    
+                                        <th>
+                                            <h3 class="text-center">Delete</h3>
+                                        </th>
+    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let k of kids | kids : search ;index as i ;trackBy:trackById">
+                                        <td class="table-user">
+                                            <h3>{{i+1}}</h3>
+                                        </td>
+                                        <td>
+                                            <div class="col-auto">
+                                                <!-- Avatar -->
+                                                <div class="avatar rounded-circle ">
+                                                    <img alt="Image placeholder" class="img-responsive" src="{{k.photo}}">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h3>{{k.name}}</h3>
+                                        </td>
+    
+                                        <td>
+                                            <h3 *ngIf="k.gender == 1">Male</h3>
+                                            <h3 *ngIf="k.gender == 2">Female</h3>
+                                        </td>
+    
+                                        <td>
+                                            <h3>{{k.dob | date:'mediumDate'}}</h3>
+                                        </td>
+    
+                                        <td>
+                                            <h3>{{k.standard}}</h3>
+                                        </td>
+    
+                                        <td>
+                                            <h3 *ngIf="k.level == 1">Aatma Shiksha</h3>
+                                            <h3 *ngIf="k.level == 2">Aatma Shodh</h3>
+                                            <h3 *ngIf="k.level == 3">Aatma Vishesh</h3>
+                                        </td>
+    
+                                        <td>
+                                            <h3>{{k.area.areaName}}</h3>
+                                        </td>
+    
+                                        <td>
+                                            <h3>{{k.group.groupName}}</h3>
+                                        </td>
+    
+                                        <td>
+                                            <h3>{{k.village.villageName}}</h3>
+                                        </td>
+    
+                                        <td>
+                                            <h3>{{k.school}}</h3>
+                                        </td>
+    
+    
+    
+    
+    
+                                        <td style="cursor: pointer;" (click)="delete(k.kidId)" class="text-center">
+                                            <p class="text-center mb-0" mat-button> <i
+                                                    class="fas fa-trash text-danger text-lg"></i></p>
+                                        </td>
+    
+                                    </tr>
+                                </tbody>
+                            </table>
+                              
+                        </div>
+                        <div class="col-6 pl-0 mx-auto d-block">
+                            <div class="row justify-content-center">
+                                <div style="cursor: pointer;" class="col-auto mt-1">
+                                    <div  *ngIf="!previousDisabled" class="icon  icon-shape bg-primary text-white rounded-circle shadow"  (click)="previousPage()">
+                                      <i class="fas fa-angle-double-left"></i>
+                                    </div>
+                                  </div>
+                                <div style="cursor: pointer;" class="col-auto  mt-1" >
+                                  <div *ngIf="!nextDisabled" class="icon icon-shape bg-primary text-white rounded-circle shadow" (click)="nextPage()">
+                                    <i  class="fas fa-angle-double-right"></i>
+                                  </div>
+                                </div>
+                            </div>
+                            
+                         </div> 
+                    </ng-container>
+                </div>
+                <!-- Light table -->
+
+            </div>
+        </div>
+
+    </div>

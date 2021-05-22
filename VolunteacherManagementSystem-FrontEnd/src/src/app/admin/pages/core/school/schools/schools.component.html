@@ -1,0 +1,391 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary ">
+    <div class="container-fluid mb-0">
+
+    </div>
+
+</div>
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
+<div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
+    <div class="col-12 col-xl-10 p-0">
+        <div class="card shadow p-4">
+            <!-- Card header -->
+            <div class="card-header border-0">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mb-0 text-center">Schools</h1>
+                        <hr>
+                    </div>
+                    <div class="col-12">
+                        <app-tabs (showTab_1)="showTab1($event)" (showTab_2)="showTab2($event)"></app-tabs>
+
+                    </div>
+
+                    <ng-container *ngIf="tab1">
+                        <div class="col-12 justify-content-center">
+                            <form class="mt-5" (ngSubmit)="addSchool(form)" #form="ngForm">
+
+                                <div class="row justify-content-center">
+                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10 ">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-name">School Name</label>
+                                            <input type="text" id="input-name"
+                                                class="form-control form-control-alternative" placeholder="School Name"
+                                                name="name" #sname="ngModel" [(ngModel)]="school.schoolName" required
+                                                maxlength="30">
+                                            <small *ngIf="sname.errors?.required && sname.touched"
+                                                class="text-danger">School name is
+                                                required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-7 col-md-10 col-lg-6 col-xl-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select State</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':stateSelected==0&&stateTouched}" 
+                                            id="input-group" (change)= "selectedState($event)" >
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="s.stateId" [selected]="s.stateId == 7"
+                                                    *ngFor="let s of states;trackBy: trackStatesById">{{s.stateName}}</option>
+                                            </select>                                            
+                                            <div class="invalid-feedback">
+                                                Please select a valid state.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-10 col-lg-6 col-xl-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select District</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':districtSelected==0&&districtTouched}" 
+                                            id="input-group" (change)= "selectedDistrict($event)">
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="d.districtId"  [selected]="d.districtId==141&&Show"
+                                                    *ngFor="let d of districts;trackBy: trackDistrictsById">{{d.districtName}}
+                                                </option>
+                                            </select>                                            
+                                            <div class="invalid-feedback">
+                                                Please select a valid District.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-10 col-lg-6 col-xl-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Taluka</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':talukaSelected==0&&talukaTouched}" 
+                                            id="input-group" (change)= "selectedTaluka($event)" >
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="t.talukaId" [selected]="t.talukaId==35&&Show"
+                                                    *ngFor="let t of talukas;trackBy: trackTalukasById">{{t.talukaName}}
+                                                </option>
+                                            </select>                                            
+                                            <div class="invalid-feedback">
+                                                Please select a valid Taluka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-10 col-lg-6 col-xl-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Village</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':villageSelected==0&&villageTouched}" 
+                                            id="input-group" (change)= "selectedVillage($event)">
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="v.villageId"
+                                                    *ngFor="let v of villages;trackBy: trackTalukasById">{{v.villageName}}
+                                                </option>
+                                            </select>                                           
+                                            <div class="invalid-feedback">
+                                                Please select a valid Village.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-phone">Phone Number</label>
+                                            <input type="text" id="input-phone" 
+                                                class="form-control form-control-alternative" placeholder="Phone Number"
+                                                name="phone" #phone="ngModel" [(ngModel)]="school.phoneNumber" required
+                                                pattern="[0-9]{10}" maxlength="10">
+                                            <small *ngIf="phone.errors?.required && phone.touched"
+                                                class="text-danger">Phone number is
+                                                required</small>
+                                            <small *ngIf="phone.errors?.pattern"
+                                                class="text-danger">Invalid phone number
+                                            </small>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-pincode">Pincode</label>
+                                            <input type="text" id="input-pincode"
+                                                class="form-control form-control-alternative" placeholder="Pincode"
+                                                name="pincode" #pincode="ngModel" [(ngModel)]="school.pincode" required pattern="[0-9]{6}">
+                                            <small *ngIf="pincode.errors?.required && pincode.touched"
+                                                class="text-danger">Pincode number is
+                                                required</small>
+                                            <small *ngIf="pincode.errors?.pattern"
+                                                class="text-danger">Invalid pincode
+                                            </small>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10 ">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-startdate">Starting
+                                                Date</label>
+                                            <input type="text" id="input-startdate"
+                                                class="form-control form-control-alternative"
+                                                placeholder="Starting Date" name="startdate" #date="ngModel" [(ngModel)]="school.startingDate" required onfocus="(this.type='date')">
+                                                <small *ngIf="date.errors?.required && date.touched"
+                                                class="text-danger">Starting date is required</small>    
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-lab">Total Labs</label>
+                                            <input type="number" id="input-lab"
+                                                class="form-control form-control-alternative"  placeholder="Total Lab"
+                                                name="lab" #labs="ngModel" [(ngModel)]="school.totalLabs" required >
+                                                <small *ngIf="labs.errors?.required && labs.touched"
+                                                class="text-danger">Total labs are required</small>
+                                                <!-- <small *ngIf="labs.errors?.minlength"
+                                                class="text-danger">range</small> -->
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-students">Total
+                                                Students</label>
+                                            <input type="number" id="input-students"
+                                                class="form-control form-control-alternative" 
+                                                placeholder="Total Students" name="students" #students="ngModel" [(ngModel)]="school.totalStudent" required>
+                                                <small *ngIf="students.errors?.required && students.touched"
+                                                class="text-danger">Total students are required</small>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-12 col-sm-7 col-md-10 col-lg-6 col-xl-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Status</label>
+                                            <select [(ngModel)]="school.status" name="status" class="form-control form-control-alternative" id="input-status">
+                                                <option class="combobox" value="1"
+                                                    *ngFor="let s of status">{{s}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10 ">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-stream">Stream</label>
+                                            <select required [(ngModel)]="school.stream" [ngClass]="{'ng-invalid':school.stream==0&&streamTouched}" class="form-control form-control-alternative" id="input-stream"
+                                                name="stream">
+                                                <option selected value="0">Select</option>
+                                                <option *ngFor="let s of stream" [value]='s' [selected]="s =='Primary School'">{{s}}</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a valid Stream.
+                                            </div>                                           
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10 ">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-status">Status</label>
+                                            <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':school.status==0&&statusTouched}" id="input-status"
+                                                name="status" [(ngModel)]="school.status" >
+                                                <option value="0" selected>Select</option>
+                                                <option *ngFor="let s of status"  [value]="status.indexOf(s)">{{s}}</option>
+                                            </select>
+                                
+                                            <div class="invalid-feedback">
+                                                Please select a valid Status.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-8 col-lg-6 col-12 col-sm-7 col-md-10 ">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-name">Requirements</label>
+                                            <textarea type="text" id="input-requirement" rows="3"
+                                                class="form-control form-control-alternative" placeholder="Requirements"
+                                                name="requirements" [(ngModel)]="school.requirements" >  </textarea>
+                                        </div>
+                                    </div>
+                                   
+
+                                   
+                                  
+                                        <div class="col-12 mt-4 mb-2 ">
+                                            <button [disabled]="!form.valid" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
+                                                <span class="btn-inner--text ">Submit</span>
+                                            </button>
+                                          </div>
+                                
+    
+                               
+                                </div>
+
+                            </form>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <!-- Light table -->
+            <ng-container *ngIf="tab2">
+                <ng-container *ngIf="showSpinner">
+                    <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
+                    </mat-spinner>
+                  </ng-container>
+                <ng-container *ngIf="noSchools">
+                    <div class="col-12 col-xl-10 mx-auto d-block my-xl-4 my-6 py-xl-6 py-6">
+                        <p class="text-center text-xl"><i class="fas fa-school"></i></p>
+                        <p class="text-xl text-center text-lg"><b>No schools yet.</b></p>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="sLength">
+                    <div class="row justify-content-center mb-4">
+                        <div class="col-xl-10 mx-auto d-block">
+    
+                            <form class="example-container ">
+                                <div class="col-lg-6 col-md-7 col-sm-7 mx-auto d-block">
+                                    <div class="form-group mb-0">
+                                        <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
+                                            <div class="input-group input-group-alternative p-0 border border-primary"
+                                                style="border-radius: 30px; ">
+                                                <div class="input-group-prepend  ">
+                                                    <span class="input-group-text p-0 m-2"><i
+                                                            class="fas fa-search"></i></span>
+                                                </div>
+                                                <input autocomplete="off" class="form-control p-0 " style="border-radius: 30px;"
+                                                    placeholder="Search" type="text" (focus)="focus = true"
+                                                    (blur)="focus = false" [(ngModel)]="search" name="search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                            </form>
+                        </div>
+                    </div>
+                    <div class="text-center mb-2">
+                        <small class="text-muted text-sm">Search by school name, stream or status</small>
+                    </div>
+                    <div> <p  class="text-right text-primary mr-3 ">  <i  (click)="download()" style="cursor: pointer;" class="fas fa-download icon-btn text-xl"></i></p></div>
+                    <div class="table-responsive mt-4">
+                       
+                        <table class="table align-items-center table-flush table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>
+                                        <h3>No</h3>
+                                    </th>
+                                    <th>
+                                        <h3>School Name</h3>
+                                    </th>
+                                    <th>
+                                        <h3>phone No</h3>
+                                    </th>
+                                    <th>
+                                        <h3>Pincode</h3>
+                                    </th>
+                                    <th>
+                                        <h3>Starting Date</h3>
+                                    </th>
+                                    <th>
+                                        <h3>Stream</h3>
+                                    </th>
+                                    <th>
+                                        <h3>Total labs</h3>
+                                    </th>
+                                    <th>
+                                        <h3>Total Students</h3>
+                                    </th>
+                                    <th>
+                                        <h3>Status</h3>
+                                    </th>
+                                    <th>
+                                        <h3 class="text-center">Edit</h3>
+                                    </th>
+                                    <th>
+                                        <h3 class="text-center">Delete</h3>
+                                    </th>
+    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let s of schools | school:search ;let i=index ; trackBy:trackById">
+                                    <td class="table-user">
+                                        <h3>{{i+1}}</h3>
+                                    </td>
+                                    <td class="table-user">
+                                        <h3>{{s.schoolName}}</h3>
+                                    </td>
+                                    <td class="table-user">
+                                        <h3>{{s.phoneNumber}}</h3>
+                                    </td>
+                                    <td class="table-user">
+                                        <h3>{{s.pincode}}</h3>
+                                    </td>
+                                    <td class="table-user">
+                                        <h3>{{s.startingDate | date:'mediumDate'}}</h3>
+                                    </td>
+                                    <td class="table-user">
+                                        <h3>{{s.stream}}</h3>
+                                    </td>
+                                    <td class="table-user">
+                                        <h3>{{s.totalLabs}}</h3>
+                                    </td>
+                                    <td class="table-user">
+                                        <h3>{{s.totalStudent}}</h3>
+                                    </td>
+                                    <td>
+                                        <h3 *ngIf="s.status === 1">Good</h3>
+                                        <h3 *ngIf="s.status === 2">Better</h3>
+                                        <h3 *ngIf="s.status === 3">Under construction</h3>
+                                    </td>
+                                    <td routerLink="/admin/schools/{{s.schoolId}}/edit">
+                                        <div class=" text-center ">
+                                            <i  class="fas fa-edit text-lg text-primary"></i>
+                                        </div>
+                                    </td>
+                                    <td  (click)="delete(s.schoolId)">
+                                        <div class="text-center ">
+                                            <i mat-button
+                                                class="fas fa-trash text-lg text-danger"></i>
+                                        </div>
+                                    </td>
+    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row pl-0">
+                        <div style="cursor: pointer;" class="col-6 mt-1">
+                            <div  *ngIf="!previousDisabled" class="icon icon-shape bg-primary text-white rounded-circle shadow"  (click)="previousPage()">
+                              <i class="fas fa-angle-double-left"></i>
+                            </div>
+                          </div>
+                        <div style="cursor: pointer;" class="col-6 mt-1" >
+                          <div *ngIf="!nextDisabled" class="icon icon-shape bg-primary text-white rounded-circle shadow" (click)="nextPage()">
+                            <i  class="fas fa-angle-double-right"></i>
+                          </div>
+                        </div>
+                        
+                     </div> 
+                </ng-container> 
+            </ng-container>
+        </div>
+    </div>
+
+</div>

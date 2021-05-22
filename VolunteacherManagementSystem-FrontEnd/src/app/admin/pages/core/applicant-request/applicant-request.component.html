@@ -1,0 +1,75 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary ">
+    <div class="container-fluid mb-0">
+
+    </div>
+
+</div>
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
+<div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
+    <div class="col-12 p-0">
+        <div class="card shadow p-4">
+            <!-- Card header -->
+            <div class="card-header p-0 border-0">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mb-0 text-center">Requests</h1>
+                        <hr>
+                        <ng-container *ngIf="showSpinner">
+                            <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
+                            </mat-spinner>
+                          </ng-container>
+                        <ng-container *ngIf="noRequests">
+                            <div class="col-12 col-xl-10 mx-auto d-block my-xl-4 my-6 py-xl-6 py-6">
+                                <p class="text-center text-xl"><i class="fas fa-users"></i></p>
+                                <p class="text-xl text-center text-lg"><b>No user requests yet.</b></p>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="rLength">
+                            <div class="row justify-content-center"  infiniteScroll [infiniteScrollDistance]="0" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" >
+                                <div *ngFor="let a of applicantRequests;trackBy:myFun" class="col-xl-8 col-lg-11  col-12">
+                                    <div class="card shadow card-stats mb-4 ">
+                                        <div class="card-body">
+                                            <div class="row justify-content-center mx-0">
+                                                <div class="col-12">
+                                                    <h6 class=" mb-4 ">
+                                                        <span class=" h4 text-dark py-1 px-3 text-white" style="border-radius: 20px;background-color:blueviolet">
+                                                           {{a.requestDate | date : 'mediumDate'}}</span>
+                                                    </h6>
+                                                </div>
+                                                <!-- <div class="col-auto mt-1">
+                                                    <div
+                                                        class="icon icon-shape text-white rounded-circle shadow bg-primary">
+                                                        <i class="fas fa-users"></i>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col">
+                                                    You got joining request from <b>{{a.name}}</b>.You can contact by
+                                                    <b>{{a.emailId}}</b>
+                                                    or <b>{{a.phoneNumber}}</b>
+                                                </div>
+                                                <div class="col-sm-auto col-12 text-center m-3">
+                                                    <i  style="cursor: pointer;" class="fas fa-check text-lg text-success mr-4"(click)="accept(a.requestId)"></i>
+                                                    <i style="cursor: pointer;" class="fas fa-times text-lg text-danger" (click)="denied(a.requestId)"></i>
+                                                </div>
+    
+                                            </div>
+    
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                          
+                        </ng-container>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

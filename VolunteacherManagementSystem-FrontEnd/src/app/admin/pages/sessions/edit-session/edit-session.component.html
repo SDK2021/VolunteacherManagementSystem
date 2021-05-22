@@ -1,0 +1,249 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary ">
+    <div class="container-fluid mb-0">
+
+    </div>
+
+</div>
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
+<div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
+    <div class="col-12 col-xl-10 ">
+        <div class="card shadow p-4">
+            <!-- Card header -->
+            <div class="card-header border-0 px-0">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mb-0 text-center">Edit Sessions</h1>
+                        <hr>
+                    </div>
+                    
+
+                   
+                        <div class="col-12 justify-content-center">
+                            <form class="mt-5" (ngSubmit)="saveSession(form)" #form="ngForm">
+                                <div class="row justify-content-center">
+                                    <!-- <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Country</label>
+                                            <select class="form-control form-control-alternative" id="input-group"
+                                                (change)="selectedCountry($event)">
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="c.countryId" disabled
+                                                    *ngFor="let c of countries;trackBy: trackCountriesById"
+                                                    [selected]="c.countryId == 8">{{c.countryName}}
+                                                </option>
+                                            </select>                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select State</label>
+                                            <select class="form-control form-control-alternative" id="input-group"
+                                                (change)="selectedState($event)">
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="s.stateId"
+                                                    *ngFor="let s of states;trackBy: trackStatesById"
+                                                    [selected]="s.stateId==7">{{s.stateName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select District</label>
+                                            <select class="form-control form-control-alternative" id="input-group"
+                                                (change)="selectedDistrict($event)">
+                                                <option class="combobox" value="0" selected>Select</option>
+                                                <option class="combobox" [value]="d.districtId"
+                                                    *ngFor="let d of districts;trackBy: trackDistrictsById"
+                                                    [selected]="d.districtId==141&&Show">{{d.districtName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Taluka</label>
+                                            <select class="form-control form-control-alternative" id="input-group"
+                                                (change)="selectedTaluka($event)">
+                                                <option class="combobox" value="0" selected>Select</option>
+                                                <option class="combobox" [value]="t.talukaId"
+                                                    *ngFor="let t of talukas;trackBy: trackTalukasById"
+                                                    [selected]="t.talukaId==35&&Show">{{t.talukaName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6 ">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Village</label>
+                                            <select class="form-control form-control-alternative" id="input-group"
+                                                (change)="selectedVillage($event)">
+                                                <option class="combobox" value="0" selected>Select</option>
+                                                <option class="combobox" [selected]="session.village.villageId == v.villageId" [value]="v.villageId"
+                                                    *ngFor="let v of villages;trackBy: trackVillagesById">
+                                                    {{v.villageName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-7">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Project</label>
+                                            <select class="form-control form-control-alternative" id="input-group"
+                                                (change)="selectedProject($event)">
+                                                <option class="combobox" value="0" selected>Select</option>
+                                                <option class="combobox" [selected] = "session.project.projectId == p.projectId" [value]="p.projectId"
+                                                    *ngFor="let p of projects">{{p.projectName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Country</label>
+                                            <select class="form-control form-control-alternative"  disabled  id="input-group"
+                                                (change)="selectedCountry($event)">
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="c.countryId" disabled
+                                                    *ngFor="let c of countries;trackBy: trackCountriesById"
+                                                    [selected]="c.countryId == 8">{{c.countryName}}
+                                                </option>
+                                            </select>
+                                            <!-- <input type="text" value="India" disabled class="form-control"> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select State</label>
+                                            <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':stateSelected==0}" id="input-group"
+                                                (change)="selectedState($event)">
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [value]="s.stateId"
+                                                    *ngFor="let s of states;trackBy: trackStatesById"
+                                                    [selected]="s.stateId==stateSelected">{{s.stateName}}</option>
+                                            </select>
+                                            <small *ngIf = "stateSelected==0" class="text-danger">State is required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select District</label>
+                                            <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':districtSelected==0}" id="input-group"
+                                                (change)="selectedDistrict($event)">
+                                                <option class="combobox" value="0" selected>Select</option>
+                                                <option class="combobox" [value]="d.districtId"
+                                                    *ngFor="let d of districts;trackBy: trackDistrictsById"
+                                                    [selected]="d.districtId==districtSelected&&Show">{{d.districtName}}
+                                                </option>
+                                            </select>
+                                            <small *ngIf = "districtSelected==0" class="text-danger">District is required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Taluka</label>
+                                            <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':talukaSelected==0}" id="input-group"
+                                                (change)="selectedTaluka($event)">
+                                                <option class="combobox" value="0" selected>Select</option>
+                                                <option class="combobox" [value]="t.talukaId"
+                                                    *ngFor="let t of talukas;trackBy: trackTalukasById"
+                                                    [selected]="t.talukaId==talukaSelected&&Show">{{t.talukaName}}
+                                                </option>
+                                            </select>
+                                            <small *ngIf = "talukaSelected==0" class="text-danger">Taluka is required</small>
+                                        </div>                                    
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6 ">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Village</label>
+                                            <select class="form-control form-control-alternative" [ngClass]="{'ng-invalid':villageSelected==0}" id="input-group"
+                                                (change)="selectedVillage($event)">
+                                                <option class="combobox" value="0" selected>Select</option>
+                                                <option class="combobox" [selected]="v.villageId ==villageSelected" [value]="v.villageId"
+                                                    *ngFor="let v of villages;trackBy: trackVillagesById">
+                                                    {{v.villageName}}
+                                                </option>
+                                            </select>
+                                            <small *ngIf = "villageSelected==0" class="text-danger">Village is required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-7 col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-group">Select Project</label>
+                                            <select class="form-control form-control-alternative" id="input-group" [ngClass]="{'ng-invalid':projectSelected==0}" (change)="selectedProject($event)">
+                                                <option selected value="0">Select</option>
+                                                <option class="combobox" [selected] = "session.project.projectId == p.projectId" [value]="p.projectId" *ngFor="let p of projects">{{p.projectName}}
+                                                </option>
+                                            </select>
+                                            <small *ngIf = "projectSelected==0" class="text-danger">Project is required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-7">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-startdate">Session
+                                                Date</label>
+                                            <input type="text"  id="input-startdate"
+                                                class="form-control form-control-alternative" placeholder="Session date"
+                                                name="startdate" #date="ngModel" [(ngModel)]="session.sessionDate"
+                                                required onfocus="(this.type = 'date')" (change)="showDate()">
+                                            <small *ngIf="date.errors?.required && date.touched"
+                                                class="text-danger">Starting date is required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-7">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-startingtime">Starting
+                                                Time</label>
+                                            <input type="time" id="input-startingtime"
+                                                class="form-control form-control-alternative"
+                                                placeholder="Starting Time" name="startingtime"  #startingTime="ngModel"
+                                                [(ngModel)]="session.startingTime" required>
+                                            <small *ngIf="startingTime.errors?.required && startingTime.touched"
+                                                class="text-danger">Starting time is required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-7">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-endingtime">Ending
+                                                Time</label>
+                                            <input type="time" id="input-endingtime"
+                                                class="form-control form-control-alternative" placeholder="Ending Time"
+                                                name="endingtime" #endingTime="ngModel" [(ngModel)]="session.endingTime"
+                                                required>
+                                            <small *ngIf="endingTime.errors?.required && endingTime.touched"
+                                                class="text-danger">Ending time is required</small>
+                                        </div>
+                                    </div>
+
+                            
+
+                                    
+                                        <div class="col-12 mt-4 mb-2 ">
+                                            <button type="submit"
+                                                class=" mx-auto d-block btn btn-primary btn-round btn-icon">
+                                                <span class="btn-inner--text ">Save</span>
+                                            </button>
+
+
+                                        </div>
+                                
+                                </div>
+
+                            </form>
+                        </div>
+               
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+</div>

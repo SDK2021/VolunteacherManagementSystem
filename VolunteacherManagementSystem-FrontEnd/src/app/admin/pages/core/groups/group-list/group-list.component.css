@@ -1,0 +1,17 @@
+.text-big
+{
+    font-size: larger;
+}
+@media (max-width: 650px)
+{
+    .title
+    {
+       text-align: center;
+    }
+}
+.bg-purple{
+    background-color: blueviolet;
+}
+.bg-deeppink{
+    background-color: deeppink;
+}

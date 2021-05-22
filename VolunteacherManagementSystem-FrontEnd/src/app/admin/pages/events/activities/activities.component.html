@@ -1,0 +1,194 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary ">
+    <div class="container-fluid mb-0">
+
+    </div>
+
+</div>
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
+<ng-container *ngIf="!isEdit">
+    <div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
+        <div class="col-12 col-xl-10  ">
+            <div class="card shadow p-4">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1 class="mb-0 text-center">Activities</h1>
+                            <hr>
+                        </div>
+                        <div class="col-12 text-right mt-3 ">
+                            <button class="btn btn-primary btn-round btn-icon" (click)="show()">
+    
+                                <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                                <span class="btn-inner--text ">Add activities</span>
+                            </button>
+                        </div>
+                        <ng-container *ngIf="isShow">
+                            <div class="col-12 justify-content-center">
+                                <form (ngSubmit)="addActivity(form)" #form="ngForm">
+    
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-7">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-activity-name">Activity
+                                                    Name</label>
+                                                <input type="text" id="input-village-name"
+                                                    class="form-control form-control-alternative" name="name"
+                                                    #name="ngModel" [(ngModel)]="activity.activityName" required
+                                                    maxlength="20">
+                                                <small *ngIf="!name.valid && name.touched" class="text-danger">Activity name
+                                                    is
+                                                    required</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <div class="form-group">
+                                                <label class="form-control-label"
+                                                    for="input-activity-desc">Description</label>
+                                                <textarea row="3" id="input-activity-desc"
+                                                    class="form-control form-control-alternative" name="desc"
+                                                    #desc="ngModel" [(ngModel)]="activity.description" required></textarea>
+                                                <small *ngIf="!desc.valid && desc.touched" class="text-danger">Description
+                                                    is
+                                                    required</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-4 mb-2 ">
+                                            <button type="submit" [disabled]="!form.valid"
+                                                class=" mx-auto d-block btn btn-primary btn-round btn-icon">
+    
+                                                <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                                                <span class="btn-inner--text ">Add</span>
+                                            </button>
+    
+    
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>
+                                    <h3>No</h3>
+                                </th>
+                                <th>
+                                    <h3>Name</h3>
+                                </th>
+                                <th>
+                                    <h3> Activity Description</h3>
+                                </th>
+                                <th>
+                                    <h3>Edit</h3>
+                                </th>
+                                <th>
+                                    <h3>Delete</h3>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let a of activities ; let index=index;trackBy:trackById">
+                                <td class="table-user " style="font-size: 17px;">
+                                    <b>{{index+1}}</b>
+                                </td>
+                                <td style="font-size: 17px;">
+                                    <h3>{{a.activityName}}</h3>
+    
+                                </td>
+                                <td class="text-wrap text-justify" style="font-size: 17px;">
+    
+                                    <ng-container>
+                                        <h3> {{a.description}}</h3>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <div style="cursor: pointer;" class="col-3 text-right ">
+                                        <i (click)="edit(a.activityId)" class="fas fa-edit text-lg text-primary"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="cursor: pointer;" class="col-3 text-right ">
+                                        <i (click)="delete(a.activityId)" class="fas fa-trash text-lg text-danger"></i>
+                                    </div>
+                                </td>
+    
+    
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</ng-container>
+<ng-container *ngIf="isEdit">
+    <div class=" row justify-content-center mx-0 mt-0 py-4">
+        <div class="col-12 col-xl-10  ">
+            <div class="card shadow p-4">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1 class="mb-0 text-center">Edit Activity</h1>
+                            <hr>
+                        </div>
+                       
+                            <div class="col-12 justify-content-center pb-8 pt-6">
+                                <form (ngSubmit)="saveActivity(form)" #form="ngForm">
+    
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-7">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-activity-name">Activity
+                                                    Name</label>
+                                                <input type="text" id="input-village-name"
+                                                    class="form-control form-control-alternative" name="name"
+                                                    #name="ngModel" [(ngModel)]="activity.activityName" required
+                                                    maxlength="20">
+                                                <small *ngIf="!name.valid && name.touched" class="text-danger">Activity name
+                                                    is
+                                                    required</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <div class="form-group">
+                                                <label class="form-control-label"
+                                                    for="input-activity-desc">Description</label>
+                                                <textarea row="3" id="input-activity-desc"
+                                                    class="form-control form-control-alternative" name="desc"
+                                                    #desc="ngModel" [(ngModel)]="activity.description" required></textarea>
+                                                <small *ngIf="!desc.valid && desc.touched" class="text-danger">Description
+                                                    is
+                                                    required</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-4 mb-2 ">
+                                            <button type="submit" [disabled]="!form.valid"
+                                                class=" mx-auto d-block btn btn-primary btn-round btn-icon">
+                                                <span class="btn-inner--text ">Save</span>
+                                            </button>
+    
+    
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    
+    </div>
+</ng-container>

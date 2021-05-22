@@ -1,0 +1,283 @@
+<div class=" pb-0 pt-0 pt-md-6  bg-primary ">
+    <div class="container-fluid mb-0">
+
+    </div>
+
+</div>
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
+<div class=" row justify-content-center mx-0 mt-0 py-4" style=" background-color: #dde3f3cc;">
+    <div class="col-12 col-xl-11 p-0 p-sm-2 ">
+        <div class="card shadow p-4">
+            <!-- Card header -->
+            <div class="card-header border-0">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mb-0 text-center">Projects</h1>
+                        <hr>
+                    </div>
+                    <div class="col-12">
+                        <app-tabs (showTab_1)="showTab1($event)" (showTab_2)="showTab2($event)"></app-tabs>
+                    </div>
+
+                    <ng-container *ngIf="tab1">
+                        <div  class="container">
+                            <app-upload-img [baseUrl]="baseUrl" [isPost]="true" (show)="show($event)"></app-upload-img>
+                          </div>
+                         
+                          <ng-container *ngIf="showForm">
+                              
+                            <div class="col-12 justify-content-center">
+                                <form (ngSubmit)="addProject(form) " #form="ngForm">
+                                    <div class="mx-auto d-block col-xl-5 col-lg-7 col-10 mt-3 ">
+                                        <img src="{{imageURL}}" style="width:100%;" alt="">
+                                      </div>
+                                    <div class="row mt-5 justify-content-center">
+                                        
+                                        <div class="col-12 col-sm-7 col-md-12 col-lg-4 col-xl-4">
+                                          
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-name">Project Name</label>
+                                                <input type="text" id="input-name" [ngClass]="{'ng-invalid':message}"
+                                                    class="form-control form-control-alternative" placeholder="Project Name"
+                                                    name="projectname" #projectName="ngModel"
+                                                    [(ngModel)]="project.projectName" required maxlength="50">
+    
+                                                <small *ngIf="projectName.errors?.required && projectName.touched"
+                                                    class="text-danger">Project name is required</small>
+                                                    <small *ngIf="message"
+                                                    class="text-danger">Project name already exists</small>
+                                            </div>
+                                        </div>
+    
+    
+    
+    
+                                        <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-startdate">Starting
+                                                    Date</label>
+                                                <input type="date" id="input-startdate"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="Starting Date" name="startdate" #startingDate="ngModel"
+                                                    [(ngModel)]="project.startingDate" required>
+                                                <small *ngIf="startingDate.errors?.required && startingDate.touched"
+                                                    class="text-danger">Starting date is required</small>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-enddate">Ending
+                                                    Date</label>
+                                                <input type="date" id="input-enddate"
+                                                    class="form-control form-control-alternative" placeholder="Ending Date"
+                                                    name="endDate" [(ngModel)]="project.endingDate">
+    
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label class="form-control-label">Project Description</label>
+                                        <textarea rows="4" class="form-control form-control-alternative" #desc="ngModel"
+                                            name="desc" [(ngModel)]="project.description" required></textarea>
+                                        <small *ngIf="desc.errors?.required && desc.touched" class="text-danger">Description
+                                            is required</small>
+    
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label class="form-control-label">Project Data</label>
+                                        <textarea rows="4" class="form-control form-control-alternative" #data="ngModel"
+                                            name="data" [(ngModel)]="project.projectData" required></textarea>
+                                        <small *ngIf="data.errors?.required && data.touched" class="text-danger">Data are
+                                            required</small>
+                                    </div>
+    
+                                    <div class="row justify-content-center">
+                                        <div class="col-6 text-center px-xl-8 px-lg-8 px-md-6 px-sm-6" (click)="showVtTab()">
+                                           <p class="h3 pb-2" [ngClass]="tab1Class==true?'tab':'border-0'" ><span>Volunteachers</span></p>
+                                        </div>
+                                        <div class="col-6 text-center px-xl-8 px-lg-8 px-md-6 px-sm-6" (click)="showKidTab()">
+                                            <p class="h3 pb-2" [ngClass]="tab2Class==true?'tab':'border-0'" ><span>Kids</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                       <ng-container *ngIf="vtTab">
+                                        <div class="col-lg-6 p-3">
+                                            <h2 class="text-center">Add Volunteachers</h2>
+    
+                                            <div class="row justify-content-center" *ngFor="let v of volunteachers">
+    
+    
+                                                <div class="col-xl-9 col-lg-10 col-md-8 col-sm-7 col-9 mx-auto d-block p-0">
+                                                    <li class="list-group-item px-0 border-0">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-auto">
+                                                                <!-- Avatar -->
+                                                                <div class="avatar rounded-circle">
+                                                                    <img alt="Image placeholder"
+                                                                        src="{{v.user.photo}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col ml--2">
+                                                                <h4 class="mb-0">
+                                                                    {{v.user.userName}}
+                                                                </h4>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <input type="checkbox" [value]="v.user.userId"
+                                                                    (change)="selectVolunteacher($event)">
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </div>
+    
+                                            </div>
+    
+                                            <!-- <div class="col-12 mt-4 mb-2 ">
+                                                <button class=" mx-auto d-block btn btn-primary btn-round btn-icon"
+                                                    (click)="show()">
+    
+                                                    <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                                                    <span class="btn-inner--text ">Add Volunteachers</span>
+                                                </button>
+                                            </div> -->
+                                        </div>
+                                       </ng-container>
+    
+                                        <ng-container *ngIf="kidTab">
+                                            <div class="col-lg-6 p-3">
+                                                <h2 class="text-center">Add Kids</h2>
+                                                <ng-container *ngIf="true">
+                                                    <div class="row justify-content-center" *ngFor="let k of kids">
+        
+        
+                                                        <div
+                                                            class="col-xl-9 col-lg-10 col-md-8 col-sm-7 col-9 mx-auto d-block p-0">
+                                                            <li class="list-group-item px-0 border-0">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-auto">
+                                                                        <!-- Avatar -->
+                                                                        <div class="avatar rounded-circle">
+                                                                            <img alt="Image placeholder"
+                                                                                src="{{k.photo}}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col ml--2">
+                                                                        <h4 class="mb-0">
+                                                                            {{k.name}}
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <input type="checkbox" [value]="k.kidId"
+                                                                            (change)="selectKids($event)">
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </div>
+        
+                                                    </div>
+                                                </ng-container>
+                                                <!-- <div class="col-12 mt-4 mb-2 ">
+                                                    <button class=" mx-auto d-block btn btn-primary btn-round btn-icon"
+                                                        (click)="show()">
+        
+                                                        <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                                                        <span class="btn-inner--text ">Add Kids</span>
+                                                </button>
+                                                </div> -->
+                                            </div>
+                                        </ng-container>
+    
+                                    </div>
+    
+                                    <hr>
+    
+                                    <ng-container *ngIf="!edit">
+                                        <div class="col-12 mt-4 mb-2 ">
+                                            <button [disabled]="!form.valid"
+                                                class=" mx-auto d-block btn btn-primary btn-round btn-icon">
+                                                <span class="btn-inner--text ">Submit</span>
+                                            </button>
+    
+    
+                                        </div>
+                                    </ng-container>
+    
+                                    <ng-container *ngIf="edit">
+                                        <div class="col-12 mt-4 mb-2 ">
+                                            <button [disabled]="!form.valid"
+                                                class=" mx-auto d-block btn btn-primary btn-round btn-icon"
+                                                (click)="show(); showTab2(true)">
+                                                <span class="btn-inner--text ">Save</span>
+                                            </button>
+    
+    
+                                        </div>
+                                    </ng-container>
+    
+    
+                                </form>
+    
+                            </div>
+                        </ng-container>
+                        
+                    </ng-container>
+                </div>
+            </div>
+            <!-- Light table -->
+            <ng-container *ngIf="tab2">
+
+                <div class="row justify-content-center  p-lg-2" >
+     
+                    <ng-container *ngIf="showSpinner">
+                        <div class="col-12">
+                            <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="40">
+                            </mat-spinner>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="noProjects">
+                        <div class="col-12 col-xl-10 mx-auto d-block my-xl-5 my-6 py-xl-7 py-6">
+                            <p class="text-center text-xl"><i class="fab fa-leanpub"></i></p>
+                            <p class="text-xl text-center text-lg"><b>No projects yet.</b></p>
+                        </div>
+                    </ng-container>
+                    
+                    <ng-container *ngIf="pLength">
+                        <div *ngFor="let p of projects" class="col-12 col-xl-6 col-lg-8 col-md-11 col-sm-9 mb-4">
+
+                            <div class="card card-profile " style=" box-shadow: 2px 2px 50px rgba(163, 160, 160, 0.2);">
+                                <li class="nav-item" ngbDropdown placement="bottom-right">
+                                    <a class="nav-link pr-0" role="button" ngbDropdownToggle>
+                                        <p class="d-block text-common text-right mt-2 mr-4 mb-0 h1"><b><i
+                                                    class="fas fa-ellipsis-v text-muted text-sm"></i></b></p>
+                                    </a>
+                                    <div class="p-2 dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
+                                        <h4 style="cursor: pointer;" class="text-center" routerLink="/admin/projects/{{p.projectId}}/edit">Edit</h4>
+                                        <h4 style="cursor: pointer;" (click)="delete(p.projectId,p.photo)" class="mb- text-center">Delete</h4>
+                                    </div>
+                                </li>
+                                <div class="container-img p-xl-1">
+                                    <img class=" p-1" src="{{p.photo}}" 
+                                        style="width:100%; filter: brightness(50%);">
+                                    <div class="centered display-4">{{p.projectName}} <br>
+                                        <h2 class="text-white">{{p.startingDate|date:'yyyy'}}</h2>
+                                        <a routerLink="/admin/projects/{{p.projectId}}/project-details"><button
+                                                class="btn text-white bg-gradient-danger">Explore</button></a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+</div>
