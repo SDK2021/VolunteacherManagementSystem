@@ -13,10 +13,12 @@ import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.Kid;
 import com.volunteacher.app.model.Project;
 import com.volunteacher.app.model.User;
+import com.volunteacher.app.model.Volunteacher;
 import com.volunteacher.app.repository.KidRepository;
 import com.volunteacher.app.repository.ProjectRepository;
 import com.volunteacher.app.repository.SessionRepository;
 import com.volunteacher.app.repository.UserRepository;
+import com.volunteacher.app.repository.VolunteacherRepository;
 import com.volunteacher.app.service.interfaces.ProjectService;
 
 @Service
@@ -37,6 +39,9 @@ public class ProjectServiceImpl implements ProjectService{
 	List<User> users;
 	
 	List<Kid> kids;
+	
+	@Autowired
+	VolunteacherRepository volunteacherRepository;
 	
 	@Override
 	public ResponseEntity<Object> addProject(Project project,String[] vIds,String[] kIds) 
@@ -98,19 +103,21 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public ResponseEntity<Object> updateProject(Project project, int id) 
+	public ResponseEntity<Object> updateProject(Project project, int id,String[] vIds,String[] kIds) 
 	{
 		try {
 			Project updateProject = projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project is not found for id: "+id));
-			
 			updateProject.setProjectName(project.getProjectName());
 			updateProject.setProjectData(project.getProjectData());
 			updateProject.setStartingDate(project.getStartingDate());
 			updateProject.setCreationDate(project.getCreationDate());
 			updateProject.setCreationTime(project.getCreationTime());
-			updateProject.setUsers(project.getUsers());
-			updateProject.setKids(project.getKids());
+			if(vIds.length > 0)
+				updateProject.setUsers(this.createVolunteachersList(vIds));
+			if(kIds.length > 0)
+				updateProject.setKids(this.createKidsList(kIds));
 			updateProject.setEndingDate(project.getCreationDate());
+			updateProject.setDescription(project.getDescription());
 			updateProject.setPhoto(project.getPhoto());
 			
 			projectRepository.save(updateProject);
@@ -215,11 +222,75 @@ public class ProjectServiceImpl implements ProjectService{
 	{
 		System.out.println("Hello I am Kids list" + ids.length);
 		this.kids = new ArrayList<Kid>();
+		
 		for (int i = 0;i<ids.length;i++) {
 			Kid kid = this.kidRepository.findById(Long.parseLong(ids[i])).orElseThrow(()-> new ResourceNotFoundException("VT id not found for id: "));
 			this.kids.add(kid);
 		}
 		System.out.println(this.kids + " " + this.kids.size());
 		return this.kids;
+	}
+	
+	
+	@Override
+	public ResponseEntity<Object> getReaminingUser(int projectId) 
+	{
+		this.users = new ArrayList<>();
+		try {
+			List<Volunteacher> volunteachers = (List<Volunteacher>)volunteacherRepository.findAll();
+			Project project = projectRepository.findById(projectId).orElseThrow(()->new ResourceNotFoundException("Project not found"));
+			
+			for (Volunteacher volunteacher : volunteachers) {
+				int flag = 0;
+				for (User user : project.getUsers()) {
+					if(user.getUserId() == volunteacher.getUser().getUserId())
+					{
+						System.out.println(user.getUserId());
+						flag=1;
+						break;
+					}
+				}
+				if(flag == 0)
+				{
+					users.add(volunteacher.getUser());
+				}
+			}
+			return ResponseEntity.status(HttpStatus.OK).body(users);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total remaining user of project");
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> getReaminingKids(int projectId)
+	{
+		this.kids = new ArrayList<>();
+		try {
+			List<Kid> kidslist = (List<Kid>)kidRepository.findAll();
+			Project project = projectRepository.findById(projectId).orElseThrow(()->new ResourceNotFoundException("Project not found"));
+			
+			for (Kid kid : kidslist) 
+			{
+				int flag = 0;
+				for (Kid k : project.getKids()) {
+					if(k.getKidId() == kid.getKidId())
+					{
+						flag=1;
+						break;
+					}
+				}
+				if(flag == 0)
+				{
+					kids.add(kid);
+				}
+			}
+			return ResponseEntity.status(HttpStatus.OK).body(kids);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total remaining user of project");
+		}
 	}
 }

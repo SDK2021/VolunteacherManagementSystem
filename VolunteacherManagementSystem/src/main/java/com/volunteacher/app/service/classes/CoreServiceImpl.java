@@ -204,6 +204,36 @@ public class CoreServiceImpl implements CoreService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on creating Village");
 		}
 	}
+	
+	@Override
+	public ResponseEntity<Object>updateVillage(int villageId,Village village) 
+	{
+		try {
+			System.out.println(village.getTaluka().getTalukaId());
+			Village updatevillage = villageRepository.findById(villageId).orElseThrow(()-> new ResourceNotFoundException("Village not found"));
+			updatevillage.setVillageName(village.getVillageName());
+			updatevillage.setTaluka(village.getTaluka());
+			villageRepository.save(updatevillage);
+			return ResponseEntity.status(HttpStatus.CREATED).body(updatevillage);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on updating Village");
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object>updateArea(int areaId,Area area) 
+	{
+		try {
+			Area updateArea = areaRepository.findById(areaId).orElseThrow(()-> new ResourceNotFoundException("Area not found"));
+			updateArea.setAreaName(area.getAreaName());		
+			areaRepository.save(updateArea);
+			return ResponseEntity.status(HttpStatus.CREATED).body(updateArea);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on updating Area");
+		}
+	}
 
 	@Override
 	public ResponseEntity<Object> areaList() {
@@ -272,6 +302,17 @@ public class CoreServiceImpl implements CoreService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch taluka by id");
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> districtById(int id) {
+		try {
+			District district = districtRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("District id not found for id: "+id));
+			return ResponseEntity.status(HttpStatus.OK).body(district);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch District by id");
 		}
 	}
 

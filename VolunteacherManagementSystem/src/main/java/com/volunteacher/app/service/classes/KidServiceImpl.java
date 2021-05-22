@@ -282,4 +282,24 @@ public class KidServiceImpl implements KidService {
 		}
 	}
 	
+	@Override
+	public ResponseEntity<Object> getAllNewKids() 
+	{
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(kidRepository.newAllKids());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch new Kids");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> totalKidsByVillage(int villageId) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(kidRepository.totalKidsVillage(villageId));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Total Kids");
+		}
+	}
 }
