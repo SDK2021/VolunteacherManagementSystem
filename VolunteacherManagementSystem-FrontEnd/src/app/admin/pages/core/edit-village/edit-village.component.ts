@@ -165,9 +165,12 @@ export class EditVillageComponent implements OnInit {
 
   selectedCountry(event)
   {
-    this.addressService.getStates(event.target.value).subscribe(data=>{
-      this.states = data
-    })
+    if(event.target.value > 0)
+    {
+      this.addressService.getStates(event.target.value).subscribe(data=>{
+        this.states = data
+      })
+    }
   }
 
   getAllStates() 
@@ -182,11 +185,18 @@ export class EditVillageComponent implements OnInit {
   selectedState(event)
   {
     this.stateSelected = event.target.value;
-    this.addressService.getDistricts(event.target.value).subscribe(data=>{
-    this.Show = false
-    this.districts = data
+    if(this.stateSelected > 0)
+    {
+      this.addressService.getDistricts(event.target.value).subscribe(data=>{
+      this.Show = false
+      this.districts = data
+      this.talukas = []
+      })
+   }
+   else{
+     this.districts=[]
     this.talukas = []
-    })
+   }
   }
 
   getAllDistricts() 
@@ -201,9 +211,12 @@ export class EditVillageComponent implements OnInit {
   selectedDistrict(event)
   {
     this.districtSelected = event.target.value;
-    this.addressService.getTalukas(event.target.value).subscribe(data=>{
-    this.talukas = data
-    })
+    if(this.districtSelected > 0)
+    {
+      this.addressService.getTalukas(event.target.value).subscribe(data=>{
+      this.talukas = data
+      })
+    }
   }
 
   getAllTalukas() 
@@ -224,6 +237,9 @@ export class EditVillageComponent implements OnInit {
   {
       this.addressService.getVillageByid(id).subscribe(data=>{
         this.village=data
+        this.stateSelected = this.village.taluka.district.state.stateId
+        this.districtSelected = this.village.taluka.district.districtId
+        this.talukaSelected = this.village.taluka.talukaId
       },error=>{
         this.handleError(error)
       })

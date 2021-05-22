@@ -29,8 +29,10 @@ export class DonateComponent implements OnInit {
  
     this.payment = new Payment()
     this.donor = new Donor()
+    this.payment.paymentMode="0"
     this.userTypes = []
     this.getAllUserType();
+   
   }
   handleError(error)
   {
@@ -56,19 +58,21 @@ export class DonateComponent implements OnInit {
   {
     this.userTypeId = event.target.value
   }
+
   addPayment(form)
   {
+   
     let today:Date = new Date()
+    this.payment.paymentMode = form.paymentMode
  //   this.payment.paymentTime = today.getHours().toString() + "-" +today.getMinutes().toString() + "-" + today.getSeconds().toString()
     this.payment.donor = this.donor
-    
     this.userService.getUserType( this.userTypeId).pipe(finalize(()=>{
       this.homeService.addPayment(this.payment).subscribe(data=>{
         console.log(this.payment.donor.userType); 
       },error=>{
         this.handleError(error)
       })
-        window.location.href = "http://localhost:9090/vms/redirect-paytm?phonenumber="+this.donor.donorPhone +"&amount="+this.payment.amount +"&email="+this.payment.donor.donorEmail
+      window.location.href = "http://localhost:9090/vms/redirect-paytm?phonenumber="+this.donor.donorPhone +"&amount="+this.payment.amount +"&email="+this.payment.donor.donorEmail
     })).subscribe(data=>{
       this.payment.donor.userType = data
     },error=>{

@@ -78,7 +78,7 @@
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select Taluka</label>
                                             <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':talukaSelected==0}" id="input-group"
-                                                (change)="selectedTaluka($event)">
+                                                (change)="selectedTaluka($event)" id="village">
                                                 <option selected value="0">Select</option>
                                                 <option class="combobox" [value]="t.talukaId"
                                                     [selected]="t.talukaId==35&&Show"
