@@ -27,6 +27,8 @@ export class FeedbackComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
+  showImageSpinner:boolean=true
+
   page:number=0
 
   constructor(private router:Router,private route:ActivatedRoute,private sessionService:SessionsService,private dialog:MatDialog , private _snackBar: MatSnackBar) { }
@@ -59,6 +61,11 @@ export class FeedbackComponent implements OnInit {
     });
   }
 
+  load()
+  {
+    this.showImageSpinner=false
+  }
+  
   getAllFeedbacks(page:number,id:number)
   {
     this.showSpinner=true

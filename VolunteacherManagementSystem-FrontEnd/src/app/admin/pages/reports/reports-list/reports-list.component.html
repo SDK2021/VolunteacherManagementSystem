@@ -56,15 +56,15 @@
                     <div class="row justify-content-center">
                       
                         <div *ngFor="let r of reportList" class="card shadow m-2 p-4 col-lg-7 col-md-12 col-sm-12 col-12">
-                            <a href="#" class="p-0 m-0">
+                            
                                 <p class="display-4 text-center fw-normal mb-0 text-dark ">{{r.title}}</p>
                                 <h3 class="text-center pt-0 my-3  text-muted">{{r.creationDate | date :'mediumDate'}} by {{r.createdBy.userName}} </h3>
                                 <!-- <p class="text-center">{{r.description}}</p> -->
                                 <div class="text-center">
-                                    <a href="#" class="btn btn-default btn-sm">View Report</a>
+                                    <button class="btn btn-default btn-sm">View Report</button>
                                 </div>
     
-                            </a>
+                            
                         </div>
                     </div>
                 </div>

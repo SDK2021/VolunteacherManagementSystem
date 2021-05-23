@@ -37,7 +37,7 @@ export class ProjectComponent implements OnInit {
 
   kPage:number=0
 
-  isProjectCreated:boolean=false
+  isProjectCreated:boolean=null
 
   showProgressbar: boolean = false
   edit: boolean = false
@@ -60,6 +60,7 @@ export class ProjectComponent implements OnInit {
   message:boolean=false
   showForm:boolean=false
 
+  showImageSpinner:boolean=true
 
   //remove this
 
@@ -104,6 +105,12 @@ export class ProjectComponent implements OnInit {
     }
   }
 
+  load()
+  {
+    this.showImageSpinner=false
+  }
+
+  
   // show() {
   //   this.isShow = !this.isShow;
   // }

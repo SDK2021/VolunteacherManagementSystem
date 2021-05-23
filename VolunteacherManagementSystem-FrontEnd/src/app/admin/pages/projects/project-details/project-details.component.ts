@@ -16,6 +16,8 @@ export class ProjectDetailsComponent implements OnInit {
   totalKids: number=0
   totalSessions: number=0
 
+  showImageSpinner:boolean=true
+
   showSpinner: boolean = false
   constructor(private router: Router, private projectService: ProjectsService, private route: ActivatedRoute) { }
 
@@ -41,6 +43,11 @@ export class ProjectDetailsComponent implements OnInit {
     {
       this.router.navigate(['error-page'])
     }
+  }
+
+  load()
+  {
+    this.showImageSpinner=false
   }
 
   getPorject(id: number) {

@@ -18,6 +18,8 @@ export class TimeLineComponent implements OnInit {
   isLiked=false
   userType:string
 
+  showImageSpinner:boolean=true
+
   page:number=0
   totalPostsPages:number
 
@@ -51,6 +53,11 @@ export class TimeLineComponent implements OnInit {
     }
   }
 
+  
+  load()
+  {
+    this.showImageSpinner=false
+  }
   getPosts(page:number)
   {
     this.showSpinner=true

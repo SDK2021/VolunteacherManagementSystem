@@ -33,6 +33,8 @@ export class VolunteachersListComponent implements OnInit {
 
   volunteachers: Array<Volunteacher> = new Array()
 
+  showImageSpinner:boolean=true
+
   constructor(private router: Router, private dialog: MatDialog, private _snackBar: MatSnackBar, private sharedService: VolunteachersService) {
    
     
@@ -55,6 +57,11 @@ export class VolunteachersListComponent implements OnInit {
     }
   }
 
+  
+  load()
+  {
+    this.showImageSpinner=false
+  }
   
   blob:Blob = new Blob()
   download()

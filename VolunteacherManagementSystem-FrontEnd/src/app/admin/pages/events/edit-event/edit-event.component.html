@@ -30,7 +30,13 @@
                             <form class="mt-5" (ngSubmit)="saveEvent(form)" #form="ngForm">
                                 <div class="mx-auto d-block col-xl-5 col-lg-7 col-10 my-3 ">                              
                                         <div class="container-img" (click)="edit()" (mouseenter)="mouseEvent()" (mouseleave)="mouseEvent()">
-                                            <img src="{{imageURL}}"  [ngClass]="{'darkShade':hover}" style="width:100%;" >
+                                            <ng-container *ngIf="showImageSpinner">
+                                                <div class="col-12 my-8 ">
+                                                    <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                                                    </mat-spinner>
+                                                </div>
+                                            </ng-container>
+                                            <img (load)="load()" src="{{imageURL}}"  [ngClass]="{'darkShade':hover}" style="width:100%;" >
             
                                             <div style="cursor: pointer;"  *ngIf="hover" class="centered display-3">
                                                <i class="fas fa-edit"></i>
@@ -123,7 +129,7 @@
                                     <div class="col-12 col-sm-7 col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-name">Event Title</label>
-                                            <input type="text" id="input-name"
+                                            <input autocomplete="off" type="text" id="input-name"
                                                 class="form-control form-control-alternative" placeholder="Event Title"
                                                 name="name" #name="ngModel"  [(ngModel)]="event.title" required maxlength="50">
                                                 <small *ngIf="!name.valid && name.touched" class="text-danger">Title is
@@ -173,7 +179,7 @@
 
                                     <div class="form-group  col-12 col-sm-11 col-md-12">
                                         <label class="form-control-label">Event Data</label>
-                                        <textarea rows="4" class="form-control form-control-alternative"  #data="ngModel" name="data" [(ngModel)]="event.eventData" required ></textarea>
+                                        <textarea autocomplete="off" rows="4" class="form-control form-control-alternative"  #data="ngModel" name="data" [(ngModel)]="event.eventData" required ></textarea>
                                         <small *ngIf="!data.valid && data.touched" class="text-danger">Data are
                                             required</small>
                                     </div>
@@ -192,7 +198,7 @@
     
                                     
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button type="submit" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
+                                            <button type="submit" [disabled]="!form.valid" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
                                                 <span class="btn-inner--text ">Save</span>
                                             </button>
         

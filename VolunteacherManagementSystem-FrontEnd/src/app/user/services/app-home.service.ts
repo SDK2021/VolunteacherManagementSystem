@@ -45,11 +45,11 @@ export class AppHomeService {
 
   addPayment(payment:Payment):Observable<Payment>
   {
-    return this.httpclient.post<Payment>(`${"http://localhost:9090/vms/payments"}`,payment)
+    return this.httpclient.post<Payment>(`${"http://localhost:9090/vms/payments"}`,payment).pipe(retry(3))
   }
 
   alreadyRegister(eventId:number,email:string):Observable<boolean>
   {
-    return this.httpclient.get<boolean>(`${"http://localhost:9090/vms/already-registered?event="}${eventId}${"&email="}${email}`)
+    return this.httpclient.get<boolean>(`${"http://localhost:9090/vms/already-registered?event="}${eventId}${"&email="}${email}`).pipe(retry(3))
   }
 }

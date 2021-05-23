@@ -30,6 +30,8 @@ export class CreateReportComponent implements OnInit {
 
   showProgressbar:boolean=false
 
+  showImageSpinner:boolean=true
+
   kidsReport = this.fb.group({
     personalInfo:this.fb.group({
       kidName:['',[Validators.required,Validators.pattern('^[a-zA-z ]{3,20}$')]],
@@ -68,6 +70,8 @@ export class CreateReportComponent implements OnInit {
     return value;
   }
 
+
+
   constructor(private route:ActivatedRoute, private fb: FormBuilder,private _auth:authentication,private router:Router,private _snackBar: MatSnackBar,private kidService:KidsService) {}
 
   ngOnInit() {
@@ -90,6 +94,12 @@ export class CreateReportComponent implements OnInit {
     {
       this.router.navigate(['error-page'])
     }
+  }
+
+  
+  load()
+  {
+    this.showImageSpinner=false
   }
 
   getKidById(kidId: number) {

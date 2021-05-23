@@ -28,77 +28,77 @@ export class KidsService {
         'eventId':eventId.toString()
       })
     }
-    return this._httpclient.post<Event>(`${"http://localhost:9090/vms/kids-participants"}`,null,header);    
+    return this._httpclient.post<Event>(`${"http://localhost:9090/vms/kids-participants"}`,null,header).pipe(retry(3))    
   }
   getkidsgrouplist():Observable<KidsGroup[]>{
 
     return this._httpclient.get<KidsGroup[]>(`${"http://localhost:9090/vms/kids-groups"}`)
-    .pipe(retry(1));
+    .pipe(retry(3));
 
   }
 
   getkidslist(page:number):Observable<Kid[]>{
     console.log("Hello");
     
-    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/kids?page="}${page}`).pipe(retry(1));
+    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/kids?page="}${page}`).pipe(retry(3));
     
   }
 
   getAllKidsByVillage(page:number,villageId:number):Observable<Kid[]>
   {
-    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/village-kids?page="}${page}${"&village="}${villageId}`);
+    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/village-kids?page="}${page}${"&village="}${villageId}`).pipe(retry(3))
   }
 
   getAllKidsByArea(page:number,areaId:number):Observable<Kid[]>
   {
-    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/area-kids?page="}${page}${"&area="}${areaId}`);
+    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/area-kids?page="}${page}${"&area="}${areaId}`).pipe(retry(3))
   }
 
   getAllKidsByVillageAndGroup(page:number,villageId:number, groupId:number):Observable<Kid[]>
   {
-    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/village-group-kids?page="}${page}${"&village="}${villageId}${"&group="}${groupId}`)
+    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/village-group-kids?page="}${page}${"&village="}${villageId}${"&group="}${groupId}`).pipe(retry(3))
   }
 
   getAllKidsByAreaAndGroupAndVillage(page:number,areaId:number, groupId:number, villageId:number):Observable<Kid[]>
   {
-    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/area-group-village-kids?page="}${page}${"&area="}${areaId}${"&group="}${groupId}${"&village="}${villageId}`)
+    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/area-group-village-kids?page="}${page}${"&area="}${areaId}${"&group="}${groupId}${"&village="}${villageId}`).pipe(retry(3))
   }
 
   getKidReport(kidId:number):Observable<Kidsreport[]>
   {
-    return this._httpclient.get<Kidsreport[]>(`${"http://localhost:9090/vms/kids/"}${kidId}${"/kids-reports"}`)
+    return this._httpclient.get<Kidsreport[]>(`${"http://localhost:9090/vms/kids/"}${kidId}${"/kids-reports"}`).pipe(retry(3))
   }
 
   kidById(kidId:number):Observable<Kid>
   {
-    return this._httpclient.get<Kid>(`${"http://localhost:9090/vms/kids/"}${kidId}`)
+    return this._httpclient.get<Kid>(`${"http://localhost:9090/vms/kids/"}${kidId}`).pipe(retry(3))
   }
   addKidReport(kidReport:Kidsreport):Observable<Kidsreport>
   {
     console.log(kidReport)
     //console.log("Hrllo")
-    return this._httpclient.post<Kidsreport>(`${"http://localhost:9090/vms/kids-reports"}`,JSON.stringify(kidReport)) 
+    return this._httpclient.post<Kidsreport>(`${"http://localhost:9090/vms/kids-reports"}`,JSON.stringify(kidReport)).pipe(retry(3)) 
   }
 
   getAreaById(areaId:number):Observable<Area>
   { 
-    return this._httpclient.get<Area>(`${"http://localhost:9090/vms/areas/"}${areaId}`)
+    return this._httpclient.get<Area>(`${"http://localhost:9090/vms/areas/"}${areaId}`).pipe(retry(3))
   }
 
   addKid(kid:Kid):Observable<Kid>
   {
-    return this._httpclient.post<Kid>(`${"http://localhost:9090/vms/kids"}`,JSON.stringify(kid));    
+    return this._httpclient.post<Kid>(`${"http://localhost:9090/vms/kids"}`,JSON.stringify(kid)).pipe(retry(3)) 
   }
 
   kidGroupById(groupId:number):Observable<KidsGroup>
   {
-    return this._httpclient.get<KidsGroup>(`${"http://localhost:9090/vms/kids-groups/"}${groupId}`);
+    return this._httpclient.get<KidsGroup>(`${"http://localhost:9090/vms/kids-groups/"}${groupId}`).pipe(retry(3))
   }
 
   
   villageById(villageId:number):Observable<Village>
   {
-    return this._httpclient.get<Village>(`${"http://localhost:9090/vms/villages/"}${villageId}`);
+    return this._httpclient.get<Village>(`${"http://localhost:9090/vms/villages/"}${villageId}`).pipe(retry(3))
   }
 
   addKidsAttendance(attendance:Attendance,kidsids:Number[]):Observable<Attendance>
@@ -108,33 +108,33 @@ export class KidsService {
         'kidsIds':kidsids.toString()
       })
     }
-    return this._httpclient.post<Attendance>(`${"http://localhost:9090/vms/add-kids-attendance"}`,attendance,header);
+    return this._httpclient.post<Attendance>(`${"http://localhost:9090/vms/add-kids-attendance"}`,attendance,header).pipe(retry(3))
   }
 
   sessionById(sessionId:number):Observable<Session>
   {
-    return this._httpclient.get<Session>(`${"http://localhost:9090/vms/sessions/"}${sessionId}`)
+    return this._httpclient.get<Session>(`${"http://localhost:9090/vms/sessions/"}${sessionId}`).pipe(retry(3))
     .pipe(retry(1));
   }
 
   getAllKidsByGroup(page:number,groupId:number):Observable<Kid[]>
   {
-    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/group-kids?page="}${page}${"&group="}${groupId}`)
+    return this._httpclient.get<Kid[]>(`${"http://localhost:9090/vms/group-kids?page="}${page}${"&group="}${groupId}`).pipe(retry(3))
   }
 
   kidReportById(id:number):Observable<Kidsreport>
   {
-    return this._httpclient.get<Kidsreport>(`${"http://localhost:9090/vms/kids-reports/"}${id}`)
+    return this._httpclient.get<Kidsreport>(`${"http://localhost:9090/vms/kids-reports/"}${id}`).pipe(retry(3))
   }
 
   editKidsGroup(groupId:number,KidsGroup:KidsGroup):Observable<KidsGroup>
   {
-    return this._httpclient.put<KidsGroup>(`${"http://localhost:9090/vms/kids-groups/"}${groupId}`,KidsGroup)
+    return this._httpclient.put<KidsGroup>(`${"http://localhost:9090/vms/kids-groups/"}${groupId}`,KidsGroup).pipe(retry(3))
   }
 
   getLatestKidReport(id:number):Observable<Kidsreport>
   {
-    return this._httpclient.get<Kidsreport>(`${"http://localhost:9090/vms/latest-kid-report?kid="}${id}`);
+    return this._httpclient.get<Kidsreport>(`${"http://localhost:9090/vms/latest-kid-report?kid="}${id}`).pipe(retry(3))
   }
 
 

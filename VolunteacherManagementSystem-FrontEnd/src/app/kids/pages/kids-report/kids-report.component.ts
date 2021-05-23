@@ -22,6 +22,8 @@ export class KidsReportComponent implements OnInit {
   
   kidReport:Kidsreport=new Kidsreport()
   showSpinner:boolean=false
+
+  showImageSpinner:boolean=true
   
   constructor(private kidsService:KidsService,private router:Router,private kidService:KidsService, private route:ActivatedRoute) {}
 
@@ -38,6 +40,12 @@ export class KidsReportComponent implements OnInit {
     {
       this.router.navigate(['error-page'])
     }
+  }
+
+  
+  load()
+  {
+    this.showImageSpinner=false
   }
   
   getKidReportByKid(id: number) {

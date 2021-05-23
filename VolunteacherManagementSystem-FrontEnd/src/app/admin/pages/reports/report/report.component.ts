@@ -23,7 +23,7 @@ export class ReportComponent implements OnInit {
   totalKids: number
   totalSessions: number
   totalEvents: number
-  showSpinner:boolean
+  showSpinner:boolean=false
   totalVTS:number 
   totalLVTS:number
   totalNewKids:number

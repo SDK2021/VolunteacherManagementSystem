@@ -36,7 +36,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-activity-name">Activity
                                                     Name</label>
-                                                <input type="text" id="input-village-name"
+                                                <input autocomplete="off" type="text" id="input-village-name"
                                                     class="form-control form-control-alternative" name="name"
                                                     #name="ngModel" [(ngModel)]="activity.activityName" required
                                                     maxlength="20">
@@ -49,7 +49,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label"
                                                     for="input-activity-desc">Description</label>
-                                                <textarea row="3" id="input-activity-desc"
+                                                <textarea autocomplete="off" row="3" id="input-activity-desc"
                                                     class="form-control form-control-alternative" name="desc"
                                                     #desc="ngModel" [(ngModel)]="activity.description" required></textarea>
                                                 <small *ngIf="!desc.valid && desc.touched" class="text-danger">Description
@@ -151,7 +151,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-activity-name">Activity
                                                     Name</label>
-                                                <input type="text" id="input-village-name"
+                                                <input autocomplete="off" type="text" id="input-village-name"
                                                     class="form-control form-control-alternative" name="name"
                                                     #name="ngModel" [(ngModel)]="activity.activityName" required
                                                     maxlength="20">
@@ -164,7 +164,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label"
                                                     for="input-activity-desc">Description</label>
-                                                <textarea row="3" id="input-activity-desc"
+                                                <textarea autocomplete="off" row="3" id="input-activity-desc"
                                                     class="form-control form-control-alternative" name="desc"
                                                     #desc="ngModel" [(ngModel)]="activity.description" required></textarea>
                                                 <small *ngIf="!desc.valid && desc.touched" class="text-danger">Description

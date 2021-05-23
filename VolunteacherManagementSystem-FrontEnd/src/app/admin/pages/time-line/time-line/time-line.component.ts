@@ -17,6 +17,9 @@ export class TimeLineComponent implements OnInit {
   noPosts:boolean=false
   page:number=0
   totalPostPages:number
+  showImageSpinner:boolean=true
+  showImageSpinner2:boolean=true
+
   constructor(private router:Router,private _sharedservice:TimeLineService) { }
 
   ngOnInit(): void {
@@ -57,6 +60,16 @@ export class TimeLineComponent implements OnInit {
     });
   }
   
+  
+  load()
+  {
+    this.showImageSpinner=false
+  }
+
+  loadPhoto()
+  {
+    this.showImageSpinner2=false
+  }
   onScroll()
   {
     if(this.page < this.totalPostPages - 1)

@@ -6,7 +6,7 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label class="form-control-label" for="input-first-name">First name</label>
-              <input  formControlName="fname" type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value={{firstName}}>
+              <input autocomplete="off" formControlName="fname" type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value={{firstName}}>
               <!-- <input  formControlName="fname" type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" > -->
               <small class="text-danger" *ngIf="(editProfile.get('userInfo.fname').errors?.required && editProfile.get('userInfo.fname').touched)">First name is required</small>
               <small class="text-danger" *ngIf="editProfile.get('userInfo.fname').hasError('pattern')">Invalid name</small>
@@ -15,7 +15,7 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label class="form-control-label" for="input-last-name">Last name</label>
-              <input  formControlName="lname" type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="{{lastName}}">
+              <input autocomplete="off" formControlName="lname" type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="{{lastName}}">
               <small class="text-danger" *ngIf="(editProfile.get('userInfo.lname').errors?.required && editProfile.get('userInfo.lname').touched)">Last name is required</small>
               <small class="text-danger" *ngIf="(editProfile.get('userInfo.lname').errors?.pattern)">Invalid name</small>
             </div>
@@ -52,7 +52,7 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label class="form-control-label" for="input-email">Email address</label>
-              <input  formControlName="email" type="email" id="input-email" class="form-control form-control-alternative" value="jesse@example.com">
+              <input autocomplete="off" formControlName="email" type="email" id="input-email" class="form-control form-control-alternative" value="jesse@example.com">
               <small class="text-danger" *ngIf="(editProfile.get('contactInfo.email').errors?.required && editProfile.get('contactInfo.email').touched)">Email is required is required</small>
               <small class="text-danger" *ngIf="(editProfile.get('contactInfo.email').errors?.email)">Invalid email</small>
             </div>
@@ -60,8 +60,8 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label class="form-control-label" for="input-phone">Phone Number</label>
-              <input  formControlName="phone" type="text" id="input-phone" class="form-control form-control-alternative" value="9734653363">
-              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.phone').errors?.required && editProfile.get('contactInfo.phone').touched)">Phone Number is required </small>
+              <input autocomplete="off" formControlName="phone" type="text" id="input-phone" class="form-control form-control-alternative" maxlength="10" >
+              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.phone').errors?.required && editProfile.get('contactInfo.phone').touched)" >Phone Number is required </small>
               <small class="text-danger" *ngIf="(editProfile.get('contactInfo.phone').errors?.pattern)">Invalid phone number</small>
             </div>
           </div>                
@@ -70,7 +70,7 @@
           <div class="col-lg-4">
             <div class="form-group">
               <label class="form-control-label" for="input-pincode">Pincode</label>
-              <input  formControlName="pincode" type="text" id="input-pincode" class="form-control form-control-alternative" value="380061" placeholder="Enter Pincode">
+              <input autocomplete="off" formControlName="pincode" type="text" id="input-pincode" class="form-control form-control-alternative"  placeholder="Enter Pincode" maxlength="6">
               <small class="text-danger" *ngIf="(editProfile.get('contactInfo.pincode').errors?.required && editProfile.get('contactInfo.pincode').touched)">Pincode is required </small>
               <small class="text-danger" *ngIf="(editProfile.get('contactInfo.pincode').errors?.pattern)">Invalid pincode</small>
             </div>
@@ -103,14 +103,14 @@
       <div formGroupName="otherInfo" class="pl-lg-4">
         <div class="form-group">
           <label>My Education</label>
-          <textarea  formControlName="education" rows="4" class="form-control form-control-alternative" placeholder="Education">Complted M.Sc in AI ML ,currently working at Google. Pursuing PhD in Canada</textarea>
+          <textarea autocomplete="off" formControlName="education" rows="4" class="form-control form-control-alternative" placeholder="Education">Complted M.Sc in AI ML ,currently working at Google. Pursuing PhD in Canada</textarea>
           <small class="text-danger" *ngIf="(editProfile.get('otherInfo.education').errors?.required && editProfile.get('otherInfo.education').touched)">Education is required</small>
         </div>
         <div class="row">
           <div class="col-md-12">
             <div class="form-group"> 
               <label class="form-control-label" for="input-employer">Employer name</label>
-              <input  formControlName="employer" id="input-employer" class="form-control form-control-alternative" placeholder="Employer Name" value="University of Computer Science" type="text">
+              <input autocomplete="off" formControlName="employer" id="input-employer" class="form-control form-control-alternative" placeholder="Employer Name" value="University of Computer Science" type="text" maxlength="20">
               <small class="text-danger" *ngIf="(editProfile.get('otherInfo.employer').errors?.required && editProfile.get('otherInfo.employer').touched)">Employer name is required </small>
             </div>
           </div>
@@ -126,7 +126,7 @@
         </div>
         <div class="text-center mt-4 mb-4">
           <!-- [disabled]="!editProfile.valid"  -->
-          <button  type="submit" href="#!" class="btn btn-info">Save</button>
+          <button  type="submit"  class="btn btn-info">Save</button>
         </div>
       </div>   
     </form>

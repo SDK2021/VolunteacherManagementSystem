@@ -46,6 +46,8 @@ export class AddParticipantsComponent implements OnInit {
 
   page: number=0
 
+  showImageSpinner:boolean=true
+
   constructor(private kidsService: KidsService, private _auth: authentication, private router: Router, private _snackBar: MatSnackBar,
     private eventService: EventsService, private route: ActivatedRoute) {
     this.villages = ["Timba", "Miroli"]
@@ -312,5 +314,11 @@ export class AddParticipantsComponent implements OnInit {
         });
       })
     }
+  }
+
+  
+  load()
+  {
+    this.showImageSpinner=false
   }
 }

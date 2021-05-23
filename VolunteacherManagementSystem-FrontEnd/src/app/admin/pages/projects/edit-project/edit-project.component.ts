@@ -33,9 +33,11 @@ export class EditProjectComponent implements OnInit {
 
   baseUrl:string="/vms/projects"
   oldImage:string=null
-  isProjectEdited:boolean=false
+  isProjectEdited:boolean=null
 
   hover:boolean=false
+
+  showImageSpinner:boolean=true
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
@@ -58,6 +60,12 @@ export class EditProjectComponent implements OnInit {
     this.getKids()
   }
 
+  load()
+  {
+    this.showImageSpinner=false
+  }
+
+  
   ngOnDestroy()
   {
     if(this.isProjectEdited==false)
@@ -95,9 +103,11 @@ export class EditProjectComponent implements OnInit {
     }
     else
     {
-      this.hover=true
+      this.hover=!this.hover
     }
   }
+
+
 
   handleError(error)
   {
@@ -157,6 +167,7 @@ export class EditProjectComponent implements OnInit {
     this.hover=false
     this.imageURL = localStorage.getItem("imageURL")
     localStorage.removeItem("imageURL")
+    this.showImageSpinner=true
   }
   openEditSnackBar() {
     this._snackBar.open('Edited successfully..', 'close', {
@@ -249,6 +260,7 @@ export class EditProjectComponent implements OnInit {
   }
   showKidTab()
   {
+    this.showImageSpinner=true
     this.tab1Class=false
     this.tab2Class=true
     this.vtTab=false

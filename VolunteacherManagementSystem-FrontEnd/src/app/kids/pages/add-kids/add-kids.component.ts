@@ -69,6 +69,8 @@ export class AddKidsComponent implements OnInit {
 
   namePattern:string="[a-zA-Z ]{3,20}"
 
+  showImageSpinner:boolean=true
+
 
   constructor(private fileService:FileUploadService,private route:ActivatedRoute,private router:Router,private _snackBar: MatSnackBar,private kidsService:KidsService,private addressService : AddressService) {}
 
@@ -154,6 +156,10 @@ export class AddKidsComponent implements OnInit {
   }
 
  
+  load()
+  {
+    this.showImageSpinner=false
+  }
   show(isShow):void
   {
     this.showForm=isShow

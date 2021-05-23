@@ -28,6 +28,7 @@ export class AttendanceComponent implements OnInit {
   users:Array<User>=new Array()
   showVtSpinner:boolean=false
   showSpinner:boolean=false
+  showImageSpinner:boolean=true
   noUsers:boolean=false
   noKids:boolean=false
   groupTouched:boolean = false
@@ -64,7 +65,10 @@ export class AttendanceComponent implements OnInit {
   }
 
 
-
+  load()
+  {
+    this.showImageSpinner=false
+  }
 
   show()
   {

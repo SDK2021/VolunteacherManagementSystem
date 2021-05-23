@@ -23,8 +23,14 @@ export class CreatePostComponent implements OnInit {
   post:Timelinepost=new Timelinepost()
   baseUrl:string="/vms/users/posts"
   imageURL:string;
+  showImageSpinner:boolean=true
 
   showProgressbar:boolean=false
+
+  load()
+  {
+    this.showImageSpinner=false
+  }
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
@@ -65,7 +71,6 @@ export class CreatePostComponent implements OnInit {
     }
   }
 
-  
 
   show(isShow):void
   {

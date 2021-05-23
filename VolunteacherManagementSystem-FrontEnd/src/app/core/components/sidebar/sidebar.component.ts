@@ -41,6 +41,8 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   public isCollapsed = true;
 
+  showImageSpinner:boolean=true
+
   user:User=new User()
   userType:string=''
   constructor(private userService:UsersService,private router: Router,private _auth:authentication) { }
@@ -88,6 +90,11 @@ export class SidebarComponent implements OnInit {
     this.router.navigate([''])
   }
 
+  
+  load()
+  {
+    this.showImageSpinner=false
+  }
   
   showChildren(index:number)
   {

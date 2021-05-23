@@ -138,10 +138,13 @@
                         <div class="col-auto">
                           <!-- Avatar -->
                           <div class="avatar rounded-circle">
-                            <!-- <ng-container *ngIf="a.user.photo==''">
-                              <mat-spinner [diameter]="25"></mat-spinner>
-                            </ng-container> -->
-                            <img alt="Image placeholder" src="{{a.createdBy.photo}}">
+                            <ng-container *ngIf="showImageSpinner">
+                              <div class="col-12 my-8 ">
+                                  <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                                  </mat-spinner>
+                              </div>
+                          </ng-container>
+                            <img  src="{{a.createdBy.photo}}" (load)="load()">
                           </div>
                         </div>
                         <div class="col ml--2">
@@ -200,7 +203,7 @@
                     <div class="input-group-prepend  ">
                       <span class="input-group-text p-0 m-2"><i class="fas fa-plus ml-2"></i></span>
                     </div>
-                    <input class="form-control p-0 " style="border-radius: 30px;" placeholder="Add announcement"
+                    <input autocomplete="off" class="form-control p-0 " style="border-radius: 30px;" placeholder="Add announcement"
                       type="text" (focus)="focus = true" (blur)="focus = false" name="Announcements" [(ngModel)]="announcement.data">
 
                   </div>
@@ -327,9 +330,7 @@
             <div class="col">
               <h3 class="mb-0">New Users</h3>
             </div>
-            <!-- <div class="col text-right">
-              <a href="#!" class="btn btn-sm btn-primary">See all</a>
-            </div> -->
+           
           </div>
         </div>
         <div style="overflow: auto;height: 50vh;"  infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onUserScroll()" [scrollWindow]="false"  >
@@ -344,7 +345,13 @@
                   <div class="col-auto">
                     <!-- Avatar -->
                     <div class="avatar rounded-circle">
-                      <img alt="Image placeholder" src="{{v.user.photo}}">
+                      <ng-container *ngIf="showImageSpinner">
+                        <div class="col-12 my-8 ">
+                            <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                            </mat-spinner>
+                        </div>
+                    </ng-container>
+                      <img (load)="load()" src="{{v.user.photo}}">
                     </div>
                   </div>
                   <div class="col ml--2 p4">
@@ -354,7 +361,7 @@
                     <span class="text-muted h5">Joined on {{v.joiningDate | date:'mediumDate'}}</span>
                   </div>
                   <div class="mx-auto d-block col-auto ">
-                    <h5 routerLink="/admin/volunteachers/{{v.volunteacherId}}/profile/posts" class="px-3 py-2 bg-primary text-white" style="cursor: pointer;border-radius: 20px;">View</h5>
+                    <h5 routerLink="/admin/volunteachers/{{v.user.userId}}/profile/posts" class="px-3 py-2 bg-primary text-white" style="cursor: pointer;border-radius: 20px;">View</h5>
     
                   </div>
                 </div>
@@ -395,7 +402,13 @@
                   <div class="col-auto mt--4 ">
                     <!-- Avatar -->
                     <div class="avatar rounded-circle">
-                      <img alt="Image placeholder" src="{{r.user.photo}}">
+                      <ng-container *ngIf="showImageSpinner">
+                        <div class="col-12 my-8 ">
+                            <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                            </mat-spinner>
+                        </div>
+                    </ng-container>
+                      <img (load)="load()" src="{{r.user.photo}}">
                     </div>
                   </div>
                   <div class="col ml--3 mt--2 ">

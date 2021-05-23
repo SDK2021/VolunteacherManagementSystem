@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-lg-12 col-md-10">
         <h1 *ngIf="!heading" class=" text-white">Hello {{user.userName}}</h1>
-        <h1 *ngIf="heading" class=" text-white">{{volunteacher.user.type.type}}</h1>
+        <h1 *ngIf="heading" class=" text-white ">{{volunteacher.user.type.type}}</h1>
         <!-- <h2 class="text-white mt-0 ">This is your profile page. You can see in how many sessions you have attended and in which projects you are. </h2>
         -->
       </div>
@@ -21,13 +21,25 @@
           <div class="col-lg-3 order-lg-2">
             <div class="card-profile-image">
               <ng-container *ngIf="isVt">
-                <a href="user/set-profile-pic">
-                  <img src="{{volunteacher.user.photo}}" class="rounded-circle">
+                <a routerLink="user/set-profile-pic">
+                  <img (load)="load()" src="{{volunteacher.user.photo}}" class="rounded-circle">
+                  <ng-container *ngIf="showImageSpinner">
+                    <div class="col-12  ">
+                        <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                        </mat-spinner>
+                    </div>
+                </ng-container>
                 </a>
               </ng-container>
               <ng-container *ngIf="!isVt">
                 <a routerLink="/{{userType}}/profile/set-profile">
-                  <img src="{{user.photo}}" class="rounded-circle">
+                  <img (load)="load()" src="{{user.photo}}" class="rounded-circle">
+                  <ng-container *ngIf="showImageSpinner">
+                    <div class="col-12 mt-6 p-0 ">
+                        <mat-spinner class="mx-auto d-block" color="primary" [diameter]="20">
+                        </mat-spinner>
+                    </div>
+                </ng-container>
                 </a>
               </ng-container>
             </div>

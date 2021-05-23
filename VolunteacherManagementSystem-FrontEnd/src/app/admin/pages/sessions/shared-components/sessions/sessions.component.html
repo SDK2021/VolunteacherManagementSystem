@@ -16,9 +16,9 @@
 
             <ng-container *ngIf="!s.show">
               <div class="text-center">
-                <a href="/user/sessions/sessions-list/{{s.session.sessionId}}/session-report"><button
-                    style="background-color: rgba(231, 121, 194, 0.26);" [disabled]="s.disable"
-                    class="btn btn-primary text-dark border-0">Feedback</button></a>
+                <a routerLink="/user/sessions/sessions-list/{{s.session.sessionId}}/session-report"><button
+                     [disabled]="s.disable"
+                    class="btn btn-dribbble text-white border-0">Feedback</button></a>
               </div>
             </ng-container>
 

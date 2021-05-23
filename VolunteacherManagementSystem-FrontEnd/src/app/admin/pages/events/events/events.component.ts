@@ -79,6 +79,8 @@ export class EventsComponent implements OnInit {
   noEvents:boolean=false
   eLength:number
 
+  showImageSpinner:boolean=true
+
   constructor(private fileService:FileUploadService,private dialog:MatDialog,private router:Router,private notiService:NotificationsService,private userService:UsersService, private authService:authentication, private projectService:ProjectsService, private addressService: AddressService,private _snackBar: MatSnackBar, private eventService:EventsService) { }
 
   ngOnInit(): void {
@@ -126,6 +128,11 @@ export class EventsComponent implements OnInit {
       console.log("Bye Bye");
       
     }
+  }
+
+  load()
+  {
+    this.showImageSpinner=false
   }
   
   handleError(error)

@@ -9,48 +9,37 @@ import { School } from 'src/app/core/model/school';
   providedIn: 'root'
 })
 export class SchoolService {
-  handleError(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      errorMessage = `Client side Error: ${error.error.message}`;
-    } else {
-      // server-side error
-      errorMessage = `Server side : Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    window.alert(errorMessage);
-    return throwError(errorMessage);
-  }
+ 
   constructor(private http:HttpClient) { }
 
   getAllSchool(page:number):Observable<School[]>
   {
-     return this.http.get<School[]>(`${"http://localhost:9090/vms/schools?page="}${page}`)
+     return this.http.get<School[]>(`${"http://localhost:9090/vms/schools?page="}${page}`).pipe(retry(3))
   }
 
   getAllRequirements():Observable<Requirement[]>
   {
-     return this.http.get<Requirement[]>(`${"http://localhost:9090/vms/requirements"}`)
+     return this.http.get<Requirement[]>(`${"http://localhost:9090/vms/requirements"}`).pipe(retry(3))
   }
 
   addSchool(school:School):Observable<School>
   {
-    return this.http.post<School>(`${"http://localhost:9090/vms/schools"}`,school)
+    return this.http.post<School>(`${"http://localhost:9090/vms/schools"}`,school).pipe(retry(3))
   }
 
   editSchool(schoolId:number,school:School):Observable<School>
   {
-    return this.http.put<School>(`${"http://localhost:9090/vms/schools/"}${schoolId}`,school)
+    return this.http.put<School>(`${"http://localhost:9090/vms/schools/"}${schoolId}`,school).pipe(retry(3))
   }
 
   deleteSchool(id:number)
   {
-    return this.http.delete(`${"http://localhost:9090/vms/schools/"}${id}`)
+    return this.http.delete(`${"http://localhost:9090/vms/schools/"}${id}`).pipe(retry(3))
   }
 
   getSchoolById(schoolId):Observable<School>
   {
-    return this.http.get<School>(`${"http://localhost:9090/vms/schools/"}${schoolId}`)
+    return this.http.get<School>(`${"http://localhost:9090/vms/schools/"}${schoolId}`).pipe(retry(3))
   }
 
   downloadSchools():Observable<Object>
@@ -60,6 +49,6 @@ export class SchoolService {
       headers:new HttpHeaders({
       })
     }
-    return this.http.get(`${"http://localhost:9090/vms/schools-download"}`,header)
+    return this.http.get(`${"http://localhost:9090/vms/schools-download"}`,header).pipe(retry(3))
   }
 }

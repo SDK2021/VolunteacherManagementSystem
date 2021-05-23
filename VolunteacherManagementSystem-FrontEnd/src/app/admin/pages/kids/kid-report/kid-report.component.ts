@@ -24,6 +24,8 @@ export class KidReportComponent implements OnInit {
 
   showSpinner:boolean=false
 
+  showImageSpinner:boolean=true
+
 
   constructor(private route:ActivatedRoute,private kidsService:KidsService,private router:Router) {}
 
@@ -73,6 +75,12 @@ export class KidReportComponent implements OnInit {
     this.getKidReportById(this.route.snapshot.params['rid'])
   }
 
+
+  
+  load()
+  {
+    this.showImageSpinner=false
+  }
 
   handleError(error)
   {

@@ -16,18 +16,18 @@ export class authentication {
 
   constructor(private http:HttpClient) { }
 
-  handleError(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      errorMessage = `Client side Error: ${error.error.message}`;
-    } else {
-      // server-side error
-      errorMessage = `Server side : Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    window.alert(errorMessage);
-    return throwError(errorMessage);
-  }
+  // handleError(error) {
+  //   let errorMessage = '';
+  //   if (error.error instanceof ErrorEvent) {
+  //     // client-side error
+  //     errorMessage = `Client side Error: ${error.error.message}`;
+  //   } else {
+  //     // server-side error
+  //     errorMessage = `Server side : Error Code: ${error.status}\nMessage: ${error.message}`;
+  //   }
+  //   window.alert(errorMessage);
+  //   return throwError(errorMessage);
+  // }
   loginAuthentication(username:String,password:String)
   {
     let header = {headers:
@@ -41,7 +41,7 @@ export class authentication {
       console.log(res);
      this.successfullyLogin(username,password)
     }
-    )).pipe(retry(1),catchError(this.handleError));
+    )).pipe(retry(3));
   }
 
   createToken(username:String,password:String)

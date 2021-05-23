@@ -32,7 +32,13 @@
                                 <form (ngSubmit)="saveProject(form) " #form="ngForm">
                                     <div class="mx-auto d-block col-xl-5 col-lg-7 col-10 mt-3 ">
                                         <div class="container-img" (click)="edit()" (mouseenter)="mouseEvent()" (mouseleave)="mouseEvent()">
-                                            <img src="{{imageURL}}"  [ngClass]="{'darkShade':hover}" style="width:100%;" >
+                                            <ng-container *ngIf="showImageSpinner">
+                                                <div class="col-12 my-8 ">
+                                                    <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                                                    </mat-spinner>
+                                                </div>
+                                            </ng-container>
+                                            <img src="{{imageURL}}" (load)="load()" [ngClass]="{'darkShade':hover}" style="width:100%;" >
             
                                             <div style="cursor: pointer;" *ngIf="hover" class="centered display-3">
                                                <i class="fas fa-edit"></i>
@@ -45,7 +51,7 @@
                                           
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-name">Project Name</label>
-                                                <input type="text" id="input-name"
+                                                <input autocomplete="off" type="text" id="input-name"
                                                     class="form-control form-control-alternative" placeholder="Project Name"
                                                     name="projectname" #projectName="ngModel"
                                                     [(ngModel)]="project.projectName" required maxlength="50">
@@ -84,7 +90,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label class="form-control-label">Project Description</label>
-                                        <textarea rows="4" class="form-control form-control-alternative" #desc="ngModel"
+                                        <textarea autocomplete="off" rows="4" class="form-control form-control-alternative" #desc="ngModel"
                                             name="desc" [(ngModel)]="project.description" required></textarea>
                                         <small *ngIf="desc.errors?.required && desc.touched" class="text-danger">Description
                                             is required</small>
@@ -92,7 +98,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label class="form-control-label">Project Data</label>
-                                        <textarea rows="4" class="form-control form-control-alternative" #data="ngModel"
+                                        <textarea autocomplete="off" rows="4" class="form-control form-control-alternative" #data="ngModel"
                                             name="data" [(ngModel)]="project.projectData" required></textarea>
                                         <small *ngIf="data.errors?.required && data.touched" class="text-danger">Data are
                                             required</small>
@@ -121,7 +127,13 @@
                                                                 <div class="col-auto">
                                                                     <!-- Avatar -->
                                                                     <div class="avatar rounded-circle">
-                                                                        <img alt="Image placeholder"
+                                                                        <ng-container *ngIf="showImageSpinner">
+                                                                            <div class="col-12 my-8 ">
+                                                                                <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                                                                                </mat-spinner>
+                                                                            </div>
+                                                                        </ng-container>
+                                                                        <img (load)="load()" alt="Image placeholder"
                                                                             src="{{u.photo}}">
                                                                     </div>
                                                                 </div>
@@ -157,8 +169,15 @@
                                                                  <div class="row align-items-center">
                                                                      <div class="col-auto">
                                                                          <!-- Avatar -->
+                                                                      
                                                                          <div class="avatar rounded-circle">
-                                                                             <img alt="Image placeholder"
+                                                                            <ng-container *ngIf="showImageSpinner">
+                                                                                <div class="col-12 my-8 ">
+                                                                                    <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                                                                                    </mat-spinner>
+                                                                                </div>
+                                                                            </ng-container>
+                                                                             <img (load)="load()" alt="Image placeholder"
                                                                                  src="{{k.photo}}">
                                                                          </div>
                                                                      </div>

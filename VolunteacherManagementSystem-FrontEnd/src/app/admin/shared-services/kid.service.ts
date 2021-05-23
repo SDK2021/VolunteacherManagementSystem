@@ -41,7 +41,7 @@ export class KidService {
       headers:new HttpHeaders({
       })
     }
-    return this.http.get(`${"http://localhost:9090/vms/kids-download"}`,header)
+    return this.http.get(`${"http://localhost:9090/vms/kids-download"}`,header).pipe(retry(3))
   }
   
 }

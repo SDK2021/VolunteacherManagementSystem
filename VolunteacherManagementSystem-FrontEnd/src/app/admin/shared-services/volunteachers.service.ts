@@ -22,7 +22,7 @@ export class VolunteachersService {
       headers:new HttpHeaders({
       })
     }
-    return this.http.get(`${"http://localhost:9090/vms/volunteachers-download"}`,header)
+    return this.http.get(`${"http://localhost:9090/vms/volunteachers-download"}`,header).pipe(retry(3))
   }
 
   getAllVolunteachers(page:number):Observable<Volunteacher[]>
@@ -45,12 +45,12 @@ export class VolunteachersService {
 
   acceptRequest(requestId:number)
   {
-    return this.http.post<Applicantrequest>(`${"http://localhost:9090/vms/request-success/"}${requestId}`,null)
+    return this.http.post<Applicantrequest>(`${"http://localhost:9090/vms/request-success/"}${requestId}`,null).pipe(retry(3))
   }
 
   deniedRequest(requestId:number)
   {
-    return this.http.post<Applicantrequest>(`${"http://localhost:9090/vms/request-denied/"}${requestId}`,null)
+    return this.http.post<Applicantrequest>(`${"http://localhost:9090/vms/request-denied/"}${requestId}`,null).pipe(retry(3))
   }
   //Users Requests
 

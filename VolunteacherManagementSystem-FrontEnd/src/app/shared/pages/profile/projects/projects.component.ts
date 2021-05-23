@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { Project } from 'src/app/core/model/project';
 import { User } from 'src/app/core/model/user';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
@@ -16,6 +17,11 @@ export class ProjectsComponent implements OnInit {
   projects:Project[] = []
   user:User
 
+  showSpinner:boolean=false
+  pLength:number
+  noProjects:boolean=false
+
+  showImageSpinner:boolean=true
   constructor(private router:Router,private route : ActivatedRoute,private authService:authentication,private userService:UsersService,private profileService:ProfileService) {
    
    }
@@ -48,8 +54,13 @@ export class ProjectsComponent implements OnInit {
     }
   }
 
+  load()
+  {
+    this.showImageSpinner=false
+  }
   getAllProjectList() 
   {
+    this.showSpinner=true
       let username:string;
       let authuser:string[];
       let userId:number;
@@ -62,15 +73,29 @@ export class ProjectsComponent implements OnInit {
         userId = this.user.userId;
         this.profileService.getAllProjectNumberByUser(userId).subscribe(projectnum=>{        
             console.log(data)
+            
             for(var num of projectnum)
             {
-              this.profileService.getProjectById(num).subscribe(prodata=>{
+              this.profileService.getProjectById(num).pipe(finalize(()=>{
+                this.showSpinner=false
+            
+            if (projectnum.length != 0) { 
+              this.pLength = this.projects.length
+              this.noProjects=false
+            }
+            //this.pLength=0
+            if(this.pLength==0)
+            {
+              this.noProjects=true
+            }
+              })).subscribe(prodata=>{
                 this.projects.push(prodata)
                
               },error=>{
                 this.handleError(error)
                })
             } 
+            
       },error=>{
         this.handleError(error)
        })

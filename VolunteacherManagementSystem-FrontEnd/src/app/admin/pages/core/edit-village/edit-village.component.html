@@ -88,7 +88,7 @@
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-village-name">Village
                                                 Name</label>
-                                            <input type="text" id="input-village-name"
+                                            <input autocomplete="off" type="text" id="input-village-name"
                                                 class="form-control form-control-alternative" placeholder="Village Name"
                                                 value="Timba" #name="ngModel" name="villageName"
                                                 [(ngModel)]="village.villageName" required>
@@ -97,7 +97,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 text-center mt-4 mb-2 ">
-                                        <button type="submit"
+                                        <button type="submit" [disabled]="!form.valid"
                                             class="btn btn-primary btn-round btn-icon">
                                         Save
                                         </button>

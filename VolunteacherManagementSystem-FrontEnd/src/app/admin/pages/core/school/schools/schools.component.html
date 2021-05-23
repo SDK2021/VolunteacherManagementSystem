@@ -32,7 +32,7 @@
                                     <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10 ">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-name">School Name</label>
-                                            <input type="text" id="input-name"
+                                            <input autocomplete="off" type="text" id="input-name"
                                                 class="form-control form-control-alternative" placeholder="School Name"
                                                 name="name" #sname="ngModel" [(ngModel)]="school.schoolName" required
                                                 maxlength="30">
@@ -104,7 +104,7 @@
                                     <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-phone">Phone Number</label>
-                                            <input type="text" id="input-phone" 
+                                            <input autocomplete="off" type="text" id="input-phone" 
                                                 class="form-control form-control-alternative" placeholder="Phone Number"
                                                 name="phone" #phone="ngModel" [(ngModel)]="school.phoneNumber" required
                                                 pattern="[0-9]{10}" maxlength="10">
@@ -122,9 +122,9 @@
                                     <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-pincode">Pincode</label>
-                                            <input type="text" id="input-pincode"
+                                            <input autocomplete="off" type="text" id="input-pincode"
                                                 class="form-control form-control-alternative" placeholder="Pincode"
-                                                name="pincode" #pincode="ngModel" [(ngModel)]="school.pincode" required pattern="[0-9]{6}">
+                                                name="pincode" #pincode="ngModel" [(ngModel)]="school.pincode" required pattern="[0-9]{6}" maxlength="6">
                                             <small *ngIf="pincode.errors?.required && pincode.touched"
                                                 class="text-danger">Pincode number is
                                                 required</small>
@@ -150,7 +150,7 @@
                                     <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-lab">Total Labs</label>
-                                            <input type="number" id="input-lab"
+                                            <input autocomplete="off" type="number" id="input-lab"
                                                 class="form-control form-control-alternative"  placeholder="Total Lab"
                                                 name="lab" #labs="ngModel" [(ngModel)]="school.totalLabs" required >
                                                 <small *ngIf="labs.errors?.required && labs.touched"
@@ -166,7 +166,7 @@
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-students">Total
                                                 Students</label>
-                                            <input type="number" id="input-students"
+                                            <input autocomplete="off" type="number" id="input-students"
                                                 class="form-control form-control-alternative" 
                                                 placeholder="Total Students" name="students" #students="ngModel" [(ngModel)]="school.totalStudent" required>
                                                 <small *ngIf="students.errors?.required && students.touched"
@@ -217,7 +217,7 @@
                                     <div class="col-xl-8 col-lg-6 col-12 col-sm-7 col-md-10 ">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-name">Requirements</label>
-                                            <textarea type="text" id="input-requirement" rows="3"
+                                            <textarea autocomplete="off" type="text" id="input-requirement" rows="3"
                                                 class="form-control form-control-alternative" placeholder="Requirements"
                                                 name="requirements" [(ngModel)]="school.requirements" >  </textarea>
                                         </div>
@@ -354,12 +354,12 @@
                                         <h3 *ngIf="s.status === 2">Better</h3>
                                         <h3 *ngIf="s.status === 3">Under construction</h3>
                                     </td>
-                                    <td routerLink="/admin/schools/{{s.schoolId}}/edit">
+                                    <td style="cursor: pointer;" routerLink="/admin/schools/{{s.schoolId}}/edit">
                                         <div class=" text-center ">
                                             <i  class="fas fa-edit text-lg text-primary"></i>
                                         </div>
                                     </td>
-                                    <td  (click)="delete(s.schoolId)">
+                                    <td style="cursor: pointer;" (click)="delete(s.schoolId)">
                                         <div class="text-center ">
                                             <i mat-button
                                                 class="fas fa-trash text-lg text-danger"></i>

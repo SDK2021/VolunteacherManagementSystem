@@ -40,6 +40,8 @@ export class KidsAttendanceComponent implements OnInit {
   selectedArea:number
   selectedGroup:number
 
+  showImageSpinner:boolean=true
+
   kidslist:Array<Kid>
   presentkids:Number[] = []
   groupSelected:number = 0
@@ -77,6 +79,12 @@ export class KidsAttendanceComponent implements OnInit {
       this.page += 1
       this.getPageableKids(this.page);
     }
+  }
+  
+  
+  load()
+  {
+    this.showImageSpinner=false
   }
   getPageableKids(page: number) {
     if(this.filter === "vga")

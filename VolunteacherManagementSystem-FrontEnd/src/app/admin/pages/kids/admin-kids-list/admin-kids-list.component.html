@@ -42,7 +42,7 @@
                                             <div class="input-group-prepend  ">
                                               <span class="input-group-text p-0 m-2"><i class="fas fa-search"></i></span>
                                             </div>
-                                            <input class="form-control p-0 " style="border-radius: 30px;" placeholder="Search" type="text"
+                                            <input autocomplete="off" class="form-control p-0 " style="border-radius: 30px;" placeholder="Search" type="text"
                                               (blur)="focus = false" [(ngModel)]="search" name="search">
                                           </div>
                                         </div>
@@ -60,7 +60,13 @@
                                             <div class="col-auto">
                                                 <!-- Avatar -->
                                                 <div class="avatar rounded-circle">
-                                                    <img alt="Image placeholder"
+                                                    <ng-container *ngIf="showImageSpinner">
+                                                        <div class="col-12 my-8 ">
+                                                            <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                                                            </mat-spinner>
+                                                        </div>
+                                                    </ng-container>
+                                                    <img (load)="load()"
                                                         src="{{k.photo}}">
                                                 </div>
                                             </div>

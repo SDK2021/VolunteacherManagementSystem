@@ -27,17 +27,24 @@
                         <div class="card shadow mt-5">
                             <!-- Card body -->
                             <div class="card-body">
+                                
                                 <a [routerLink]="['/user/kids/set-photo']">
-                                    <img src="{{imageURL}}"
+                                    <img (load)="load()" src="{{imageURL}}"
                                         class="mt--6 rounded-circle img-center img-fluid shadow shadow-lg--hover"
                                         style="width: 140px;">
+                                        <ng-container *ngIf="showImageSpinner">
+                                            <div class="col-12  ">
+                                                <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                                                </mat-spinner>
+                                            </div>
+                                        </ng-container>  
                                 </a>
                                 <form class="mt-5" (ngSubmit)="addKid(form.value)" #form="ngForm">
                                     <div class="row justify-content-center  px-lg-6">
                                         <div class="col-lg-6 col-md-9 col-sm-10">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-name">Name</label>
-                                                <input #name="ngModel" [(ngModel)]="kid.name" name="name" type="text"
+                                                <input autocomplete="off" #name="ngModel" [(ngModel)]="kid.name" name="name" type="text"
                                                     id="input-name" class="form-control form-control-alternative"
                                                     placeholder="name" required pattern="{{namePattern}}">
                                                 <small *ngIf="name.errors?.required && name.touched"
@@ -107,7 +114,7 @@
                                         <div class="col-lg-6 col-md-9 col-sm-10">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-standard">School</label>
-                                                <input #school="ngModel" name="school" [(ngModel)]="kid.school"
+                                                <input autocomplete="off" #school="ngModel" name="school" [(ngModel)]="kid.school"
                                                     type="text" id="input-standard"
                                                     class="form-control form-control-alternative"
                                                     placeholder="School Name" required>

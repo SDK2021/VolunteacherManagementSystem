@@ -23,7 +23,13 @@
           <div class="card m-0 p-0 shadow ">
             <div class="row justify-content-center mt-5">
               <div class="col-xl-5 col-7 ">
-                <img src="{{imageURL}}" style="width:100%;" >
+                <ng-container *ngIf="showImageSpinner">
+                  <div class="col-12 my-8 ">
+                      <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="30">
+                      </mat-spinner>
+                  </div>
+              </ng-container>
+                <img (load)="load()" src="{{imageURL}}" style="width:100%;" >
               </div>
 
 
@@ -31,7 +37,7 @@
             <form (ngSubmit)="createPost()" #form="ngForm">
               <div class="col-xl-8 col-10 mt-5 mx-auto d-block">
                 <div class="form-group">
-                  <input [(ngModel)]="post.postDescription" name="caption" #caption="ngModel" type="text"
+                  <input autocomplete="off" [(ngModel)]="post.postDescription" name="caption" #caption="ngModel" type="text"
                     class="form-control caption" placeholder="Enter Caption" style="border-radius: 0px;" required>
                 </div>
                 <small *ngIf="caption.errors?.required && caption.touched" class="text-danger">Caption is
@@ -40,7 +46,7 @@
 
 
               <div class="text-center mt-4 mb-4">
-                <button  class="btn btn-primary">Post</button>
+                <button [disabled]="!form.valid" class="btn btn-primary">Post</button>
               </div>
 
             </form>

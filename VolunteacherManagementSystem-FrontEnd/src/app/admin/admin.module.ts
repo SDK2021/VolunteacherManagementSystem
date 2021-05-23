@@ -16,8 +16,6 @@ import { SchoolsComponent } from './pages/core/school/schools/schools.component'
 import { AreasComponent } from './pages/core/areas/areas.component';
 import { ProjectComponent } from './pages/projects/project/project.component';
 import { PaymentsComponent } from './pages/donation/payments/payments.component';
-import { KidsListComponent } from './pages/kids/kids-list/kids-list.component';
-import { KidsAttendanceComponent } from './pages/attendance/kids-attendance/kids-attendance.component';
 import { CreateSessionsComponent } from './pages/sessions/create-sessions/create-sessions.component';
 import { SharedModule } from '../shared/shared.module';
 import { AllSessionsComponent } from './pages/sessions/all-sessions/all-sessions.component';
@@ -75,8 +73,6 @@ import { AdminKidsListComponent } from './pages/kids/admin-kids-list/admin-kids-
     AreasComponent,
     ProjectComponent,
     PaymentsComponent,
-    KidsListComponent,
-    KidsAttendanceComponent,
     CreateSessionsComponent,
     AllSessionsComponent,
     EventsComponent,

@@ -76,7 +76,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'events/:id/edit', component: EditEventComponent},
     { path: 'projects/:id/project-details', component: ProjectDetailsComponent},
     { path: 'projects/:id/edit', component: EditProjectComponent},
-    { path: 'reports-list', component: ReportsListComponent},
+    // { path: 'reports-list', component: ReportsListComponent},
     { path: 'report', component:ReportComponent},
     { path: 'kids', component:AdminKidsListComponent},
     { path: 'kids/:id/reports/:rid/kids-report', component: KidReportComponent},

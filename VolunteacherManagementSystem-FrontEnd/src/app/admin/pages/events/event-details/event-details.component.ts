@@ -16,6 +16,8 @@ export class EventDetailsComponent implements OnInit {
   showSpinner:boolean=false
   totalParticipant:number
 
+  showImageSpinner:boolean=true
+
 
   colors:string[]=['bg-lightpink','bg-lightblue','bg-lightyellow']
   ngOnInit(): void {
@@ -40,6 +42,11 @@ export class EventDetailsComponent implements OnInit {
     }
   }
 
+  load()
+  {
+    this.showImageSpinner=false
+  }
+  
   getEvent(id:number)
   {
     this.showSpinner=true

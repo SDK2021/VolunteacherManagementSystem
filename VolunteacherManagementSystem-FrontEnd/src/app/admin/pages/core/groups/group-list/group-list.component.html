@@ -36,7 +36,7 @@
                   <div class="col-lg-7">
                     <div class="form-group">
                       <label class="form-control-label" for="input-group-name">Group Name</label>
-                      <input #groupName="ngModel" name="groupName" [ngClass]="{'ng-invalid':isError}" [(ngModel)]="kidsGroup.groupName" type="text" id="input-group-name" 
+                      <input autocomplete="off" #groupName="ngModel" name="groupName" [ngClass]="{'ng-invalid':isError}" [(ngModel)]="kidsGroup.groupName" type="text" id="input-group-name" 
                       class="form-control form-control-alternative" required maxlength="20">
                       <small *ngIf="groupName.errors?.required && groupName.touched"
                       class="text-danger">Name is required</small>
@@ -48,7 +48,7 @@
                   <div class="col-lg-7">
                     <div class="form-group">
                       <label class="form-control-label" for="input-activity-name">Criteria</label>
-                      <input #criteria="ngModel" name="criteria" [(ngModel)]="kidsGroup.criteria" type="text" id="input-village-name" 
+                      <input autocomplete="off" #criteria="ngModel" name="criteria" [(ngModel)]="kidsGroup.criteria" type="text" id="input-village-name" 
                       class="form-control form-control-alternative" required>
                       <small *ngIf="criteria.errors?.required && criteria.touched"
                       class="text-danger">Criteria are required</small>
@@ -140,7 +140,7 @@
                     <div class="col-lg-7">
                       <div class="form-group">
                         <label class="form-control-label" for="input-group-name">Group Name</label>
-                        <input #groupName="ngModel" name="groupName" [(ngModel)]="kidsGroup.groupName" type="text" id="input-group-name" 
+                        <input autocomplete="off" #groupName="ngModel" name="groupName" [(ngModel)]="kidsGroup.groupName" type="text" id="input-group-name" 
                         class="form-control form-control-alternative" required maxlength="20">
                         <small *ngIf="groupName.errors?.required && groupName.touched"
                         class="text-danger">Name is required</small>
@@ -150,7 +150,7 @@
                     <div class="col-lg-7">
                       <div class="form-group">
                         <label class="form-control-label" for="input-activity-name">Criteria</label>
-                        <input #criteria="ngModel" name="criteria" [(ngModel)]="kidsGroup.criteria" type="text" id="input-village-name" 
+                        <input autocomplete="off" #criteria="ngModel" name="criteria" [(ngModel)]="kidsGroup.criteria" type="text" id="input-village-name" 
                         class="form-control form-control-alternative" required>
                         <small *ngIf="criteria.errors?.required && criteria.touched"
                         class="text-danger">Criteria are required</small>

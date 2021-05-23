@@ -34,7 +34,7 @@
                             <div class="col-lg-7">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-activity-name">Area</label>
-                                    <input type="text" id="input-village-name" #name="ngModel"
+                                    <input autocomplete="off" type="text" id="input-village-name" #name="ngModel"
                                         class="form-control form-control-alternative" required name="area" [(ngModel)]="area.areaName" >
                                    <small *ngIf="name.errors?.required && name.touched" class="text-danger">Area name is required</small>
                                 </div>

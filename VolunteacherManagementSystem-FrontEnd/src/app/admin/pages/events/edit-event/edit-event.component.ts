@@ -51,7 +51,9 @@ export class EditEventComponent implements OnInit {
   selectedActivities:Array<number> = new Array()
   projects:Array<Project> = []
 
-  isEventEdited:boolean=false
+  showImageSpinner:boolean=true
+
+  isEventEdited:boolean=null
 
 
   hover:boolean=false
@@ -98,6 +100,11 @@ export class EditEventComponent implements OnInit {
     }
   }
 
+  load()
+  {
+    this.showImageSpinner=false
+  }
+
   edit() {
     if(this.isEdit==false)
     {
@@ -116,6 +123,7 @@ export class EditEventComponent implements OnInit {
     this.showForm=isShow
     this.imageURL = localStorage.getItem("imageURL")
     this.hover=false
+    this.showImageSpinner=true
   }
 
   mouseEvent()
@@ -126,7 +134,7 @@ export class EditEventComponent implements OnInit {
     }
     else
     {
-      this.hover=true
+      this.hover=!this.hover
     }
   }
 
@@ -163,8 +171,6 @@ export class EditEventComponent implements OnInit {
           
         })).subscribe(data=>{
         this.talukas = data
-        },error=>{
-          this.handleError(error)
         })
     })).subscribe(data=>{
       this.villages = data
@@ -172,11 +178,8 @@ export class EditEventComponent implements OnInit {
       this.districtSelected = this.event.village.taluka.district.districtId
       this.talukaSelected = this.event.village.taluka.talukaId
       this.villageSelected = this.event.village.villageId
-    },error=>{
-      this.handleError(error)
+      this.projectSelected=this.event.project.projectId
     })
-    }, error => {
-      this.handleError(error)
     })
   }
 
@@ -297,6 +300,11 @@ export class EditEventComponent implements OnInit {
   saveEvent()
   {
     console.log(this.villageSelected);
+    console.log(this.projectSelected);
+    console.log(this.event.eventData);
+    
+    
+    console.log(this.event);
     
     if(this.villageSelected > 0 && this.projectSelected >0 && this.event.eventData !="")
     {

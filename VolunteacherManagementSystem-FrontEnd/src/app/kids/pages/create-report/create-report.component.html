@@ -24,8 +24,14 @@
                             <div class="card shadow mt-5">
                                 <!-- Card body -->
                                 <div class="card-body">
-                                    <a href="user/kids/set-photo">
-                                        <img src="{{kid.photo}}"
+                                    <a routerLink="user/kids/set-photo">
+                                        <ng-container *ngIf="showImageSpinner">
+                                            <div class="col-12">
+                                                <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                                                </mat-spinner>
+                                            </div>
+                                        </ng-container>
+                                        <img (load)="load()" src="{{kid.photo}}"
                                             class="mt--6 rounded-circle img-center img-fluid shadow shadow-lg--hover"
                                             style="width: 140px;">
                                     </a>
@@ -80,7 +86,7 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label"
                                                         for="input-gujarati">Gujarati</label>
-                                                    <input [(ngModel)]="report.gujarati"  required name="gujarati" #gujarati="ngModel" type="number"  id="input-gujarati"
+                                                    <input autocomplete="off" [(ngModel)]="report.gujarati"  required name="gujarati" #gujarati="ngModel" type="number"  id="input-gujarati"
                                                         class="form-control form-control-alternative"
                                                         placeholder="Gujarati" min="0" max="100">
                                                 </div>
@@ -90,7 +96,7 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label"
                                                         for="input-english">English</label>
-                                                    <input required name="english" #english="ngModel" type="number" id="input-english"
+                                                    <input autocomplete="off" required name="english" #english="ngModel" type="number" id="input-english"
                                                         class="form-control form-control-alternative" [(ngModel)]="report.english"
                                                         placeholder="English" min="0" max="100">
                                                 </div>
@@ -99,7 +105,7 @@
                                             <div class="col-lg-3 col-md-7  col-sm-7 col-10">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-maths">Maths</label>
-                                                    <input required name="maths" #maths="ngModel" type="number" id="input-maths"
+                                                    <input autocomplete="off" required name="maths" #maths="ngModel" type="number" id="input-maths"
                                                         class="form-control form-control-alternative" [(ngModel)]="report.maths"
                                                         placeholder="Maths" min="0" max="100">
                                                 </div>
@@ -227,7 +233,7 @@
 
                                         <div class="form-group px-xl-5 px-lg-3">
                                             <label class="form-control-label">Other Interest Areas</label>
-                                            <textarea  rows="4" [(ngModel)]="report.interestArea" name="interestArea"
+                                            <textarea autocomplete="off" rows="4" [(ngModel)]="report.interestArea" name="interestArea"
                                                 class="form-control form-control-alternative"></textarea>
                                             <br>
                                             <!-- <small class="text-danger"
@@ -239,7 +245,7 @@
 
                                         <div class="form-group px-xl-5 px-lg-3">
                                             <label class="form-control-label">Remarks</label>
-                                            <textarea rows="4" [(ngModel)]="report.remarks" name="remarks"
+                                            <textarea autocomplete="off" rows="4" [(ngModel)]="report.remarks" name="remarks"
                                                 class="form-control form-control-alternative"></textarea>
                                             <br>
                                             <!-- <small class="text-danger"

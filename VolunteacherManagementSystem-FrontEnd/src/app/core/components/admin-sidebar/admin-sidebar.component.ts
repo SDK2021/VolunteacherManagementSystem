@@ -47,7 +47,7 @@ export const ROUTES: RouteInfo[] = [
 
 
   ] ,showChild:false,adjustment:''},
-  { path: 'reports-list', title: 'Reports',  icon:'fas fa-file-invoice text-primary', class: '',children:[
+  { path: 'report', title: 'Report',  icon:'fas fa-file-invoice text-primary', class: '',children:[
 
     
   ] ,showChild:false,adjustment:''},
@@ -87,6 +87,8 @@ export class AdminSidebarComponent implements OnInit {
 
   user:User=new User()
   userType:string=''
+
+  showImageSpinner:boolean=true
   
   constructor(private userService:UsersService,private authService:authentication,private router: Router) {
    // this.showChildren(3)
@@ -143,6 +145,12 @@ export class AdminSidebarComponent implements OnInit {
       this.menuItems[index]["class"]="fas fa-chevron-down text-primary"
     }
    
+  }
+
+  
+  load()
+  {
+    this.showImageSpinner=false
   }
   
 }

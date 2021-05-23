@@ -39,6 +39,8 @@ export class AppHomeComponent implements OnInit {
   participantUser: Participant;
   totalAnnouncementPages:number
 
+  showImageSpinner:boolean=true
+
   events: Array<Event>
 
   wish:string=''
@@ -106,6 +108,11 @@ export class AppHomeComponent implements OnInit {
     }
   }
 
+  
+  load()
+  {
+    this.showImageSpinner=false
+  }
   handleError(error) {
     console.log(error);
     console.log(error.status);

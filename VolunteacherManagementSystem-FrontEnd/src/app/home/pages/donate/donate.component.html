@@ -28,8 +28,8 @@
             <div class="col-lg-12">
               <div class="form-group">
                 <label class="form-control-label" for="input-name">Name</label>
-                <input type="text" id="input-name" class="form-control form-control-alternative" placeholder="Name"
-                  #dname='ngModel' name="name" [(ngModel)]="donor.donorName" required pattern="[a-zA-Z ]{3,30}">
+                <input autocomplete="off" type="text" id="input-name" class="form-control form-control-alternative" placeholder="Name"
+                  #dname='ngModel' name="name" [(ngModel)]="donor.donorName" required pattern="[a-zA-Z ]{3,30}" maxlength="30">
                 <small *ngIf="dname.errors?.required && dname.touched" class="text-danger">Name is required</small>
                 <small *ngIf="dname.errors?.pattern" class="text-danger">Invalid Name</small>
               </div>
@@ -37,7 +37,7 @@
             <div class="col-lg-12">
               <div class="form-group">
                 <label class="form-control-label" for="input-email">Email Address</label>
-                <input type="text" id="input-email" class="form-control form-control-alternative"
+                <input autocomplete="off" type="text" id="input-email" class="form-control form-control-alternative"
                   placeholder="Email Address" name="email" [(ngModel)]="donor.donorEmail" #email="ngModel" required
                   email maxlength="40">
                 <small *ngIf="email.errors?.required && email.touched" class="text-danger">Email is required</small>
@@ -48,7 +48,7 @@
             <div class="col-lg-12">
               <div class="form-group">
                 <label class="form-control-label" for="input-phone">Contact No</label>
-                <input type="text" id="input-phone" class="form-control form-control-alternative"
+                <input autocomplete="off" type="text" id="input-phone" class="form-control form-control-alternative"
                   placeholder="Contact No" #phone='ngModel' name="phoneNumber" [(ngModel)]="donor.donorPhone" required
                   pattern="[0-9]{10}" maxlength="10">
                 <small *ngIf="phone.errors?.required && phone.touched" class="text-danger">Contact Number is
@@ -74,7 +74,7 @@
             <div class="col-lg-12">
               <div class="form-group">
                 <label class="form-control-label" for="input-amount">Amount</label>
-                <input type="text" id="input-phone" class="form-control form-control-alternative" placeholder="Amount"
+                <input autocomplete="off" type="text" id="input-phone" class="form-control form-control-alternative" placeholder="Amount"
                   name="amount" [(ngModel)]="payment.amount" #amount='ngModel' required pattern='[0-9]{1,10}'>
                   <small *ngIf="amount.errors?.required && amount.touched" class="text-danger">Amount is required</small>
                   <small *ngIf="amount.errors?.pattern" class="text-danger">Invalid Amount</small>

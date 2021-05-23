@@ -30,7 +30,7 @@ export class SessionsService {
       headers:new HttpHeaders({
       })
     }
-    return this.httpclient.get(`${"http://localhost:9090/vms/sessions-download"}`,header)
+    return this.httpclient.get(`${"http://localhost:9090/vms/sessions-download"}`,header).pipe(retry(3))
   }
 
   getSessionsByMonthAndYear(page:number,month:number,year:number):Observable<Session[]>
@@ -85,16 +85,16 @@ export class SessionsService {
   
   addContent(content:Content):Observable<Content>
   {
-    return this.httpclient.post<Content>(`${"http://localhost:9090/vms/contents"}`,content)
+    return this.httpclient.post<Content>(`${"http://localhost:9090/vms/contents"}`,content).pipe(retry(3))
   }
 
   getContentByGroup(id:number):Observable<Content>
   {
-    return this.httpclient.get<Content>(`${"http://localhost:9090/vms/contents/"}${id}`)
+    return this.httpclient.get<Content>(`${"http://localhost:9090/vms/contents/"}${id}`).pipe(retry(3))
   }
   
   getAllContents():Observable<Content[]>
   {
-    return this.httpclient.get<Content[]>(`${"http://localhost:9090/vms/contents"}`)
+    return this.httpclient.get<Content[]>(`${"http://localhost:9090/vms/contents"}`).pipe(retry(3))
   }
 }

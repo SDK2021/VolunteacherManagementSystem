@@ -36,11 +36,21 @@
           <div class="card">
             <div class="card-header d-flex align-items-center">
               <div class="d-flex align-items-center">
-                <a href="#">
-                  <img src="{{p.createdBy.photo}}" class="avatar">
-                </a>
+            
+                <div class="avatar rounded-circle">
+                  <ng-container *ngIf="showImageSpinner">
+                      <div class="col-12 my-8 ">
+                          <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                          </mat-spinner>
+                      </div>
+                  </ng-container>
+                  <img (load)="load()"
+                      src="{{p.createdBy.photo}}">
+              </div>
+                 
+               
                 <div class="mx-3">
-                  <a href="#" class="text-dark font-weight-600 text-sm">{{p.createdBy.userName}}</a>
+                  <h4>{{p.createdBy.userName}}</h4>
                   <small class="d-block text-common">{{p.creationDate | date : mediumDate }}</small>
                 </div>
               </div>
@@ -48,8 +58,15 @@
             </div>
   
   
-            <div class=" post-image" style="margin-bottom: 1rem;"><img alt="Image placeholder"
-                src="{{p.postPhoto}}" class="img-fluid" height="700px" width="900px"></div>
+            <div class=" post-image" style="margin-bottom: 1rem;">
+              <ng-container *ngIf="showImageSpinner2">
+                <div class="col-12 my-8 ">
+                    <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                    </mat-spinner>
+                </div>
+            </ng-container>
+              <img (load)="loadPhoto()" alt="Image placeholder" src="{{p.postPhoto}}" class="img-fluid" height="700px" width="900px">
+            </div>
   
             <div class="container-fluid mt-3 mb-3">
               <p class="text-md " style="border-left: 1px solid rgba(0, 0, 0, .5);padding-left: 15px;">

@@ -35,6 +35,8 @@ export class AdminKidsListComponent implements OnInit {
   filter:string
   @Input() label:string 
 
+  showImageSpinner:boolean=true
+
   search:string=''
 
   kidslist: Array<Kid>=new Array()
@@ -72,6 +74,10 @@ export class AdminKidsListComponent implements OnInit {
     }
   }
 
+  load()
+  {
+    this.showImageSpinner=false
+  }
   onScroll() {
     console.log("Hello");
     

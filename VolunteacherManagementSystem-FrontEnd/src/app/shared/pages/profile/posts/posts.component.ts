@@ -34,6 +34,8 @@ export class PostsComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   showSpinner:boolean=false
+
+  showImageSpinner:boolean=true
   constructor(private dialog:MatDialog,private fileService:FileUploadService,private _snackBar: MatSnackBar,private postService:TimeLineService,private route:ActivatedRoute,private router:Router,private authService: authentication, private userService: UsersService, private profileService: ProfileService) { }
 
   ngOnInit(): void {
@@ -55,6 +57,11 @@ export class PostsComponent implements OnInit {
     }
   }
 
+  
+  load()
+  {
+    this.showImageSpinner=false
+  }
   handleError(error)
   {
     console.log(error);

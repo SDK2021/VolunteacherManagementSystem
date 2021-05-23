@@ -55,7 +55,7 @@
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="form-control-label" for="input-name">Name</label>
-                    <input maxlength="30" #name="ngModel" name="name" [(ngModel)]="applicantRequest.name" type="text"
+                    <input autocomplete="off" maxlength="30" #name="ngModel" name="name" [(ngModel)]="applicantRequest.name" type="text"
                       id="input-name" class="form-control form-control-alternative" placeholder="Name" required
                       pattern="[a-zA-Z ]{3,30}">
                     <small *ngIf="name.errors?.required && name.touched" class="text-danger">Name is required</small>
@@ -65,7 +65,7 @@
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="form-control-label" for="input-email">Email Address</label>
-                    <input name="email" #email="ngModel" [(ngModel)]="applicantRequest.emailId" type="text"
+                    <input autocomplete="off" name="email" #email="ngModel" [(ngModel)]="applicantRequest.emailId" type="text"
                       id="input-email" class="form-control form-control-alternative" placeholder="Email Address" required
                       email maxlength="40">
                     <small *ngIf="email.errors?.required && email.touched" class="text-danger">Email is required</small>
@@ -77,7 +77,7 @@
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="form-control-label" for="input-phone">Contact No</label>
-                    <input #phone="ngModel" name="phone" [(ngModel)]="applicantRequest.phoneNumber" type="text"
+                    <input autocomplete="off" #phone="ngModel" name="phone" [(ngModel)]="applicantRequest.phoneNumber" type="text"
                       id="input-phone" class="form-control form-control-alternative" placeholder="Contact No" required
                       pattern="[0-9]{10}" maxlength="10">
                     <small *ngIf="phone.errors?.required && phone.touched" class="text-danger">Contact Number is

@@ -1,11 +1,31 @@
+<ng-container *ngIf="showSpinner">
+  <div class="col-12 py-8">
+      <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="40">
+      </mat-spinner>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="noProjects">
+  <div class="col-12 col-xl-10 mx-auto d-block my-xl-5 my-6 py-xl-7 py-6">
+      <p class="text-center text-xl"><i class="fab fa-leanpub"></i></p>
+      <p class="text-xl text-center text-lg"><b>No projects yet.</b></p>
+  </div>
+</ng-container>
+<ng-container *ngIf="pLength">
   <div *ngFor="let p of projects" class="row justify-content-center p-4">
     <div class="col-12 col-xl-8 col-lg-8 ">
         <div class="card card-profile " style=" box-shadow: 2px 2px 50px rgba(163, 160, 160, 0.2);">
           <div class="container-img">
-            <img src="{{p.photo}}"  style="width:100%; filter: brightness(50%);">
+            <img (load)="load()" src="{{p.photo}}"  style="width:100%; filter: brightness(50%);">
+            <ng-container *ngIf="showImageSpinner">
+              <div class="col-12 my-8 ">
+                  <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
+                  </mat-spinner>
+              </div>
+          </ng-container>
             <div class="centered display-3">{{p.projectName}}</div>
           </div>
-            <!-- <img src="../../../../../assets/img/home/mnmr.jpg" alt="Image placeholder" class="card-img-top"> -->
+            
             <div class="card-body pt-0">
               <div class="row mt-2" > 
                 <div class="col">
@@ -36,3 +56,4 @@
         
     </div>
 </div>
+</ng-container>

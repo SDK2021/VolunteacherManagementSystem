@@ -25,6 +25,8 @@ export class KidsListComponent implements OnInit {
   view:boolean=false
   create:boolean=false
 
+  showImageSpinner:boolean=true
+
   redirectToPart1:string
   redirectToPart2:string
   page:number=0
@@ -90,6 +92,11 @@ export class KidsListComponent implements OnInit {
     //this.getkids()
   }
 
+  
+  load()
+  {
+    this.showImageSpinner=false
+  }
   handleError(error)
   {
     console.log(error);

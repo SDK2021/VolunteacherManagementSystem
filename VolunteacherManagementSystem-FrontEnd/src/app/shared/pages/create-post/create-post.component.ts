@@ -35,6 +35,8 @@ export class CreatePostComponent implements OnInit {
   timeLinePost:Timelinepost;
   isPostCreated:boolean=false
 
+  showImageSpinner:boolean=true
+
   constructor(private fileService:FileUploadService,private router:Router,private timelineService:TimeLineService, private _snackBar: MatSnackBar,private _authService:authentication,private userSerice:UsersService) { }
 
   ngOnInit(): void {
@@ -61,6 +63,12 @@ export class CreatePostComponent implements OnInit {
       console.log("Bye Bye");
       
     }
+  }
+
+  
+  load()
+  {
+    this.showImageSpinner=false
   }
   handleError(error)
   {

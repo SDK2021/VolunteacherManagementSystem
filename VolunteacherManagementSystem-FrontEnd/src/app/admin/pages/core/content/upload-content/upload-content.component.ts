@@ -37,6 +37,8 @@ export class UploadContentComponent implements OnInit {
   groupId:number
   shows:boolean = false
 
+ 
+
 
 
   constructor( private router: Router,private kidsService:KidsService, private sessionService:SessionsService, private uploadService: FileUploadService,private _sharedservice:KidsService, private _snackBar: MatSnackBar) { }
@@ -67,6 +69,7 @@ export class UploadContentComponent implements OnInit {
     this.isShow=!this.isShow
   }
 
+ 
   getkidsgroup()
   {
     this._sharedservice.getkidsgrouplist().subscribe(data =>{

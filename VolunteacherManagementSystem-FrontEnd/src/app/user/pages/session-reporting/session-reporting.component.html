@@ -23,21 +23,21 @@
                 <form role="form" (ngSubmit)="addSessionReport()" #form="ngForm">
                     <div class="form-group">
                         <label>How was your experience?</label>
-                        <textarea #experience="ngModel" name="experience" [(ngModel)]="feedback.experience" rows="4" class="form-control form-control-alternative" required></textarea>
+                        <textarea autocomplete="off" #experience="ngModel" name="experience" [(ngModel)]="feedback.experience" rows="4" class="form-control form-control-alternative" required></textarea>
                         <small *ngIf="experience.errors?.required && experience.touched" class="text-danger">Experience is required</small>
                       </div>
                     <div class="form-group">
                         <label>What did you do in the session?</label>
-                        <textarea #sessions="ngModel" name="description"  [(ngModel)]="feedback.description"  rows="4" class="form-control form-control-alternative" required></textarea>
+                        <textarea autocomplete="off" #sessions="ngModel" name="description"  [(ngModel)]="feedback.description"  rows="4" class="form-control form-control-alternative" required></textarea>
                         <small *ngIf="sessions.errors?.required && sessions.touched" class="text-danger">Session reporting is required</small>
                       </div> 
                       <div class="form-group">
                         <label>Suggestions</label>
-                        <textarea rows="4" name="suggestions" [(ngModel)]="feedback.suggestions" class="form-control form-control-alternative"></textarea>
+                        <textarea autocomplete="off" rows="4" name="suggestions" [(ngModel)]="feedback.suggestions" class="form-control form-control-alternative"></textarea>
                       </div> 
                       <div class="form-group">
                         <label>Your requirements</label>
-                        <textarea rows="4" name="requirements"  [(ngModel)]="feedback.requirements" class="form-control form-control-alternative"></textarea>
+                        <textarea autocomplete="off" rows="4" name="requirements"  [(ngModel)]="feedback.requirements" class="form-control form-control-alternative"></textarea>
                       </div>  
                       <div class="text-center mt-4 mb-4">
                         <button type="submit" [disabled]="!form.valid" class="btn btn-primary">Submit</button>

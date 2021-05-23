@@ -35,6 +35,8 @@ export class ProfileComponent implements OnInit {
 
   isVt:boolean=false
   show:boolean=true
+
+  showImageSpinner:boolean=true
   constructor(private vtService:VolunteachersService,private route:ActivatedRoute,private authService:authentication,private userService:UsersService,private profileService:ProfileService,private router:Router) {
    
    }
@@ -104,6 +106,11 @@ export class ProfileComponent implements OnInit {
     
   }
 
+  load()
+  {
+    this.showImageSpinner=false
+  }
+  
  handleError(error)
   {
     console.log(error);
@@ -169,6 +176,7 @@ export class ProfileComponent implements OnInit {
       {
         this.volunteacher = data
         this.volunteacher.experience=this.calculateExperience(new Date(this.volunteacher.joiningDate))
+        console.log(this.volunteacher)
       },error=>{
         this.handleError(error)
       })

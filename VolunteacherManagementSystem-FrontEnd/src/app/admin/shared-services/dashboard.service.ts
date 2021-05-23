@@ -55,7 +55,7 @@ export class DashboardService {
 
   addAnnouncement(announcement:Announcement):Observable<Announcement>
   {
-    return this.http.post<Announcement>(`${"http://localhost:9090/vms/announcements"}`,announcement)
+    return this.http.post<Announcement>(`${"http://localhost:9090/vms/announcements"}`,announcement).pipe(retry(3))
   }
 }
 

@@ -37,7 +37,7 @@ export class EventsService {
   getAllActivities(page:number):Observable<Activity[]>
   {
       return this.http.get<Activity[]>(`${"http://localhost:9090/vms/activities?page="}${page}`).pipe(retry(3))
-      .pipe(retry(3))
+    
   }
 
   getEvent(id:number):Observable<Event>

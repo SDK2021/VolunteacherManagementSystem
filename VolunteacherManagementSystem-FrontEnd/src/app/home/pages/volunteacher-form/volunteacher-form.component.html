@@ -33,7 +33,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-name">Name</label>
-                                    <input #name="ngModel" name="name" [(ngModel)]="v.user.userName" type="text"
+                                    <input autocomplete="off" #name="ngModel" name="name" [(ngModel)]="v.user.userName" type="text"
                                         id="input-name" class="form-control form-control-alternative" placeholder="Name"
                                         required pattern="[a-zA-Z ]{3,20}">
                                     <small *ngIf="name.errors?.required && name.touched" class="text-danger">Name is
@@ -44,7 +44,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-email">Email Address</label>
-                                    <input name="email" #email="ngModel" [(ngModel)]="v.user.emailId" type="text"
+                                    <input autocomplete="off" name="email" #email="ngModel" [(ngModel)]="v.user.emailId" type="text"
                                         id="input-email" class="form-control form-control-alternative"
                                         placeholder="Email Address" required email maxlength="40">
                                     <small *ngIf="email.errors?.required && email.touched" class="text-danger">Email is
@@ -60,7 +60,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-phone">Contact No</label>
-                                    <input #phone="ngModel" name="phone" [(ngModel)]="v.user.phoneNumber" type="text"
+                                    <input autocomplete="off" #phone="ngModel" name="phone" [(ngModel)]="v.user.phoneNumber" type="text"
                                         id="input-phone" class="form-control form-control-alternative"
                                         placeholder="Contact No" required pattern="[0-9]{10}" maxlength="10">
                                     <small *ngIf="phone.errors?.required && phone.touched" class="text-danger">Contact
@@ -112,7 +112,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                   <label class="form-control-label" for="input-pincode">Pincode</label>
-                                  <input name="pincode"  #pincode="ngModel" type="text" id="input-pincode" class="form-control form-control-alternative" placeholder="Enter Pincode"
+                                  <input autocomplete="off" name="pincode"  #pincode="ngModel" type="text" id="input-pincode" class="form-control form-control-alternative" placeholder="Enter Pincode"
                                   pattern="[0-9]{6}" maxlength="6" [(ngModel)]="v.pincode" >
                                   <small class="text-danger" *ngIf="pincode.errors?.pattern">Invalid pincode</small>
                                 </div>
@@ -147,7 +147,7 @@
                               <div class="col-md-12">
                                 <div class="form-group"> 
                                   <label class="form-control-label" for="input-employer">Employer name</label>
-                                  <input  name="employer" #employer="ngModel" [(ngModel)]="v.employerName"  id="input-employer" class="form-control form-control-alternative" placeholder="Employer Name" value="University of Computer Science" type="text">
+                                  <input  autocomplete="off" name="employer" #employer="ngModel" [(ngModel)]="v.employerName"  id="input-employer" class="form-control form-control-alternative" placeholder="Employer Name" value="University of Computer Science" type="text">
                                   
                                 </div>
                               </div>
@@ -155,7 +155,7 @@
                               <div class="col-md-12">
                                 <div class="form-group">
                                   <label class="form-control-label" for="input-school">School Name</label>
-                                  <input  name="school" #school="ngModel" [(ngModel)]="v.school" id="input-school" class="form-control form-control-alternative" placeholder="School Name" value="Gyanda girls" type="text">
+                                  <input autocomplete="off" name="school" #school="ngModel" [(ngModel)]="v.school" id="input-school" class="form-control form-control-alternative" placeholder="School Name" value="Gyanda girls" type="text">
                                  
                                 </div>
                               </div>
