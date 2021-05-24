@@ -25,6 +25,7 @@
                         <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
                         <span class="btn-inner--text ">Add area</span>
                 </button>
+                <p style="background-color: #f8d7da;" class="alert  text-default text-md text-center mt-3"><b>The area can not be deleted which have connection with kids data.</b></p>
                 </div>
              <ng-container *ngIf="isShow">
                 <div class="col-12 justify-content-center">
@@ -56,57 +57,74 @@
             </div>
         </div>
         <!-- Light table -->
-        <div class="table-responsive">
-            <div class="table-responsive">
-                <table class="table align-items-center table-flush table-hover">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>
-                                <h3>No</h3>
-                            </th>
-                            <th>
-                                <h3>Area</h3>
-                            </th>
-                            <th class="text-center">
-                                <h3 >Edit</h3>
-                            </th>
-                         
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let a of areas;let index=index">
-                            <td class="table-user">
-                                <h3>{{index+1}}</h3>
-                            </td>
-                            <td class="p-0">
-                                <ng-container *ngIf="a.isEdit">
-                                    <form #form="ngForm">
-                                        <div class="col-xl-8 col-10 mt-2 pl-0 ">
-                                          <div class="form-group">
-                                            <input (keyup.enter)="saveArea(index)" autocomplete="off" class="text-lg" [(ngModel)]="area.areaName" name="area" #name="ngModel" type="text"
-                                              class="form-control border-0 m-0 "   style="border-radius: 0px;font-size: 17px;color:#32325d" required>
-                                          </div>
-                                          <small *ngIf="name.errors?.required && name.touched" class="text-danger">Area name is
-                                            required</small>
-                                        </div>
-                                      </form>
-                                </ng-container>
-                              <ng-container *ngIf="!a.isEdit">
-                                <h3>{{a.areaName}}</h3>
-                              </ng-container>
-                            </td>
-                            <td class="text-center">
-                                <div class="col-3 mx-auto d-block ">
-                                   <i class="icon-btn" style="cursor: pointer;" (click)="editArea(index)" class="fas fa-edit text-lg text-primary"></i>
-                                </div>
-                            </td>
-                          
-                         
-                        </tr>
-                    </tbody>
-                </table>
+        <ng-container *ngIf="showSpinner">
+            <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
+            </mat-spinner>
+          </ng-container>
+        <ng-container *ngIf="noAreas">
+            <div class="col-12 col-xl-10 mx-auto d-block my-xl-4 my-6 py-xl-6 py-6">
+                <p class="text-xl text-center text-lg"><b>No areas yet.</b></p>
             </div>
-        </div>
+        </ng-container>
+        <ng-container *ngIf="aLength">
+            <div class="table-responsive">
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>
+                                    <h3>No</h3>
+                                </th>
+                                <th>
+                                    <h3>Area</h3>
+                                </th>
+                                <th class="text-center">
+                                    <h3 >Edit</h3>
+                                </th>
+                                <th class="text-center">
+                                    <h3 >Delete</h3>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let a of areas;let index=index">
+                                <td class="table-user">
+                                    <h3>{{index+1}}</h3>
+                                </td>
+                                <td class="p-0">
+                                    <ng-container *ngIf="a.isEdit">
+                                        <form #form="ngForm">
+                                            <div class="col-xl-8 col-10 mt-2 pl-0 ">
+                                              <div class="form-group">
+                                                <input (keyup.enter)="saveArea(index)" autocomplete="off" class="text-lg" [(ngModel)]="area.areaName" name="area" #name="ngModel" type="text"
+                                                  class="form-control border-0 m-0 "   style="border-radius: 0px;font-size: 17px;color:#32325d" required>
+                                              </div>
+                                              <small *ngIf="name.errors?.required && name.touched" class="text-danger">Area name is
+                                                required</small>
+                                            </div>
+                                          </form>
+                                    </ng-container>
+                                  <ng-container *ngIf="!a.isEdit">
+                                    <h3>{{a.areaName}}</h3>
+                                  </ng-container>
+                                </td>
+                                <td class="text-center">
+                                    <div class="col-3 mx-auto d-block ">
+                                       <i  style="cursor: pointer;" (click)="editArea(index)" class="fas fa-edit icon-btn text-lg text-primary"></i>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="col-3 mx-auto d-block ">
+                                       <i  *ngIf="!a.isDelete " (click)="delete(a.areaId)" style="cursor: pointer;"  class="fas fa-trash  text-lg text-danger"></i>
+                                    </div>
+                                </td>
+                             
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </ng-container>
     </div>
   </div>
   

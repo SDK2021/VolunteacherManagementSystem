@@ -46,6 +46,13 @@ public class TimelinePostController {
 		return timelinePostService.deletePost(id);
 	}
 	
+	@GetMapping("/posts/{id}")
+	public ResponseEntity<Object> getPost(@PathVariable Long id)
+	{
+		return timelinePostService.postById(id);
+	}
+	
+	
 	@GetMapping("/total-posts/{id}")
 	public int getAllPostByUser(@PathVariable int id)
 	{

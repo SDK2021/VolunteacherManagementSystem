@@ -25,6 +25,8 @@ public interface KidRepository extends PagingAndSortingRepository<Kid, Long>{
 	
 	public Page<Kid> findAllByAreaAreaId(int id,Pageable pageable);
 	
+	public List<Kid> findAllByAreaAreaId(int id);
+	
 	public Page<Kid> findAllByVillageVillageIdAndGroupGroupId(int vid, int gid,Pageable pageable);
 	
 	public Page<Kid> findAllByVillageVillageIdAndAreaAreaId(int vid,int aid,Pageable pageable);

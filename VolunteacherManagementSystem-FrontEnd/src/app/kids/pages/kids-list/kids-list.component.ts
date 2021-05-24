@@ -37,9 +37,11 @@ export class KidsListComponent implements OnInit {
   selectedArea:number
   selectedGroup:number
 
+  search:string=''
+
   @Input() label:string 
 
-  kidslist: Array<Kid>
+  kidslist: Array<Kid>=new Array()
   constructor(private kidsService:KidsService,private _auth:authentication,private router:Router) {
     
     // let currentDate=new Date()

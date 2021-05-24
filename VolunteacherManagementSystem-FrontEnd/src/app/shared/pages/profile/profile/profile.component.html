@@ -50,15 +50,15 @@
           <div class="row">
             <div class="col">
               <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                <button *ngIf="show" class="bg-transparent border-0 "  [routerLink]="['projects']">
+                <button *ngIf="show" class="btn bg-transparent border-0 "  [routerLink]="['projects']">
                   <span class="heading"  style="font-size: 18px;color: #525f7f;"><b>{{totalProject}}</b></span><br>
                   <span class="text-primary">Projects</span>
                 </button>
-                <button class="bg-transparent border-0 " [routerLink]="['posts']">
+                <button class="btn  bg-transparent border-0 " [routerLink]="['posts']">
                   <span class="heading"  style="font-size: 18px;color: #525f7f;"><b>{{totalPosts}}</b></span><br>
                   <span class="text-primary">Posts</span>
                 </button>
-                <button *ngIf="show" class="bg-transparent border-0 ">
+                <button *ngIf="show" class="btn bg-transparent border-0 " style="pointer-events: none;">
                   <span class="heading"  style="font-size: 18px;color: #525f7f;"><b>{{totalSessions}}</b></span><br>
                   <span class="text-primary">Sessions</span>
                 </button>
@@ -69,6 +69,7 @@
             <h3>
               {{user.userName}}
             </h3>
+            
           
             <div class="h5">
               <i class="ni business_briefcase-24 mr-2"></i>{{volunteacher.experience}}

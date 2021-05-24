@@ -52,16 +52,6 @@ public class Volunteacher {
 	@Column(nullable = false,columnDefinition = "DATE")
 	private Calendar joiningDate;
 	
-//	@NotNull
-//	@Column(nullable = false, columnDefinition = "TIME")
-//	@JsonFormat(shape = Shape.STRING,pattern = "HH-mm-ss")
-//	@CreationTimestamp
-//	private Calendar JoiningTime;
-	
-	@JsonFormat(shape = Shape.STRING,pattern = "MM-dd-yyy")
-	@Column(columnDefinition = "DATE")
-	private Calendar endingDate;
-
 	@Column(length = 6)
 	private int pincode;
 
@@ -115,14 +105,6 @@ public class Volunteacher {
 
 	public void setJoiningDate(Calendar joiningDate) {
 		this.joiningDate = joiningDate;
-	}
-
-	public Calendar getEndingDate() {
-		return endingDate;
-	}
-
-	public void setEndingDate(Calendar endingDate) {
-		this.endingDate = endingDate;
 	}
 
 	public int getPincode() {

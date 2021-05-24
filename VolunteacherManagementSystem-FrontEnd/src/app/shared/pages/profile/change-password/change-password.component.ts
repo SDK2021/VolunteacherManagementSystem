@@ -7,6 +7,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -18,7 +19,15 @@ export class ChangePasswordComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   constructor(private _snackBar: MatSnackBar,private userService:UsersService,private auth:authentication,private router:Router) { }
   updateSuccessfully:boolean = false
+  password:string=''
+  
+
+  passwordMatch: boolean
   ngOnInit(): void {
+    if(localStorage.getItem("username") == null)
+    {
+      this.router.navigate(['']);
+    }
     this.updateSuccessfully = false
   }
 
@@ -36,7 +45,17 @@ export class ChangePasswordComponent implements OnInit {
       this.router.navigate(['error-page'])
     }
   }
+  checkPassword(conPass: string) {
 
+    if (conPass.length > 0) {
+      if (conPass == this.password) {
+        this.passwordMatch = false
+      }
+      else {
+        this.passwordMatch = true
+      }
+    }
+  }
   openSnackBar() {
     this._snackBar.open('Password changed  successfully..', 'close', {
       duration: 2000,
@@ -63,5 +82,8 @@ export class ChangePasswordComponent implements OnInit {
       })
   }
 
-
+  ngOnDestroy():void
+  {
+    localStorage.removeItem("username")
+  }
 }

@@ -84,6 +84,7 @@ export class NotificationComponent implements OnInit {
                 }
                 if(notification.session !=null)
                 {
+                  
                   this.sessions.push(notification.session)
                 }
               }
@@ -109,6 +110,7 @@ export class NotificationComponent implements OnInit {
                     }
                   }
                 }
+                
               })).subscribe(data => {
                 userId = data.userId
               })

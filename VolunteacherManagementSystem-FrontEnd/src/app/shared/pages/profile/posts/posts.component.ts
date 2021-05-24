@@ -15,6 +15,7 @@ import { Usertype } from 'src/app/core/model/usertype';
 import { MatDialog } from '@angular/material/dialog';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { DialogBoxComponent } from 'src/app/admin/components/dialog-box/dialog-box.component';
+
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -35,6 +36,10 @@ export class PostsComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   showSpinner:boolean=false
 
+  isAdminProfile:boolean=false
+
+  showProgressbar:boolean=false
+
   showImageSpinner:boolean=true
   constructor(private dialog:MatDialog,private fileService:FileUploadService,private _snackBar: MatSnackBar,private postService:TimeLineService,private route:ActivatedRoute,private router:Router,private authService: authentication, private userService: UsersService, private profileService: ProfileService) { }
 
@@ -53,6 +58,10 @@ export class PostsComponent implements OnInit {
     else
     {
       this.urlType=array[1]
+      if(array[1]==="admin" && array[2]=='profile')
+        this.isAdminProfile=true
+      else
+        this.isAdminProfile=false
       this.getposts(this.page)
     }
   }
@@ -93,7 +102,7 @@ export class PostsComponent implements OnInit {
 
       this.profileService.getAllPostByUser(page,userId).subscribe(data => {
         this.posts = data['content']
-        this.getPosts(data)
+        
         this.showSpinner=false
         if (data != null) {
           this.pLength = data['content'].length
@@ -108,10 +117,16 @@ export class PostsComponent implements OnInit {
   }
 
   getVolunteachersPost(id:number) {
+    this.showSpinner=true
       this.profileService.getAllPostByUser(this.page,id).subscribe(data => {
         this.posts = data['content'];
+        this.showSpinner=false
+        if (data != null) {
+          this.pLength = data['content'].length
+          
+        }
         this.totalPostsPages = data['totalPages']
-        this.getPosts(data)
+        // this.getPosts(data)
         console.log(this.posts);
       },error=>{
         this.handleError(error)
@@ -175,11 +190,13 @@ export class PostsComponent implements OnInit {
   }
   deletePost(id:number,image:string)
   {
+    this.showProgressbar=true
     this.postService.deleteTimelinePost(id).subscribe(data =>{
       console.log(data)
       this.fileService.delete(image)
     this.openDeleteSnackBar()
     this.getposts(this.page)
+    this.showProgressbar=false
 
     },error=>{
       this.handleError(error)
@@ -216,9 +233,17 @@ export class PostsComponent implements OnInit {
 
   savePost(postId:number)
   {
+    this.showProgressbar=true
     this.profileService.savePost(postId,this.post).subscribe(data=>{
       console.log(data);
+      this.showProgressbar=false
       this.openEditSnackBar()
+      
     })
+  }
+
+  close(index:number)
+  {
+    this.posts[index]['isEdit']=false
   }
 }

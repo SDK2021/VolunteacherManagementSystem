@@ -24,6 +24,15 @@ export class VolunteachersService {
     }
     return this.http.get(`${"http://localhost:9090/vms/volunteachers-download"}`,header).pipe(retry(3))
   }
+  getApplicantRequestById(id:number):Observable<Applicantrequest>
+  {
+    return this.http.get<Applicantrequest>(`${"http://localhost:9090/vms/applicant-requests/"}${id}`).pipe(retry(3))
+  }
+  
+  addVolunteacher(volunteacher:Volunteacher):Observable<Volunteacher>
+  {
+    return this.http.post<Volunteacher>(`${"http://localhost:9090/vms/volunteachers"}`,volunteacher).pipe(retry(3))
+  }
 
   getAllVolunteachers(page:number):Observable<Volunteacher[]>
   {

@@ -349,22 +349,3 @@ export const chartExample2 = {
   }
 }
 
-export const chartExample3 = {
-  options: {
-
-  },
-  data: {
-    labels: ["Jul", "Aug", "Sep"],
-    datasets: [
-      {
-        data: [10, 20, 50],
-        backgroundColor: [
-          colors.theme['danger'],
-          colors.theme['info'],
-          colors.theme['primary']
-        ]
-      }
-    ],
-    
-  }
-}

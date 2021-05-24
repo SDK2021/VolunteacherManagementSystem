@@ -126,5 +126,8 @@ import { AdminKidsListComponent } from './pages/kids/admin-kids-list/admin-kids-
     MatProgressBarModule,
     InfiniteScrollModule
   ],
+  exports:[
+    KidsPipe
+  ]
 })
 export class AdminModule { }

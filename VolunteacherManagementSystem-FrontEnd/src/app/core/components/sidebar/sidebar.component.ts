@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
 import { UsersService } from 'src/app/user/services/users.service';
@@ -35,6 +35,10 @@ export const ROUTES: RouteInfo[] = [
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
+})
+
+@Injectable({
+  providedIn:'root'
 })
 export class SidebarComponent implements OnInit {
 

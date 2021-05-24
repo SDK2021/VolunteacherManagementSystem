@@ -1,6 +1,6 @@
+
 package com.volunteacher.app.service.interfaces;
 
-import org.hibernate.boot.model.source.internal.hbm.PluralAttributeMapKeyManyToAnySourceImpl;
 import org.springframework.http.ResponseEntity;
 
 import com.volunteacher.app.model.Kid;
@@ -11,6 +11,8 @@ public interface KidService {
 	public ResponseEntity<Object> addKid(Kid kid);
 	
 	public ResponseEntity<Object> kidList(int id);
+	
+	public ResponseEntity<Object> getAllKidList();
 	
 	public ResponseEntity<Object> kidById(Long id);
 	

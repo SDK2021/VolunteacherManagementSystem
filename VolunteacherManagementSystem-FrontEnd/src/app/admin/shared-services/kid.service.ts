@@ -14,6 +14,11 @@ export class KidService {
 
   constructor(private http:HttpClient) { }
 
+   getAllKidslist():Observable<Kid[]>
+  {
+    return this.http.get<Kid[]>(`${"http://localhost:9090/vms/all-kids"}`).pipe(retry(3))
+  }
+
   getAllKids(page:number):Observable<Kid[]>
   {
     return this.http.get<Kid[]>(`${"http://localhost:9090/vms/kids?page="}${page}`).pipe(retry(3))

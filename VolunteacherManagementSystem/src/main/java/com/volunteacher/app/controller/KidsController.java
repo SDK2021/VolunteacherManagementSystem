@@ -55,6 +55,13 @@ public class KidsController {
 		return kidService.kidById(id);
 	}
 	
+	@GetMapping("/all-kids")
+	public ResponseEntity<Object> getAllKid()
+	{
+		return kidService.getAllKidList();
+	}
+	
+	
 	@GetMapping("/group-kids")
 	public ResponseEntity<Object> getKidsByGroup(@RequestParam("page") int page,@RequestParam(name = "group") int gid)
 	{

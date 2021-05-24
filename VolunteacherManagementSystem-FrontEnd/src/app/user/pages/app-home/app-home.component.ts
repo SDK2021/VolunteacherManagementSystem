@@ -33,22 +33,22 @@ export class AppHomeComponent implements OnInit {
   users: Array<User>
   uLength: number = 0
 
-  user:User=new User()
+  user: User = new User()
 
   page: number = 0
   participantUser: Participant;
-  totalAnnouncementPages:number
+  totalAnnouncementPages: number
 
-  showImageSpinner:boolean=true
+  showImageSpinner: boolean = true
 
   events: Array<Event>
 
-  wish:string=''
+  wish: string = ''
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  showProgressbar:boolean=false
+  showProgressbar: boolean = false
 
   public get get_events() {
     return this.events
@@ -68,7 +68,7 @@ export class AppHomeComponent implements OnInit {
 
   slides: String[] = new Array()
 
-  constructor(private _snackBar: MatSnackBar,private postService: TimeLineService, private router: Router, private sharedservice: AppHomeService, private authService: authentication, private userService: UsersService, private notiService: NotificationsService, private eventService: EventsService) {
+  constructor(private _snackBar: MatSnackBar, private postService: TimeLineService, private router: Router, private sharedservice: AppHomeService, private authService: authentication, private userService: UsersService, private notiService: NotificationsService, private eventService: EventsService) {
 
   }
 
@@ -76,7 +76,7 @@ export class AppHomeComponent implements OnInit {
 
   ngOnInit(): void {
     // this.slides['image']=new String()
-    this.page=0
+    this.page = 0
     this.events = []
     this.getUser()
     this.showSpinner = true
@@ -88,30 +88,25 @@ export class AppHomeComponent implements OnInit {
     console.log(this.get_events);
     this.showSpinner = false
 
-    let today:Date = new Date()
+    let today: Date = new Date()
 
-    if(today.getHours()<12)
-    {
-        this.wish="Good Morning "
+    if (today.getHours() < 12) {
+      this.wish = "Good Morning "
     }
-    else if(today.getHours()>=12&&today.getHours()<18)
-    {
-      this.wish="Good Afternoon"
+    else if (today.getHours() >= 12 && today.getHours() < 18) {
+      this.wish = "Good Afternoon"
     }
-    else if(today.getHours()>=18&&today.getHours()<21)
-    {
-      this.wish="Good Evening"
+    else if (today.getHours() >= 18 && today.getHours() < 21) {
+      this.wish = "Good Evening"
     }
-    else
-    {
-      this.wish="Good Night"
+    else {
+      this.wish = "Good Night"
     }
   }
 
-  
-  load()
-  {
-    this.showImageSpinner=false
+
+  load() {
+    this.showImageSpinner = false
   }
   handleError(error) {
     console.log(error);
@@ -132,8 +127,7 @@ export class AppHomeComponent implements OnInit {
     });
   }
   onScroll() {
-    if(this.page < this.totalAnnouncementPages - 1)
-    {
+    if (this.page < this.totalAnnouncementPages - 1) {
       this.page += 1
       this.getPageableAnnouncements(this.page);
     }
@@ -194,30 +188,27 @@ export class AppHomeComponent implements OnInit {
       data => {
         this.events = data['content']
         console.log(this.events)
-        this.eLength=this.events.length
-        let authUser:string[]
-      let userId:number
-      authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ")
-      this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(()=>{    
+        this.eLength = this.events.length
+        let authUser: string[]
+        let userId: number
+        authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ")
+        this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(() => {
 
-          for (let i=0;i<this.events.length;i++)
-          {
-            for(let user of this.events[i].users)
-            {
-              if(user.userId == userId)
-              {
+          for (let i = 0; i < this.events.length; i++) {
+            for (let user of this.events[i].users) {
+              if (user.userId == userId) {
                 this.events[i].disable = true
                 break
               }
             }
           }
-    })).subscribe(data=>{
-      userId = data.userId
+        })).subscribe(data => {
+          userId = data.userId
 
-    })
-   
+        })
 
-     //   this.displayEvent(this.events)
+
+        //   this.displayEvent(this.events)
       }, error => {
         this.handleError(error)
       })
@@ -263,11 +254,11 @@ export class AppHomeComponent implements OnInit {
   // }
 
   addEventVolunteacher(value) {
-    this.showProgressbar=true
+    this.showProgressbar = true
     console.log(value)
     let authuser: string[];
     let email: string;
-    let users:User[] = []
+    let users: User[] = []
 
     if (this.authService.isUserLogin) {
       localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME);
@@ -275,14 +266,14 @@ export class AppHomeComponent implements OnInit {
       email = atob(authuser[0]);
       this.userService.getUserByEmail(email).pipe(finalize(() => {
         console.log(users);
-        
+
         this.notiService.addVTParticipant(users, value).subscribe(data => {
           console.log(data)
-          this.showProgressbar=false
+          this.showProgressbar = false
           this.openSnackBar()
           setTimeout(() => {
             console.log("Hello Krunal #TheProjectPartner");
-              this.getEvents()
+            this.getEvents()
           }, 1000);
         }, error => {
           this.handleError(error)
@@ -298,8 +289,8 @@ export class AppHomeComponent implements OnInit {
     let authUser: string[]
     if (this.authService.isUserLogin) {
       authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
-      this.userService.getUserByEmail(atob(authUser[0])).subscribe(data=>{
-        this.user=data
+      this.userService.getUserByEmail(atob(authUser[0])).subscribe(data => {
+        this.user = data
       })
     }
 

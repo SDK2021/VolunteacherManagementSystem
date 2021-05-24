@@ -25,7 +25,9 @@ export class ForgotPasswordComponent implements OnInit {
     this.userService.sendOTP(val.username).subscribe(data=>{
       console.log(data)
       this.showSpinner=false
-      this.router.navigate(['forgot-password/send-otp'])
+      setTimeout(() => {
+        this.router.navigate(['forgot-password/send-otp'])
+      }, 1500); 
       this.invalidEmail = false
       localStorage.setItem("username",data.userId.toString() + " " + val.username);
     },
@@ -34,7 +36,8 @@ export class ForgotPasswordComponent implements OnInit {
       if(error.status == 400)
       {
         this.invalidEmail = true
-        this.router.navigate(['forgot-password'])
+        this.showSpinner=false
+        //this.router.navigate(['forgot-password'])
       }
       else if(error.status==500){
         this.router.navigate(['/internal-server-error'])

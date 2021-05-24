@@ -5,7 +5,7 @@ import { Area } from 'src/app/core/model/area';
 import { Kid } from 'src/app/core/model/kid';
 import { Kidsreport } from 'src/app/core/model/kidsreport';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
-import { chartExample1, chartExample2, chartExample3, chartOptions, parseOptions } from 'src/app/variables/charts';
+import { chartExample1, chartExample2, chartOptions, parseOptions } from 'src/app/variables/charts';
 import { KidsService } from '../../shared-services/kids.service';
 
 @Component({
@@ -19,6 +19,8 @@ export class KidsReportComponent implements OnInit {
   public salesChart;
   public clicked: boolean = true;
   public clicked1: boolean = false;
+
+  n:number
   
   kidReport:Kidsreport=new Kidsreport()
   showSpinner:boolean=false
@@ -42,6 +44,7 @@ export class KidsReportComponent implements OnInit {
     }
   }
 
+  personalityChart:any
   
   load()
   {
@@ -52,6 +55,22 @@ export class KidsReportComponent implements OnInit {
     this.showSpinner=true
     this.kidsService.getLatestKidReport(id).subscribe(data=>{
       this.kidReport = data
+
+      // this.personalityChart.data.datasets[0].data[0]=(this.kidReport.prayer*25)/10
+      // this.personalityChart.data.datasets[0].data[1]=(this.kidReport.prayer*25)/10
+      // this.personalityChart.data.datasets[0].data[2]=(this.kidReport.goshthi*25)/10
+      // this.personalityChart.data.datasets[0].data[3]=(this.kidReport.abhivyakti*25)/10
+
+      this.personalityChart.data.datasets[0].data[0]=25
+      this.personalityChart.data.datasets[0].data[1]=25
+      this.personalityChart.data.datasets[0].data[2]=25
+      this.personalityChart.data.datasets[0].data[3]=25
+
+      
+
+      console.log(this.personalityChart.data);
+      
+
       console.log(data);
       
       this.showSpinner=false
@@ -64,14 +83,15 @@ export class KidsReportComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.kidReport.kid=new Kid()
     this.kidReport.kid.area=new Area()
 
    this.getKidReportByKid(this.route.snapshot.params['id'])
     
     //this.getKidReportById(this.route.snapshot.params['id'])
-
+    this.n=25
 
     this.datasets = [
       [0, 20, 10, 30, 15, 40, 20, 60, 60],
@@ -96,12 +116,35 @@ export class KidsReportComponent implements OnInit {
 
     parseOptions(Chart, chartOptions());
 
-    var personalityChart = new Chart(chartPie, {
-      type: 'pie',
-      options: chartExample3.options,
-      data: chartExample3.data
-    });
+  
+    // var personalityChart = new Chart(chartPie, {
+    //   type: 'pie',
+    //   options: this.personalityChart.options,
+    //   data: this.personalityChart.data
+    // });
+
+    this.personalityChart = new Chart(chartPie, {
+      type:'pie',
+      options: {
     
+      },
+      data: {
+        labels: ["Discipline", "Prayer", "Goshthi","Abhivyakti"],
+        datasets: [
+          {
+            data:[25,25,25,25],
+            backgroundColor: [
+             "red",
+              "green",
+              "blue"
+            ]
+          }
+        ],
+        
+      }
+    })
+
+
     var chartSales = document.getElementById('chart-sales');
 
     this.salesChart = new Chart(chartSales, {
@@ -109,6 +152,8 @@ export class KidsReportComponent implements OnInit {
 			options: chartExample1.options,
 			data: chartExample1.data
 		});
+
+    console.log(this.personalityChart.data);
   }
 
 
@@ -135,4 +180,6 @@ export class KidsReportComponent implements OnInit {
      
   }
 
+
+    
 }

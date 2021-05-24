@@ -44,7 +44,7 @@ export class CreateReportComponent implements OnInit {
     interestArea:['',Validators.required],
     remarks:['',Validators.required],
     subjects: this.fb.group({
-      gujarati: ['',Validators.required],
+      gujarati: ['',Validators.required,Validators.max(100)],
       english: ['',Validators.required],
       maths: ['',Validators.required],
     }),

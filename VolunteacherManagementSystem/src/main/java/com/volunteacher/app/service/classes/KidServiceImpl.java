@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.Kid;
 import com.volunteacher.app.model.KidsGroup;
-import com.volunteacher.app.model.Volunteacher;
 import com.volunteacher.app.repository.KidRepository;
 import com.volunteacher.app.repository.KidsGroupRepository;
 import com.volunteacher.app.service.interfaces.KidService;
@@ -47,6 +46,18 @@ public class KidServiceImpl implements KidService {
 		try {
 			Pageable pageable = PageRequest.of(page, 10);
 			Page<Kid> kidList = (Page<Kid>) kidRepository.findAll(pageable);
+			return ResponseEntity.status(HttpStatus.OK).body(kidList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids");
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> getAllKidList() 
+	{
+		try {			
+			List<Kid> kidList = (List<Kid>) kidRepository.findAll();
 			return ResponseEntity.status(HttpStatus.OK).body(kidList);
 		} catch (Exception e) {
 			e.printStackTrace();

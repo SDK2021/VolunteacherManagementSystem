@@ -43,7 +43,7 @@ export class EventsService {
   getEvent(id:number):Observable<Event>
   {
       return this.http.get<Event>(`${"http://localhost:9090/vms/events/"}`+`${id}`).pipe(retry(3))
-      .pipe(retry(3))
+     
   }
 
   getEventById(eventId:number):Observable<Event>

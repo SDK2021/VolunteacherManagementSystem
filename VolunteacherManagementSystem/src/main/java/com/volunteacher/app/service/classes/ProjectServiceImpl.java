@@ -3,13 +3,11 @@ package com.volunteacher.app.service.classes;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.validator.internal.metadata.aggregated.rule.ReturnValueMayOnlyBeMarkedOnceAsCascadedPerHierarchyLine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.accept.AbstractMappingContentNegotiationStrategy;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.Kid;

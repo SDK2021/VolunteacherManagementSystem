@@ -51,36 +51,36 @@
             <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-4">
                 <div class="form-group">
                     <label class="form-control-label" for="input-group">Select Village</label>
-                    <select required class="form-control form-control-alternative" id="input-group" 
-                    (change)="selectedVillage($event)" [ngClass]="{'ng-invalid':((village.touched&&village.invalid)||(village.touched&&villageSelected==0))}" name="village" #village="ngModel" ngModel>
+                    <select class="form-control form-control-alternative" id="input-group" 
+                    (change)="selectedVillage($event)" name="village" #village="ngModel" ngModel>
                         <option class="combobox" value="" selected>Select</option>
                         <option class="combobox" [value]="v.villageId" *ngFor="let v of villages;trackBy: trackVillagesById">{{v.villageName}}
                         </option>
                     </select>
-                    <small class="text-danger" *ngIf="((village.touched&&village.invalid)||(village.touched&&villageSelected==0))">Village is Required</small>
+                    <!-- <small class="text-danger" *ngIf="((village.touched&&village.invalid)||(village.touched&&villageSelected==0))">Village is Required</small> -->
                 </div>
             </div>
             <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-4">
                 <div class="form-group">
                     <label class="form-control-label" for="input-group">Select Area</label>
-                    <select required class="form-control form-control-alternative" id="input-group" 
-                    (change)="selectedArea($event)" name="area" #area="ngModel" ngModel [ngClass]="{'ng-invalid':((area.touched&&area.invalid)||(area.touched&&areaSelected==0))}">
+                    <select  class="form-control form-control-alternative" id="input-group" 
+                    (change)="selectedArea($event)" name="area" #area="ngModel" ngModel >
                         <option class="combobox" value="" selected>Select</option>
                         <option class="combobox" [value]="a.areaId" *ngFor="let a of areas;trackBy: trackAreasById">{{a.areaName}}</option>
                     </select>
-                    <small class="text-danger" *ngIf="((area.touched&&area.invalid)||(area.touched&&areaSelected==0))">Area is Required</small>
+                    <!-- <small class="text-danger" *ngIf="((area.touched&&area.invalid)||(area.touched&&areaSelected==0))">Area is Required</small> -->
                 </div>
             </div>
             <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-4">
                 <div class="form-group">
                     <label class="form-control-label" for="input-group">Select Group</label>
-                    <select required class="form-control form-control-alternative" id="input-group" 
-                    (change)="selectedGroup($event)" name="group" #group="ngModel" ngModel [ngClass]="{'ng-invalid':((group.touched&&group.invalid)||(group.touched&&groupSelected==0))}">
+                    <select  class="form-control form-control-alternative" id="input-group" 
+                    (change)="selectedGroup($event)" name="group" #group="ngModel" ngModel>
                         <option class="combobox" value="" selected>Select</option>
                         <option class="combobox" [value]="g.groupId" *ngFor="let g of groups;trackBy: trackGroupsById" >{{g.groupName}}
                         </option>
                     </select>
-                    <small class="text-danger" *ngIf="((group.touched&&group.invalid)||(group.touched&&groupSelected==0))">State is Required</small>
+                    <!-- <small class="text-danger" *ngIf="((group.touched&&group.invalid)||(group.touched&&groupSelected==0))">State is Required</small> -->
                 </div>
             </div>
         </div>

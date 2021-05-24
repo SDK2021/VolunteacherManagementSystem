@@ -35,6 +35,8 @@ export class AddParticipantsComponent implements OnInit {
   selectedVillage:number
   selectedGroup:number
 
+  search:string=''
+
   filter:string;
   showProgressbar:boolean=false
   disabled:boolean=true
@@ -137,6 +139,7 @@ export class AddParticipantsComponent implements OnInit {
     this.filter = filter
    this.showSpinner=true
     this.kidsService.getkidslist(page).subscribe(data => {
+      this.showSpinner=false
       this.kidslist = data['content'];
       this.totalKidsPages = data['totalPages']
 

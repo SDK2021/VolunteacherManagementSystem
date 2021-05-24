@@ -17,6 +17,7 @@ import com.volunteacher.app.model.Village;
 import com.volunteacher.app.repository.AreaRepository;
 import com.volunteacher.app.repository.CountryRepository;
 import com.volunteacher.app.repository.DistrictRepository;
+import com.volunteacher.app.repository.KidRepository;
 import com.volunteacher.app.repository.StateRepository;
 import com.volunteacher.app.repository.TalukaRepository;
 import com.volunteacher.app.repository.VillageRepository;
@@ -42,6 +43,9 @@ public class CoreServiceImpl implements CoreService {
 	
 	@Autowired
 	AreaRepository areaRepository;
+	
+	@Autowired
+	KidRepository kidRepository;
 	
 
 	@Override
@@ -209,6 +213,7 @@ public class CoreServiceImpl implements CoreService {
 	public ResponseEntity<Object>updateVillage(int villageId,Village village) 
 	{
 		try {
+			System.out.println(village.getTaluka().getTalukaId());
 			Village updatevillage = villageRepository.findById(villageId).orElseThrow(()-> new ResourceNotFoundException("Village not found"));
 			updatevillage.setVillageName(village.getVillageName());
 			updatevillage.setTaluka(village.getTaluka());

@@ -28,26 +28,26 @@
                         <div class="text-center text-muted mb-4">
                             <h1>Volunteacher</h1>
                         </div>
-                        <form (ngSubmit)="onSubmit()" #form="ngForm">
+                        <form (ngSubmit)="addUser(form.value)" #form="ngForm">
 
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-name">Name</label>
-                                    <input autocomplete="off" #name="ngModel" name="name" [(ngModel)]="v.user.userName" type="text"
+                                    <input autocomplete="off" #name="ngModel"  readonly name="name" [value]="applicantRequest.name" [(ngModel)]="v.user.userName" type="text"
                                         id="input-name" class="form-control form-control-alternative" placeholder="Name"
-                                        required pattern="[a-zA-Z ]{3,20}">
-                                    <small *ngIf="name.errors?.required && name.touched" class="text-danger">Name is
+                                         pattern="[a-zA-Z ]{3,20}">
+                                    <!-- <small *ngIf="name.errors?.required" class="text-danger">Name is
                                         required</small>
-                                    <small *ngIf="name.errors?.pattern" class="text-danger">Invalid Name</small>
+                                    <small *ngIf="name.errors?.pattern" class="text-danger">Invalid Name</small> -->
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-email">Email Address</label>
-                                    <input autocomplete="off" name="email" #email="ngModel" [(ngModel)]="v.user.emailId" type="text"
+                                    <input autocomplete="off" name="email" readonly [value]="applicantRequest.emailId" #email="ngModel" [(ngModel)]="v.user.emailId" type="text"
                                         id="input-email" class="form-control form-control-alternative"
-                                        placeholder="Email Address" required email maxlength="40">
-                                    <small *ngIf="email.errors?.required && email.touched" class="text-danger">Email is
+                                        placeholder="Email Address" email maxlength="40">
+                                    <!-- <small *ngIf="email.errors?.required" class="text-danger">Email is
                                         required</small>
                                     <small *ngIf="email.errors?.email || email.errors?.maxlength"
                                         class="text-danger">Invalid
@@ -55,24 +55,21 @@
                                 </div>
                                 <div class="alert alert-danger" role="alert" *ngIf="invalidEmail == true">
                                     Email Already exist.
+                                </div> -->
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-phone">Contact No</label>
-                                    <input autocomplete="off" #phone="ngModel" name="phone" [(ngModel)]="v.user.phoneNumber" type="text"
+                                    <input autocomplete="off" #phone="ngModel" readonly [value]="applicantRequest.phoneNumber" name="phone" [(ngModel)]="v.user.phoneNumber" type="text"
                                         id="input-phone" class="form-control form-control-alternative"
-                                        placeholder="Contact No" required pattern="[0-9]{10}" maxlength="10">
-                                    <small *ngIf="phone.errors?.required && phone.touched" class="text-danger">Contact
+                                        placeholder="Contact No" pattern="[0-9]{10}" maxlength="10">
+                                    <!-- <small *ngIf="phone.errors?.required" class="text-danger">Contact
                                         Number is
                                         required</small>
                                     <small *ngIf="phone.errors?.pattern" class="text-danger">Invalid Contact
-                                        Number</small>
-                                </div>
-                                <div class="alert alert-danger" role="alert"
-                                    *ngIf="invalidMobileNumber == true && invalidEmail == false">
-                                    Phone number Already exist.
-                                </div>
+                                        Number</small> -->
+                                </div>                              
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -109,6 +106,19 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                  <label class="form-control-label" for="input-startdate">
+                                      DOB</label>
+                                  <input type="text" id="input-startdate"
+                                      class="form-control form-control-alternative" placeholder="DOB"
+                                      name="dob" #date="ngModel" [(ngModel)]="v.user.dob"
+                                      required onfocus="(this.type = 'date')">
+                                  <small *ngIf="date.errors?.required && date.touched"
+                                      class="text-danger">DOB is required</small>
+                              </div>
+                          </div>
+
                             <div class="col-12">
                                 <div class="form-group">
                                   <label class="form-control-label" for="input-pincode">Pincode</label>
@@ -116,30 +126,56 @@
                                   pattern="[0-9]{6}" maxlength="6" [(ngModel)]="v.pincode" >
                                   <small class="text-danger" *ngIf="pincode.errors?.pattern">Invalid pincode</small>
                                 </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                  <label class="form-control-label" for="input-city">Join As a</label>
+                                  
+                                  <select required #type="ngModel" ngModel name="type" class="form-control form-control-alternative" id="input-city" (change)="selectedUserType($event)">
+                                    <option value="" selected>Select</option>
+                                    <option [value]="usertypes.indexOf(u)+1" *ngFor="let u of usertypes">{{u}}</option>
+                                  </select>
+                                  <small class="text-danger" *ngIf="type.touched && type.errors?.required">Usertype required</small>
+                                </div>
                               </div>
-                              <!-- <div class="col-12"  >
+
+                              <div class="col-12"  *ngIf="isLvt">
                                 <div class="form-group">
                                   <label class="form-control-label" for="input-village">Village</label>
-                                  <select [(ngModel)]="v.village.villageId" class="form-control form-control-alternative" id="input-village">
+                                  <select required #village="ngModel" name="village" ngModel class="form-control form-control-alternative" id="input-village" (change)="selectedVillage($event)" >
+                                      <option value="" selected>Select</option>
                                     <option [value]="v.villageId" *ngFor="let v of villages">{{v.villageName}}</option>
                                   </select>
-                                 
+                                  <small class="text-danger" *ngIf="village.touched && village.errors?.required">Village required</small>
                                 </div>
                               </div>
-                              <div class="col-12">
+
+                              <div class="col-12" *ngIf="isVt">
                                 <div class="form-group">
-                                  <label class="form-control-label" for="input-city">City</label>
-                                  <select [(ngModel)]="v.village.villageId"  formControlName="city" class="form-control form-control-alternative" id="input-city">
-                                    <option [value]="city.talukaId" *ngFor="let city of cities">{{city.talukaName}}</option>
+                                  <label class="form-control-label" for="input-city">State</label>
+                                  <select required #state="ngModel" name="state" ngModel class="form-control form-control-alternative" id="input-state" (change)="selectedState($event)">
+                                    <option value="" selected>Select</option>
+                                    <option [value]="s.stateId" *ngFor="let s of states">{{s.stateName}}</option>
                                   </select>
-                                  
+                                  <small class="text-danger" *ngIf="state.touched && state.errors?.required">State required</small>
                                 </div>
-                              </div> -->
+                              </div>
+
+                              <div class="col-12" *ngIf="isVt">
+                                <div class="form-group">
+                                  <label class="form-control-label" for="input-district">City</label>
+                                  <select required #district="ngModel" name="district" ngModel class="form-control form-control-alternative" id="input-district" (change)="selectedDistrict($event)">
+                                    <option value="" selected>Select</option>
+                                    <option [value]="d.districtId" *ngFor="let d of districts">{{d.districtName}}</option>
+                                  </select>  
+                                  <small class="text-danger" *ngIf="district.touched && district.errors?.required">District required</small>
+                                </div>
+                              </div>
 
                               <div class="col-md-12">
                                 <div class="form-group">
                                     <label>My Education</label>
-                                    <textarea required name="education" #education="ngModel" [ngModel]="v.education" rows="3" class="form-control form-control-alternative" placeholder="Education">Complted M.Sc in AI ML ,currently working at Google. Pursuing PhD in Canada</textarea>
+                                    <textarea required name="education" #education="ngModel" [(ngModel)]="v.education" rows="3" class="form-control form-control-alternative" placeholder="Education">Complted M.Sc in AI ML ,currently working at Google. Pursuing PhD in Canada</textarea>
                                     <small class="text-danger" *ngIf="education.errors?.required && education.touched">Education is required</small>
                                   </div>
                               </div>
@@ -152,16 +188,35 @@
                                 </div>
                               </div>
 
-                              <div class="col-md-12">
+                              <div class="col-md-12"  *ngIf="isLvt">
                                 <div class="form-group">
                                   <label class="form-control-label" for="input-school">School Name</label>
-                                  <input autocomplete="off" name="school" #school="ngModel" [(ngModel)]="v.school" id="input-school" class="form-control form-control-alternative" placeholder="School Name" value="Gyanda girls" type="text">
+                                  <input autocomplete="off" name="school" #school="ngModel" [(ngModel)]="v.school" id="input-school" class="form-control form-control-alternative" placeholder="School Name"  type="text">
                                  
                                 </div>
                               </div>
+                             
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label class="form-control-label" for="input-school">Create Password</label>
+                                  <input autocomplete="off" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" name="psw" #psw="ngModel" [(ngModel)]="v.user.password" id="input-school" class="form-control form-control-alternative" placeholder="Enter password" type="password" required>
+                                  <small class="text-danger" *ngIf="psw.errors?.required && psw.touched">Password is required</small>
+                                  <small class="text-danger" *ngIf="psw.errors?.pattern && psw.touched">Password does not match with strength</small>
+                                </div>
+                              </div>
+
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label class="form-control-label" for="input-school">Confirm Password</label>
+                                  <input [ngClass]="{'ng-invalid':(passwordMatch && conPsw.touched && conPsw.value !='') || (conPsw.errors?.required && conPsw.touched)}" autocomplete="off" name="conPass" #conPsw="ngModel" id="input-school" class="form-control form-control-alternative" placeholder="Confirm password"  type="password" required ngModel (input)="checkPassword(conPsw.value)">
+                                 <small class="text-danger" *ngIf="passwordMatch && conPsw.touched && conPsw.value !=''">Password does not matched</small>
+                                 <small class="text-danger" *ngIf="conPsw.errors?.required && conPsw.touched"> Confirm Password is required</small>
+                                </div>
+                              </div>
+                       
 
                             <div class="text-center">
-                                <button [disabled]="!form.valid" type="submit" class="btn btn-primary mt-4">Submit
+                                <button [disabled]="!form.valid || (!(psw.value===conPsw.value))&& (conPsw.touched)" type="submit" class="btn btn-primary mt-4">Submit
                                    </button>
                             </div>
                         </form>

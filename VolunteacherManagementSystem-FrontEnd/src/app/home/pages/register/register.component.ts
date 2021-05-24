@@ -16,6 +16,8 @@ export class RegisterComponent implements OnInit {
   invalidMobileNumber:boolean = false;
   showForm:boolean=true
 
+  disabled:boolean=false
+
   showProgressbar:boolean=false
 
   constructor(private router:Router,private _userService:UsersService) { }
@@ -25,12 +27,14 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
+    this.disabled=true
     this.showProgressbar=true
     this.applicantRequest.status = 2;
     //this.applicantRequest.requestDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
     console.log(this.applicantRequest)
     this._userService.registration(this.applicantRequest).subscribe(data=>{
       this.invalidMobileNumber = false
+      this.disabled=false
       this.invalidEmail = false
       this.showProgressbar=false
       this.showForm=false

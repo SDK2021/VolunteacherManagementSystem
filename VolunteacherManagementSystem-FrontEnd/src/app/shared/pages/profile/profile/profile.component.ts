@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { VolunteachersService } from 'src/app/admin/shared-services/volunteachers.service';
+import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
+import { SidebarComponent } from 'src/app/core/components/sidebar/sidebar.component';
+import { AuthLayoutComponent } from 'src/app/core/layouts/auth-layout/auth-layout.component';
 import { User } from 'src/app/core/model/user';
 import { Usertype } from 'src/app/core/model/usertype';
 import { Volunteacher } from 'src/app/core/model/volunteacher';
@@ -37,7 +40,7 @@ export class ProfileComponent implements OnInit {
   show:boolean=true
 
   showImageSpinner:boolean=true
-  constructor(private vtService:VolunteachersService,private route:ActivatedRoute,private authService:authentication,private userService:UsersService,private profileService:ProfileService,private router:Router) {
+  constructor(private navbar:NavbarComponent,private vtService:VolunteachersService,private route:ActivatedRoute,private authService:authentication,private userService:UsersService,private profileService:ProfileService,private router:Router) {
    
    }
 
@@ -47,7 +50,14 @@ export class ProfileComponent implements OnInit {
     console.log(this.router.url.split('/'));
     let array:Array<string>=this.router.url.split('/')
     console.log(array);
-
+    // this.router.navigate([''])
+    setTimeout(() => {
+      this.navbar.ngOnInit()
+    }, 2000); 
+   
+   
+    console.log("ng on init call");
+    
   
     if(array[1]==="admin")
     {

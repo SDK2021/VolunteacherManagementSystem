@@ -74,8 +74,7 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 			
 			updateVolunteacher.setDistrict(volunteacher.getDistrict());
 			updateVolunteacher.setEducation(volunteacher.getEducation());
-			updateVolunteacher.setEmployerName(volunteacher.getEmployerName());
-			updateVolunteacher.setEndingDate(volunteacher.getEndingDate());
+			updateVolunteacher.setEmployerName(volunteacher.getEmployerName());			
 			updateVolunteacher.setJoiningDate(volunteacher.getJoiningDate());
 			updateVolunteacher.setPincode(volunteacher.getPincode());
 			updateVolunteacher.setSchool(volunteacher.getSchool());

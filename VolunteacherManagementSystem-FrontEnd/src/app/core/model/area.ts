@@ -8,4 +8,5 @@ export class Area {
     kids:Kid[];
 
     isEdit:boolean=false
+    isDelete:boolean = false
 }

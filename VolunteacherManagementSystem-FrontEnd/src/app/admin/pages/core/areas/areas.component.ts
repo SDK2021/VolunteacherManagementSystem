@@ -12,6 +12,7 @@ import { Area } from 'src/app/core/model/area';
 import { finalize } from 'rxjs/operators';
 import { ProjectsService } from 'src/app/admin/shared-services/projects.service';
 import { NgForm } from '@angular/forms';
+import { KidService } from 'src/app/admin/shared-services/kid.service';
 @Component({
   selector: 'app-areas',
   templateUrl: './areas.component.html',
@@ -22,9 +23,13 @@ export class AreasComponent implements OnInit {
   villageId:number;
   area:Area = new Area()
 
+  showSpinner:boolean=false
+  noAreas:boolean=false
+  aLength:number
+
   showProgressbar: boolean = false
 
-  constructor(private router:Router,private projectService:ProjectsService,private addressService:AddressService, private route:ActivatedRoute,private dialog:MatDialog, private _snackBar: MatSnackBar) { }
+  constructor(private kidService:KidService, private router:Router,private projectService:ProjectsService,private addressService:AddressService, private route:ActivatedRoute,private dialog:MatDialog, private _snackBar: MatSnackBar) { }
   areas:Array<Area> = []
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
@@ -39,7 +44,43 @@ export class AreasComponent implements OnInit {
 
   getAllArea()
   {
-    this.addressService.getAllArea().subscribe(data=>{
+    this.showSpinner=true
+    this.addressService.getAreas(this.route.snapshot.params['id']).pipe(finalize(()=>{
+      this.kidService.getAllKidslist().subscribe(data=>{
+        let flag=0
+        for (let area of this.areas) {
+          flag = 0
+          for (let kid of data) 
+          {
+            if(kid.area.areaId === area.areaId)
+            {
+              flag = 1
+              console.log("Area:"+area.areaId);
+              break 
+            }
+          }
+          if(flag==1)
+          {
+            area.isDelete = true
+          }
+          else
+          {
+            area.isDelete = false
+          }
+        }
+        console.log(this.areas);
+        this.showSpinner=false
+        if (data != null) {
+          this.aLength = this.areas.length
+          this.noAreas=false
+        }
+        //this.aLength=0
+        if(this.aLength==0)
+        {
+          this.noAreas=true
+        }
+      })
+    })).subscribe(data=>{
       this.areas = data
     })
   }
@@ -52,6 +93,20 @@ export class AreasComponent implements OnInit {
     console.log(this.areas[index]["areaId"]);
     
    
+  }
+
+  handleError(error)
+  {
+    console.log(error);        
+    if(error.status===500)
+    {
+      this.router.navigate(['internal-server-error'])
+      
+    }
+    else
+    {
+      this.router.navigate(['error-page'])
+    }
   }
   addArea(form:NgForm)
   {
@@ -67,16 +122,7 @@ export class AreasComponent implements OnInit {
           this.showProgressbar=false
         },2000)
       },error=>{
-        console.log(error);        
-          if(error.status===500)
-          {
-            this.router.navigate(['internal-server-error'])
-            
-          }
-          else
-          {
-            this.router.navigate(['error-page'])
-          }
+        this.handleError(error)
       })
     })).subscribe(data=>{
       this.area.village = data
@@ -124,5 +170,40 @@ export class AreasComponent implements OnInit {
       }, 1000);
     })
     
+  }
+
+  deleteArea(id:number)
+  {
+    this.showProgressbar=true
+     this.addressService.deleteArea(id).subscribe(data=>{
+       console.log(data);  
+       this.openDeleteSnackBar()  
+       setTimeout(() => {
+        this.getAllArea()
+        this.showProgressbar=false
+       }, 2000);
+     },error=>{
+      this.handleError(error)
+    })
+  }
+
+  delete(id:number)
+  {
+    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
+       console.log(data.delete)
+      if(data.delete)
+      { 
+        this.deleteArea(id)
+      }
+    })
+    
+  }
+
+  openDeleteSnackBar() {
+    this._snackBar.open('Deleted successfully..', 'close', {
+      duration: 2000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 }

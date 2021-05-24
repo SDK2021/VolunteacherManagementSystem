@@ -18,6 +18,8 @@ import { EditKidComponent } from './pages/edit-kid/edit-kid.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { AdminModule } from '../admin/admin.module';
+
 @NgModule({
   declarations: [KidsReportComponent,KidsAttendanceComponent,AddKidsComponent, KidsHomeComponent, AddParticipantsComponent, CreateReportComponent,KidsListComponent, SetKidsPhotoComponent, EditKidComponent],
   imports: [
@@ -31,7 +33,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    AdminModule
   ],
   exports:[]
 })

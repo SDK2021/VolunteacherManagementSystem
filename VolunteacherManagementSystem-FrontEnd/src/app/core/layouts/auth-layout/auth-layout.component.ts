@@ -1,10 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-layout',
   templateUrl: './auth-layout.component.html',
   styleUrls: ['./auth-layout.component.scss']
+})
+
+@Injectable({
+  providedIn:'root'
 })
 export class AuthLayoutComponent implements OnInit, OnDestroy {
   test: Date = new Date();
@@ -13,6 +17,8 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    console.log("Hello i am called");
+    
     var html = document.getElementsByTagName("html")[0];
     html.classList.add("auth-layout");
     var body = document.getElementsByTagName("body")[0];

@@ -65,7 +65,6 @@ public class TimelinePostServiceImpl implements TimelinePostService {
 			
 			updatePost.setPostDescription(post.getPostDescription());
 			updatePost.setPostPhoto(post.getPostPhoto());
-			updatePost.setCreationDate(post.getCreationDate());
 			
 			timelinePostRepository.save(updatePost);
 			return ResponseEntity.status(HttpStatus.OK).body(updatePost);

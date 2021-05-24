@@ -22,23 +22,25 @@
       <div class="card bg-secondary shadow border-0">
         <div class="card-header bg-transparent pb-2">
 
-          <div class="card-body px-lg-5 py-lg-5">
+          <div class="card-body px-lg-5 pt-0">
+            <div class="alert my-2 mx-auto d-block" style="background-color:#64ffdb2f ;" *ngIf="isEmailSent">
+              <b> <label class="mx-auto d-block text-center text-success">Email sent again successfully to your email id {{email}}</label></b>
+             </div>
             <div class="text-center text-muted mb-4">
               <h1>Reset Password</h1>
             </div>
             <form (ngSubmit)="verifyOTP(vms.value)" #vms="ngForm">
-              <h3 class="text-center">We send code to your email</h3>
+              <h3 class="text-center">We sent code to your email id</h3>
 
               <h4 class="text-muted text-center"> Enter 6 digit verification code sent to your email</h4>
 
               <div class="form-group mb-3 mt-4">
+                <label >Enter OTP</label>
                 <div class="input-group input-group-alternative">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                  </div>
-                  <input autocomplete="off" class="form-control" ngModel placeholder="6 digit code" type="text" name="otp">
-
+                  <input #otp='ngModel' autocomplete="off" class="form-control" ngModel placeholder="6 digit code" type="text" name="otp" required>
+                  
                 </div>
+                <small *ngIf="otp.errors?.required && otp.touched" class="text-danger">OTP is Required</small>
               </div>
 
               <div class="class alert alert-danger" *ngIf="invalidOTP">Invalid OTP.. Try again..</div>
@@ -54,8 +56,9 @@
                 </div>
               </ng-container>
 
+              
               <div class="text-center">
-                <button type="button submit" class="btn btn-primary my-4">Submit</button>
+                <button [disabled]='!vms.valid' type="button submit" class="btn btn-primary my-4">Submit</button>
               </div>
             </form>
           </div>

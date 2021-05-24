@@ -5,7 +5,7 @@ import { Area } from 'src/app/core/model/area';
 import { Kid } from 'src/app/core/model/kid';
 import { Kidsreport } from 'src/app/core/model/kidsreport';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
-import { chartExample1, chartExample2, chartExample3, chartOptions, parseOptions } from 'src/app/variables/charts';
+import { chartExample1, chartExample2,chartOptions, parseOptions } from 'src/app/variables/charts';
 import { KidsService } from '../../shared-services/kids.service';
 
 @Component({
@@ -90,8 +90,8 @@ export class KidsReportComponent implements OnInit {
 
     var personalityChart = new Chart(chartPie, {
       type: 'pie',
-      options: chartExample3.options,
-      data: chartExample3.data
+      options: this.chartExample3.options,
+      data: this.chartExample3.data
     });
     
     var chartSales = document.getElementById('chart-sales');
@@ -126,5 +126,23 @@ export class KidsReportComponent implements OnInit {
      return kid
      
   }
-
+  chartExample3 = {
+    options: {
+  
+    },
+    data: {
+      labels: ["Jul", "Aug", "Sep"],
+      datasets: [
+        {
+          data: [10, 20, 50],
+          backgroundColor: [
+            Chart.colors.theme['danger'],
+            Chart.colors.theme['info'],
+            Chart.colors.theme['primary']
+          ]
+        }
+      ],
+      
+    }
+  }
 }

@@ -91,4 +91,9 @@ export class AddressService {
   {
     return this.http.put<Area>(`${"http://localhost:9090/vms/areas/"}${areaId}`,area).pipe(retry(3))
   }
+
+  deleteArea(areaId:number)
+  {
+    return this.http.delete(`${"http://localhost:9090/vms/areas/"}${areaId}`).pipe(retry(3))
+  }
 }

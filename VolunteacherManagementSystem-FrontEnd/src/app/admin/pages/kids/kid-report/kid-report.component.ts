@@ -6,7 +6,7 @@ import { Kid } from 'src/app/core/model/kid';
 import { Kidsreport } from 'src/app/core/model/kidsreport';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
 import { KidsService } from 'src/app/kids/shared-services/kids.service';
-import { chartExample1, chartExample2, chartExample3, chartOptions, parseOptions } from 'src/app/variables/charts';
+import { chartExample1, chartExample2, chartOptions, parseOptions } from 'src/app/variables/charts';
 
 @Component({
   selector: 'app-kid-report',
@@ -32,6 +32,11 @@ export class KidReportComponent implements OnInit {
   
 
   ngOnInit(): void {
+
+    console.log(Chart.colors);
+    console.log(Chart.colors.theme['danger']);
+    
+    
 
     this.kidReport.kid=new Kid()
     this.kidReport.kid.area=new Area()
@@ -60,8 +65,8 @@ export class KidReportComponent implements OnInit {
 
     var personalityChart = new Chart(chartPie, {
       type: 'pie',
-      options: chartExample3.options,
-      data: chartExample3.data
+      options: this.personalityChart.options,
+      data: this.personalityChart.data
     });
     
     var chartSales = document.getElementById('chart-sales');
@@ -132,5 +137,24 @@ export class KidReportComponent implements OnInit {
         
      return kid
      
+  }
+  personalityChart = {
+    options: {
+  
+    },
+    data: {
+      labels: ["Discipline", "Prayer", "Goshthi","Abhivyakti"],
+      datasets: [
+        {
+          data: [this.kidReport.discipline, this.kidReport.prayer, this.kidReport.goshthi,this.kidReport.abhivyakti],
+          backgroundColor: [
+            "red",
+            "green",
+            "blue"
+          ]
+        }
+      ],
+      
+    }
   }
 }
