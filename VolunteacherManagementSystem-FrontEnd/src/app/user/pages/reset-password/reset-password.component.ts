@@ -18,13 +18,16 @@ export class ResetPasswordComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   oldPsinvalid:boolean = false
+  showProgressbar:boolean=false
   constructor(private _snackBar: MatSnackBar,private userService:UsersService,private authService:authentication,private router:Router) { }
   updateSuccessfully:boolean = false
   ngOnInit(): void {
     this.updateSuccessfully = false
     this.oldPsinvalid = false
   }
-
+  password:string=''
+  oldPassword:string=''
+  passwordMatch: boolean
   handleError(error)
   {
     console.log(error);
@@ -50,6 +53,7 @@ export class ResetPasswordComponent implements OnInit {
 
   updatePassword(val)
   {
+    this.showProgressbar=true
     let username:string[]
     let userId:number
     let user:User =  new User()
@@ -64,6 +68,7 @@ export class ResetPasswordComponent implements OnInit {
           console.log(data + "success");
           this.router.navigate(['login'])
           this.updateSuccessfully = true
+          this.showProgressbar=false
           this.openSnackBar()
           this.oldPsinvalid = false
       },error=>{
@@ -81,6 +86,18 @@ export class ResetPasswordComponent implements OnInit {
       user = userdata
       userId= userdata.userId
     })
+    }
+  }
+
+  checkPassword(conPass: string) {
+
+    if (conPass.length > 0) {
+      if (conPass == this.password) {
+        this.passwordMatch = false
+      }
+      else {
+        this.passwordMatch = true
+      }
     }
   }
 }

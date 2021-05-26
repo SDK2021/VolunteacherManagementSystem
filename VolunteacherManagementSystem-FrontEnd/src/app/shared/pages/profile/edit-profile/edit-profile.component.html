@@ -1,3 +1,8 @@
+<ng-container *ngIf="showProgressbar">
+  <div style="z-index: 100;position: -webkit-sticky;position:sticky;top:0;">
+      <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+  </div>
+</ng-container>
 <div class="card-body">
     <form  [formGroup]="editProfile" (ngSubmit)="saveProfile()">
       <h6 class="heading-small text-muted mb-4">User information</h6>
@@ -51,8 +56,8 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="form-group">
-              <label class="form-control-label" for="input-email">Email address</label>
-              <input autocomplete="off" formControlName="email" type="email" id="input-email" class="form-control form-control-alternative" value="jesse@example.com">
+              <label  class="form-control-label" for="input-email">Email address</label>
+              <input readonly autocomplete="off" formControlName="email" type="email" id="input-email" class="form-control form-control-alternative" value="jesse@example.com">
               <small class="text-danger" *ngIf="(editProfile.get('contactInfo.email').errors?.required && editProfile.get('contactInfo.email').touched)">Email is required is required</small>
               <small class="text-danger" *ngIf="(editProfile.get('contactInfo.email').errors?.email)">Invalid email</small>
             </div>
@@ -89,10 +94,11 @@
             <div class="form-group">
               <label class="form-control-label" for="input-city">District</label>
               <select  formControlName="city" class="form-control form-control-alternative" id="input-city">
-                <option class="combobox" value="0" selected>Select</option>
-                <option [value]="d.districtId" *ngFor="let d of districts" [selected]="d.districtId==141">{{d.districtName}}</option>
+                <option class="combobox" value="" selected>Select</option>
+                <option [value]="d.districtId" *ngFor="let d of districts" [selected]="d.districtId==  districtSelected
+                ">{{d.districtName}}</option>
               </select>
-              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.city').errors?.required && editProfile.get('contactInfo.city').touched)">City is required</small>
+              <small class="text-danger" *ngIf="(editProfile.get('contactInfo.city').errors?.required && editProfile.get('contactInfo.city').touched)">District is required</small>
             </div>
           </div>
         </div>

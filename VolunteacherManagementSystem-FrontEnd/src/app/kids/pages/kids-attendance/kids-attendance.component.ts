@@ -197,6 +197,7 @@ export class KidsAttendanceComponent implements OnInit {
     this.filter = filter
     this.kidsService.getAllKidsByAreaAndGroupAndVillage(this.page, areaId, groupId, villageId).subscribe(data => {
       this.kidslist = data['content']
+      this.kidslist=this.calculateAge(this.kidslist)
       this.totalKidsPages = data['totalPages']
       console.log(data);
     }, error => {
@@ -224,4 +225,23 @@ export class KidsAttendanceComponent implements OnInit {
     return g.groupId
   }
 
+  calculateAge(kidsList:Array<Kid>):Array<Kid>
+  {
+      for(let k of kidsList)
+      {
+        let currentDate=new Date()
+        let bDate=new Date(k.dob)
+        
+        let diffInSec= Math.abs(currentDate.getTime()-bDate.getTime())
+        console.log(diffInSec);
+        
+        k.age=(diffInSec/(1000 * 3600 * 24)/365)+1
+        let array:Array<string>=k.age.toString().split('.')
+        k.age=Number.parseInt(array[0])
+        console.log(k.age)
+        
+      }
+      return kidsList
+     
+  }
 }

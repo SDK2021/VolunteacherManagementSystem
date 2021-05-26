@@ -22,7 +22,7 @@ export class Kidsreport {
 
 	volunteaching: number;
 
-	games: String;
+	games: number;
 
 	sports:number
 
@@ -35,4 +35,6 @@ export class Kidsreport {
 	gujarati: number;
 
 	english: number;
+
+	literature:number;
 }

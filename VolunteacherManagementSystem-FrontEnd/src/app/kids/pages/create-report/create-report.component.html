@@ -88,7 +88,7 @@
                                                         for="input-gujarati">Gujarati</label>
                                                     <input autocomplete="off" [(ngModel)]="report.gujarati"  required name="gujarati" #gujarati="ngModel" type="number"  id="input-gujarati"
                                                         class="form-control form-control-alternative"
-                                                        placeholder="Gujarati" min="0" max="100">
+                                                        placeholder="Gujarati" min="0" max="100" >
                                                 </div>
                                             </div>
 
@@ -112,117 +112,117 @@
                                             </div>
                                             <br>
                                             <div class="col-12">
-                                                <!-- <small
-                                                    *ngIf=" gujarati.errors?required "
-                                                    class="text-danger">Marks are required</small> -->
+                                                <small
+                                                    *ngIf=" gujarati.errors?.required && gujarati.touched || english.errors?.required && english.touched || maths.errors?.required && maths.touched  "
+                                                    class="text-danger">Marks are required</small>
 
-                                                    <!-- <small
-                                                    *ngIf="(kidsReport.get('subjects.maths').errors?.min && kidsReport.get('subjects.maths').errors?.touched ) "
-                                                    class="text-danger">Min Length</small> -->
+                                                    <small
+                                                    *ngIf="gujaratiError" 
+                                                    class="text-danger">Invalid Marks</small>
                                             </div>
 
                                         </div>
                                         <hr>
-                                        <h4 class="mt-4 mb-4">How the kid is in followin?</h4>
+                                        <h4 class="mt-4 mb-4">How the kid is in following?</h4>
                                         <div  class="row justify-content-center">
                                             <div class="form-group mx-2">
                                                 <label class="form-control-label"
                                                     for="input-discipline">Discipline</label><br>
-                                                <mat-slider thumbLabel name="discipline"
-                                                    [displayWith]="formatLabel" tickInterval="0" min="0" max="10" [(ngModel)]="report.discipline">
+                                                <mat-slider thumbLabel name="discipline" #discipline="ngModel" 
+                                                    [displayWith]="formatLabel" required tickInterval="0" min="0" max="10" [(ngModel)]="report.discipline">
                                                 </mat-slider>
                                                 <br>
-                                                <!-- <small
-                                                    *ngIf="kidsReport.get('personality.discipline').value==0 && kidsReport.get('personality.discipline').touched"
-                                                    class="text-danger">Invalid Value</small> -->
+                                                <small
+                                                    *ngIf="discipline.invalid && discipline.touched"
+                                                    class="text-danger">Invalid Value</small>
                                             </div>
 
                                             <div class="form-group mx-2">
                                                 <label class="form-control-label" for="input-prayer">Prayer</label><br>
-                                                <mat-slider thumbLabel
-                                                    [displayWith]="formatLabel" name="prayer" tickInterval="0" min="0" max="10" [(ngModel)]="report.prayer">
+                                                <mat-slider thumbLabel #prayer='ngModel'
+                                                    [displayWith]="formatLabel" required name="prayer" tickInterval="0" min="0" max="10" [(ngModel)]="report.prayer">
                                                 </mat-slider><br>
-                                                <!-- <small
-                                                    *ngIf="kidsReport.get('personality.prayer').value==0 && kidsReport.get('personality.prayer').touched"
-                                                    class="text-danger">Invalid Value</small> -->
+                                                <small
+                                                    *ngIf="prayer.invalid && prayer.touched"
+                                                    class="text-danger">Invalid Value</small>
                                             </div>
 
 
                                             <div class="form-group mx-2">
                                                 <label class="form-control-label" for="input-gosthi">Gosthi</label><br>
-                                                <mat-slider  thumbLabel
+                                                <mat-slider  thumbLabel #goshthi='ngModel' required
                                                     [displayWith]="formatLabel"  name="goshthi" tickInterval="0" min="0" max="10" [(ngModel)]="report.goshthi">
                                                 </mat-slider><br>
-                                                <!-- <small
-                                                    *ngIf="kidsReport.get('personality.goshthi').value==0 && kidsReport.get('personality.goshthi').touched"
-                                                    class="text-danger">Invalid Value</small> -->
+                                                <small
+                                                    *ngIf="goshthi.invalid && goshthi.touched"
+                                                    class="text-danger">Invalid Value</small>
                                             </div>
 
 
                                             <div class="form-group mx-2 ">
                                                 <label class="form-control-label" for="input-games">Games</label><br>
-                                                <mat-slider  thumbLabel
+                                                <mat-slider  thumbLabel #games="ngModel" required
                                                     [displayWith]="formatLabel" name="games" tickInterval="0" min="0" max="10" [(ngModel)]="report.games">
                                                 </mat-slider><br>
-                                                <!-- <small
-                                                    *ngIf="kidsReport.get('personality.games').value==0 && kidsReport.get('personality.games').touched"
-                                                    class="text-danger">Invalid Value</small> -->
+                                                <small
+                                                    *ngIf="games.invalid && games.touched"
+                                                    class="text-danger">Invalid Value</small>
                                             </div>
 
                                             <div class="form-group mx-2 ">
                                                 <label class="form-control-label"
                                                     for="input-abhivyakti">Abhivyakti</label><br>
-                                                <mat-slider  thumbLabel
+                                                <mat-slider  thumbLabel #abhivyakti="ngModel" required
                                                     [displayWith]="formatLabel" name="abhivyakti" tickInterval="0" min="0" max="10" [(ngModel)]="report.abhivyakti">
                                                 </mat-slider><br>
-                                                <!-- <small
-                                                    *ngIf="kidsReport.get('personality.abhivyakti').value==0 && kidsReport.get('personality.abhivyakti').touched"
-                                                    class="text-danger">Invalid Value</small> -->
+                                                <small
+                                                    *ngIf="abhivyakti.invalid && abhivyakti.touched"
+                                                    class="text-danger">Invalid Value</small>
 
                                             </div>
 
                                             <div class="form-group mx-2">
                                                 <label class="form-control-label"
                                                     for="input-volunteaching">Volunteaching</label><br>
-                                                <mat-slider  thumbLabel
+                                                <mat-slider  thumbLabel #volunteaching="ngModel" required
                                                     [displayWith]="formatLabel" name="volunteaching" tickInterval="0" min="0" max="10" [(ngModel)]="report.volunteaching">
                                                 </mat-slider><br>
-                                                <!-- <small
-                                                    *ngIf="kidsReport.get('personality.volunteaching').value==0 && kidsReport.get('personality.volunteaching').touched"
-                                                    class="text-danger">Invalid Value</small> -->
+                                                <small
+                                                    *ngIf="volunteaching.invalid && volunteaching.touched"
+                                                    class="text-danger">Invalid Value</small>
                                             </div>
 
                                             <div class="form-group mx-2">
                                                 <label class="form-control-label"
                                                     for="input-volunteaching">Sports</label><br>
-                                                <mat-slider  thumbLabel
-                                                    [displayWith]="formatLabel" name="reports" tickInterval="0" min="0" max="10" [(ngModel)]="report.sports">
+                                                <mat-slider  thumbLabel #sports="ngModel" required
+                                                    [displayWith]="formatLabel" name="sports" tickInterval="0" min="0" max="10" [(ngModel)]="report.sports">
                                                 </mat-slider><br>
-                                                <!-- <small
-                                                    *ngIf="kidsReport.get('personality.sports').value==0 && kidsReport.get('personality.sports').touched"
-                                                    class="text-danger">Invalid Value</small> -->
+                                                <small
+                                                    *ngIf="sports.invalid && sports.touched"
+                                                    class="text-danger">Invalid Value</small>
                                             </div>
 
                                             <div class="form-group mx-2">
                                                 <label class="form-control-label"
                                                     for="input-volunteaching">Art</label><br>
-                                                <mat-slider  thumbLabel [displayWith]="formatLabel"
+                                                <mat-slider  thumbLabel [displayWith]="formatLabel" #art="ngModel" required
                                                     tickInterval="0" min="0" max="10" name="art" [(ngModel)]="report.artCraft">
                                                 </mat-slider><br>
-                                                <!-- <small
-                                                    *ngIf="kidsReport.get('personality.art').value==0 && kidsReport.get('personality.art').touched"
-                                                    class="text-danger">Invalid Value</small> -->
+                                                <small
+                                                    *ngIf="art.invalid && art.touched"
+                                                    class="text-danger">Invalid Value</small>
                                             </div>
 
                                             <div class="form-group mx-2">
                                                 <label class="form-control-label"
                                                     for="input-volunteaching">Literature</label><br>
-                                                <mat-slider thumbLabel
+                                                <mat-slider thumbLabel #lit="ngModel" required
                                                     [displayWith]="formatLabel" name="literature" tickInterval="0" min="0" max="10" [(ngModel)]="report.literature">
                                                 </mat-slider><br>
-                                                <!-- <small
-                                                    *ngIf="kidsReport.get('personality.literature').value==0 && kidsReport.get('personality.literature').touched"
-                                                    class="text-danger">Invalid Value</small> -->
+                                                <small
+                                                    *ngIf="lit.invalid && lit.touched"
+                                                    class="text-danger">Invalid Value</small>
                                             </div>
 
 
@@ -233,24 +233,24 @@
 
                                         <div class="form-group px-xl-5 px-lg-3">
                                             <label class="form-control-label">Other Interest Areas</label>
-                                            <textarea autocomplete="off" rows="4" [(ngModel)]="report.interestArea" name="interestArea"
+                                            <textarea autocomplete="off" rows="4" #interests="ngModel" required [(ngModel)]="report.interestArea" name="interestArea"
                                                 class="form-control form-control-alternative"></textarea>
                                             <br>
-                                            <!-- <small class="text-danger"
-                                                *ngIf="(kidsReport.get('interestArea').errors?.required && kidsReport.get('interestArea').touched)">Interest
-                                                areas are required</small> -->
+                                            <small class="text-danger"
+                                                *ngIf="interests.invalid && interests.touched">Interest
+                                                areas are required</small>
                                         </div>
 
                                         
 
                                         <div class="form-group px-xl-5 px-lg-3">
                                             <label class="form-control-label">Remarks</label>
-                                            <textarea autocomplete="off" rows="4" [(ngModel)]="report.remarks" name="remarks"
+                                            <textarea autocomplete="off"  rows="4" [(ngModel)]="report.remarks" name="remarks"
                                                 class="form-control form-control-alternative"></textarea>
                                             <br>
-                                            <small class="text-danger"
-                                                *ngIf="(kidsReport.get('remarks').errors?.required && kidsReport.get('remarks').touched)">Remarks
-                                                are required</small>
+                                            <!-- <small class="text-danger"
+                                                *ngIf="remarks.invalid && remarks.touched">Remarks
+                                                are required</small> -->
                                         </div>
 
 

@@ -124,7 +124,7 @@ export class SessionsComponent implements OnInit {
               }    
             }
             this.getFilteredSessions(this.sessions)
-            console.log(this.sessions);
+            console.log(this.displaySessions);
             this.showSpinner=false
             if(this.displaySessions.length==0)
             {
@@ -163,13 +163,13 @@ export class SessionsComponent implements OnInit {
       let sTime: string = sessions[i]["session"]["startingTime"]
       let h: string = sTime.split(":")[0]
       let m: string = sTime.split(":")[1]
-      let s: string = sTime.split(":")[2]
+      //let s: string = sTime.split(":")[2]
       //console.log(h+":"+m+":"+s)
 
       let d = new Date(sDate)
       d.setHours(Number.parseInt(h))
       d.setMinutes(Number.parseInt(m))
-      d.setSeconds(Number.parseInt(s))
+//d.setSeconds(Number.parseInt(s))
       //console.log("After setting hrs:"+d)
 
       //console.log("and the date is:"+d)
@@ -185,10 +185,10 @@ export class SessionsComponent implements OnInit {
         console.log("Ending time" + sEndingTime)
         let h: string = sEndingTime.split(":")[0]
         let m: string = sEndingTime.split(":")[1]
-        let s: string = sEndingTime.split(":")[2]
+        //let s: string = sEndingTime.split(":")[2]
         d.setHours(Number.parseInt(h))
         d.setMinutes(Number.parseInt(m))
-        d.setSeconds(Number.parseInt(s))
+       // d.setSeconds(Number.parseInt(s))
         if (currentDate.getTime() >= d.getTime()) {
           sessions[i]["show"] = false;
         }

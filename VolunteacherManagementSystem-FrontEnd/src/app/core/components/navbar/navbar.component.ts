@@ -43,6 +43,10 @@ export class NavbarComponent implements OnInit {
     }
   }
   ngOnInit() {
+
+    if(this.router.url.split('/')[1]=="admin")
+      this.userType="admin"
+    
     this.listTitles = ROUTES.filter(listTitle => listTitle);
     let user:Array<string>
     user=localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')

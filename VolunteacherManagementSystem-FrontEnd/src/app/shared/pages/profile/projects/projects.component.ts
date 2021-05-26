@@ -67,10 +67,10 @@ export class ProjectsComponent implements OnInit {
       userId = this.user.userId;
       this.profileService.getAllProjectNumberByUser(userId).subscribe(projectnum => {
         console.log(data)
-
+        this.showSpinner = false
         for (var num of projectnum) {
           this.profileService.getProjectById(num).pipe(finalize(() => {
-            this.showSpinner = false
+            
 
             if (projectnum.length != 0) {
               this.pLength = projectnum.length

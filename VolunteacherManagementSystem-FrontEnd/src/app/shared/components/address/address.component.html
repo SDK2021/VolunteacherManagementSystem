@@ -5,7 +5,7 @@
             <div class="col-12 col-sm-7 col-md-6 col-lg-4 col-xl-4">
                 <div class="form-group">
                     <label class="form-control-label" for="input-group">Select Country</label>
-                    <select required class="form-control form-control-alternative" id="input-group" (change)="selectedCountry($event)">
+                    <select [disabled]="true" required class="form-control form-control-alternative" id="input-group" (change)="selectedCountry($event)">
                         <option selected value="">Select</option>
                         <option class="combobox" [value]="c.countryId" disabled *ngFor="let c of countries;trackBy: trackCountriesById" [selected] = "c.countryId == 8">{{c.countryName}}
                         </option>

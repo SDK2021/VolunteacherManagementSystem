@@ -29,22 +29,24 @@ export class EditProfileComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
   // editProfile:FormGroup
- villages: Array<Village>
- // profileImg:string="default-profile.jpg"
+  villages: Array<Village>
+  // profileImg:string="default-profile.jpg"
   districts: Array<District>
- // editProfile:FormGroup
+  districtSelected: number
+  // editProfile:FormGroup
 
 
-  volunteacher:Volunteacher = new Volunteacher()
-  user:User
-  firstName:string
-  lastName:string
-  isShow:boolean;
-  villageSelected:number
-  dob:string
-  constructor(private router:Router,private addressService: AddressService,private profileService:ProfileService,private fb: FormBuilder,private _snackBar: MatSnackBar, private userServeice:UsersService, private authService:authentication) {   }
+  showProgressbar:boolean=false
+  volunteacher: Volunteacher = new Volunteacher()
+  user: User
+  firstName: string
+  lastName: string
+  isShow: boolean;
+  villageSelected: number
+  dob: string
+  constructor(private router: Router, private addressService: AddressService, private profileService: ProfileService, private fb: FormBuilder, private _snackBar: MatSnackBar, private userServeice: UsersService, private authService: authentication) { }
 
-    
+
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
@@ -56,17 +58,14 @@ export class EditProfileComponent implements OnInit {
     this.isShow = true;
   }
 
-  handleError(error)
-  {
+  handleError(error) {
     console.log(error);
     console.log(error.status);
-    
-    if(error.status===500)
-    {
+
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
@@ -79,109 +78,132 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  setProfileValue(volunteacher:Volunteacher)
-  {
-    this.editProfile.get(['userInfo','fname']).setValue(this.firstName)
-    this.editProfile.get(['userInfo','lname']).setValue(this.lastName)
-    this.editProfile.get(['userInfo','gender']).setValue(volunteacher.user.gender)
-    this.editProfile.get(['userInfo','dob']).setValue(formatDate(volunteacher.user.dob,'yyyy-MM-dd','en'))
+  setProfileValue(volunteacher: Volunteacher) {
+    this.editProfile.get(['userInfo', 'fname']).setValue(this.firstName)
+    this.editProfile.get(['userInfo', 'lname']).setValue(this.lastName)
+    this.editProfile.get(['userInfo', 'gender']).setValue(volunteacher.user.gender)
+    this.editProfile.get(['userInfo', 'dob']).setValue(formatDate(volunteacher.user.dob, 'yyyy-MM-dd', 'en'))
 
-    this.editProfile.get(['contactInfo','email']).setValue(volunteacher.user.email)
-    this.editProfile.get(['contactInfo','phone']).setValue(volunteacher.user.phoneNumber)
-    this.editProfile.get(['contactInfo','pincode']).setValue(volunteacher.pincode)
-    this.editProfile.get(['contactInfo','village']).setValue(volunteacher.village.villageId)
-    this.editProfile.get(['contactInfo','city']).setValue(volunteacher.village.taluka.district.districtId)
+    this.editProfile.get(['contactInfo', 'email']).setValue(volunteacher.user.email)
+    this.editProfile.get(['contactInfo', 'phone']).setValue(volunteacher.user.phoneNumber)
+    this.editProfile.get(['contactInfo', 'pincode']).setValue(volunteacher.pincode)
+    this.editProfile.get(['contactInfo', 'city']).setValue(volunteacher.district.districtId)
 
-    this.editProfile.get(['otherInfo','education']).setValue(volunteacher.education)
-    this.editProfile.get(['otherInfo','employer']).setValue(volunteacher.employerName)
+    this.editProfile.get(['otherInfo', 'education']).setValue(volunteacher.education)
+    this.editProfile.get(['otherInfo', 'employer']).setValue(volunteacher.employerName)
 
-    if(volunteacher.user.type.typeId == 3)
-    {
-      this.editProfile.get(['otherInfo','schoolName']).setValue(volunteacher.school)
+    if (volunteacher.user.type.typeId == 3) {
+      this.editProfile.get(['otherInfo', 'schoolName']).setValue(volunteacher.school)
+      this.editProfile.get(['contactInfo', 'village']).setValue(volunteacher.village.villageId)
     }
-    else{
+    else {
       this.isShow = false;
     }
   }
 
 
 
-  getVolunteacherForm()
-  {
-    this.volunteacher.user.userName= this.editProfile.get(['userInfo','fname']).value +" "+
-    this.editProfile.get(['userInfo','lname']).value
+  getVolunteacherForm() {
+    this.volunteacher.user.userName = this.editProfile.get(['userInfo', 'fname']).value + " " +
+      this.editProfile.get(['userInfo', 'lname']).value
 
-    this.volunteacher.user.gender=this.editProfile.get(['userInfo','gender']).value
-    this.volunteacher.user.dob= this.editProfile.get(['userInfo','dob']).value
-    this.volunteacher.user.email=this.editProfile.get(['contactInfo','email']).value
-    this.volunteacher.user.phoneNumber=this.editProfile.get(['contactInfo','phone']).value
-    this.volunteacher.pincode=this.editProfile.get(['contactInfo','pincode']).value
-    this.volunteacher.village=this.editProfile.get(['contactInfo','village']).value
-    this.volunteacher.district=this.editProfile.get(['contactInfo','city']).value
-    this.volunteacher.education=this.editProfile.get(['otherInfo','education']).value
-    this.volunteacher.employerName=this.editProfile.get(['otherInfo','employer']).value
-    this.volunteacher.school=this.editProfile.get(['otherInfo','schoolName']).value
-  
-   
-   
-    
+    this.volunteacher.user.gender = this.editProfile.get(['userInfo', 'gender']).value
+    this.volunteacher.user.dob = this.editProfile.get(['userInfo', 'dob']).value
+    this.volunteacher.user.email = this.editProfile.get(['contactInfo', 'email']).value
+    this.volunteacher.user.phoneNumber = this.editProfile.get(['contactInfo', 'phone']).value
+    this.volunteacher.pincode = this.editProfile.get(['contactInfo', 'pincode']).value
+
+    this.volunteacher.village = this.editProfile.get(['contactInfo', 'village']).value
+
+    this.volunteacher.district = this.editProfile.get(['contactInfo', 'city']).value
+    this.volunteacher.education = this.editProfile.get(['otherInfo', 'education']).value
+    this.volunteacher.employerName = this.editProfile.get(['otherInfo', 'employer']).value
+    this.volunteacher.school = this.editProfile.get(['otherInfo', 'schoolName']).value
+
+
+
+
   }
-  saveProfile()
-  {
+  saveProfile() {
+    this.showProgressbar=true
     this.getVolunteacherForm()
     console.log(this.volunteacher);
     console.log(this.volunteacher);
-    if(this.villageSelected = 0)
-    {
+    if (this.villageSelected = 0) {
       this.villageSelected = this.volunteacher.village.villageId
     }
 
-    if(!(this.volunteacher.user.dob === this.dob))
-    {
+    if (!(this.volunteacher.user.dob === this.dob)) {
       let dob: string = this.volunteacher.user.dob
       let date: string[] = dob.split("-")
       let vtdob = date[1] + "-" + date[2] + "-" + date[0]
       this.volunteacher.user.dob = vtdob
     }
-    this.addressService.getDistrictById(this.editProfile.get(['contactInfo','city']).value).pipe(finalize(()=>{
-    this.addressService.getVillageByid(this.editProfile.get(['contactInfo','village']).value).pipe(finalize(()=>{
-      this.userServeice.saveVolunteacher(this.volunteacher.volunteacherId,this.volunteacher).subscribe(data=>{
-        console.log(data+"  edited")
-      })
-    })).subscribe(data=>{
-    this.volunteacher.village = data
+    this.addressService.getDistrictById(this.editProfile.get(['contactInfo', 'city']).value).pipe(finalize(() => {
+      if (this.volunteacher.user.type.typeId == 3) {
+        this.addressService.getVillageByid(this.editProfile.get(['contactInfo', 'village']).value).pipe(finalize(() => {
+          this.userServeice.saveVolunteacher(this.volunteacher.volunteacherId, this.volunteacher).subscribe(data => {
+            this.showProgressbar=false
+            console.log(data + "  edited")
+            this.openSnackBar()
+            this.router.navigate(['/user/profile/posts'])
+            
+          }, error => {
+              this.handleError(error)
+            })
+        })).subscribe(data => {
+          this.volunteacher.village = data
+        })
+      }
+      else {
+        this.volunteacher.village = null
+        this.userServeice.saveVolunteacher(this.volunteacher.volunteacherId, this.volunteacher).subscribe(data => {
+          this.showProgressbar=false
+          console.log(data + "  edited")
+          this.openSnackBar()
+          this.router.navigate(['/user/profile/posts'])
+        }, error => {
+          this.handleError(error)
+        })
+      }
+
+
+    })).subscribe(data => {
+      this.volunteacher.district = data
     })
-  })).subscribe(data=>{
-    this.volunteacher.district = data
-  })
   }
 
-  getProfileDetail()
-  {
-    let username:string;
-    let authuser:string[];
-    let userId:number;
-    let userName:string[]
+  getProfileDetail() {
+    let username: string;
+    let authuser: string[];
+    let userId: number;
+    let userName: string[]
 
     authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
     username = atob(authuser[0]);
-    this.userServeice.getUserByEmail(username).pipe(finalize(()=>{
-      this.profileService.getVolunteacherByUser(userId).pipe(finalize(()=>{
-         this.addressService.getDistricts(this.volunteacher.district.state.stateId).pipe(finalize(()=>{
-          this.addressService.getVillages(this.volunteacher.village.taluka.talukaId).subscribe(data=>{
-            this.villages = data
-            },error=>{
+    this.userServeice.getUserByEmail(username).pipe(finalize(() => {
+      this.profileService.getVolunteacherByUser(userId).pipe(finalize(() => {
+        this.addressService.getDistricts(this.volunteacher.district.state.stateId).pipe(finalize(() => {
+          if (this.volunteacher.user.userId == 3) {
+            this.addressService.getVillages(this.volunteacher.village.taluka.talukaId).subscribe(data => {
+              this.villages = data
+            }, error => {
               this.handleError(error)
             })
-         })).subscribe(data=>{
-        this.districts = data
-      })
-      })).subscribe(data=>{
+          }
+        })).subscribe(data => {
+          this.districts = data
+
+          console.log(this.districtSelected);
+
+        })
+      })).subscribe(data => {
         this.volunteacher = data
         this.dob = this.volunteacher.user.dob
-        this.setProfileValue( this.volunteacher);
+        this.districtSelected = this.volunteacher.district.districtId
+        this.setProfileValue(this.volunteacher);
       })
-    })).subscribe(data=>{
+    })).subscribe(data => {
       this.user = data;
       console.log(this.user)
       userName = this.user.userName.split(" ")
@@ -193,26 +215,26 @@ export class EditProfileComponent implements OnInit {
 
 
 
-      editProfile = this.fb.group({
-      userInfo: this.fb.group({
-        fname: [null,[Validators.required,Validators.pattern('^[a-zA-z]{3,10}$')]],
-        lname: [null,[Validators.required,Validators.pattern('^[a-zA-z]{3,10}$')]],
-        gender: ['Select',Validators.required],
-        dob: ['',Validators.required],
-      }),
-      contactInfo: this.fb.group({
-        email: [null,[Validators.required,Validators.email]],
-        phone: [null,[Validators.required,Validators.pattern('^[0-9]{10}$')]],
-        pincode: [null,[Validators.required,Validators.pattern('^[0-9]{6}$')]],
-        village: ['',Validators.required],
-        city: ['',Validators.required],
-      }),
-      otherInfo: this.fb.group({
-        education: ['',Validators.required],
-        employer: ['',Validators.required],
-        schoolName: ['',Validators.required],
-      }),
-      
-    });
- 
+  editProfile = this.fb.group({
+    userInfo: this.fb.group({
+      fname: [null, [Validators.required, Validators.pattern('^[a-zA-z]{3,10}$')]],
+      lname: [null, [Validators.required, Validators.pattern('^[a-zA-z]{3,10}$')]],
+      gender: ['Select', Validators.required],
+      dob: ['', Validators.required],
+    }),
+    contactInfo: this.fb.group({
+      email: [null, [Validators.required, Validators.email]],
+      phone: [null, [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      pincode: [null, [Validators.required, Validators.pattern('^[0-9]{6}$')]],
+      village: ['', Validators.required],
+      city: ['', Validators.required],
+    }),
+    otherInfo: this.fb.group({
+      education: ['', Validators.required],
+      employer: ['', Validators.required],
+      schoolName: ['', Validators.required],
+    }),
+
+  });
+
 }

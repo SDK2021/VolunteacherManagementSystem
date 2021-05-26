@@ -30,7 +30,7 @@ export class UploadImgComponent implements OnInit {
   isShow: boolean;
   selectedFileName: string = "";
 
-  showProgressbar:boolean=false
+  showProgressbar: boolean = false
 
   private userId: number
 
@@ -43,14 +43,15 @@ export class UploadImgComponent implements OnInit {
   currentFileUpload: FileUpload;
   percentage: number;
   image: File
+  imagecnt: number
 
-  showError:boolean=true
+  showError: boolean = true
   @Output() show = new EventEmitter<boolean>();
-  constructor(private router: Router,private _snackBar: MatSnackBar, private uploadService: FileUploadService, private authService: authentication, private userService: UsersService) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar, private uploadService: FileUploadService, private authService: authentication, private userService: UsersService) { }
 
   ngOnInit(): void {
     this.selectedFileName = null;
-
+    this.imagecnt = 0
     if (this.isPost) {
       this.x = 8
       this.y = 5
@@ -64,17 +65,14 @@ export class UploadImgComponent implements OnInit {
 
   }
 
-  handleError(error)
-  {
+  handleError(error) {
     console.log(error);
     console.log(error.status);
-    
-    if(error.status===500)
-    {
+
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
@@ -92,7 +90,7 @@ export class UploadImgComponent implements OnInit {
   imageCropped(event: ImageCroppedEvent) {
     let user: Array<string>
     let imageName: string
-       
+
     this.croppedImage = event.base64;
     //console.log(this.croppedImage);
     let randomString = this.randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
@@ -102,8 +100,7 @@ export class UploadImgComponent implements OnInit {
 
   }
 
-  randomString(length, chars) 
-  {
+  randomString(length, chars) {
     var result = '';
     for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
     return result;
@@ -137,7 +134,7 @@ export class UploadImgComponent implements OnInit {
   }
 
   selectFile(event): void {
-    this.showError=false
+    this.showError = false
     this.selectedFiles = event.target.files;
     this.selectedFileName = this.selectedFiles.item(0).name
     console.log(this.selectedFiles.item(0).name);
@@ -145,29 +142,35 @@ export class UploadImgComponent implements OnInit {
   }
 
   upload(): void {
-    
-    this.showProgressbar=true
+
+    this.showProgressbar = true
     const file = this.image;
     this.selectedFiles = undefined;
 
     this.currentFileUpload = new FileUpload(file);
-    this.uploadService.pushFileToStorage(this.currentFileUpload, this.baseUrl).subscribe( 
+    this.uploadService.pushFileToStorage(this.currentFileUpload, this.baseUrl).subscribe(
       percentage => {
         this.percentage = Math.round(percentage);
         if (this.percentage === 100) {
-         
-          setTimeout(() => {this.showProgressbar=false
-            this._snackBar.open('Image uploaded successfully..', 'close', {
-              duration: 2000,
-              horizontalPosition: this.horizontalPosition,
-              verticalPosition: this.verticalPosition,
-            });
-             this.hide() }, 2000);
+
+          //if (this.imagecnt == 0) {
+
+            setTimeout(() => {
+              this.showProgressbar = false
+              this._snackBar.open('Image uploaded successfully..', 'close', {
+                duration: 2000,
+                horizontalPosition: this.horizontalPosition,
+                verticalPosition: this.verticalPosition,
+              });
+              this.hide(); console.log("Hello post");
+            }, 1000);
+            //this.imagecnt++;
+         // }
           // this.createPost.imageURL = localStorage.getItem("imageURL")
           // console.log(this.createPost.imageURL);
 
         }
-      },error=>{
+      }, error => {
         this.handleError(error)
       }
 

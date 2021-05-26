@@ -103,8 +103,7 @@ export class ProfileComponent implements OnInit {
         
     }
     else
-    {
-     
+    {  
       this.show=true
       this.totalProject = 0;
       this.totalSessions = 0;

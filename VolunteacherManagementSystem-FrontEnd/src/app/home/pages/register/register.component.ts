@@ -45,12 +45,19 @@ export class RegisterComponent implements OnInit {
         {
           this.invalidEmail = true
           this.showProgressbar=false
+
+          setTimeout(() => {
+            this.router.navigate([''])
+          }, 3000);
         }
         else if(error.status == 400)
         {
           this.invalidEmail = false
           this.invalidMobileNumber = true
           this.showProgressbar=false
+          setTimeout(() => {
+            this.router.navigate([''])
+          }, 3000);
         }
         else if(error.status == 500)
         {

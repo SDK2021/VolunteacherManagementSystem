@@ -21,75 +21,66 @@ import { TimeLineService } from '../../shared-services/time-line.service';
 
 export class CreatePostComponent implements OnInit {
 
-  post:Timelinepost=new Timelinepost()
-  baseUrl:string="/vms/users/posts"
-  imageURL:string;
-  
-  showProgressbar:boolean=false
+  post: Timelinepost = new Timelinepost()
+  baseUrl: string = "/vms/users/posts"
+  imageURL: string;
+
+  showProgressbar: boolean = false
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  isShow:boolean=false
-  showForm:boolean=false
-  timeLinePost:Timelinepost;
-  isPostCreated:boolean=false
+  isShow: boolean = false
+  showForm: boolean = false
+  timeLinePost: Timelinepost;
+  isPostCreated: boolean = false
 
-  showImageSpinner:boolean=true
+  showImageSpinner: boolean = true
 
-  constructor(private fileService:FileUploadService,private router:Router,private timelineService:TimeLineService, private _snackBar: MatSnackBar,private _authService:authentication,private userSerice:UsersService) { }
+  constructor(private fileService: FileUploadService, private router: Router, private timelineService: TimeLineService, private _snackBar: MatSnackBar, private _authService: authentication, private userSerice: UsersService) { }
 
   ngOnInit(): void {
-       this.imageURL = localStorage.getItem("imageURL")
-   
-    if(this.imageURL!=null)
-    {
-      this.fileService.delete(this.imageURL)
-      console.log("deleted");
-      localStorage.removeItem("imageURL")
-      
-    }
-  }
-  ngOnDestroy()
-  {
-    if(this.isPostCreated==false)
-    {
-      if(this.imageURL!=null)
-      {
-        this.fileService.delete(this.imageURL)
-        localStorage.removeItem("imageURL")
-      }
-       
-      console.log("Bye Bye");
-      
-    }
-  }
+    // this.imageURL = localStorage.getItem("imageURL")
 
-  
-  load()
-  {
-    this.showImageSpinner=false
+    // if (this.imageURL != null) {
+    //   this.fileService.delete(this.imageURL)
+    //   console.log("deleted");
+    //   localStorage.removeItem("imageURL")
+
+    // }
   }
-  handleError(error)
-  {
+  // ngOnDestroy() {
+  //   if (this.isPostCreated == false) {
+  //     if (this.imageURL != null) {
+  //       this.fileService.delete(this.imageURL)
+  //       localStorage.removeItem("imageURL")
+  //     }
+
+  //     console.log("Bye Bye");
+
+  //   }
+  // }
+
+
+  load() {
+    this.showImageSpinner = false
+  }
+  handleError(error) {
     console.log(error);
     console.log(error.status);
-    
-    if(error.status===500)
-    {
+
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
 
-  show(isShow):void
-  {
-    this.showForm=isShow
+  show(isShow): void {
+    this.showForm = isShow
     this.imageURL = localStorage.getItem("imageURL")
-    
+    localStorage.removeItem("imageURL")
   }
   openSnackBar() {
     this._snackBar.open('Posted successfully..', 'close', {
@@ -99,35 +90,33 @@ export class CreatePostComponent implements OnInit {
     });
   }
 
-  createPost()
-  {
-    this.showProgressbar=true
-    let user:User
-    let authUser:string[]
-    let userID:number
+  createPost() {
+    this.showProgressbar = true
+    let user: User
+    let authUser: string[]
+    let userID: number
     this.timeLinePost = new Timelinepost()
     this.timeLinePost.postPhoto = this.imageURL
     this.timeLinePost.postDescription = this.post.postDescription;
 
-    if(this._authService.isUserLogin())
-    {
-        authUser=localStorage.getItem(this._authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
-        this.userSerice.getUserByEmail(atob(authUser[0])).pipe(finalize(()=>{
-          this.timeLinePost.createdBy = user
-          console.log(this.timeLinePost)
-          this.timelineService.createTimelinePost(this.timeLinePost).subscribe(data=>{
-            console.log(data)
-            this.isPostCreated=true
-            localStorage.removeItem("imageURL")
-            this.showProgressbar=false
-            this.router.navigate(['/user/posts'])
-          },error=>{
-            this.handleError(error)
-          })
-        })).subscribe(data=>{
-          user = data
+    if (this._authService.isUserLogin()) {
+      authUser = localStorage.getItem(this._authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
+      this.userSerice.getUserByEmail(atob(authUser[0])).pipe(finalize(() => {
+        this.timeLinePost.createdBy = user
+        console.log(this.timeLinePost)
+        this.timelineService.createTimelinePost(this.timeLinePost).subscribe(data => {
           console.log(data)
+          // this.isPostCreated = true
+          // localStorage.removeItem("imageURL")
+          this.showProgressbar = false
+          this.router.navigate(['/user/posts'])
+        }, error => {
+          this.handleError(error)
         })
+      })).subscribe(data => {
+        user = data
+        console.log(data)
+      })
     }
 
   }

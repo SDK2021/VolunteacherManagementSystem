@@ -43,7 +43,7 @@ export const routes1: Routes = [
           }
         ] 
     },
-    { path: 'kids',           component: KidsHomeComponent},
+    { path: 'kids/event-participation',           component: KidsHomeComponent},
     { path: 'kids/kids-list',      component: KidsListComponent},
     { path: 'kids/kids-list/:id/kids-report',    component: KidsReportComponent},
     { path: 'groups',         component: GroupListComponent},

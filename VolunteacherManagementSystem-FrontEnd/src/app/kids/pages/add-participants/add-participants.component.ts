@@ -91,7 +91,7 @@ export class AddParticipantsComponent implements OnInit {
     this.kidsService.addParticipants(this.kidsParticipateIds, this.eventId).subscribe(data => {
       this.showProgressbar=false
       this.openSnackBar()
-      this.router.navigate(['/user/kids'])
+      this.router.navigate(['/user/kids/event-participation'])
       console.log(data)
     }, error => {
       this.handleError(error)

@@ -1,3 +1,8 @@
+<ng-container *ngIf="showProgressbar">
+    <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
+        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
+    </div>
+</ng-container>
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
@@ -5,11 +10,7 @@
         </div>
     </div>
 </div>
-<ng-container *ngIf="showProgressbar">
-    <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
-        <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
-    </div>
-</ng-container>
+
 <!-- Page content -->
 <div class="container-fluid mt--7" style="background-color: #172b4d;">
     <div class="row">

@@ -24,14 +24,16 @@ import { Event } from 'src/app/core/model/event';
 })
 export class NotificationComponent implements OnInit {
 
-  notifications: Array<Notification>
+  notifications: Array<Notification> = []
   user: User
   usertype: String;
   attendedUsers: User[] = [];
   events: Event[] = []
-  sessions:Session[] = []
+  sessions: Session[] = []
   participantUser: Participant;
   today: Date = new Date()
+  page:number = 0
+  totalPages:number
   showProgressbar: boolean = false
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
@@ -39,7 +41,7 @@ export class NotificationComponent implements OnInit {
   constructor(private dialog: MatDialog, private _snackBar: MatSnackBar, private router: Router, private eventService: EventsService, private notiService: NotificationsService, private authService: authentication, private userService: UsersService, private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
-    this.getAllNotifications()
+    this.getAllNotifications(this.page)
     this.attendedUsers = []
     this.participantUser = new Participant()
   }
@@ -57,7 +59,7 @@ export class NotificationComponent implements OnInit {
   }
 
 
-  getAllNotifications() {
+  getAllNotifications(page) {
 
     let authuser: string[];
     let email: string;
@@ -72,62 +74,109 @@ export class NotificationComponent implements OnInit {
           this.user = data
           this.usertype = this.user.type.type;
           console.log(this.usertype);
-          this.notificationService.getNotifications(0, this.usertype).subscribe(data => {
+          this.notificationService.getNotifications(page, this.usertype).pipe(finalize(()=>{
+           
+            for (let notification of this.notifications) {
+              if (notification.event != null) {
+                this.events.push(notification.event)
+              }
+              if (notification.session != null) {
 
-            this.notifications = data['content'];
-            this.notificationService.getNotifications(0, "ALL").subscribe(data => {
-              this.notifications = this.notifications.concat(data['content']);
-              for (let notification of this.notifications) {
-                if(notification.event !=null)
-                {
-                  this.events.push(notification.event)
-                }
-                if(notification.session !=null)
-                {
-                  
-                  this.sessions.push(notification.session)
+                this.sessions.push(notification.session)
+              }
+            }
+            let authUser: string[]
+            let userId: number
+            authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ")
+            this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(() => {
+
+              for (let i = 0; i < this.events.length; i++) {
+                for (let user of this.events[i].users) {
+                  if (user.userId == userId ) {
+                    this.events[i].disable = true
+                    break
+                  }
                 }
               }
-              let authUser: string[]
-              let userId: number
-              authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ")
-              this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(() => {
-              
-                for (let i = 0; i < this.events.length; i++) {
-                  for (let user of this.events[i].users) {
-                    if (user.userId == userId) {
-                      this.events[i].disable = true
-                      break
-                    }
-                  }
-                }
 
-                for (let i = 0; i < this.sessions.length; i++) {
-                  for (let user of this.sessions[i].users) {
-                    if (user.userId == userId) {
-                      this.sessions[i].disable = true
-                      break
-                    }
+
+              for (let i = 0; i < this.sessions.length; i++) {
+                for (let user of this.sessions[i].users) {
+                  if (user.userId == userId ) {
+                    this.sessions[i].disable = true
+                    break
                   }
                 }
+               
                 
-              })).subscribe(data => {
-                userId = data.userId
-              })
+              }
 
-
-
-              console.log(data);
-            }, error => {
-              this.handleError(error)
-            });
-            console.log(data);
+            })).subscribe(data => {
+              userId = data.userId
+            })
+          })).subscribe(data => {
+            console.log(data);            
+            this.notifications =  this.notifications.concat(data['content'])
+            console.log(this.notifications);
+            
+            this.totalPages = data['totalPages']
           });
         },
         (error) => console.log(error)
       );
     }
   }
+
+  isSessionDisable(session:Session):boolean {
+
+    let currentDate: Date = new Date()
+    let sDate: string = session.sessionDate
+    let sTime: string = session.endingTime
+    let h: string = sTime.split(":")[0]
+    let m: string = sTime.split(":")[1]
+    //let s: string = sTime.split(":")[2]
+    let d = new Date(sDate)
+    d.setHours(Number.parseInt(h))
+    d.setMinutes(Number.parseInt(m))
+    //d.setSeconds(Number.parseInt(s))
+
+    console.log(d);
+    console.log(currentDate);
+    
+
+   if(currentDate.getDate()>=d.getDate())
+   {
+    if (currentDate.getTime() >= d.getTime()) {
+      console.log(currentDate.getTime() + " " + session.sessionId +' '+ d.getTime());
+      console.log("In if");
+      
+      return true
+    }
+    else
+     return false
+   }
+
+  }
+
+  isEventDisable(event:Event):boolean {
+
+    let currentDate: Date = new Date()
+    let sDate: string = event.eventDate
+    let sTime: string = event.eventEndingTime
+    let h: string = sTime.split(":")[0]
+    let m: string = sTime.split(":")[1]
+    let d = new Date(sDate)
+    d.setHours(Number.parseInt(h))
+    d.setMinutes(Number.parseInt(m))
+
+    if (currentDate.getTime() >= d.getTime()) {
+      return true
+    }
+    else
+     return false
+
+  }
+
 
   openSnackBar() {
     this._snackBar.open('Registered successfully..', 'close', {
@@ -155,7 +204,13 @@ export class NotificationComponent implements OnInit {
           this.attendedUsers = []
           setTimeout(() => {
             console.log("Hello Krunal #TheProjectPartner");
-            this.getAllNotifications()
+            console.log(this.page);
+            this.notifications = []
+            
+            for(let i=0;i<=this.page;i++)
+            {
+              this.getAllNotifications(i)
+            }
           }, 1000);
         }, error => {
           this.handleError(error)
@@ -189,7 +244,12 @@ export class NotificationComponent implements OnInit {
           this.openSnackBar()
           setTimeout(() => {
             console.log("Hello Krunal #TheProjectPartner");
-            this.getAllNotifications()
+            this.notifications = []
+            
+            for(let i=0;i<=this.page;i++)
+            {
+              this.getAllNotifications(i)
+            }
           }, 1000);
         }, error => {
           this.handleError(error)
@@ -217,5 +277,19 @@ export class NotificationComponent implements OnInit {
       }
     })
   }
+
+  onScroll() {
+    console.log("Hello");
+    
+    if(this.page < this.totalPages - 1)
+    {
+      this.page += 1
+      this.getPageablePosts(this.page);
+    }
+  }
+  getPageablePosts(page: number) {
+   this.getAllNotifications(page)
+  }
+
 
 }

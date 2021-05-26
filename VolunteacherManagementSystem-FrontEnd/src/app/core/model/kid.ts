@@ -26,7 +26,7 @@ export class Kid {
     events:Event[];
     attendances:Attendance[];
     kidsreport:Kidsreport[];
-    age:number
+    age:number=0
     totalSessions:number;
 
     attendance:boolean=false

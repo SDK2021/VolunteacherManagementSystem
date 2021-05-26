@@ -203,7 +203,7 @@ export class CreateSessionsComponent implements OnInit {
  
   addSession(form) {
     //console.log(form)
-    if(this.villageSelected > 0 && this.session.project.projectId >0)
+    if(this.villageSelected > 0 && this.projectSelected >0)
     {
       this.showProgressbar = true
       let sessiondate: string = this.session.sessionDate

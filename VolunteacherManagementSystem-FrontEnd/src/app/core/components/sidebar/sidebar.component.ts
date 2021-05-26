@@ -17,11 +17,11 @@ export const ROUTES: RouteInfo[] = [
     { path: 'posts', title: 'Timeline',  icon: 'fas fa-images text-danger', class: '' ,children:[],showChild:false},
     { path: 'content', title: 'Content',  icon: ' ni ni-ruler-pencil text-info', class: '' ,children:[],showChild:false},
     { path: 'sessions/sessions-list', title: 'Sessions',  icon: 'fas fa-book-reader text-primary', class: '' ,children:[],showChild:false},
-    { path: 'kids', title: 'Kids',  icon: 'fas fa-users text-yellow', class: 'ni ni-bold-right text-muted' ,children:[
+    { path: 'kids/add-kid', title: 'Kids',  icon: 'fas fa-users text-yellow', class: 'ni ni-bold-right text-muted' ,children:[
 
       { path: 'kids/create-report/kids-list', title: 'Create Report',  icon: ' fas fa-plus text-info', class: ''},
       { path: 'kids/kids-list', title: 'View Reports',  icon: 'fas fa-plus text-danger', class: ''},
-      { path: 'kids/add-kid', title: 'Add Kid',  icon: ' fas fa-plus text-yellow', class: ''},
+      { path: 'kids/event-participation', title: 'Event participation',  icon: ' fas fa-plus text-yellow', class: ''},
       { path: 'kids/edit-kids/kids-list', title: 'Edit Kid',  icon: 'fas fa-plus text-primary', class: ''},
     
 

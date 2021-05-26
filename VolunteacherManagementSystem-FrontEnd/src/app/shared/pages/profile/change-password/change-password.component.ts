@@ -20,7 +20,7 @@ export class ChangePasswordComponent implements OnInit {
   constructor(private _snackBar: MatSnackBar,private userService:UsersService,private auth:authentication,private router:Router) { }
   updateSuccessfully:boolean = false
   password:string=''
-  
+  showProgressbar:boolean=false
 
   passwordMatch: boolean
   ngOnInit(): void {
@@ -66,6 +66,7 @@ export class ChangePasswordComponent implements OnInit {
 
   updatePassword(val)
   {
+    this.showProgressbar=true
     let username:string[]
     if(localStorage.getItem("username")!=null)
       username = localStorage.getItem("username").split(" ");
@@ -75,6 +76,7 @@ export class ChangePasswordComponent implements OnInit {
         this.router.navigate(['login'])
         this.updateSuccessfully = true
         this.openSnackBar()
+        this.showProgressbar=false
         localStorage.removeItem("username")
       },error=>{
         this.updateSuccessfully = false

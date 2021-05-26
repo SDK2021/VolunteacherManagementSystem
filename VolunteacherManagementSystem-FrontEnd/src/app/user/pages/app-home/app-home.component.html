@@ -12,7 +12,7 @@
 </ng-container>
 <!-- Page content -->
 <div class="container-fluid mt--7" style="background-color: #172b4d;">
-  <div class="row">
+  <div class="row p-0 m-0">
     <div class="col p-sm-4 p-3 ">
       <div class="card shadow border-0 pb-8" style="border-radius:2rem;">
         <ng-container *ngIf="showSpinner">
@@ -100,10 +100,15 @@
                   </h2>
 
                   <ng-container >
-                    <div *ngFor="let a of announcements" class=" card p-4 mb-4 shadow "  >
+                    <div *ngFor="let a of announcements" class=" card px-4 mb-4 shadow " style="background-color: #edf0f1d7;"  >
+                      <h5 class="mt-2 mb-0 text-default text-right">
+                        {{a.creationTime}}
+                     </h5>
                       <div class="row align-items-center">
+
                         <div class="col-auto">
                           <!-- Avatar -->
+                          
                           <div class="avatar rounded-circle">
                             <ng-container *ngIf="showImageSpinner">
                               <div class="col-12 my-8 ">
@@ -120,10 +125,10 @@
                           </h4>
                         </div>
                       </div>
-                      <h5 class="mt-2 text-muted">
+                      <h5 class="mt-2 text-default">
                         {{a.creationDate | date:'mediumDate'}}
                       </h5>
-                      <p>
+                      <p class="text-dark">
                         {{a.data}}
                       </p>
                       <!-- <div class="icon-actions">

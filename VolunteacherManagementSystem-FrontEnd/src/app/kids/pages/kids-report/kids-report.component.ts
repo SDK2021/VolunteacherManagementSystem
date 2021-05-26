@@ -5,7 +5,7 @@ import { Area } from 'src/app/core/model/area';
 import { Kid } from 'src/app/core/model/kid';
 import { Kidsreport } from 'src/app/core/model/kidsreport';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
-import { chartExample1, chartExample2, chartOptions, parseOptions } from 'src/app/variables/charts';
+import {colors, chartOptions, parseOptions } from 'src/app/variables/charts';
 import { KidsService } from '../../shared-services/kids.service';
 
 @Component({
@@ -24,6 +24,9 @@ export class KidsReportComponent implements OnInit {
   
   kidReport:Kidsreport=new Kidsreport()
   showSpinner:boolean=false
+
+  kidReports:Kidsreport[]=new Array()
+  showkidsReportComparision:boolean = false
 
   showImageSpinner:boolean=true
   
@@ -56,21 +59,6 @@ export class KidsReportComponent implements OnInit {
     this.kidsService.getLatestKidReport(id).subscribe(data=>{
       this.kidReport = data
 
-      // this.personalityChart.data.datasets[0].data[0]=(this.kidReport.prayer*25)/10
-      // this.personalityChart.data.datasets[0].data[1]=(this.kidReport.prayer*25)/10
-      // this.personalityChart.data.datasets[0].data[2]=(this.kidReport.goshthi*25)/10
-      // this.personalityChart.data.datasets[0].data[3]=(this.kidReport.abhivyakti*25)/10
-
-      this.personalityChart.data.datasets[0].data[0]=25
-      this.personalityChart.data.datasets[0].data[1]=25
-      this.personalityChart.data.datasets[0].data[2]=25
-      this.personalityChart.data.datasets[0].data[3]=25
-
-      
-
-      console.log(this.personalityChart.data);
-      
-
       console.log(data);
       
       this.showSpinner=false
@@ -88,6 +76,7 @@ export class KidsReportComponent implements OnInit {
     this.kidReport.kid=new Kid()
     this.kidReport.kid.area=new Area()
 
+   this.getAllKidsReport()
    this.getKidReportByKid(this.route.snapshot.params['id'])
     
     //this.getKidReportById(this.route.snapshot.params['id'])
@@ -100,60 +89,145 @@ export class KidsReportComponent implements OnInit {
     this.data = this.datasets[0];
 
 
-    var chartOrders = document.getElementById('chart-orders');
+   
 
     parseOptions(Chart, chartOptions());
 
 
-    var ordersChart = new Chart(chartOrders, {
-      type: 'bar',
-      options: chartExample2.options,
-      data: chartExample2.data
-    });
+    // var performanceChart = new Chart(chartOrders, {
+    //   type: 'bar',
+    //   options: this.performanceChart.options,
+    //   data: this.performanceChart.data
+    // });
 
 
     var chartPie = document.getElementById('chart-pie');
 
     parseOptions(Chart, chartOptions());
 
-  
-    // var personalityChart = new Chart(chartPie, {
-    //   type: 'pie',
-    //   options: this.personalityChart.options,
-    //   data: this.personalityChart.data
-    // });
 
-    this.personalityChart = new Chart(chartPie, {
-      type:'pie',
-      options: {
-    
-      },
-      data: {
-        labels: ["Discipline", "Prayer", "Goshthi","Abhivyakti"],
-        datasets: [
-          {
-            data:[25,25,25,25],
-            backgroundColor: [
-             "red",
-              "green",
-              "blue"
+   
+
+   
+  }
+  getAllKidsReport() {
+    this.kidService.getKidReport(this.route.snapshot.params['id']).subscribe(data=>{
+      this.kidReports=data
+      console.log(this.kidReports);
+
+      var chartPie = document.getElementById('chart-pie');
+      this.personalityChart = new Chart(chartPie, {
+        type:'pie',
+        options: {
+      
+        },
+        data: {
+          labels: ["Discipline", "Goshthi","Abhivyakti"],
+          datasets: [
+            {
+              data:[ this.kidReports[0].discipline, this.kidReports[0].goshthi, this.kidReports[0].abhivyakti],
+              backgroundColor: [
+                "blueviolet",
+               "lightpink",
+                "indigo"
+              ]
+            }
+          ],
+          
+        }
+      })
+      var chartOrders = document.getElementById('chart-orders');
+
+      var performanceChart = new Chart(chartOrders, {
+        type: 'bar',
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  callback: function(value) {
+                    if (!(value % 10)) {
+                      return value;
+                    }
+                  }
+                }
+              }
             ]
+          },
+          tooltips: {
+            callbacks: {
+              label: function(item, data) {
+                var label = data.datasets[item.datasetIndex].label || "";
+                var yLabel = item.yLabel;
+                var content = "";
+                if (data.datasets.length > 1) {
+                  content += label;
+                }
+                content += yLabel;
+                return content;
+              }
+            }
           }
-        ],
+        },
+        data: {
+          labels: ["Prayer", "Games", "Sports", "Literature", "Art", "Volunteaching"],
+          datasets: [
+            {
+              label: "Performance",
+              data: [this.kidReports[0].prayer, this.kidReports[0].games,this.kidReports[0].sports,this.kidReports[0].literature, this.kidReports[0].artCraft, this.kidReports[0].volunteaching]
+            }
+          ]
+        }
+      })
+      
+      if(this.kidReports.length >=3)
+      {
+        console.log("Hello");
         
+        this.showkidsReportComparision = true
+
+        let totalReport1:number = ((this.kidReports[0].abhivyakti + this.kidReports[0].artCraft + this.kidReports[0].discipline + this.kidReports[0].english + this.kidReports[0].games 
+          + this.kidReports[0].goshthi + this.kidReports[0].gujarati + this.kidReports[0].literature + this.kidReports[0].maths+ this.kidReports[0].prayer + this.kidReports[0].sports + this.kidReports[0].volunteaching)*100)/120 
+    
+        let totalReport2:number = ((this.kidReports[1].abhivyakti + this.kidReports[1].artCraft + this.kidReports[1].discipline + this.kidReports[1].english + this.kidReports[1].games 
+            + this.kidReports[1].goshthi + this.kidReports[1].gujarati + this.kidReports[1].literature + this.kidReports[1].maths+ this.kidReports[1].prayer + this.kidReports[1].sports + this.kidReports[1].volunteaching)*100)/120
+          
+        let totalReport3:number = ((this.kidReports[2].abhivyakti + this.kidReports[2].artCraft + this.kidReports[2].discipline + this.kidReports[2].english + this.kidReports[2].games 
+              + this.kidReports[2].goshthi + this.kidReports[2].gujarati + this.kidReports[2].literature + this.kidReports[2].maths+ this.kidReports[2].prayer + this.kidReports[2].sports + this.kidReports[2].volunteaching)*100)/120
+          
+       console.log(+totalReport1+" " + +totalReport3 +" " + +totalReport2);
+
+      var chartProgress = document.getElementById('chart-sales');
+
+      let progressChart = new Chart(chartProgress, {
+        type: 'line',
+        options: {
+          scales: {
+            yAxes: [{
+              gridLines: {
+                color: colors.gray[900],
+                zeroLineColor: colors.gray[900]
+              },
+              ticks: {
+                callback: function(value) {
+                  if (!(value % 10)) {
+                    return  value ;
+                  }
+                }
+              }
+            }]
+          }
+        },
+        data: {
+          labels: ['Report1', 'Report2', 'Report3'],
+          datasets: [{
+            label: 'Performance',
+            data: [Math.round(totalReport1),Math.round(totalReport2),Math.round(totalReport3)]
+          }]
+        }
+      })      
       }
     })
-
-
-    var chartSales = document.getElementById('chart-sales');
-
-    this.salesChart = new Chart(chartSales, {
-			type: 'line',
-			options: chartExample1.options,
-			data: chartExample1.data
-		});
-
-    console.log(this.personalityChart.data);
   }
 
 
@@ -179,6 +253,9 @@ export class KidsReportComponent implements OnInit {
      return kid
      
   }
+
+ 
+
 
 
     

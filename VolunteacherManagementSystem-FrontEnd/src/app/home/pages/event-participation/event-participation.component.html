@@ -21,7 +21,7 @@
     
         </div>
         <div class=" bg-white  p-lg-6 p-xl-6 p-md-6 p-sm-6 p-xs-8 p-4 ">
-            <div class="row p-4 justify-content-center" style="background-color: lavenderblush;">
+            <div class="row p-4 justify-content-center bg-secondary" >
                 <div class="col-12 ">
                     <div class="px-xl-8">
                         <form class="px-xl-8 px-lg-8 px-md-6" (ngSubmit)="onSubmit()" #form="ngForm">
@@ -43,7 +43,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-email">Email Address</label>
-                                    <input autocomplete="off" name="email" #email="ngModel" [(ngModel)]="eventParticipant.email" type="text"
+                                    <input autocomplete="off" name="email" #email="ngModel" [(ngModel)]="eventParticipant.email" type="email"
                                         id="input-email" class="form-control form-control-alternative"
                                         placeholder="Email Address" required email maxlength="40">
                                     <small *ngIf="email.errors?.required && email.touched" class="text-danger">Email is

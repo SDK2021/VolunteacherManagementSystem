@@ -237,8 +237,15 @@ export class PostsComponent implements OnInit {
     this.profileService.savePost(postId,this.post).subscribe(data=>{
       console.log(data);
       this.showProgressbar=false
+      let array:Array<string>=this.router.url.split('/')
+      console.log(array);
+      
+        this.getposts(this.page)
+     
       this.openEditSnackBar()
       
+    },error=>{
+      this.handleError(error)
     })
   }
 

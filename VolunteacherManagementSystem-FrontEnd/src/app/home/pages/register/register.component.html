@@ -65,7 +65,7 @@
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="form-control-label" for="input-email">Email Address</label>
-                    <input autocomplete="off" name="email" #email="ngModel" [(ngModel)]="applicantRequest.emailId" type="text"
+                    <input autocomplete="off" name="email" #email="ngModel" [(ngModel)]="applicantRequest.emailId" type="email"
                       id="input-email" class="form-control form-control-alternative" placeholder="Email Address" required
                       email maxlength="40">
                     <small *ngIf="email.errors?.required && email.touched" class="text-danger">Email is required</small>

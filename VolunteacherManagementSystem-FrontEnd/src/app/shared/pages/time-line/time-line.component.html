@@ -7,14 +7,14 @@
 </div>
 <!-- Page content -->
 <div class="container-fluid mt--7" style="background-color: #172b4d;">
-  <div class="row" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+  <div class="row m-0" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
     <div class="col p-0">
       <div class="card shadow border-0">
         <div class="card card-header">
           <h5 class="h3 mb-0">Activity feed</h5>
         </div>
-        <div class="map-canvas post-bg justify-content-center">
-          <div class="row justify-content-center px-xl-4 py-4">
+        <div class="map-canvas post-bg justify-content-center py-0">
+          <div class="row justify-content-center px-xl-4 ">
             <div class="col-12 col-xl-10"> 
               <div class="col-xl-9 col-12 mb-4 mx-auto d-block">
                 <div class="container card p-4 shadow-dark ">
@@ -64,7 +64,7 @@
                 </div>
             
 
-                  <div class=" post-image" style="margin-bottom: 1rem;"><img alt="Image placeholder"
+                  <div class=" post-image" style="margin-bottom: 1rem;"><img 
                       src="{{p.postPhoto}}" class="img-fluid" height="700px" width="900px"></div>
 
                   <div class="container-fluid mt-3 mb-3">

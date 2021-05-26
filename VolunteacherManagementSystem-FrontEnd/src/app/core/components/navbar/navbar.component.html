@@ -5,9 +5,11 @@
     
     <!-- User -->
     <ul class="navbar-nav align-items-center d-none d-md-flex">
+     <ng-container *ngIf="!(userType=='admin')">
       <a [routerLink]="['/user/notifications']" class="display-4 nav-link nav-link-icon" role="button">
         <i class="ni ni-bell-55"></i>
       </a>
+     </ng-container>
       <li class="nav-item" ngbDropdown placement="bottom-right">
         <a class="nav-link pr-0" role="button" ngbDropdownToggle>
           <div class="media align-items-center">

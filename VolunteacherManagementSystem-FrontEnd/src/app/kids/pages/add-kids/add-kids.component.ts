@@ -76,15 +76,15 @@ export class AddKidsComponent implements OnInit {
 
   ngOnInit() {
    
-    this.imageURL = localStorage.getItem("imageURL")
+    // this.imageURL = localStorage.getItem("imageURL")
    
-    if(this.imageURL!=null)
-    {
-      this.fileService.delete(this.imageURL)
-      console.log("deleted");
-      localStorage.removeItem("imageURL")
+    // if(this.imageURL!=null)
+    // {
+    //   this.fileService.delete(this.imageURL)
+    //   console.log("deleted");
+    //   localStorage.removeItem("imageURL")
       
-    }
+    // }
 
     this.getkidsgroup()
     this.getAllCountries();
@@ -125,20 +125,20 @@ export class AddKidsComponent implements OnInit {
     // }
   }
 
-  ngOnDestroy()
-  {
-    if(this.isKidAdded==false)
-    {
-      if(this.imageURL!=null)
-      {
-        this.fileService.delete(this.imageURL)
-        localStorage.removeItem("imageURL")
-      }
+  // ngOnDestroy()
+  // {
+  //   if(this.isKidAdded==false)
+  //   {
+  //     if(this.imageURL!=null)
+  //     {
+  //       this.fileService.delete(this.imageURL)
+  //       localStorage.removeItem("imageURL")
+  //     }
        
-      console.log("Bye Bye");
+  //     console.log("Bye Bye");
       
-    }
-  }
+  //   }
+  // }
 
   handleError(error)
   {
@@ -164,7 +164,7 @@ export class AddKidsComponent implements OnInit {
   {
     this.showForm=isShow
     this.imageURL = localStorage.getItem("imageURL")
-    
+    localStorage.removeItem('imageURL')
   }
   
   addKid(form)
@@ -189,10 +189,14 @@ export class AddKidsComponent implements OnInit {
           this.kidsService.villageById(areadata.village.villageId).pipe(finalize(()=>{
             this.kidsService.addKid(this.kid).subscribe(data=>{
               console.log(data)
-              this.isKidAdded=true
+              //this.isKidAdded=true
               this.showProgressbar=false
-              localStorage.removeItem("imageURL")
+              //localStorage.removeItem("imageURL")
               this.openSnackBar();
+              
+              setTimeout(() => {
+                this.router.navigate(['/user'])
+              }, 1500);
             },error=>{
               this.handleError(error)
             })

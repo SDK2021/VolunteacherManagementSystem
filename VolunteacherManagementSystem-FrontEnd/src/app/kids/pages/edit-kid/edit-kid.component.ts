@@ -115,6 +115,7 @@ export class EditKidComponent implements OnInit {
     this.showForm = isShow
     this.imageURL = localStorage.getItem("imageURL")
     localStorage.removeItem("imageURL")
+    this.showImageSpinner=true
   }
 
   getKidById(kidId: number) {

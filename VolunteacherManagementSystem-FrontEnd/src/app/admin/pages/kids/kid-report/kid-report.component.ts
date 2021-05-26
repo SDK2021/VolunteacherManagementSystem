@@ -6,7 +6,7 @@ import { Kid } from 'src/app/core/model/kid';
 import { Kidsreport } from 'src/app/core/model/kidsreport';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
 import { KidsService } from 'src/app/kids/shared-services/kids.service';
-import { chartExample1, chartExample2, chartOptions, parseOptions } from 'src/app/variables/charts';
+import {  chartOptions, parseOptions } from 'src/app/variables/charts';
 
 @Component({
   selector: 'app-kid-report',
@@ -47,16 +47,9 @@ export class KidReportComponent implements OnInit {
     this.data = this.datasets[0];
 
 
-    var chartOrders = document.getElementById('chart-orders');
+  
 
     parseOptions(Chart, chartOptions());
-
-
-    var ordersChart = new Chart(chartOrders, {
-      type: 'bar',
-      options: chartExample2.options,
-      data: chartExample2.data
-    });
 
 
     var chartPie = document.getElementById('chart-pie');
@@ -71,11 +64,11 @@ export class KidReportComponent implements OnInit {
     
     var chartSales = document.getElementById('chart-sales');
 
-    this.salesChart = new Chart(chartSales, {
-			type: 'line',
-			options: chartExample1.options,
-			data: chartExample1.data
-		});
+    // this.salesChart = new Chart(chartSales, {
+		// 	type: 'line',
+		// 	options: chartExample1.options,
+		// 	data: chartExample1.data
+		// });
 
     this.getKidReportById(this.route.snapshot.params['rid'])
   }
@@ -157,4 +150,6 @@ export class KidReportComponent implements OnInit {
       
     }
   }
+
+
 }

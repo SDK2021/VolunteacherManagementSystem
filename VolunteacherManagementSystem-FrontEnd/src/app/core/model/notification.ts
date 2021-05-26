@@ -17,6 +17,8 @@ export class Notification {
 
 	event: Event;
 
+	createdDate:string
+
 
 
 

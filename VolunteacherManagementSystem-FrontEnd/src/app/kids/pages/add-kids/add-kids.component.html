@@ -1,7 +1,7 @@
 <div class="header bg-gradient-danger pb-7 pt-3 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
-            <h1 class=" text-white title">{{heading}} Kid</h1>
+            <h1 class=" text-white title">Add Kid</h1>
         </div>
     </div>
 </div>
@@ -46,7 +46,7 @@
                                                 <label class="form-control-label" for="input-name">Name</label>
                                                 <input autocomplete="off" #name="ngModel" [(ngModel)]="kid.name" name="name" type="text"
                                                     id="input-name" class="form-control form-control-alternative"
-                                                    placeholder="name" required pattern="{{namePattern}}">
+                                                    placeholder="name" required pattern="{{namePattern}}" maxlength="30">
                                                 <small *ngIf="name.errors?.required && name.touched"
                                                     class="text-danger">Name is required</small>
                                                 <small *ngIf="name.errors?.pattern" class="text-danger">Invalid

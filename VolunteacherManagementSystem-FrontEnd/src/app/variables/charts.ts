@@ -131,7 +131,7 @@ var fonts = {
 }
 
 // Colors
-var colors = {
+export var colors = {
   gray: {
     100: '#f6f9fc',
     200: '#e9ecef',
@@ -151,6 +151,7 @@ var colors = {
     'success': '#2dce89',
     'danger': '#f5365c',
     'warning': '#fb6340'
+    
   },
   black: '#12263F',
   white: '#FFFFFF',
@@ -280,72 +281,6 @@ export const parseOptions = (parent, options) => {
 		}
 	}
 
-export const chartExample1 = {
-  options: {
-    scales: {
-      yAxes: [{
-        gridLines: {
-          color: colors.gray[900],
-          zeroLineColor: colors.gray[900]
-        },
-        ticks: {
-          callback: function(value) {
-            if (!(value % 10)) {
-              return '$' + value + 'k';
-            }
-          }
-        }
-      }]
-    }
-  },
-  data: {
-    labels: ['March', 'June', 'September','November'],
-    datasets: [{
-      label: 'Performance',
-      data: [10, 20, 10,30]
-    }]
-  }
-}
 
-export const chartExample2 = {
-  options: {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            callback: function(value) {
-              if (!(value % 10)) {
-                //return '$' + value + 'k'
-                return value;
-              }
-            }
-          }
-        }
-      ]
-    },
-    tooltips: {
-      callbacks: {
-        label: function(item, data) {
-          var label = data.datasets[item.datasetIndex].label || "";
-          var yLabel = item.yLabel;
-          var content = "";
-          if (data.datasets.length > 1) {
-            content += label;
-          }
-          content += yLabel;
-          return content;
-        }
-      }
-    }
-  },
-  data: {
-    labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [
-      {
-        label: "Sales",
-        data: [25, 20, 30, 22, 17, 29]
-      }
-    ]
-  }
-}
+
 
