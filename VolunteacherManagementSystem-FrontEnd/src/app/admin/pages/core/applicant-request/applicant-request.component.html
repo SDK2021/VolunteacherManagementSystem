@@ -52,8 +52,8 @@
                                                     or <b>{{a.phoneNumber}}</b>
                                                 </div>
                                                 <div class="col-sm-auto col-12 text-center m-3">
-                                                    <i  style="cursor: pointer;" class="fas fa-check text-lg text-success mr-4"(click)="accept(a.requestId)"></i>
-                                                    <i style="cursor: pointer;" class="fas fa-times text-lg text-danger" (click)="denied(a.requestId)"></i>
+                                                   <button (click)="accept(a.requestId)" class="btn pr-0 bg-transparent border-0 btn-icon" [disabled]="disable" > <i  style="cursor: pointer;" class="fas  fa-check text-lg text-success mr-4"></i></button>
+                                                   <button  (click)="denied(a.requestId)" class="btn  bg-transparent border-0 btn-icon" [disabled]="disable" > <i style="cursor: pointer;" class="fas fa-times text-lg text-danger"></i></button>
                                                 </div>
     
                                             </div>

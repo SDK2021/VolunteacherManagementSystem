@@ -64,17 +64,14 @@ public class User {
 	@NotNull
 	@OneToOne
 	private UserType type;
-	
-	@NotNull
+
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String photo;
 	
 	@Column(length = 10)
 	private String userOTP;
 	
-	@Column(columnDefinition = "TIME")
-	@JsonFormat(shape = Shape.STRING,timezone = "IST", pattern = "HH-mm-ss")
-	private Calendar userOTPTime;
+	
 	
 	
 	@OneToMany(mappedBy = "createdBy")
@@ -182,11 +179,5 @@ public class User {
 		this.userOTP = userOTP;
 	}
 
-	public Calendar getUserOTPTime() {
-		return userOTPTime;
-	}
-
-	public void setUserOTPTime(Calendar userOTPTime) {
-		this.userOTPTime = userOTPTime;
-	}
+	
 }

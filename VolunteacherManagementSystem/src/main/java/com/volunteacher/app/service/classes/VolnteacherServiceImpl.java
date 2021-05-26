@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
@@ -21,6 +22,9 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 	
 	@Autowired
 	VolunteacherRepository volunteacherRepository;	
+	
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
 	public ResponseEntity<Object> volunteacherList(int page)
@@ -44,6 +48,7 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 	public ResponseEntity<Object> addVolunteacher(Volunteacher volunteacher) 
 	{
 		try {	
+			volunteacher.getUser().setPassword(passwordEncoder.encode(volunteacher.getUser().getPassword()));
 			Volunteacher saveVolunteacher = volunteacherRepository.save(volunteacher);
 			return ResponseEntity.status(HttpStatus.CREATED).body(saveVolunteacher);
 			
@@ -94,10 +99,11 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 	public ResponseEntity<Object> deleteVolunteacher(int id) 
 	{	
 		try {
-			Volunteacher v= volunteacherRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Volunteacher not found for id: " + id));
-			volunteacherRepository.deleteVolunteacherProjects(v.getUser().getUserId());
-			System.out.println(v);
-			volunteacherRepository.deleteVolunteacherSessions(v.getUser().getUserId());
+			Volunteacher volunteacher= volunteacherRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Volunteacher not found for id: " + id));
+			volunteacherRepository.deleteVolunteacherProjects(volunteacher.getUser().getUserId());
+			System.out.println(volunteacher);
+			volunteacherRepository.deleteVolunteacherSessions(volunteacher.getUser().getUserId());
+			volunteacherRepository.deleteVolunteacherEvents(id);
 			volunteacherRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {

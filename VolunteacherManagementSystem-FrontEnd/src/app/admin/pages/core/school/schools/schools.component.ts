@@ -177,9 +177,13 @@ export class SchoolsComponent implements OnInit {
   }
 
    
-  addSchool(form:NgForm)
+  addSchool(form)
   {
     this.showProgressbar=true
+    this.school.stream = form.stream
+    this.school.status = form.status
+    console.log(form.status);
+    
     console.log(this.school)
     this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
       let startdate:String = this.school.startingDate
@@ -193,7 +197,8 @@ export class SchoolsComponent implements OnInit {
         console.log(data)
         this.showProgressbar=false
         this.openAddSnackBar()
-        form.reset()
+        this.showTab2(true)
+        this.showTab1(false)
         setTimeout(()=>{
           this.getAllSchools(this.page)
         },2000)

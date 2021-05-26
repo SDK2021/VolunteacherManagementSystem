@@ -40,4 +40,9 @@ public interface VolunteacherRepository extends PagingAndSortingRepository<Volun
 	@Modifying
 	@Query(value="DELETE FROM session_users WHERE users_user_id =:id",nativeQuery = true)
 	public void deleteVolunteacherSessions(@Param("id") long id);
+	
+	@Transactional
+	@Modifying
+	@Query(value="DELETE FROM event_users WHERE users_user_id =:id",nativeQuery = true)
+	public void deleteVolunteacherEvents(@Param("id") long id);
 }

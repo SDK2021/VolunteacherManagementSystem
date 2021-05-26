@@ -48,12 +48,12 @@ public class Session {
 	private Calendar sessionDate;
 	
 	@NotNull
-	@JsonFormat(shape = Shape.STRING,pattern = "HH:mm:ss")
+	@JsonFormat(shape = Shape.STRING,pattern = "HH:mm")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar startingTime;
 	
 	@NotNull
-	@JsonFormat(shape = Shape.STRING,pattern = "HH:mm:ss")
+	@JsonFormat(shape = Shape.STRING,pattern = "HH:mm")
 	@Column(nullable = false, columnDefinition = "TIME")
 	private Calendar endingTime;
 	

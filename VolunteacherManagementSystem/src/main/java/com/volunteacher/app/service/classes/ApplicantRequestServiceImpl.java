@@ -68,14 +68,14 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 	}
 	
 	@Override
-	public ApplicantRequest requestById(int id)
+	public ResponseEntity<Object> requestById(int id)
 	{
 		try {
 			ApplicantRequest request = applicantRequestRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Applicant Request not found for id: "+ id));
-			return request;
+			return ResponseEntity.status(HttpStatus.OK).body(request);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Applicant request by id");
 		}
 	}
 	

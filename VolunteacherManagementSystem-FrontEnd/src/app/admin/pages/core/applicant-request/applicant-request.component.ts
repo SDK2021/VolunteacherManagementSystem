@@ -28,6 +28,8 @@ export class ApplicantRequestComponent implements OnInit {
 
   page:number=0
 
+  disable:boolean=null
+
   constructor(private router:Router,private volunteacherService:VolunteachersService,private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
@@ -81,28 +83,36 @@ export class ApplicantRequestComponent implements OnInit {
 
   accept(value)
   {
+    this.disable=true
     this.showProgressbar=true
-    this.volunteacherService.acceptRequest(value).subscribe(data=>{},error=>{
+    this.volunteacherService.acceptRequest(value).subscribe(data=>{
+      setTimeout(() => {
+        this.openAcceptSnackBar()
+         this.getAllApplicantrequests(0)
+        this.showProgressbar=false
+        this.disable=false
+      }, 2000);
+    },error=>{
       this.handleError(error)
     })
-    setTimeout(() => {
-      this.openAcceptSnackBar()
-       this.getAllApplicantrequests(0)
-      this.showProgressbar=false
-    }, 2000);
+    
   }
 
   denied(value)
   {
+    this.disable=true
     this.showProgressbar=true
-    this.volunteacherService.deniedRequest(value).subscribe(data=>{},error=>{
+    this.volunteacherService.deniedRequest(value).subscribe(data=>{
+      setTimeout(() => {
+        this.openDeniedSnackBar()
+        this.showProgressbar=false
+        this.disable=false
+        this.getAllApplicantrequests(0)
+      }, 2000);
+    },error=>{
       this.handleError(error)
     })
-    setTimeout(() => {
-      this.openDeniedSnackBar()
-      this.showProgressbar=false
-      this.getAllApplicantrequests(0)
-    }, 2000);
+
   }
 
   getAllApplicantrequests(page:number)

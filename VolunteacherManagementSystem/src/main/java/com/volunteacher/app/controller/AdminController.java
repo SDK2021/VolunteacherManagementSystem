@@ -52,11 +52,11 @@ public class AdminController {
 		return applicantRequestService.addRequest(applicantRequest);
 	}
 	
-//	@GetMapping("/applicant-requests/{id}")
-//	public ResponseEntity<Object> getApplicantRequest(@PathVariable int id)
-//	{
-//		return applicantRequestService.requestById(id);
-//	}
+	@GetMapping("/applicant-requests/{id}")
+	public ResponseEntity<Object> getApplicantRequest(@PathVariable int id)
+	{
+		return applicantRequestService.requestById(id);
+	}
 	
 	@DeleteMapping("/applicant-requests/{id}")
 	public ResponseEntity<Object> deleteApplicantRequest(@PathVariable int id)

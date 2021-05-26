@@ -154,7 +154,8 @@
                         </div>
                         <ng-container *ngIf="user.userId===a.createdBy.userId">
                           <div class="col mr-2 text-right">
-                            <li class="nav-item " ngbDropdown placement="bottom-right">
+                            <i style="cursor: pointer;" class="text-sm fas fa-trash text-danger" (click)=" delete(a.announcementId)"></i>
+                            <!-- <li class="nav-item " ngbDropdown placement="bottom-right">
                               <a class="nav-link pr-0" role="button" ngbDropdownToggle>
                                 <p class="d-block text-common text-right mt-2 mr-4 mb-0 h1"><b><i
                                       class="fas fa-ellipsis-v text-muted text-sm"></i></b></p>
@@ -164,7 +165,7 @@
                                 <h4 class="text-center" (click)="isEdit()">Edit</h4>
                                 <h4 (click)=" delete(a.announcementId)" class="mb- text-center">Delete</h4>
                               </div>
-                            </li>
+                            </li> -->
                           </div>
                         </ng-container>
                       </div>
@@ -201,7 +202,7 @@
                 <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
                   <div class="input-group input-group-alternative p-0 border" style="border-radius: 30px; ">
                     <div class="input-group-prepend  ">
-                      <span class="input-group-text p-0 m-2"><i class="fas fa-plus ml-2"></i></span>
+                      <span class="input-group-text p-0 m-2"><i class=" fas fa-plus ml-2"></i></span>
                     </div>
                     <input autocomplete="off" class="form-control p-0 " style="border-radius: 30px;" placeholder="Add announcement"
                       type="text" (focus)="focus = true" (blur)="focus = false" name="Announcements" [(ngModel)]="announcement.data">
@@ -212,7 +213,7 @@
               </div>
             </div>
             <div style="cursor: pointer;" class="col-auto  pl-0">
-              <i class=" ml-2 fas fa-paper-plane display-4" (click)="addAnnouncement(form)"></i>
+              <i  class=" text-primary icon-btn ml-2 fas fa-paper-plane display-4" (click)="addAnnouncement(form)"></i>
             </div>
           </div>
 
@@ -298,16 +299,23 @@
         
         <ng-container *ngIf="nLength>0" >
           <div *ngFor="let n of notifications;let i=index" class="row justsify-content-center mx-0">
+            
             <ng-container>
-              <div  *ngIf="n.session !=null" class="text-justify text-default col-10 p-4 mx-auto d-block mb-4 card shadow {{colors[i%4]}}">
+              <div  *ngIf="n.session !=null" class="text-justify text-default col-10 px-4 pt-2 pb-4 mx-auto d-block mb-4 card shadow {{colors[i%4]}}">
+                <h5 class="mt-2 mb-0 text-default text-right mb-2">
+                  {{n.createdDate | date:'mediumDate' }} {{n.createdDate | date:'shortTime' }}
+               </h5>
                 The session at {{n.session.village.villageName}} on {{n.session.sessionDate}} at
                 {{n.session.startingTime}} to {{n.session.endingTime}} , is notified to the <b>{{n.userType}}</b>
               </div>
             </ng-container>
             <ng-container *ngIf="n.event!=null">
               <div class="text-justify text-default col-10 p-4 mx-auto d-block mb-4 card shadow {{colors[i%4]}}">
+                <h5 class="mt-2 mb-0 text-default text-right mb-2">
+                  {{n.createdDate | date:'mediumDate' }} {{n.createdDate | date:'shortTime' }}
+               </h5>
                 The event at {{n.event.village.villageName}} on {{n.event.eventDate}} at {{n.event.eventStartingTime}} to
-                {{n.event.eventndingTime}} , is notified to the {{n.userType}}
+                {{n.event.eventndingTime}} , is notified to the <b>{{n.userType}}</b>
               </div>
             </ng-container>
           </div>

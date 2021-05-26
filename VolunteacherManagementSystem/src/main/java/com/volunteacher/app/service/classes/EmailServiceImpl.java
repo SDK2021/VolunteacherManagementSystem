@@ -79,12 +79,8 @@ public class EmailServiceImpl implements EmailService {
 			this.sendMail(email,userOTP,user.getUserName());
 			
 			user.setUserOTP(userOTP);
-			Calendar calendar = Calendar.getInstance();
-			calendar.set(Calendar.HOUR ,12);
-			calendar.set(Calendar.MINUTE, 01);
-			calendar.set(Calendar.SECOND,30);
-			System.out.println(calendar.getTime());
-			user.setUserOTPTime(calendar);
+		
+			
 			
 			userRepository.save(user);
 			return ResponseEntity.status(HttpStatus.OK).body(user);
@@ -141,6 +137,7 @@ public class EmailServiceImpl implements EmailService {
 			System.out.println(oldPassword);
 			User user = userRepository.findByUserId(userId);
 			
+			
 			if(user == null)
 				throw new UsernameNotFoundException("Username not found when update the password");	
 			
@@ -153,6 +150,7 @@ public class EmailServiceImpl implements EmailService {
 			}
 			String encodedPassword = passwordEncoder.encode(newPassword);
 			user.setPassword(encodedPassword);
+			user.setUserOTP(null);
 			userRepository.save(user);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(user);
@@ -361,7 +359,7 @@ public class EmailServiceImpl implements EmailService {
 					+ "                                                                                                                            <tbody>\r\n"
 					+ "                                                                                                                                <tr>\r\n"
 					+ "                                                                                                                                    <td style=\"background-color:#d7263d;text-align:center;color:#ffffff;border-radius:3px;font-size:16px;text-decoration:none;font-weight:bold\">\r\n"
-					+ "                                                                                                                                        <a href=\"https://localhost:4200/register\" style=\"margin:0;padding:0px 3px 0px 3px;display:block;color:#ffffff;font-size:16px;line-height:18px;font-family:Arial,Helvetica,sans-serif;text-align:center;font-weight:bold;text-align:center;text-decoration:none;border:10px solid #d7263d;border-radius:3px\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=https://techgig.com/mail_redirect.php?url%3Dhttps%253A%252F%252Fwww.techgig.com%252Fwebinar%252FBuild-Apps-on-Salesforce-with-Modern-Javascript-1964%253Faction%253Dbook-seat-cHBLK055VjZ6REZUaGxBVSs2aXdQdz09%2526utm_source%253DTG_batch%2526utm_medium%253Demail%2526utm_campaign%253Dwebinar_2021-05-06%2526%2526auto_login%3DNUZmS1lNa1FRMXU4L1poZHc2Mk9KRDhUODNRcGdSdEx0WSswTzJTWHhmMGxkaHo2cGZJUUZvdUNOYk5JMUhDb0t0ak1uNEdMVkh6UU5uZUU2eFMzTGc9PQ%3D%3D%2526etoken%3DNUZmS1lNa1FRMXU4L1poZHc2Mk9KRHdUZy9YZGc3VlAyNjFqV0MwSG9EUT0%3D%2526activity_name%253DNzY5MzIx%2526template_type%253D0&amp;source=gmail&amp;ust=1621709655620000&amp;usg=AFQjCNHycczoMT3mqvDbkEyQzyy-Ofoyew\">JOIN AS A VOLUNTEACHER </a>\r\n"
+					+ "                                                                                                                                        <a href=\"http://localhost:4200/register\" style=\"margin:0;padding:0px 3px 0px 3px;display:block;color:#ffffff;font-size:16px;line-height:18px;font-family:Arial,Helvetica,sans-serif;text-align:center;font-weight:bold;text-align:center;text-decoration:none;border:10px solid #d7263d;border-radius:3px\" target=\"_blank\" data-saferedirecturl=\"http://localhost:4200/register\">JOIN AS A VOLUNTEACHER </a>\r\n"
 					+ "                                                                                                                                    </td>\r\n"
 					+ "                                                                                                                                </tr>\r\n"
 					+ "                                                                                                                            </tbody>\r\n"
@@ -708,6 +706,7 @@ public class EmailServiceImpl implements EmailService {
 		}
 	}
 	
+	
 	@Override
 	public boolean acceptRequestMail(ApplicantRequest request) throws AddressException {
 		try {
@@ -733,14 +732,14 @@ public class EmailServiceImpl implements EmailService {
 //					+ "  font-size: 18px;'>Login</button></a></center></p>"
 //					+ "</div></div></div></center>", "text/html");
 			
-			mimeMessage.setContent("<div style=\"margin:0;padding:0\" dir=\"ltr\" bgcolor=\"#ffffff\">"
+				mimeMessage.setContent("<div style=\"margin:0;padding:0\" dir=\"ltr\" bgcolor=\"#ffffff\">"
 					+ "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" id=\"m_1686811882427449699email_table\" style=\"border-collapse:collapse\"><tbody><tr><td id=\"m_1686811882427449699email_content\" style=\"font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;background:#ffffff\">"
 					+ "<table border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse\"><tbody><tr><td height=\"20\" style=\"line-height:20px\" colspan=\"3\">&nbsp;</td></tr><tr><td height=\"1\" colspan=\"3\" style=\"line-height:1px\"></td></tr><tr><td><table border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse;text-align:center;width:100%\"><tbody>"
 					+ "<tr><td width=\"15px\" style=\"width:15px\"></td><td style=\"line-height:0px;max-width:600px;padding:0 0 15px 0\"><table border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse\"><tbody><tr><td style=\"width:100%;text-align:left;height:33px\"><img height=\"33\" src=\"https://firebasestorage.googleapis.com/v0/b/volunteacher-management-system.appspot.com/o/Suhanee-logo.png?alt=media&token=63d69178-55a0-4cd6-bb4d-799fe4ee55b7\" style=\"border:0\" class=\"CToWUd\"></td></tr></tbody></table>"
 					+ "</td><td width=\"15px\" style=\"width:15px\"></td></tr></tbody></table></td></tr><tr><td><table border=\"0\" width=\"430\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse;margin:0 auto 0 auto\"><tbody><tr><td><table border=\"0\" width=\"430px\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse;margin:0 auto 0 auto;width:430px\"><tbody><tr><td width=\"15\" style=\"display:block;width:15px\">&nbsp;&nbsp;&nbsp;</td></tr><tr><td><table border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse\"><tbody><tr><td>"
 					+ "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse\"><tbody><tr><td width=\"20\" style=\"display:block;width:20px\">&nbsp;&nbsp;&nbsp;</td><td><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse\"><tbody><tr><td></td></tr><tr><td><p style=\"margin:10px 0 10px 0;color:#565a5c;font-size:18px\">Hi  "+ request.getName()+",</p><p style=\"margin:10px 0 10px 0;color:#565a5c;font-size:18px\">Your request to join in AIREP as a Volunteacher is successfully accepted By VMS team. Now You can login into our System from below link.</p></td></tr><tr></tr><tr><td height=\"10\" style=\"line-height:10px\" colspan=\"1\">&nbsp;"
-					+ "</td></tr><tr><td><a href=\"https://localhost:4200/login\" style=\"color:#3b5998;text-decoration:none;display:block;width:370px\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=https://instagram.com/accounts/password/reset/confirm/?uidb36%3D3s1ma8p%26token%3D7CO7BB94ygQeEU3Qjg40Fq9c0qkMaoSU3wno4yheZ1zb3obMY7VveeVVQHE5uUt1:password_reset_email%26v%3D186.0.0.36.128%26s%3Dpassword_reset_email&amp;source=gmail&amp;ust=1621723050030000&amp;usg=AFQjCNEQrMZh6Ef_tSvpTkEjrngeliFcQw\">"
-					+ "<table border=\"0\" width=\"390\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse\"><tbody><tr><td style=\"border-collapse:collapse;border-radius:3px;text-align:center;display:block;border:solid 1px #009fdf;padding:10px 16px 14px 16px;margin:0 2px 0 auto;min-width:80px;background-color:#47a2ea\"><a href=\"https://localhost:4200/login\" style=\"color:#3b5998;text-decoration:none;display:block\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=https://instagram.com/accounts/password/reset/confirm/?uidb36%3D3s1ma8p%26token%3D7CO7BB94ygQeEU3Qjg40Fq9c0qkMaoSU3wno4yheZ1zb3obMY7VveeVVQHE5uUt1:password_reset_email%26v%3D186.0.0.36.128%26s%3Dpassword_reset_email&amp;source=gmail&amp;ust=1621723050030000&amp;usg=AFQjCNEQrMZh6Ef_tSvpTkEjrngeliFcQw\"><center><font size=\"3\"><span style=\"font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#fdfdfd;font-size:16px;line-height:16px\">Get&nbsp;Started</span></font></center></a></td></tr></tbody></table>"
+					+ "</td></tr><tr><td><a href=\"http://localhost:4200/volunteacher-registration?requestId="+request.getRequestId() +"\"style=\"color:#3b5998;text-decoration:none;display:block;width:370px\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=https://instagram.com/accounts/password/reset/confirm/?uidb36%3D3s1ma8p%26token%3D7CO7BB94ygQeEU3Qjg40Fq9c0qkMaoSU3wno4yheZ1zb3obMY7VveeVVQHE5uUt1:password_reset_email%26v%3D186.0.0.36.128%26s%3Dpassword_reset_email&amp;source=gmail&amp;ust=1621723050030000&amp;usg=AFQjCNEQrMZh6Ef_tSvpTkEjrngeliFcQw\">"
+					+ "<table border=\"0\" width=\"390\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse\"><tbody><tr><td style=\"border-collapse:collapse;border-radius:3px;text-align:center;display:block;border:solid 1px #009fdf;padding:10px 16px 14px 16px;margin:0 2px 0 auto;min-width:80px;background-color:#47a2ea\"><a href=\"http://localhost:4200/volunteacher-registration?requestId="+request.getRequestId() +"\"style=color:#3b5998;text-decoration:none;display:block\" target=\"_blank\" data-saferedirecturl=\"http://localhost:4200/volunteacher-registration?requestId="+request.getRequestId() +"\"><center><font size=\"3\"><span style=\"font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#fdfdfd;font-size:16px;line-height:16px\">Get&nbsp;Started</span></font></center></a></td></tr></tbody></table>"
 					+ "</a></td></tr><tr><td height=\"10\" style=\"line-height:10px\" colspan=\"1\">&nbsp;</td></tr><tr><td><p style=\"margin:10px 0 10px 0;color:#565a5c;font-size:18px\">If you will not be able to login into our system then feel free to send a mail on <a href='mailto:sdkproject2021@gmail.com'\"\">Email id.</a>.</p></td></tr></tbody></table></td><td width=\"20\" style=\"display:block;width:20px\">&nbsp;&nbsp;&nbsp;</td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse;margin:0 auto 0 auto;width:100%;max-width:600px\"><tbody><tr><td height=\"4\" style=\"line-height:4px\" colspan=\"3\">&nbsp;</td></tr><tr><td width=\"15px\" style=\"width:15px\"></td><td width=\"20\" style=\"display:block;width:20px\">&nbsp;&nbsp;&nbsp;</td><td style=\"text-align:center\"><div style=\"padding-top:10px;display:flex\">"
 					+ "<br></div></td><td width=\"20\" style=\"display:block;width:20px\">&nbsp;&nbsp;&nbsp;</td><td width=\"15px\" style=\"width:15px\"></td></tr><tr><td height=\"32\" style=\"line-height:32px\" colspan=\"3\">&nbsp;</td></tr></tbody></table></td></tr><tr><td height=\"20\" style=\"line-height:20px\" colspan=\"3\">&nbsp;</td></tr></tbody></table><span></span></td>"
 						+ " <tr >                                                       <td style=color:#4b4649;font-size:14px;line-height:21px;font-family:Arial,Helvetica,sans-serif;font-style:normal;font-weight:normal;text-align:left\">\r\n"

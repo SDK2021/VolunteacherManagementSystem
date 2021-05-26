@@ -10,7 +10,7 @@ public interface ApplicantRequestService {
 	
 	public ResponseEntity<Object> requestList(int page);
 	
-	public ApplicantRequest requestById(int id);
+	public ResponseEntity<Object> requestById(int id);
 	
 	public ResponseEntity<Object> deleteRequest(int id);
 	

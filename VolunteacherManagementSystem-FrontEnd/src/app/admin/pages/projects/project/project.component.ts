@@ -71,15 +71,15 @@ export class ProjectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.imageURL = localStorage.getItem("imageURL")
+    // this.imageURL = localStorage.getItem("imageURL")
    
-    if(this.imageURL!=null)
-    {
-      this.fileService.delete(this.imageURL)
-      console.log("deleted");
-      localStorage.removeItem("imageURL")
+    // if(this.imageURL!=null)
+    // {
+    //   this.fileService.delete(this.imageURL)
+    //   console.log("deleted");
+    //   localStorage.removeItem("imageURL")
       
-    }
+    // }
     this.kPage=0
     this.vPage=0
     this.getAllProjects()
@@ -90,20 +90,20 @@ export class ProjectComponent implements OnInit {
 
   }
 
-  ngOnDestroy()
-  {
-    if(this.isProjectCreated==false)
-    {
-      if(this.imageURL!=null)
-      {
-        this.fileService.delete(this.imageURL)
-        localStorage.removeItem("imageURL")
-      }
+  // ngOnDestroy()
+  // {
+  //   if(this.isProjectCreated==false)
+  //   {
+  //     if(this.imageURL!=null)
+  //     {
+  //       this.fileService.delete(this.imageURL)
+  //       localStorage.removeItem("imageURL")
+  //     }
        
-      console.log("Bye Bye");
+  //     console.log("Bye Bye");
       
-    }
-  }
+  //   }
+  // }
 
   load()
   {
@@ -189,11 +189,12 @@ export class ProjectComponent implements OnInit {
 
   show(isShow):void
   {
+    this.showImageSpinner=true
     this.showForm=isShow
     console.log(this.imageURL);
     
     this.imageURL = localStorage.getItem("imageURL")
-    //localStorage.removeItem("imageURL")
+    localStorage.removeItem("imageURL")
     
   }
 
@@ -268,13 +269,15 @@ export class ProjectComponent implements OnInit {
     console.log(this.selectedKids)
     this.projectService.addProject(this.project, this.selectedVolunteacher, this.selectedKids).subscribe(data => {
       console.log(data)
-     
-      this.isProjectCreated=true
-      this.showProgressbar = false
       this.openAddSnackBar()
       form.resetForm()
-      localStorage.removeItem("imageURL")
-      this.router.navigate(['/admin/projects'])
+     // this.isProjectCreated=true
+     setTimeout(() => {
+      this.showProgressbar = false
+      this.getAllProjects()
+      this.showTab2(true)
+     }, 1500);
+
       //this.getAllProjects()
     },error=>{
       this.handleError(error)

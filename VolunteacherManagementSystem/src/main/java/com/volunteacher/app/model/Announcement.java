@@ -51,8 +51,7 @@ public class Announcement {
 	
 	@NotNull
 	@Column(nullable = false, columnDefinition = "TIME")
-	@JsonFormat(shape = Shape.STRING, pattern = "HH-mm-ss")
-	@CreationTimestamp
+	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm")
 	private Calendar creationTime;
 
 	public Announcement() {

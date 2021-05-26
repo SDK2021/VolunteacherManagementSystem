@@ -334,13 +334,15 @@ export class DashboardComponent implements OnInit {
       authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
       this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(() => {
         let today = new Date()
-        this.announcement.creationTime = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds()
+        this.announcement.creationTime = today.getHours() + ":" + today.getMinutes()
         this.dashboardService.addAnnouncement(this.announcement).subscribe(data=>{
           this.showProgressbar=false
           this.openSnackBar()
           this.announcement.data=""
           this.getAnnouncements(0)
           console.log(data); 
+        },error=>{
+          this.handleError(error)
         })
       })).subscribe(data=>{
         this.announcement.createdBy = data

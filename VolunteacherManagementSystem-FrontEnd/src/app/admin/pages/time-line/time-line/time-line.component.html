@@ -59,13 +59,13 @@
   
   
             <div class=" post-image" style="margin-bottom: 1rem;">
-              <ng-container *ngIf="showImageSpinner2">
+              <!-- <ng-container *ngIf="showImageSpinner2">
                 <div class="col-12 my-8 ">
                     <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
                     </mat-spinner>
                 </div>
-            </ng-container>
-              <img (load)="loadPhoto()" alt="Image placeholder" src="{{p.postPhoto}}" class="img-fluid" height="700px" width="900px">
+            </ng-container> -->
+              <img (load)="loadPhoto()"  src="{{p.postPhoto}}" class="img-fluid" height="700px" width="900px">
             </div>
   
             <div class="container-fluid mt-3 mb-3">

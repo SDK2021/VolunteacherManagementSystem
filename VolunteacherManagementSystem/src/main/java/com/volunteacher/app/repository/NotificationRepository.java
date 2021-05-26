@@ -11,13 +11,15 @@ import com.volunteacher.app.model.Notification;
 @Repository
 public interface NotificationRepository extends PagingAndSortingRepository<Notification, Long>{
 
-	@Query(value = "select * from notification where user_type=:userType ORDER BY created_date DESC", nativeQuery = true)
+	@Query(value = "select * from notification where (user_type=:userType or user_type='ALL') ORDER BY created_date DESC", nativeQuery = true)
 	Page<Notification> notificationByUser(String userType,Pageable pageable);
 	
-	@Query(value = "select * from notification INNER JOIN session ON notification.session_session_id = session.session_id WHERE MONTH(session.session_date) = :month and YEAR(session.session_date)= :year and user_type=:userType ORDER BY session.session_date DESC", nativeQuery = true)
+	@Query(value = "select * from notification INNER JOIN session ON notification.session_session_id = session.session_id WHERE MONTH(session.session_date) = :month and YEAR(session.session_date)= :year and user_type=:userType  ORDER BY creation_date DESC", nativeQuery = true)
 	Page<Notification> notificationByMonthAndYear(int month, int year,String userType,Pageable pageable);
 	
 	@Query(value = "delete from notification where created_by_user_id = :id", nativeQuery = true)
 	public long deleteByCreatedByUserId(long id);
 }
 
+//@Query(value = "select * from notification INNER JOIN session ON notification.session_session_id = session.session_id WHERE MONTH(session.session_date) = :month and YEAR(session.session_date)= :year and (user_type=:userType or user_type='ALL') ORDER BY creation_date DESC", nativeQuery = true)
+//Page<Notification> notificationByMonthAndYear(int month, int year,String userType,Pageable pageable);

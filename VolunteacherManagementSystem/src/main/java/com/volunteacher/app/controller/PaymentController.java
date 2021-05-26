@@ -96,6 +96,7 @@ public class PaymentController {
 		return paymentService.deletePayment(id);
 	}
 	
+	
 	@GetMapping("/redirect-paytm")	
 	public ModelAndView redirectPaytm(@RequestParam("phonenumber") String number,@RequestParam("amount") String amount,@RequestParam("email") String email) throws Exception
 	{

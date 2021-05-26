@@ -35,10 +35,13 @@
                                             <input autocomplete="off" type="text" id="input-name"
                                                 class="form-control form-control-alternative" placeholder="School Name"
                                                 name="name" #sname="ngModel" [(ngModel)]="school.schoolName" required
-                                                maxlength="30">
+                                                maxlength="30" pattern=".{2,30}">
                                             <small *ngIf="sname.errors?.required && sname.touched"
                                                 class="text-danger">School name is
                                                 required</small>
+                                                <small *ngIf="sname.errors?.pattern"
+                                                class="text-danger">School name invalid
+                                                </small>
                                         </div>
                                     </div>
 
@@ -52,7 +55,7 @@
                                                     *ngFor="let s of states;trackBy: trackStatesById">{{s.stateName}}</option>
                                             </select>                                            
                                             <div  class="text-danger" *ngIf="stateSelected==0">
-                                                Please select a valid state.
+                                               <small> Please select a valid state.</small>
                                             </div>
                                         </div>
                                     </div>
@@ -67,7 +70,7 @@
                                                 </option>
                                             </select>                                            
                                             <div  class="text-danger" *ngIf="districtSelected==0">
-                                                Please select a valid District.
+                                               <small> Please select a valid District.</small>
                                             </div>
                                         </div>
                                     </div>
@@ -82,7 +85,7 @@
                                                 </option>
                                             </select>                                            
                                             <div  class="text-danger" *ngIf="talukaSelected==0">
-                                                Please select a valid Taluka.
+                                               <small> Please select a valid Taluka.</small>
                                             </div>
                                         </div>
                                     </div>
@@ -97,7 +100,7 @@
                                                 </option>
                                             </select>                                           
                                             <div  class="text-danger" *ngIf="village.invalid&&village.touched">
-                                                Please select a valid Village.
+                                               <small> Please select a valid Village.</small>
                                             </div>
                                         </div>
                                     </div>
@@ -141,7 +144,7 @@
                                                 Date</label>
                                             <input type="text" id="input-startdate"
                                                 class="form-control form-control-alternative"
-                                                placeholder="Starting Date" name="startdate" #date="ngModel" [(ngModel)]="school.startingDate" required onfocus="(this.type='date')">
+                                                placeholder="Starting Date" name="startdate" #date="ngModel" minlength="2" maxlength="30" [(ngModel)]="school.startingDate" required onfocus="(this.type='date')">
                                                 <small *ngIf="date.errors?.required && date.touched"
                                                 class="text-danger">Starting date is required</small>    
                                         </div>
@@ -194,7 +197,7 @@
                                                 <option *ngFor="let s of stream" [value]='s'>{{s}}</option>
                                             </select>
                                             <div class="text-danger" *ngIf="schoolStream.invalid&&schoolStream.touched">
-                                                Please select a valid Stream.
+                                               <small> Please select a valid Stream.</small>
                                             </div>                                           
                                         </div>
                                     </div>
@@ -209,7 +212,7 @@
                                             </select>
                                 
                                             <div class="text-danger" *ngIf="schoolStatus.invalid&&schoolStatus.touched">
-                                                Please select a valid Status.
+                                              <small>  Please select a valid Status.</small>
                                             </div>
                                         </div>
                                     </div>
@@ -315,6 +318,9 @@
                                         <h3>Status</h3>
                                     </th>
                                     <th>
+                                        <h3>Requirements</h3>
+                                    </th>
+                                    <th>
                                         <h3 class="text-center">Edit</h3>
                                     </th>
                                     <th>
@@ -349,10 +355,15 @@
                                     <td class="table-user">
                                         <h3>{{s.totalStudent}}</h3>
                                     </td>
+                                    
                                     <td>
                                         <h3 *ngIf="s.status === 1">Good</h3>
                                         <h3 *ngIf="s.status === 2">Better</h3>
                                         <h3 *ngIf="s.status === 3">Under construction</h3>
+                                    </td>
+                                    <td class="table-user">
+                                        <h3 class="text-justify">{{s.requirements}}</h3>
+                                        <h3 class="text-center" *ngIf="!s.requirements">-</h3>
                                     </td>
                                     <td style="cursor: pointer;" routerLink="/admin/schools/{{s.schoolId}}/edit">
                                         <div class=" text-center ">
