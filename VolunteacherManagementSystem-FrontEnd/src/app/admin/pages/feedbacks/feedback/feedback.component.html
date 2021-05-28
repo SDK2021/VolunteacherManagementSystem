@@ -63,8 +63,8 @@
                             </div>
                             <div class="row mx-0" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50"
                                 (scrolled)="onScroll()">
-                                <div *ngFor="let f of feedbacks"
-                                    class="card shadow p-xl-5 p-lg-4 p-md-3 p-sm-3 p-3 mt-4 mb-6">
+                                <div *ngFor="let f of feedbacks | feedback : search"
+                                    class="card col-12 shadow p-xl-5 p-lg-4 p-md-3 p-sm-3 p-3 mt-4 mb-6">
                                     <div class="row align-items-center mb-3">
                                         <div class="col-auto">
                                             <!-- Avatar -->

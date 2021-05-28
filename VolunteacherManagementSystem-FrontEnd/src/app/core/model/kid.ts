@@ -31,5 +31,6 @@ export class Kid {
 
     attendance:boolean=false
     checked:boolean = false
+    
 }
 

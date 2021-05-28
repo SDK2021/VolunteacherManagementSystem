@@ -186,7 +186,7 @@
                                             <select class="form-control form-control-alternative" id="input-status"
                                                 name="status" [(ngModel)]="school.status" [ngClass]="{'ng-invalid':school.status==0}">
                                                 <option value="" selected>Select</option>
-                                                <option *ngFor="let s of status" [selected] = "school.status == status.indexOf(s)" [value]="status.indexOf(s)+1">{{s}}</option>
+                                                <option *ngFor="let s of status" [selected] = "school.status == status.indexOf(s)+1" [value]="status.indexOf(s)+1">{{s}}</option>
                                             </select>
                                             <small *ngIf = "school.status==0" class="text-danger">Status is required</small>
                                         </div>

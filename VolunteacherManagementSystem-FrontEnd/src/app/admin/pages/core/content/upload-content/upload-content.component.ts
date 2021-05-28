@@ -74,6 +74,9 @@ export class UploadContentComponent implements OnInit {
   {
     this._sharedservice.getkidsgrouplist().subscribe(data =>{
       this.groups=data;
+      
+      console.log(this.groups);
+      
     },error=>{
       this.handleError(error)
     });
@@ -124,9 +127,13 @@ export class UploadContentComponent implements OnInit {
                 duration: 2000,
                 horizontalPosition: this.horizontalPosition,
                 verticalPosition: this.verticalPosition,
+                
               }); 
-                this.addContent() }, 2000);
+                this.addContent();
+                
+                }, 2000);
             }
+
            console.log( localStorage.getItem("imageURL"));
         
       },error=>{
@@ -145,6 +152,9 @@ export class UploadContentComponent implements OnInit {
     this.kidsService.kidGroupById(this.groupId).pipe(finalize(()=>{
       this.sessionService.addContent(this.content).subscribe(data=>{
         console.log(data);
+        setTimeout(() => {
+          this.getAllContents()
+        }, 1000);
        
       },error=>{
         this.handleError(error)

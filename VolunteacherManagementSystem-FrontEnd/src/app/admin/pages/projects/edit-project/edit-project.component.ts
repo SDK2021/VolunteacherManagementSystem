@@ -45,16 +45,16 @@ export class EditProjectComponent implements OnInit {
   constructor(private volunteacherService:VolunteachersService, private fileService:FileUploadService,private _snackBar: MatSnackBar,private route:ActivatedRoute,private router:Router,private projectService:ProjectsService) { }
 
   ngOnInit(): void {
-    this.imageURL = localStorage.getItem("imageURL")
-    this.oldImage = null
+    // this.imageURL = localStorage.getItem("imageURL")
+    // this.oldImage = null
    
-    if(this.imageURL!=null)
-    {
-      this.fileService.delete(this.imageURL)
-      console.log("deleted");
-      localStorage.removeItem("imageURL")
+    // if(this.imageURL!=null)
+    // {
+    //   this.fileService.delete(this.imageURL)
+    //   console.log("deleted");
+    //   localStorage.removeItem("imageURL")
       
-    }
+    // }
     this.getProject(this.route.snapshot.params['id'])
     this.getVolunteachers()
     this.getKids()
@@ -66,21 +66,36 @@ export class EditProjectComponent implements OnInit {
   }
 
   
-  ngOnDestroy()
-  {
-    if(this.isProjectEdited==false)
-    {
-      if(this.imageURL!=null)
-      {
-        this.fileService.delete(this.imageURL)
-        localStorage.removeItem("imageURL")
-      }
+  // ngOnDestroy()
+  // {
+  //   if(this.isProjectEdited==false)
+  //   {
+  //     if(this.imageURL!=null)
+  //     {
+  //       this.fileService.delete(this.imageURL)
+  //       localStorage.removeItem("imageURL")
+  //     }
        
-      console.log("Bye Bye");
+  //     console.log("Bye Bye");
       
-    }
-  }
+  //   }
+  // }
 
+  invalidEndingDate:boolean=false
+  validateDate(startingdate,endingDate)
+  {
+    let projectStartingDate=new Date(startingdate)
+
+    let array2: string[] = endingDate.split("-")
+    let date2 = array2[1] + "-" + array2[2] + "-" + array2[0]
+    let projectEndingDate=new Date(date2)
+
+    if(projectEndingDate < projectStartingDate)
+      this.invalidEndingDate=true
+    else
+      this.invalidEndingDate=false
+
+  }
 
   edit() {
     if(this.isEdit==false)
@@ -144,7 +159,7 @@ export class EditProjectComponent implements OnInit {
     this.projectService.getProject(id).subscribe(data => {
       this.project = data
       this.projectStartingDate = this.project.startingDate
-      this.projectEndingDate = this.project.startingDate
+      this.projectEndingDate = this.project.endingDate
 
       for (let user of this.project.users) {
         this.selectedVolunteacher.push(user.userId)
@@ -200,11 +215,11 @@ export class EditProjectComponent implements OnInit {
   }
 
   saveProject(form:NgForm) {
-    if(this.imageURL!=null)
-    {
-      this.oldImage=this.project.photo
-      this.project.photo=this.imageURL
-    }
+    // if(this.imageURL!=null)
+    // {
+    //   this.oldImage=this.project.photo
+    //   this.project.photo=this.imageURL
+    // }
     this.showProgressbar = true
     let today = new Date()
     let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
@@ -220,6 +235,8 @@ export class EditProjectComponent implements OnInit {
 
     if(!(this.project.endingDate === this.projectEndingDate))
     {
+      console.log(this.project.endingDate);
+      
       let enddate: string = this.project.endingDate
       let edate: string[] = enddate.split("-")
       let endingdate = edate[1] + "-" + edate[2] + "-" + edate[0]
@@ -227,7 +244,7 @@ export class EditProjectComponent implements OnInit {
     }
     this.projectService.editProject(this.route.snapshot.params['id'],this.project, this.selectedVolunteacher, this.selectedKids).subscribe(data => {
       console.log(data)
-      this.isProjectEdited=true
+      //this.isProjectEdited=true
       // console.log(this.oldImage);
       
       // if(this.oldImage!=null)

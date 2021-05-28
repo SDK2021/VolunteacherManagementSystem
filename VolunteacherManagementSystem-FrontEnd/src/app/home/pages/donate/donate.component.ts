@@ -72,7 +72,7 @@ export class DonateComponent implements OnInit {
       },error=>{
         this.handleError(error)
       })
-      alert(this.donor.donorPhone);
+   
       
       window.location.href = "http://localhost:9090/vms/redirect-paytm?phonenumber="+this.donor.donorPhone +"&amount="+this.payment.amount +"&email="+this.payment.donor.donorEmail
     })).subscribe(data=>{

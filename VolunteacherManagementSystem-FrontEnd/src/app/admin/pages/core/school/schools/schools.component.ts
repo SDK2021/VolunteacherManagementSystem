@@ -243,12 +243,18 @@ export class SchoolsComponent implements OnInit {
   selectedState(event)
   {
     this.stateSelected = event.target.value;
-    this.addressService.getDistricts(event.target.value).subscribe(data=>{
     this.Show = false
-    this.districts = data
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    this.districtSelected = 0
     this.talukas = []
     this.villages = []
-    })
+    if(event.target.value > 0)
+    {
+      this.addressService.getDistricts(event.target.value).subscribe(data=>{
+      this.districts = data
+      })
+    }
   }
 
   getAllDistricts() 
@@ -262,13 +268,22 @@ export class SchoolsComponent implements OnInit {
 
   selectedDistrict(event)
   {
-    this.districtSelected = event.target.value;
-    this.addressService.getTalukas(event.target.value).subscribe(data=>{
-    this.talukas = data
-    this.villages = []
-    })
+    this.villageSelected = 0
+    this.talukaSelected = 0
+    if(event.target.value > 0)
+    {
+      this.districtSelected = event.target.value;
+      this.addressService.getTalukas(event.target.value).subscribe(data=>{
+      this.talukas = data
+      this.villages = []
+      })
+    }
+    else{
+      this.talukas = []
+      this.villages = []
+      this.districtSelected = 0
+    }
   }
-
   getAllTalukas() 
   {
     this.addressService.getTalukas(this.districtSelected).subscribe(data=>{
@@ -282,7 +297,7 @@ export class SchoolsComponent implements OnInit {
   {
     this.talukaSelected = event.target.value;
     console.log(event.target.value);
-    if(event.target.value != 0)
+    if(event.target.value > 0)
     {
           this.addressService.getVillages(event.target.value).subscribe(data=>{
           this.villages = data

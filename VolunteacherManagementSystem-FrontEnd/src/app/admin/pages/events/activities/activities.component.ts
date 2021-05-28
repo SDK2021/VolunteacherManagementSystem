@@ -33,7 +33,7 @@ export class ActivitiesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllActivities(this.page)
+    this.getAllActivities()
   }
 
   handleError(error)
@@ -92,10 +92,10 @@ export class ActivitiesComponent implements OnInit {
     this.show()
   }
 
-  getAllActivities(page:number)
+  getAllActivities()
   {
-    this.eventService.getAllActivities(page).subscribe(data=>{
-      this.activities=data['content']
+    this.eventService.getActivities().subscribe(data=>{
+      this.activities=data
       console.log(this.activities);
       
     },error=>{
@@ -112,7 +112,7 @@ export class ActivitiesComponent implements OnInit {
       this.show()
       form.reset()
       setTimeout(()=>{
-        this.getAllActivities(this.page)
+        this.getAllActivities()
         this.showProgressbar=false
       },2000)
     },error=>{
@@ -132,7 +132,7 @@ export class ActivitiesComponent implements OnInit {
        console.log(data);  
        this.openDeletedSnackBar()  
        setTimeout(() => {
-        this.getAllActivities(this.page)
+        this.getAllActivities()
         this.showProgressbar=false
        }, 2000);
      },error=>{

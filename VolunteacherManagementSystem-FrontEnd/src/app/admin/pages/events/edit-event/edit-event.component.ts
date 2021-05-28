@@ -26,6 +26,7 @@ import { AddressService } from 'src/app/shared/shared-services/address.service';
 export class EditEventComponent implements OnInit {
 
   event:Event=new Event()
+  eventDate:string
   isEdit: boolean = false
   showForm:boolean=true
   imageURL:string
@@ -65,15 +66,15 @@ export class EditEventComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.imageURL = localStorage.getItem("imageURL")
+    // this.imageURL = localStorage.getItem("imageURL")
    
-    if(this.imageURL!=null)
-    {
-      this.fileService.delete(this.imageURL)
-      console.log("deleted");
-      localStorage.removeItem("imageURL")
+    // if(this.imageURL!=null)
+    // {
+    //   this.fileService.delete(this.imageURL)
+    //   console.log("deleted");
+    //   localStorage.removeItem("imageURL")
       
-    }
+    // }
     this.event.village=new Village()
     this.event.project=new Project()
     let date:Date = new Date()
@@ -85,20 +86,22 @@ export class EditEventComponent implements OnInit {
     this.getEvent(this.route.snapshot.params['id'])
   }
 
-  ngOnDestroy()
-  {
-    if(this.isEventEdited==false)
-    {
-      if(this.imageURL!=null)
-      {
-        this.fileService.delete(this.imageURL)
-        localStorage.removeItem("imageURL")
-      }
+  // ngOnDestroy()
+  // {
+  //   if(this.isEventEdited==false)
+  //   {
+  //     if(this.imageURL!=null)
+  //     {
+  //       this.fileService.delete(this.imageURL)
+  //       localStorage.removeItem("imageURL")
+  //     }
        
-      console.log("Bye Bye");
+  //     console.log("Bye Bye");
       
-    }
-  }
+  //   }
+  // }
+
+  
 
   load()
   {
@@ -122,6 +125,7 @@ export class EditEventComponent implements OnInit {
   {
     this.showForm=isShow
     this.imageURL = localStorage.getItem("imageURL")
+    localStorage.removeItem("imageURL")
     this.hover=false
     this.showImageSpinner=true
   }
@@ -159,6 +163,7 @@ export class EditEventComponent implements OnInit {
     this.eventService.getEventById(id).subscribe(data => {
       this.event = data
       this.imageURL=this.event.photo
+      this.eventDate = this.event.eventDate
       console.log(this.event);
       this.addressService.getVillages(this.event.village.taluka.talukaId).pipe(finalize(()=>{
         this.addressService.getTalukas(this.districtSelected).pipe(finalize(()=>{
@@ -308,11 +313,11 @@ export class EditEventComponent implements OnInit {
     
     if(this.villageSelected > 0 && this.projectSelected >0 && this.event.eventData !="")
     {
-      if(this.imageURL!=null)
-      {
-          this.oldImage=this.event.photo
-          this.event.photo=this.imageURL
-      }
+      // if(this.imageURL!=null)
+      // {
+      //     this.oldImage=this.event.photo
+      //     this.event.photo=this.imageURL
+      // }
       if(this.villageSelected == null)
       {
         this.villageSelected = this.event.village.villageId
@@ -332,12 +337,16 @@ export class EditEventComponent implements OnInit {
       console.log(this.selectedActivities);
       
       this.event.photo =this.imageURL
-      let eventdate:string = this.event.eventDate
+      if(!(this.eventDate === this.event.eventDate))
+      {
+        let eventdate:string = this.event.eventDate
       console.log(eventdate);
       
       let sdate:string[] = eventdate.split("-")
-      let eventDate = sdate[0] + "-" +  sdate[1] + "-" + sdate[2]
+      let eventDate = sdate[1] + "-" +  sdate[2] + "-" + sdate[0]
       this.event.eventDate = eventDate
+      }
+      
       this.event.notified = false
       console.log( this.event.eventDate);
 
@@ -348,12 +357,12 @@ export class EditEventComponent implements OnInit {
         this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
           this.eventService.editEvent(this.event.eventId,this.event,this.selectedActivities).subscribe(data=>{
             console.log(data)
-            this.isEventEdited=true
-            if(this.oldImage!=null)
-            {
-              this.fileService.delete(this.oldImage)
-              localStorage.removeItem("imageURL")
-            }
+            // this.isEventEdited=true
+            // if(this.oldImage!=null)
+            // {
+            //   this.fileService.delete(this.oldImage)
+            //   localStorage.removeItem("imageURL")
+            // }
             
             this.showProgressbar=false
             this.openEditSnackBar()

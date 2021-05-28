@@ -1,3 +1,9 @@
+<style>
+.btn{
+  box-shadow: none;
+}
+
+</style>
 <ng-container *ngIf="showProgressbar">
   <div style="z-index: 100;;position: -webkit-sticky;position:sticky;top:0;">
     <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
@@ -204,16 +210,16 @@
                     <div class="input-group-prepend  ">
                       <span class="input-group-text p-0 m-2"><i class=" fas fa-plus ml-2"></i></span>
                     </div>
-                    <input autocomplete="off" class="form-control p-0 " style="border-radius: 30px;" placeholder="Add announcement"
-                      type="text" (focus)="focus = true" (blur)="focus = false" name="Announcements" [(ngModel)]="announcement.data">
+                    <input  autocomplete="off" class="form-control p-0 " style="border-radius: 30px;" placeholder="Add announcement"
+                      type="text" (focus)="focus = true" (blur)="focus = false"  name="Announcements" [(ngModel)]="announcement.data" (input)='checkAnnouncement()'>
 
                   </div>
 
                 </div>
               </div>
             </div>
-            <div style="cursor: pointer;" class="col-auto  pl-0">
-              <i  class=" text-primary icon-btn ml-2 fas fa-paper-plane display-4" (click)="addAnnouncement(form)"></i>
+            <div style="cursor: pointer;" class="col-auto ml-2  pl-0">
+             <button [disabled]='announcementDisable' class="btn bg-transparent border-0 py-1 " (click)="addAnnouncement(form)"> <i  class=" text-primary icon-btn  fas fa-paper-plane display-4" ></i></button>
             </div>
           </div>
 

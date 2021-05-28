@@ -78,6 +78,7 @@ export class CreatePostComponent implements OnInit {
   }
 
   show(isShow): void {
+    this.showImageSpinner=true
     this.showForm = isShow
     this.imageURL = localStorage.getItem("imageURL")
     localStorage.removeItem("imageURL")

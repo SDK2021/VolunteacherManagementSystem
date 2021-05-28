@@ -62,7 +62,7 @@ export class ProfileComponent implements OnInit {
     if(array[1]==="admin")
     {
       this.isVt=false
-     
+      this.editProfile=false
       if(array[2]==='volunteachers')
       {
         this.isVt=true

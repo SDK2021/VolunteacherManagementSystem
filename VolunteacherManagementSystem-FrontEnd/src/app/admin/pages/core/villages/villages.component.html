@@ -47,14 +47,12 @@
                                             <label class="form-control-label" for="input-group">Select State</label>
                                             <select required class="form-control form-control-alternative" id="input-group" [ngClass]="{'ng-invalid':stateSelected==0}"
                                                 (change)="selectedState($event)">
-                                                <option selected value="0">Select</option>
+                                                <option selected value="">Select</option>
                                                 <option class="combobox" [value]="s.stateId" [selected]="s.stateId == 7"
                                                     *ngFor="let s of states;trackBy: trackStatesById">{{s.stateName}}
                                                 </option>
                                             </select>
-                                            <div class="invalid-feedback">
-                                                Please select a valid state.
-                                            </div>                                            
+                                            <small *ngIf="stateSelected==0" class="text-danger">State Required</small>                                           
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-7 col-md-6 col-lg-6 col-xl-5">
@@ -69,9 +67,7 @@
                                                     {{d.districtName}}
                                                 </option>
                                             </select> 
-                                            <div class="invalid-feedback">
-                                                Please select a valid District.
-                                            </div>                                       
+                                            <small *ngIf="districtSelected==0" class="text-danger">District Required</small>                                                                                 
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-7 col-md-6 col-lg-6 col-xl-5">
@@ -85,9 +81,7 @@
                                                     *ngFor="let t of talukas;trackBy: trackTalukasById">{{t.talukaName}}
                                                 </option>
                                             </select>
-                                            <div class="invalid-feedback">
-                                                Please select a valid Taluka.
-                                            </div>                                            
+                                            <small *ngIf="talukaSelected==0" class="text-danger">Taluka Required</small>                                                                                     
                                         </div>
                                     </div>
                                 </div>

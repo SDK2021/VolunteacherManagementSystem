@@ -104,6 +104,23 @@ export class ProjectComponent implements OnInit {
       
   //   }
   // }
+  invalidEndingDate:boolean=false
+  validateDate(startingdate,endingDate)
+  {
+    let array: string[] = startingdate.split("-")
+    let date = array[1] + "-" + array[2] + "-" + array[0]
+    let projectStartingDate=new Date(date)
+
+    let array2: string[] = endingDate.split("-")
+    let date2 = array2[1] + "-" + array2[2] + "-" + array2[0]
+    let projectEndingDate=new Date(date2)
+
+    if(projectEndingDate < projectStartingDate)
+      this.invalidEndingDate=true
+    else
+      this.invalidEndingDate=false
+
+  }
 
   load()
   {

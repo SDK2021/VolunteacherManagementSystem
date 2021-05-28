@@ -7,7 +7,6 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Route } from '@angular/compiler/src/core';
 import { SessionsService } from 'src/app/admin/shared-services/sessions/sessions.service';
 import { Sessionreport } from 'src/app/core/model/sessionreport';
 @Component({
@@ -30,6 +29,7 @@ export class FeedbackComponent implements OnInit {
   showImageSpinner:boolean=true
 
   page:number=0
+  totalPages:number
 
   constructor(private router:Router,private route:ActivatedRoute,private sessionService:SessionsService,private dialog:MatDialog , private _snackBar: MatSnackBar) { }
 
@@ -71,6 +71,7 @@ export class FeedbackComponent implements OnInit {
     this.showSpinner=true
     this.sessionService.getAllSessionReportsBySession(page,id).subscribe(data=>{
         this.feedbacks=data['content']
+        this.totalPages = data['totalPages']
         this.showSpinner=false
         if (data != null) {
           this.fLength = this.feedbacks.length
@@ -94,7 +95,7 @@ export class FeedbackComponent implements OnInit {
        console.log(data);  
        this.openSnackBar()  
        setTimeout(() => {
-        this.getAllFeedbacks(this.page,this.route.snapshot.params['id'])
+        this.getAllFeedbacks(0,this.route.snapshot.params['id'])
         this.showProgressbar=false
        }, 2000);
      },error=>{
@@ -115,8 +116,11 @@ export class FeedbackComponent implements OnInit {
   }
 
   onScroll() {
-    this.page += 1
-    this.getPageableEvent(this.page,this.route.snapshot.params['id']);
+    if(this.page < this.totalPages)
+    {
+      this.page += 1
+      this.getPageableEvent(this.page,this.route.snapshot.params['id']);
+    }
   }
   getPageableEvent(page: number,id:number) {
     this.sessionService.getAllSessionReportsBySession(page,id).subscribe(data=>{

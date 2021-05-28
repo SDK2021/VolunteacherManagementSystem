@@ -145,6 +145,7 @@ export class EditSessionComponent implements OnInit {
       this.districtSelected = this.session.village.taluka.district.districtId
       this.talukaSelected = this.session.village.taluka.talukaId
       this.villageSelected = this.session.village.villageId
+      this.projectSelected = this.session.project.projectId
     },error=>{
       this.handleError(error)
     })

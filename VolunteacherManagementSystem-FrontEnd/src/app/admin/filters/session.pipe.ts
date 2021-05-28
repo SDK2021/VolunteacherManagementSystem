@@ -18,7 +18,7 @@ export class SessionPipe implements PipeTransform {
       let m3=new RegExp('^m[arch]?[arch]?[arch]?[arch]?$')
       let m4=new RegExp('^a[pril]?[pril]?[pril]?[pril]?$')
       let m5=new RegExp('^m[ay]?[ay]?$')
-      let m6=new RegExp('^j[une]?[une]?[une]?$')
+      let m6=new RegExp('^j[un]?[un]?$')
       let m7=new RegExp('^j[uly]?[uly]?[uly]?$')
       let m8=new RegExp('^a[ugust]?[ugust]?[ugust]?[ugust]?[ugust]?$')
       let m9=new RegExp('^s[eptember]?[eptember]?[eptember]?[eptember]?[eptember]?[eptember]?[eptember]?[eptember]?$')
@@ -28,6 +28,11 @@ export class SessionPipe implements PipeTransform {
 
       let year=new RegExp('^[0-9]{1,4}$')
 
+      
+      if(m6.test(searchKey.toLowerCase()))
+      {
+       return search.sessionDate.toString().split('-')[0].includes('06')
+      }
       if(m1.test(searchKey.toLowerCase()))
       {
        return search.sessionDate.toString().split('-')[0].includes('01')
@@ -56,10 +61,6 @@ export class SessionPipe implements PipeTransform {
 
       
 
-      if(m6.test(searchKey.toLowerCase()))
-      {
-       return search.sessionDate.toString().split('-')[0].includes('06')
-      }
 
       if(m7.test(searchKey.toLowerCase()))
       {

@@ -41,6 +41,10 @@ export class NotificationComponent implements OnInit {
   constructor(private dialog: MatDialog, private _snackBar: MatSnackBar, private router: Router, private eventService: EventsService, private notiService: NotificationsService, private authService: authentication, private userService: UsersService, private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
+    if(!this.authService.isUserLogin)
+    {
+      this.router.navigate(['login'])
+    }
     this.getAllNotifications(this.page)
     this.attendedUsers = []
     this.participantUser = new Participant()
@@ -96,6 +100,7 @@ export class NotificationComponent implements OnInit {
                     this.events[i].disable = true
                     break
                   }
+                  
                 }
               }
 
@@ -105,6 +110,9 @@ export class NotificationComponent implements OnInit {
                   if (user.userId == userId ) {
                     this.sessions[i].disable = true
                     break
+                  }
+                  else if (this.isSessionDisable(this.sessions[i])) {
+                    this.sessions[i].disable = true
                   }
                 }
                
@@ -118,7 +126,20 @@ export class NotificationComponent implements OnInit {
             console.log(data);            
             this.notifications =  this.notifications.concat(data['content'])
             console.log(this.notifications);
-            
+            for (let i = 0; i < this.notifications.length; i++) {
+             if(this.notifications[i].session!=null)
+             {
+              if (this.isSessionDisable(this.notifications[i].session)) {
+                this.notifications[i].session.disable = true
+              }
+             }
+             if(this.notifications[i].event!=null)
+             {
+              if (this.isEventDisable(this.notifications[i].event)) {
+                this.notifications[i].event.disable = true
+              }
+             }
+            }
             this.totalPages = data['totalPages']
           });
         },
@@ -144,17 +165,17 @@ export class NotificationComponent implements OnInit {
     console.log(currentDate);
     
 
-   if(currentDate.getDate()>=d.getDate())
-   {
-    if (currentDate.getTime() >= d.getTime()) {
-      console.log(currentDate.getTime() + " " + session.sessionId +' '+ d.getTime());
-      console.log("In if");
-      
+
+    if (currentDate > d) {
       return true
     }
     else
-     return false
-   }
+    {
+      console.log("in else");
+      return false
+    }
+     
+  
 
   }
 
@@ -169,7 +190,7 @@ export class NotificationComponent implements OnInit {
     d.setHours(Number.parseInt(h))
     d.setMinutes(Number.parseInt(m))
 
-    if (currentDate.getTime() >= d.getTime()) {
+    if (currentDate >= d) {
       return true
     }
     else

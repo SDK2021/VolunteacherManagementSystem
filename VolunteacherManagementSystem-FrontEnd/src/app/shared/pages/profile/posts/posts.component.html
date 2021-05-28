@@ -16,7 +16,7 @@
         </div>
       </ng-container>
       <ng-container *ngIf="!showSpinner">
-        <ng-container *ngIf="(pLength==0 && urlType=== 'admin') && !isAdminProfile ">
+        <ng-container *ngIf="(pLength==0 && urlType=== 'admin') &&  !isAdminProfile ">
           <div class="mx-auto d-block mt-8">
             <img src="../../../../../assets/img/banners/adminPost.png" class="img-fluid" height="200px" width="200px"
               alt="">
@@ -29,7 +29,7 @@
 
         </ng-container>
 
-        <ng-container *ngIf="(pLength==0  && urlType=== 'user') || isAdminProfile ">
+        <ng-container *ngIf="(pLength==0  && urlType=== 'user') ||(pLength==0 && isAdminProfile) ">
           <div style="cursor: pointer;" routerLink="/{{urlType}}/posts/create-post" class="mx-auto d-block mt-8">
             <img src="../../../../../assets/img/banners/createPost.png" class="img-fluid" height="200px" width="200px"
               alt="">

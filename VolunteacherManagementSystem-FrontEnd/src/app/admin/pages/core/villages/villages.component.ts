@@ -65,7 +65,9 @@ export class VillagesComponent implements OnInit {
     this.getAllStates();
     this.getAllDistricts();
     this.getAllTalukas();
-
+    this.stateSelected = 8
+    this.districtSelected = 141
+    this.talukaSelected = 35
  
     this.getAllVillages();
 
@@ -166,6 +168,8 @@ export class VillagesComponent implements OnInit {
         console.log(data)
         this.showProgressbar = false
         this.openSnackBar()
+        this.showTab1(false)
+        this.showTab2(true)
         form.reset()
         setTimeout(()=>{
           this.getAllVillages()
@@ -207,13 +211,18 @@ export class VillagesComponent implements OnInit {
   selectedState(event)
   {
     this.stateSelected = event.target.value;
-    this.addressService.getDistricts(event.target.value).subscribe(data=>{
-    this.Show = false
-    this.districts = data
+    this.Show = false   
+    this.talukaSelected = 0
+    this.districtSelected = 0
     this.talukas = []
-    })
+    this.villages = []
+    if(event.target.value > 0)
+    {
+      this.addressService.getDistricts(event.target.value).subscribe(data=>{
+      this.districts = data
+      })
+    }
   }
-
   getAllDistricts() 
   {
     this.addressService.getDistricts(7).subscribe(data=>{
@@ -224,11 +233,21 @@ export class VillagesComponent implements OnInit {
   }
 
   selectedDistrict(event)
-  {
-    this.districtSelected = event.target.value;
-    this.addressService.getTalukas(event.target.value).subscribe(data=>{
-    this.talukas = data
-    })
+  {    
+    this.talukaSelected = 0
+    if(event.target.value > 0)
+    {
+      this.districtSelected = event.target.value;
+      this.addressService.getTalukas(event.target.value).subscribe(data=>{
+      this.talukas = data
+      this.villages = []
+      })
+    }
+    else{
+      this.talukas = []
+      this.villages = []
+      this.districtSelected = 0
+    }
   }
 
   getAllTalukas() 
@@ -243,6 +262,13 @@ export class VillagesComponent implements OnInit {
   selectedTaluka(event)
   {
     this.talukaSelected = event.target.value;
+    console.log(event.target.value);
+    if(event.target.value > 0)
+    {
+          this.addressService.getVillages(event.target.value).subscribe(data=>{
+          this.villages = data
+        })
+    }
   }
 
 }

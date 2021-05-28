@@ -98,7 +98,7 @@
                                             <div class="p-2 border-left border-dark">
                                                 <div class="card shadow m-sm-4 m-2 p-0">
                                                 
-                                                    <div class="card-body pt-0  px-2 px-lg-4">
+                                                    <div class="card-body py-0  px-2 px-lg-4">
                                                         <h5 class="mt-2 mb-0 text-muted text-right">
                                                             {{n.createdDate | date:'mediumDate' }} {{n.createdDate | date:'shortTime' }}
                                                          </h5>
@@ -127,7 +127,7 @@
                                             <div class="p-2 border-left border-dark">
                                                 <div class="card shadow m-4 p-0">
                 
-                                                    <div class="card-body pt-0 ">
+                                                    <div class="card-body py-0 ">
                                                         <h5 class="mt-2 mb-0 text-muted text-right">
                                                             {{n.createdDate | date:'mediumDate' }} {{n.createdDate | date:'shortTime' }}
                                                          </h5>
@@ -138,7 +138,7 @@
                                                             {{n.event.village.villageName}}</p>
                                                         <div class="text-center my-4">
                                                             <button [disabled]="n.event.disable == true"
-                                                                class="btn btn-primary mx-4 text-white justify-content-between rounded px-4 py-2"
+                                                                class="btn btn-dribbble mx-4 text-white justify-content-between rounded px-4 py-2"
                                                                 (click)="openEventDialog(n.event.eventId)">Join</button>
                                                         </div>
                                                         

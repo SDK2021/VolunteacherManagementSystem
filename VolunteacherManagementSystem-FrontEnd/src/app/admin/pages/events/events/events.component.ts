@@ -85,15 +85,15 @@ export class EventsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.imageURL = localStorage.getItem("imageURL")
+    // this.imageURL = localStorage.getItem("imageURL")
    
-    if(this.imageURL!=null)
-    {
-      this.fileService.delete(this.imageURL)
-      console.log("deleted");
-      localStorage.removeItem("imageURL")
+    // if(this.imageURL!=null)
+    // {
+    //   this.fileService.delete(this.imageURL)
+    //   console.log("deleted");
+    //   localStorage.removeItem("imageURL")
       
-    }
+    // }
   
     let date:Date = new Date()
     console.log(date)
@@ -115,20 +115,20 @@ export class EventsComponent implements OnInit {
     
   }
 
-  ngOnDestroy()
-  {
-    if(this.isEventCreated==false)
-    {
-      if(this.imageURL!=null)
-      {
-        this.fileService.delete(this.imageURL)
-        localStorage.removeItem("imageURL")
-      }
+  // ngOnDestroy()
+  // {
+  //   if(this.isEventCreated==false)
+  //   {
+  //     if(this.imageURL!=null)
+  //     {
+  //       this.fileService.delete(this.imageURL)
+  //       localStorage.removeItem("imageURL")
+  //     }
        
-      console.log("Bye Bye");
+  //     console.log("Bye Bye");
       
-    }
-  }
+  //   }
+  // }
 
   load()
   {
@@ -238,7 +238,7 @@ export class EventsComponent implements OnInit {
 
   addEvent(form:NgForm)
   {
-    if(this.villageSelected > 0 && this.event.project !=null)
+    if(this.villageSelected > 0 && this.projectSelected > 0)
     {
       this.showProgressbar=true
       console.log(this.event)
@@ -258,8 +258,9 @@ export class EventsComponent implements OnInit {
           this.eventService.addEvent(this.event,this.selectedActivities).subscribe(data=>{
             console.log(data)
             this.showProgressbar=false
-            localStorage.removeItem("imageURL")
+            //localStorage.removeItem("imageURL")
             this.openAddSnackBar()
+            this.showTab2(true)
             form.reset()
             setTimeout(()=>{
               this.getAllEvent(this.page)
@@ -480,6 +481,7 @@ export class EventsComponent implements OnInit {
     console.log(this.imageURL);
     
     this.imageURL = localStorage.getItem("imageURL")
+    localStorage.removeItem("imageURL")
     
     
   }

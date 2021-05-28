@@ -28,7 +28,7 @@
                     </div>
                     <ng-container *ngIf="isShow">
                         <div class="col-12 justify-content-center">
-                            <form>
+                            <form #form="ngForm">
                                 <div class="row justify-content-center">
 
                                     <div class="col-12 col-sm-8 col-md-7 col-lg-5 col-xl-5">
@@ -46,19 +46,17 @@
                                     <div class="col-12 col-sm-8 col-md-7 col-lg-5 col-xl-4 ">
                                         <div class="form-group" style="position: relative;top: 30%;">
                                             <div class="custom-file">
-                                                <input type="file" accept=".pdf,.doc" class="custom-file-input" id="customFile"
+                                                <input required ngModel name="file" type="file" accept=".pdf,.doc" class="custom-file-input" id="customFile"
                                                 (change)="selectedFile($event)">
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>
-
+                                            <small *ngIf="selectedFileName" class="text-default">{{selectedFileName}} is choosen</small>
                                         </div>
                                     </div>
 
 
                                     <div class="col-12 text-center mt-3 ">
-                                        <button class="btn btn-primary btn-round btn-icon" (click)="uploadContent()">
-
-                                            <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                                        <button [disabled]="!form.valid" class="btn btn-dribbble btn-round btn-icon" (click)="uploadContent()">
                                             <span class="btn-inner--text ">Upload </span>
                                         </button>
                                     </div>

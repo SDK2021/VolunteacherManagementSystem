@@ -168,6 +168,15 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  announcementDisable:boolean=true
+  checkAnnouncement()
+  {
+    if(this.announcement.data=="")
+     this.announcementDisable=true
+    else
+      this.announcementDisable=false
+  }
+
   getUser() {
     let authuser: string[]
     authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
@@ -325,6 +334,7 @@ export class DashboardComponent implements OnInit {
   }
   addAnnouncement()
   {
+    this.announcementDisable=true
     this.showProgressbar=true
     console.log(this.announcement);
     

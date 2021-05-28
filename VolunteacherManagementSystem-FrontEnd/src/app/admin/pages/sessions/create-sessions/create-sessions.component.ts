@@ -65,6 +65,7 @@ export class CreateSessionsComponent implements OnInit {
   projectSelected: number;
 
   page:number=0
+  totalPages:number
 
   showSpinner:boolean=false
   noSessions:boolean=false
@@ -175,6 +176,7 @@ export class CreateSessionsComponent implements OnInit {
     let today: Date = new Date()
     this.sessionService.getSessionsByMonthAndYear(page,today.getMonth() + 1, today.getFullYear()).subscribe(data => {
       this.sessions = data['content']
+      this.totalPages = data['totalPages']
       console.log(this.sessions);
       this.showSpinner=false
       if (data != null) {
@@ -221,7 +223,7 @@ export class CreateSessionsComponent implements OnInit {
             console.log(data)
             this.showProgressbar = false
             this.openAddSnackBar()
-            form.reset()
+            this.showTab2(true)
             setTimeout(()=>{
               this.getSessionsByMonthAndYear(this.page)
             },2000)
@@ -418,8 +420,11 @@ export class CreateSessionsComponent implements OnInit {
   }
 
   onScroll() {
-    this.page += 1
-    this.getPageableEvent(this.page);
+    if(this.page<this.totalPages)
+    {
+      this.page += 1
+      this.getPageableEvent(this.page);
+    }
   }
   getPageableEvent(page: number) {
     let today:Date=new Date()

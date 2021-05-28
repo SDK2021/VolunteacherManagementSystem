@@ -170,7 +170,7 @@
                             </div>
                             <div class="col-12 p-0">
                                 <div class="row justify-content-center">
-                                    <div *ngFor="let u of users" class="col-xl-5 col-lg-5 col-9 m-2">
+                                    <div *ngFor="let u of users | user : search" class="col-xl-5 col-lg-5 col-9 m-2">
                                         <div class="row p-2  rounded border align-items-center ">
                                             <div class="col-auto">
                                                 <div class="avatar rounded-circle">

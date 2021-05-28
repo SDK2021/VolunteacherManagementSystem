@@ -45,40 +45,41 @@ export class CreatePostComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.imageURL = localStorage.getItem("imageURL")
+    // this.imageURL = localStorage.getItem("imageURL")
    
-    if(this.imageURL!=null)
-    {
-      this.fileService.delete(this.imageURL)
-      console.log("deleted");
-      localStorage.removeItem("imageURL")
+    // if(this.imageURL!=null)
+    // {
+    //   this.fileService.delete(this.imageURL)
+    //   console.log("deleted");
+    //   localStorage.removeItem("imageURL")
       
-    }
+    // }
   }
 
-  ngOnDestroy()
-  {
-    if(this.isPostCreated==false)
-    {
-      if(this.imageURL!=null)
-      {
-        this.fileService.delete(this.imageURL)
-        localStorage.removeItem("imageURL")
-      }
+  // ngOnDestroy()
+  // {
+  //   if(this.isPostCreated==false)
+  //   {
+  //     if(this.imageURL!=null)
+  //     {
+  //       this.fileService.delete(this.imageURL)
+  //       localStorage.removeItem("imageURL")
+  //     }
        
-      console.log("Bye Bye");
+  //     console.log("Bye Bye");
       
-    }
-  }
+  //   }
+  // }
 
 
   show(isShow):void
   {
+    this.showImageSpinner=true
     this.showForm=isShow
     console.log(this.imageURL);
     
     this.imageURL = localStorage.getItem("imageURL")
-   
+    localStorage.removeItem("imageURL")
     
   }
   openSnackBar() {
@@ -106,10 +107,10 @@ export class CreatePostComponent implements OnInit {
           console.log(this.timeLinePost)
           this.timelineService.createTimelinePost(this.timeLinePost).subscribe(data=>{
             console.log(data)
-            this.isPostCreated=true
+            //this.isPostCreated=true
             this.showProgressbar=false
             this.openSnackBar()
-            localStorage.removeItem("imageURL")
+            
             this.router.navigate(['/admin/post'])
           },error=>{
             console.log(error);

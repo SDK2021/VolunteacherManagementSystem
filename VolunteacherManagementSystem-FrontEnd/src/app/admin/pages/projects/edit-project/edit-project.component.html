@@ -82,9 +82,9 @@
                                                 <label class="form-control-label" for="input-enddate">Ending
                                                     Date</label>
                                                 <input type="text" id="input-enddate"
-                                                    class="form-control form-control-alternative" placeholder="Ending Date"
-                                                    name="endDate" [(ngModel)]="project.endingDate" onfocus="(this.type='date')">
-    
+                                                    class="form-control form-control-alternative" placeholder="Ending Date" #endingDate='ngModel'
+                                                    name="endDate" [(ngModel)]="project.endingDate" onfocus="(this.type='date')" (blur)="validateDate(startingDate.value,endingDate.value)">
+                                                    <small class="text-danger" *ngIf="invalidEndingDate">Invalid ending date</small>  
                                             </div>
                                         </div>
                                     </div>
@@ -207,7 +207,7 @@
     
                                     <ng-container *ngIf="edit">
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button type="submit" [disabled]="!form.valid"
+                                            <button type="submit" [disabled]="!form.valid || invalidEndingDate"
                                                 class=" mx-auto d-block btn btn-primary btn-round btn-icon"
                                                >
                                                 <span class="btn-inner--text ">Save</span>

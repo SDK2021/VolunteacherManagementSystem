@@ -59,6 +59,7 @@ import { EditSchoolComponent } from './pages/core/school/edit-school/edit-school
 import { EditVillageComponent } from './pages/core/edit-village/edit-village.component';
 import { EditSessionComponent } from './pages/sessions/edit-session/edit-session.component';
 import { AdminKidsListComponent } from './pages/kids/admin-kids-list/admin-kids-list.component';
+import { UserPipe } from './filters/user.pipe';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { AdminKidsListComponent } from './pages/kids/admin-kids-list/admin-kids-
     EditSchoolComponent,
     EditVillageComponent,
     EditSessionComponent,
-    AdminKidsListComponent
+    AdminKidsListComponent,
+    UserPipe
   ],
   imports: [
     CommonModule,

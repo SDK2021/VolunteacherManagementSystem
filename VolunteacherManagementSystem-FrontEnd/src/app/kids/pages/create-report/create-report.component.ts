@@ -12,7 +12,7 @@ import { Kid } from 'src/app/core/model/kid';
 import { KidsService } from '../../shared-services/kids.service';
 import { Area } from 'src/app/core/model/area';
 import { finalize } from 'rxjs/operators';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 
 @Component({
   selector: 'app-create-report',
@@ -128,16 +128,50 @@ export class CreateReportComponent implements OnInit {
     });
   }
 
-  
+  gujaratiError:boolean=false
+  englishError:boolean=false
+  mathsError:boolean=false
+
+  checkGujarati(marks:number)
+  {
+    if(marks>100)
+    {
+        this.gujaratiError=true
+    }
+    else
+    {
+      this.gujaratiError=false
+    }
+  }
+
+  checkEnglish(marks:number)
+  {
+    if(marks>100)
+    {
+      this.englishError=true
+    }
+    else
+    {
+      this.englishError=false
+    }
+  }
+
+  checkMaths(marks:number)
+  {
+    if(marks>100)
+    {
+      this.mathsError=true
+    }
+    else
+    {
+      this.mathsError=false
+    }
+  }
+
   createReport() {
 
     this.showProgressbar=true
     let kidId:number;
-
-    // TODO: Use EventEmitter with form value
-   // this.report = this.kidsReport.value
-    console.log(this.report);
-    
      kidId = this.route.snapshot.params['id']
       this.kidService.kidById(kidId).pipe(finalize(()=>{
         this.kidService.addKidReport(this.report).subscribe(data=>{
@@ -151,6 +185,7 @@ export class CreateReportComponent implements OnInit {
       })).subscribe(data=>{
         this.report.kid = data
       })
+    
   }  
 
   calculateAge(kid:Kid):Kid

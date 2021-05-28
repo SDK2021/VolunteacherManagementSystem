@@ -38,6 +38,7 @@ export class EditSchoolComponent implements OnInit {
   
 
   Show:boolean=true;
+  schoolDate:string
 
   villageSelected:number;
   stateSelected:number;
@@ -219,6 +220,7 @@ export class EditSchoolComponent implements OnInit {
       })
     })).subscribe(data=>{      
       this.school = data
+      this.schoolDate = this.school.startingDate
       console.log(data);
     })
   }
@@ -233,10 +235,13 @@ export class EditSchoolComponent implements OnInit {
     this.showProgressbar=true
     console.log(this.school)
     this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
-      let startdate:String = this.school.startingDate
-      let sdate:string[] = startdate.split("-")
-      let startingdate = sdate[0] + "-" +  sdate[1] + "-" + sdate[2]
-      this.school.startingDate = startingdate
+      if(!(this.schoolDate === this.school.startingDate))
+      {
+        let startdate:String = this.school.startingDate
+        let sdate:string[] = startdate.split("-")
+        let startingdate = sdate[1] + "-" +  sdate[2] + "-" + sdate[0]
+        this.school.startingDate = startingdate
+      }
       this.schoolService.editSchool(this.school.schoolId,this.school).subscribe(data=>{
         console.log(data)
         setTimeout(()=>{

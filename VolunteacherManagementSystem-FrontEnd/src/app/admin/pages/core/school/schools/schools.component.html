@@ -208,7 +208,7 @@
                                             <select required class="form-control form-control-alternative" [ngClass]="{'ng-invalid':schoolStatus.invalid&&schoolStatus.touched}" id="input-status"
                                                 name="status" #schoolStatus="ngModel" ngModel >
                                                 <option value="" selected>Select</option>
-                                                <option *ngFor="let s of status"  [value]="status.indexOf(s)">{{s}}</option>
+                                                <option *ngFor="let s of status"  [value]="status.indexOf(s)+1">{{s}}</option>
                                             </select>
                                 
                                             <div class="text-danger" *ngIf="schoolStatus.invalid&&schoolStatus.touched">

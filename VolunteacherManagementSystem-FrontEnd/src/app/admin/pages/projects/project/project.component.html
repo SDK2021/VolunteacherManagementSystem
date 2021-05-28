@@ -69,7 +69,7 @@
                                                 <input type="date" id="input-startdate"
                                                     class="form-control form-control-alternative"
                                                     placeholder="Starting Date" name="startdate" #startingDate="ngModel"
-                                                    [(ngModel)]="project.startingDate" required>
+                                                    [(ngModel)]="project.startingDate" required >
                                                 <small *ngIf="startingDate.errors?.required && startingDate.touched"
                                                     class="text-danger">Starting date is required</small>
                                             </div>
@@ -79,10 +79,10 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-enddate">Ending
                                                     Date</label>
-                                                <input type="date" id="input-enddate"
+                                                <input type="date" id="input-enddate" #endingDate="ngModel"
                                                     class="form-control form-control-alternative" placeholder="Ending Date"
-                                                    name="endDate" [(ngModel)]="project.endingDate">
-    
+                                                    name="endDate" [(ngModel)]="project.endingDate" (change)="validateDate(startingDate.value,endingDate.value)">
+                                                 <small class="text-danger" *ngIf="invalidEndingDate">Invalid ending date</small>   
                                             </div>
                                         </div>
                                     </div>
@@ -216,7 +216,7 @@
     
                                     <ng-container *ngIf="!edit">
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button [disabled]="!form.valid"
+                                            <button [disabled]="!form.valid || invalidEndingDate"
                                                 class=" mx-auto d-block btn btn-primary btn-round btn-icon">
                                                 <span class="btn-inner--text ">Submit</span>
                                             </button>

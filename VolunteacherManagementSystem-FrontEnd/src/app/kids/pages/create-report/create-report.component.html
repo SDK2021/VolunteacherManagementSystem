@@ -88,7 +88,10 @@
                                                         for="input-gujarati">Gujarati</label>
                                                     <input autocomplete="off" [(ngModel)]="report.gujarati"  required name="gujarati" #gujarati="ngModel" type="number"  id="input-gujarati"
                                                         class="form-control form-control-alternative"
-                                                        placeholder="Gujarati" min="0" max="100" >
+                                                        placeholder="Gujarati" min="0" max="100" (input)="checkGujarati(gujarati.value)">
+                                                        <small
+                                                        *ngIf="gujaratiError" 
+                                                        class="text-danger">Invalid Marks</small>
                                                 </div>
                                             </div>
 
@@ -98,8 +101,12 @@
                                                         for="input-english">English</label>
                                                     <input autocomplete="off" required name="english" #english="ngModel" type="number" id="input-english"
                                                         class="form-control form-control-alternative" [(ngModel)]="report.english"
-                                                        placeholder="English" min="0" max="100">
+                                                        placeholder="English" min="0" max="100" (input)="checkEnglish(english.value)">
+                                                        <small
+                                                *ngIf="englishError" 
+                                                class="text-danger">Invalid Marks</small>
                                                 </div>
+                                                
                                             </div>
 
                                             <div class="col-lg-3 col-md-7  col-sm-7 col-10">
@@ -107,7 +114,10 @@
                                                     <label class="form-control-label" for="input-maths">Maths</label>
                                                     <input autocomplete="off" required name="maths" #maths="ngModel" type="number" id="input-maths"
                                                         class="form-control form-control-alternative" [(ngModel)]="report.maths"
-                                                        placeholder="Maths" min="0" max="100">
+                                                        placeholder="Maths" min="0" max="100" (input)="checkMaths(maths.value)">
+                                                        <small
+                                                        *ngIf="mathsError" 
+                                                        class="text-danger">Invalid Marks</small>
                                                 </div>
                                             </div>
                                             <br>
@@ -116,9 +126,7 @@
                                                     *ngIf=" gujarati.errors?.required && gujarati.touched || english.errors?.required && english.touched || maths.errors?.required && maths.touched  "
                                                     class="text-danger">Marks are required</small>
 
-                                                    <small
-                                                    *ngIf="gujaratiError" 
-                                                    class="text-danger">Invalid Marks</small>
+                                                   
                                             </div>
 
                                         </div>

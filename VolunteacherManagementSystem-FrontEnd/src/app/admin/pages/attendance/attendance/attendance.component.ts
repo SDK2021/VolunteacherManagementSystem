@@ -7,6 +7,7 @@ import { Kid } from 'src/app/core/model/kid';
 import { KidsGroup } from 'src/app/core/model/kids-group';
 import { Session } from 'src/app/core/model/session';
 import { User } from 'src/app/core/model/user';
+import { Usertype } from 'src/app/core/model/usertype';
 import { KidsService } from 'src/app/kids/shared-services/kids.service';
 
 @Component({
@@ -42,6 +43,7 @@ export class AttendanceComponent implements OnInit {
   constructor(private kidsService:KidsService,private router:Router,private sessionService:SessionsService,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+   
     this.getUsersBySession(this.route.snapshot.params['id'])
     this.getkidsgroup()
     this.groupId = 0

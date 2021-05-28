@@ -106,6 +106,7 @@ export class PostsComponent implements OnInit {
         this.showSpinner=false
         if (data != null) {
           this.pLength = data['content'].length
+          console.log(this.pLength);
           
         }
        

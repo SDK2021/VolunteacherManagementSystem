@@ -146,7 +146,7 @@
                                                     [selected]="s.stateId==7">{{s.stateName}}</option>
                                             </select>
                                             <div class="text-danger" *ngIf="stateSelected==0">
-                                                Please select a valid state.
+                                               <small> Please select a valid state.</small>
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@
                                                 </option>
                                             </select>
                                             <div class="text-danger" *ngIf="districtSelected==0">
-                                                Please select a valid District.
+                                                <small>Please select a valid District.</small>
                                             </div>
                                         </div>
                                     </div>
@@ -178,7 +178,7 @@
                                                 </option>
                                             </select>
                                             <div class="text-danger" *ngIf="talukaSelected==0">
-                                                Please select a valid Taluka.
+                                                <small>Please select a valid Taluka.</small>
                                             </div>
                                         </div>
                                     </div>
@@ -194,7 +194,9 @@
                                                 </option>
                                             </select>
                                             <div class="text-danger" *ngIf="((village.invalid&&village.touched) || (village.touched&&villageSelected==0))">
-                                                Please select a valid Village.
+                                                <small>
+                                                    Please select a valid Village.
+                                                </small>
                                             </div>
                                         </div>
                                     </div>
@@ -212,7 +214,7 @@
                                                 </option>
                                             </select>
                                             <div class="text-danger" *ngIf="project.touched&&project.invalid">
-                                                Please select a valid Project.
+                                                <small>Please select a valid Project.</small>
                                             </div>
                                         </div>
                                     </div>
