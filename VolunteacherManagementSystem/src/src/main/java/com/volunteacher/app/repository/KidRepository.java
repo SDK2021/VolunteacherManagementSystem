@@ -1,7 +1,5 @@
 package com.volunteacher.app.repository;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -13,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.volunteacher.app.model.Kid;
-import com.volunteacher.app.model.Volunteacher;
 
 
 @Repository
@@ -24,6 +21,8 @@ public interface KidRepository extends PagingAndSortingRepository<Kid, Long>{
 	public Page<Kid> findAllByVillageVillageId(int id,Pageable pageable);
 	
 	public Page<Kid> findAllByAreaAreaId(int id,Pageable pageable);
+	
+	public Page<Kid> findAllByAreaAreaId(int id);
 	
 	public Page<Kid> findAllByVillageVillageIdAndGroupGroupId(int vid, int gid,Pageable pageable);
 	
