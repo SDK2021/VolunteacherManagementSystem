@@ -11,6 +11,7 @@ import { finalize } from 'rxjs/operators';
 import { DialogBoxComponent } from 'src/app/admin/components/dialog-box/dialog-box.component';
 import { VolunteacherPipe } from 'src/app/admin/filters/volunteacher.pipe';
 import { VolunteachersService } from 'src/app/admin/shared-services/volunteachers.service';
+import { State } from 'src/app/core/model/state';
 import { Volunteacher } from 'src/app/core/model/volunteacher';
 
 @Component({
@@ -43,6 +44,7 @@ export class VolunteachersListComponent implements OnInit {
   ngOnInit(): void {
     this.page=0
     this.getAllVoluntecahers(this.page)
+    
   }
 
   handleError(error) {
@@ -87,12 +89,21 @@ export class VolunteachersListComponent implements OnInit {
   getAllVoluntecahers(page:number) {
 
     this.showSpinner=true
-    this.sharedService.getAllVolunteachers(page).subscribe(data => {
+    this.sharedService.getAllVolunteachers(page).pipe(finalize(()=>{
+      for (let vt of this.volunteachers) {
+        this.sharedService.getStatusVolunteachers(vt.volunteacherId).subscribe(data=>{
+          vt.status = data
+        })
+      }
+    })).subscribe(data => {
       this.volunteachers = data['content']
       this.totalVTPages = data['totalPages']
+     
       console.log(this.volunteachers);
       this.vLength=this.volunteachers.length
       this.showSpinner=false
+
+
     }, error => {
       this.handleError(error)
     })

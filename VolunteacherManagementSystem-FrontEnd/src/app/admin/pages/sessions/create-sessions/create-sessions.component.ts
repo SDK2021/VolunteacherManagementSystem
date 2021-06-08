@@ -225,7 +225,7 @@ export class CreateSessionsComponent implements OnInit {
             this.openAddSnackBar()
             this.showTab2(true)
             setTimeout(()=>{
-              this.getSessionsByMonthAndYear(this.page)
+              this.getSessionsByMonthAndYear(0)
             },2000)
           },error=>{
             this.handleError(error)

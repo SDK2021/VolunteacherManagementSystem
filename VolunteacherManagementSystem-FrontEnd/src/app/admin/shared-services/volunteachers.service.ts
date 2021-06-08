@@ -40,6 +40,12 @@ export class VolunteachersService {
      .pipe(retry(3))
   }
 
+  getStatusVolunteachers(vid:number):Observable<number>
+  {
+     return this.http.get<number>(`${"http://localhost:9090/vms/volunteacher-status?vid="}${vid}`)
+     .pipe(retry(3))
+  }
+
   getRemainingVolunteachers(projectId:number):Observable<User[]>
   {
     return this.http.get<User[]>(`${"http://localhost:9090/vms/remaining-volunteachers?project="}${projectId}`)

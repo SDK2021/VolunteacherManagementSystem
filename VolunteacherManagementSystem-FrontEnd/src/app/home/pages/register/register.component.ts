@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
   register(){
     this.disabled=true
     this.showProgressbar=true
-    this.applicantRequest.status = 2;
+    this.applicantRequest.status = 0;
     //this.applicantRequest.requestDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
     console.log(this.applicantRequest)
     this._userService.registration(this.applicantRequest).subscribe(data=>{

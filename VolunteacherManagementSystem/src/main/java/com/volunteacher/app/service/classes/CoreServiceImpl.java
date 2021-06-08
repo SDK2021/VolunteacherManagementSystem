@@ -114,8 +114,8 @@ public class CoreServiceImpl implements CoreService {
 		try {
 			List<Village> villageList = (List<Village>) villageRepository.findAll();
 			
-			if(villageList.size() < 1)
-				throw new ResourceNotFoundException("Villages list not found");
+//			if(villageList.size() < 1)
+//				throw new ResourceNotFoundException("Villages list not found");
 			
 			return ResponseEntity.status(HttpStatus.OK).body(villageList);
 		} catch (Exception e) {

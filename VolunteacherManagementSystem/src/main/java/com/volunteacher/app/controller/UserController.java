@@ -162,4 +162,10 @@ public class UserController {
 	{
 		return userService.totalVolunteacherBySessionVillage(villageId);
 	}
+	
+	@GetMapping("/volunteacher-status")
+	public int volunteacherStatus(@RequestParam("vid") int vid)
+	{
+		return volunteacherService.getVolunteacherStatus(vid);
+	}
 }

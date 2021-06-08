@@ -248,7 +248,7 @@ export class EventsComponent implements OnInit {
       let sdate:string[] = eventdate.split("-")
       let eventDate = sdate[1] + "-" +  sdate[2] + "-" + sdate[0]
       this.event.eventDate = eventDate
-      this.event.notified = true
+      this.event.notified = false
 
       this.event.eventStartingTime = this.event.eventStartingTime + ":00"
       this.event.eventEndingTime = this.event.eventEndingTime + ":00"
@@ -263,7 +263,7 @@ export class EventsComponent implements OnInit {
             this.showTab2(true)
             form.reset()
             setTimeout(()=>{
-              this.getAllEvent(this.page)
+              this.getAllEvent(0)
             },2000)
           }, error => {
             this.handleError(error)
@@ -481,7 +481,7 @@ export class EventsComponent implements OnInit {
     console.log(this.imageURL);
     
     this.imageURL = localStorage.getItem("imageURL")
-    localStorage.removeItem("imageURL")
+    // localStorage.removeItem("imageURL")
     
     
   }

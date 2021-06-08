@@ -65,7 +65,7 @@ public class User {
 	@OneToOne
 	private UserType type;
 
-	@Column(nullable = false, columnDefinition = "TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String photo;
 	
 	@Column(length = 10)

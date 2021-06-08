@@ -1,5 +1,6 @@
 package com.volunteacher.app.repository;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -27,6 +28,9 @@ public interface SessionRepository extends PagingAndSortingRepository<Session, L
 	
 	@Query(value = "select COUNT(*) from session",nativeQuery = true)
 	public int allSessions();
+	
+	@Query(value = "select * from session where DATE(NOW()) > DATE(:joinDate) and YEAR(NOW()) > YEAR(:joinDate)",nativeQuery = true)
+	public List<Session> sessionsForVolunteacher(Calendar joinDate);
 	
 	@Query(value = "Select session_id from session where session_date > DATE_SUB(NOW(),INTERVAL 15 DAY) ORDER BY session_date DESC",nativeQuery = true)
 	public List<Long> getPreviousSessions();

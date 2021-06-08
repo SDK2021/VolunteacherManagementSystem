@@ -54,7 +54,7 @@ public class Payment {
 	private double amount;
 
 	@NotNull
-	@Column(nullable = false, length = 25)
+	@Column(nullable = false, length = 60)
 	private String transactionId;
 
 	@NotNull

@@ -76,10 +76,11 @@ export class CreatePostComponent implements OnInit {
   {
     this.showImageSpinner=true
     this.showForm=isShow
-    console.log(this.imageURL);
+    
     
     this.imageURL = localStorage.getItem("imageURL")
-    localStorage.removeItem("imageURL")
+     localStorage.removeItem("imageURL")
+    console.log(this.imageURL);
     
   }
   openSnackBar() {

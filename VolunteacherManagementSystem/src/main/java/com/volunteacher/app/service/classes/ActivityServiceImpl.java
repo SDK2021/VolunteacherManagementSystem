@@ -80,6 +80,7 @@ public class ActivityServiceImpl implements ActivityService{
 	{
 		try {
 			activityRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Activity is not found for id: "+ id));
+			activityRepository.deleteActivityEvent(id);
 			activityRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {

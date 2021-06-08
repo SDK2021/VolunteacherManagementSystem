@@ -199,9 +199,12 @@ export class SchoolsComponent implements OnInit {
         this.openAddSnackBar()
         this.showTab2(true)
         this.showTab1(false)
+        
         setTimeout(()=>{
           this.getAllSchools(this.page)
+          this.school=null
         },2000)
+       
       },error=>{
         this.handleError(error)
       })

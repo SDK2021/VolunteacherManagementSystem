@@ -110,13 +110,13 @@ public class ProjectServiceImpl implements ProjectService{
 			updateProject.setProjectName(project.getProjectName());
 			updateProject.setProjectData(project.getProjectData());
 			updateProject.setStartingDate(project.getStartingDate());
+			updateProject.setEndingDate(project.getEndingDate());
 			updateProject.setCreationDate(project.getCreationDate());
 			updateProject.setCreationTime(project.getCreationTime());
 			if(vIds.length > 0)
 				updateProject.setUsers(this.createVolunteachersList(vIds));
 			if(kIds.length > 0)
-				updateProject.setKids(this.createKidsList(kIds));
-			updateProject.setEndingDate(project.getCreationDate());
+				updateProject.setKids(this.createKidsList(kIds));			
 			updateProject.setDescription(project.getDescription());
 			updateProject.setPhoto(project.getPhoto());
 			

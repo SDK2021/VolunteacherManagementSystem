@@ -148,13 +148,16 @@ export class VolunteacherFormComponent implements OnInit {
     })
   }
 
+  showProgressbar:boolean=false
   addUser()
   {
+    this.showProgressbar=true
     console.log(this.v);
       let sessiondate: string = this.v.user.dob
       let dob: string[] = sessiondate.split("-")
       let dateofbirth = dob[1] + "-" + dob[2] + "-" + dob[0]
       this.v.user.dob = dateofbirth
+      this.v.user.photo='https://firebasestorage.googleapis.com/v0/b/volunteacher-management-50e59.appspot.com/o/vms%2Fusers%2Fprofile%2Fdummy%20user.pngPCmLUI3m?alt=media&token=6c615dcc-cd9a-4d01-af0a-aba279687b02'
 
     if(this.isVt == true)
     {
@@ -166,7 +169,13 @@ export class VolunteacherFormComponent implements OnInit {
       console.log(this.v);
       this.volunteacherService.addVolunteacher(this.v).subscribe(data=>{
         console.log(data);
+        this.showProgressbar=false
+        setTimeout(() => {
+          this.router.navigate(['/login'])
+        }, 1500);
         
+      },error=>{
+        this.handleError(error)
       })
 
       })).subscribe(data=>{
@@ -183,7 +192,11 @@ export class VolunteacherFormComponent implements OnInit {
         this.v.user.type = usertype
         console.log(this.v);
         this.volunteacherService.addVolunteacher(this.v).subscribe(data=>{
-          console.log(data);  
+          console.log(data); 
+          this.showProgressbar=false
+          setTimeout(() => {
+            this.router.navigate(['/login'])
+          }, 1500); 
         })
   
         })).subscribe(data=>{

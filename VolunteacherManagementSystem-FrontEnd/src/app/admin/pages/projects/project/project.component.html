@@ -33,13 +33,13 @@
                             <div class="col-12 justify-content-center">
                                 <form (ngSubmit)="addProject(form) " #form="ngForm">
                                     <div class="mx-auto d-block col-xl-5 col-lg-7 col-10 mt-3 ">
-                                        <ng-container *ngIf="showImageSpinner">
+                                        <!-- <ng-container *ngIf="showImageSpinner">
                                             <div class="col-12 my-8 ">
                                                 <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
                                                 </mat-spinner>
                                             </div>
-                                        </ng-container>
-                                        <img src="{{imageURL}}" style="width:100%;" (load)="load()">
+                                        </ng-container> -->
+                                        <img src="{{imageURL}}" style="width:100%;" >
                                       </div>
                                     <div class="row mt-5 justify-content-center">
                                         
@@ -124,13 +124,13 @@
                                                             <div class="col-auto">
                                                                 <!-- Avatar -->
                                                                 <div class="avatar rounded-circle">
-                                                                    <ng-container *ngIf="showImageSpinner">
+                                                                    <!-- <ng-container *ngIf="showImageSpinner">
                                                                         <div class="col-12 my-8 ">
                                                                             <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
                                                                             </mat-spinner>
                                                                         </div>
-                                                                    </ng-container>
-                                                                    <img (load)="load()"
+                                                                    </ng-container> -->
+                                                                    <img 
                                                                         src="{{v.user.photo}}">
                                                                 </div>
                                                             </div>
@@ -173,14 +173,14 @@
                                                                 <div class="row align-items-center">
                                                                     <div class="col-auto">
                                                                         <!-- Avatar -->
-                                                                        <ng-container *ngIf="showImageSpinner">
+                                                                        <!-- <ng-container *ngIf="showImageSpinner">
                                                                             <div class="col-12 my-8 ">
                                                                                 <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
                                                                                 </mat-spinner>
                                                                             </div>
-                                                                        </ng-container>
+                                                                        </ng-container> -->
                                                                         <div class="avatar rounded-circle">
-                                                                            <img (load)="load()"
+                                                                            <img 
                                                                                 src="{{k.photo}}">
                                                                         </div>
                                                                     </div>

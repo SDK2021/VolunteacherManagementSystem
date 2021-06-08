@@ -159,6 +159,7 @@ export class AreasComponent implements OnInit {
 
   saveArea(index:number)
   {
+    
     this.openEditSnackBar()
    
     console.log(this.area);

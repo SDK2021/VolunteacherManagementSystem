@@ -4,9 +4,8 @@ import Chart from 'chart.js';
 import { Area } from 'src/app/core/model/area';
 import { Kid } from 'src/app/core/model/kid';
 import { Kidsreport } from 'src/app/core/model/kidsreport';
-import { authentication } from 'src/app/home/shared-services/authentication.service';
 import { KidsService } from 'src/app/kids/shared-services/kids.service';
-import {  chartOptions, parseOptions } from 'src/app/variables/charts';
+import { colors, chartOptions, parseOptions } from 'src/app/variables/charts';
 
 @Component({
   selector: 'app-kid-report',
@@ -26,6 +25,10 @@ export class KidReportComponent implements OnInit {
 
   showImageSpinner:boolean=true
 
+  personalityChart:any
+
+  kidReports:Array<Kidsreport>=new Array()
+
 
   constructor(private route:ActivatedRoute,private kidsService:KidsService,private router:Router) {}
 
@@ -33,10 +36,10 @@ export class KidReportComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(Chart.colors);
-    console.log(Chart.colors.theme['danger']);
+   
     
     
+    this.getAllKidsReport()
 
     this.kidReport.kid=new Kid()
     this.kidReport.kid.area=new Area()
@@ -56,11 +59,6 @@ export class KidReportComponent implements OnInit {
 
     parseOptions(Chart, chartOptions());
 
-    var personalityChart = new Chart(chartPie, {
-      type: 'pie',
-      options: this.personalityChart.options,
-      data: this.personalityChart.data
-    });
     
     var chartSales = document.getElementById('chart-sales');
 
@@ -108,6 +106,73 @@ export class KidReportComponent implements OnInit {
       this.showSpinner=false
       this.kidReport.kid=this.calculateAge(this.kidReport.kid)
       console.log(this.kidReport);
+
+      var chartPie = document.getElementById('chart-pie');
+      this.personalityChart = new Chart(chartPie, {
+        type: 'pie',
+        options: {
+
+        },
+        data: {
+          labels: ["Discipline", "Goshthi", "Abhivyakti"],
+          datasets: [
+            {
+              data: [this.kidReport.discipline, this.kidReport.goshthi, this.kidReport.abhivyakti],
+              backgroundColor: [
+                "blueviolet",
+                "lightpink",
+                "indigo"
+              ]
+            }
+          ],
+
+        }
+      })
+      var chartOrders = document.getElementById('chart-orders');
+
+      var performanceChart = new Chart(chartOrders, {
+        type: 'bar',
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  callback: function (value) {
+                    if (!(value % 10)) {
+                      return value;
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          tooltips: {
+            callbacks: {
+              label: function (item, data) {
+                var label = data.datasets[item.datasetIndex].label || "";
+                var yLabel = item.yLabel;
+                var content = "";
+                if (data.datasets.length > 1) {
+                  content += label;
+                }
+                content += yLabel;
+                return content;
+              }
+            }
+          }
+        },
+        data: {
+          labels: ["Prayer", "Games", "Sports", "Literature", "Art", "Volunteaching"],
+          datasets: [
+            {
+              label: "Performance",
+              data: [this.kidReport.prayer, this.kidReport.games, this.kidReport.sports, this.kidReport.literature, this.kidReport.artCraft, this.kidReport.volunteaching]
+            }
+          ]
+        }
+      })
+    
+
       
     },error=>{
       this.handleError(error)
@@ -131,25 +196,61 @@ export class KidReportComponent implements OnInit {
      return kid
      
   }
-  personalityChart = {
-    options: {
-  
-    },
-    data: {
-      labels: ["Discipline", "Prayer", "Goshthi","Abhivyakti"],
-      datasets: [
-        {
-          data: [this.kidReport.discipline, this.kidReport.prayer, this.kidReport.goshthi,this.kidReport.abhivyakti],
-          backgroundColor: [
-            "red",
-            "green",
-            "blue"
-          ]
-        }
-      ],
-      
-    }
+  getAllKidsReport() {
+    this.kidsService.getKidReport(this.route.snapshot.params['id']).subscribe(data => {
+      this.kidReports = data
+      console.log(this.kidReports);
+      var chartProgress = document.getElementById('chart-sales')
+      if (this.kidReports.length >= 3) {
+        console.log("Hello");
+        
+        // this.showkidsReportComparision = true
+
+        let totalReport1: number = ((this.kidReports[0].abhivyakti + this.kidReports[0].artCraft + this.kidReports[0].discipline + this.kidReports[0].english + this.kidReports[0].games
+          + this.kidReports[0].goshthi + this.kidReports[0].gujarati + this.kidReports[0].literature + this.kidReports[0].maths + this.kidReports[0].prayer + this.kidReports[0].sports + this.kidReports[0].volunteaching) * 100) / 120
+
+        let totalReport2: number = ((this.kidReports[1].abhivyakti + this.kidReports[1].artCraft + this.kidReports[1].discipline + this.kidReports[1].english + this.kidReports[1].games
+          + this.kidReports[1].goshthi + this.kidReports[1].gujarati + this.kidReports[1].literature + this.kidReports[1].maths + this.kidReports[1].prayer + this.kidReports[1].sports + this.kidReports[1].volunteaching) * 100) / 120
+
+        let totalReport3: number = ((this.kidReports[2].abhivyakti + this.kidReports[2].artCraft + this.kidReports[2].discipline + this.kidReports[2].english + this.kidReports[2].games
+          + this.kidReports[2].goshthi + this.kidReports[2].gujarati + this.kidReports[2].literature + this.kidReports[2].maths + this.kidReports[2].prayer + this.kidReports[2].sports + this.kidReports[2].volunteaching) * 100) / 120
+
+        console.log(+totalReport1 + " " + +totalReport3 + " " + +totalReport2);
+       
+        
+
+        let progressChart = new Chart(chartProgress, {
+          type: 'line',
+          options: {
+            scales: {
+              yAxes: [{
+                gridLines: {
+                  color: colors.gray[900],
+                  zeroLineColor: colors.gray[900]
+                },
+                ticks: {
+                  callback: function (value) {
+                    if (!(value % 10)) {
+                      return value;
+                    }
+                  }
+                }
+              }]
+            }
+          },
+          data: {
+            labels: ['Report1', 'Report2', 'Report3'],
+            datasets: [{
+              label: 'Performance',
+               data: [Math.round(totalReport1), Math.round(totalReport2), Math.round(totalReport3)]
+              //data: [25,25,25]
+            }]
+          }
+        })
+      }
+    },error=>{
+      this.handleError(error)
+    })
+
   }
-
-
 }

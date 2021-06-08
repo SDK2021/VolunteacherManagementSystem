@@ -22,6 +22,8 @@ public interface VolunteacherService {
 	
 	public List<Volunteacher> vtByToday();
 	
+	public int getVolunteacherStatus(int vid); 
+	
 	public ResponseEntity<Object> getTotalVolunteacher(); 
 	
 	public ResponseEntity<Object> getNewVolunteachers(int page);

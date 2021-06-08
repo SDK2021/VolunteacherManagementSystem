@@ -13,7 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.volunteacher.app.exception.ResourceNotFoundException;
+import com.volunteacher.app.model.Session;
+import com.volunteacher.app.model.User;
 import com.volunteacher.app.model.Volunteacher;
+import com.volunteacher.app.repository.SessionRepository;
 import com.volunteacher.app.repository.VolunteacherRepository;
 import com.volunteacher.app.service.interfaces.VolunteacherService;
 
@@ -25,6 +28,9 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	SessionRepository sessionRepository;
 	
 	@Override
 	public ResponseEntity<Object> volunteacherList(int page)
@@ -155,4 +161,32 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch new Volunteachers");
 		}
 	}
+	
+	@Override
+	public int getVolunteacherStatus(int vid) {
+		Volunteacher volunteacher = volunteacherRepository.findById(vid).orElseThrow(()->new ResourceNotFoundException("Error"));
+		int count = 0;
+		List<Session> sessions  = this.sessionRepository.sessionsForVolunteacher(volunteacher.getJoiningDate());
+		System.out.println(this.sessionRepository.sessionsForVolunteacher(volunteacher.getJoiningDate()));
+		for (Session session : sessions) {
+			session.getUsers();
+			for (User user : session.getUsers()) {
+				if(user.getUserId() == volunteacher.getUser().getUserId())
+				{
+					count++;
+					break;
+				}
+			}
+		}
+		System.out.println(count);
+		if(count < sessions.size()/2)
+		{
+			return 2;
+		}
+		else 
+		{
+			return 1;
+		}
+	}
+
 }
