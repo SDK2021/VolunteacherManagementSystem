@@ -17,7 +17,7 @@
         <div class="col p-0">
             <div class="card shadow border-0 pb-8">
                 <div class="container">
-                    <app-upload-img  [baseUrl]="baseUrl" [isPost]="true" (show)="show($event)" ></app-upload-img>
+                    <app-upload-img  [baseUrl]="baseUrl" [isPost]="true" (show)="show($event)" (croppedImg)="getCroppedImage($event)" ></app-upload-img>
                 </div>
 
                 <div *ngIf="showForm" class="row justify-content-center">
@@ -32,7 +32,7 @@
                                             </mat-spinner>
                                         </div>
                                     </ng-container>
-                                 <img (load)="load()" src="{{imageURL}}" style="width:100%;" alt="">
+                                 <img (load)="load()" [src]="croppedImage" style="width:100%;" alt="">
                                 </div>
                                 
                                 

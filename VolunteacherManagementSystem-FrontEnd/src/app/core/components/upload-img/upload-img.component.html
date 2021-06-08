@@ -20,8 +20,9 @@
                         <input accept=".png,.jpg" style="cursor: pointer;" type="file" class="custom-file-input" id="customFile"
                             (change)="fileChangeEvent($event);selectFile($event)">
                         <label class="custom-file-label" for="customFile">Choose file</label>
+                        <button [disabled]="showError" class="btn btn-primary mx-auto d-block mt-3" (click)="getCroppedImage()">Uplaod</button>
                     </div>
-
+                    
                 </div>
             </div>
         </div>
@@ -33,7 +34,7 @@
         </div>
 
         <div class="row justify-content-center" style="margin-top: 5%;">
-            <div class="text-center col-xl-8 col-lg-12 col-md-12 order-sm-2 order-2" style="height: 70vh;">
+            <div class="text-center col-xl-8 col-lg-12 col-md-12 order-sm-2 order-2" style="height: 70vh;position: relative;">
                 <h5>Crop Image</h5>
                 <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
                     [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="x / y" [resizeToWidth]="1400"  [resizeToHeight]="1200" 
@@ -49,7 +50,7 @@
         </div>
         
         <div class="row justify-content-center mt-6">
-            <button [disabled]="showError" class="btn btn-primary" (click)="upload()">Uplaod</button>
+           
         </div>
     </form>
     </div>

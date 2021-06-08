@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import {AngularFireDatabase, AngularFireList} from '@angular/fire/database'
-import {AngularFireStorage} from '@angular/fire/storage'
-import { Observable } from 'rxjs';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database'
+import { AngularFireStorage } from '@angular/fire/storage'
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { UploadImgComponent } from '../components/upload-img/upload-img.component';
 import { FileUpload } from '../model/file-upload';
 
 @Injectable({
@@ -11,57 +10,70 @@ import { FileUpload } from '../model/file-upload';
 })
 export class FileUploadService {
 
-  private basePath:string=''
-  public imageUrl:string
-  constructor(private database:AngularFireDatabase, private storage:AngularFireStorage) { }
+  private basePath: string = ''
+  public imageUrl = new BehaviorSubject<string>(null)
+  constructor(private database: AngularFireDatabase, private storage: AngularFireStorage) { }
 
-  pushFileToStorage(file:FileUpload, baseUrl:string):Observable<number>
-  {
-    this.basePath=baseUrl
-    
+  pushFileToStorage(file: FileUpload, baseUrl: string): Observable<number> {
+    this.basePath = baseUrl
+
     //Defining url to upload 
-    const filePath=`${this.basePath}/${file.file.name}`
+    const filePath = `${this.basePath}/${file.file.name}`
 
     //Defining storage ref to call upload 
-    const storageRef=this.storage.ref(filePath)
-    const uploadTask=this.storage.upload(filePath,file.file)
+    const storageRef = this.storage.ref(filePath)
+    const uploadTask = this.storage.upload(filePath, file.file)
 
     //Saving File
     uploadTask.snapshotChanges().pipe(
-      finalize(()=>{
-        
-        storageRef.getDownloadURL().subscribe(downloadUrl=>{
-          file.url=downloadUrl
-          this.imageUrl=downloadUrl
-          file.name=file.file.name
+      finalize(() => {
+
+        storageRef.getDownloadURL().subscribe(downloadUrl => {
+          file.url = downloadUrl
+          // this.imageUrl=downloadUrl
+          file.name = file.file.name
           this.saveFile(file)
           console.log(file.url);
-          if(localStorage.getItem("imageURL")!=null)
-          {
-    
-            localStorage.removeItem("imageURL")
-          }
-          localStorage.setItem("imageURL",file.url);
-
-          console.log(localStorage.getItem("imageURL"))
-          
+          this.imageUrl.next(downloadUrl)
         })
       })
     ).subscribe()
-      console.log(uploadTask.percentageChanges());
-      
+    console.log(uploadTask.percentageChanges());
     return uploadTask.percentageChanges();
-
-    
   }
 
   //Save file in database
-  private saveFile(file:FileUpload)
-  {
-      this.database.list(this.basePath).push(file)
+  private saveFile(file: FileUpload) {
+    this.database.list(this.basePath).push(file)
   }
 
-  // deleteFile(file:FileUpload)
+  delete(downloadUrl) {
+    return this.storage.storage.refFromURL(downloadUrl).delete();
+  }
+
+  getFiles(numberItems): AngularFireList<FileUpload> {
+    return this.database.list(this.basePath, ref =>
+      ref.limitToLast(numberItems));
+  }
+}
+
+// if(localStorage.getItem("imageURL")!=null)
+          // {
+
+          //   localStorage.removeItem("imageURL")
+          // }
+          // localStorage.setItem("imageURL",file.url);
+
+          // console.log(localStorage.getItem("imageURL"))
+
+
+// private deleteFileStorage(name: string): void {
+  //   const storageRef = this.storage.ref(this.basePath);
+  //   storageRef.child(name).delete();
+  // }
+
+
+ // deleteFile(file:FileUpload)
   // {
   //   this.deleteFileDatabase(file.key).then(()=>{
   //     this.deleteFileDatabase(file.file.name)
@@ -73,19 +85,3 @@ export class FileUploadService {
   // {
   //     return this.database.list(this.basePath).remove(key)
   // }
-
-  delete(downloadUrl) {
-    return this.storage.storage.refFromURL(downloadUrl).delete();
-  }
- 
-
-  // private deleteFileStorage(name: string): void {
-  //   const storageRef = this.storage.ref(this.basePath);
-  //   storageRef.child(name).delete();
-  // }
-
-  getFiles(numberItems): AngularFireList<FileUpload> {
-    return this.database.list(this.basePath, ref =>
-      ref.limitToLast(numberItems));
-  }
-}

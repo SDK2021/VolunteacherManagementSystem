@@ -38,6 +38,7 @@ export class UploadImgComponent implements OnInit {
   scale = 1;
   transform: ImageTransform = {};
   imageChangedEvent: any = '';
+  @Output() croppedImg= new EventEmitter<any>()
   croppedImage: any = '';
   selectedFiles: FileList;
   currentFileUpload: FileUpload;
@@ -141,42 +142,48 @@ export class UploadImgComponent implements OnInit {
 
   }
 
-  upload(): void {
-
-    this.showProgressbar = true
-    const file = this.image;
-    this.selectedFiles = undefined;
-
-    this.currentFileUpload = new FileUpload(file);
-    this.uploadService.pushFileToStorage(this.currentFileUpload, this.baseUrl).subscribe(
-      percentage => {
-        this.percentage = Math.round(percentage);
-        if (this.percentage === 100) {
-
-          //if (this.imagecnt == 0) {
-
-            setTimeout(() => {
-              this.showProgressbar = false
-              this._snackBar.open('Image uploaded successfully..', 'close', {
-                duration: 2000,
-                horizontalPosition: this.horizontalPosition,
-                verticalPosition: this.verticalPosition,
-              });
-              this.hide(); console.log("Hello post");
-            }, 1000);
-            //this.imagecnt++;
-         // }
-          // this.createPost.imageURL = localStorage.getItem("imageURL")
-          // console.log(this.createPost.imageURL);
-
-        }
-      }, error => {
-        this.handleError(error)
-      }
-
-    )
-
+  getCroppedImage()
+  {
+    this.croppedImg.emit(this.croppedImage)
+    this.hide()
   }
+
+  // upload(): void {
+
+  //   this.showProgressbar = true
+  //   const file = this.image;
+  //   this.selectedFiles = undefined;
+
+  //   this.currentFileUpload = new FileUpload(file);
+  //   this.uploadService.pushFileToStorage(this.currentFileUpload, this.baseUrl).subscribe(
+  //     percentage => {
+  //       this.percentage = Math.round(percentage);
+  //       if (this.percentage === 100) {
+
+  //         //if (this.imagecnt == 0) {
+
+  //           setTimeout(() => {
+  //             this.showProgressbar = false
+  //             this._snackBar.open('Image uploaded successfully..', 'close', {
+  //               duration: 2000,
+  //               horizontalPosition: this.horizontalPosition,
+  //               verticalPosition: this.verticalPosition,
+  //             });
+  //             this.hide(); console.log("Hello post");
+  //           }, 1000);
+  //           //this.imagecnt++;
+  //        // }
+  //         // this.createPost.imageURL = localStorage.getItem("imageURL")
+  //         // console.log(this.createPost.imageURL);
+
+  //       }
+  //     }, error => {
+  //       this.handleError(error)
+  //     }
+
+  //   )
+
+  // }
 
   dataURLtoFile(dataurl, filename) {
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
