@@ -1,6 +1,7 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
+import { ProfileService } from 'src/app/shared/shared-services/profile.service';
 import { UsersService } from 'src/app/user/services/users.service';
 import { User } from '../../model/user';
 
@@ -49,7 +50,7 @@ export class SidebarComponent implements OnInit {
 
   user:User=new User()
   userType:string=''
-  constructor(private userService:UsersService,private router: Router,private _auth:authentication) { }
+  constructor(private profileService:ProfileService,private userService:UsersService,private router: Router,private _auth:authentication) { }
 
   handleError(error)
   {
@@ -77,9 +78,20 @@ export class SidebarComponent implements OnInit {
    this.userService.getUserByEmail(atob(user[0])).subscribe(data=>{
      this.user=data
      if(data.type.typeId==1)
-       this.userType='admin'
-     else
-       this.userType='user'
+      {
+        this.userType='admin'
+        this.profileService.adminProfileImage.subscribe(data=>{
+          if(data!=null)
+            this.user.photo=data
+        })
+      }    
+      else{
+        this.userType='user'
+        this.profileService.userProfileImage.subscribe(data=>{
+          if(data!=null)
+            this.user.photo=data
+        })
+      }  
        
      console.log(this.user);
         

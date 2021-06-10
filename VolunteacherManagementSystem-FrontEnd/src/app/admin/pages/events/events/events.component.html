@@ -20,29 +20,20 @@
                         <hr>
                     </div>
                     <div class="col-12">
-                        <app-tabs (showTab_1)="showTab1($event)" (showTab_2)="showTab2($event)"></app-tabs>
+                        <app-tabs (showTab_1)="showTab1($event)" (showTab_2)="showTab2($event)"  (croppedImg)="getCroppedImage($event)"></app-tabs>
 
                     </div>
 
                     <ng-container *ngIf="tab1">
                         <div class="container">
-                            <app-upload-img [baseUrl]="baseUrl" [isPost]="true" (show)="show($event)"></app-upload-img>
+                            <app-upload-img [baseUrl]="baseUrl" [isPost]="true" (show)="show($event)"  (croppedImg)="getCroppedImage($event)"></app-upload-img>
                         </div>
                         <ng-container *ngIf="showForm">
                             <div class="col-12 justify-content-center">
                                 <form class="mt-5" (ngSubmit)="addEvent(form)" #form="ngForm">
                                     <div class="mx-auto d-block col-xl-5 col-lg-7 col-10 my-3 ">
-
-
                                         <div class="container-img">
-                                            <!-- <ng-container *ngIf="showImageSpinner">
-                                                <div class="col-12 my-8 ">
-                                                    <mat-spinner class="mx-auto d-block my-4" color="primary"
-                                                        [diameter]="20">
-                                                    </mat-spinner>
-                                                </div>
-                                            </ng-container> -->
-                                            <img src="{{imageURL}}" style="width:100%;">
+                                            <img [src]="croppedImage" style="width:100%;">
                                         </div>
 
                                     </div>

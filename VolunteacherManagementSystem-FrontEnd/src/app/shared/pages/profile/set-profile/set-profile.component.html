@@ -16,7 +16,7 @@
                
                 <div class="row justify-content-center ">
                     <div class="container">
-                        <app-upload-img [baseUrl]="baseUrl" (show)="onShow($event)"></app-upload-img>
+                        <app-upload-img [baseUrl]="baseUrl" (show)="onShow($event)" (croppedImg)="getCroppedImage($event)"></app-upload-img>
                         <ng-container *ngIf="showSpinner">
                             <div class="col-12 py-8">
                                 <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="40">

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { UploadImgComponent } from 'src/app/core/components/upload-img/upload-img.component';
 import { Area } from 'src/app/core/model/area';
 import { Country } from 'src/app/core/model/country';
 import { District } from 'src/app/core/model/district';
+import { FileUpload } from 'src/app/core/model/file-upload';
 import { Kid } from 'src/app/core/model/kid';
 import { KidsGroup } from 'src/app/core/model/kids-group';
 import { State } from 'src/app/core/model/state';
@@ -22,8 +24,13 @@ import { KidsService } from '../../shared-services/kids.service';
 export class EditKidComponent implements OnInit {
 
   baseUrl: string = "/vms/kids/profiles"
-  imageURL: string=null
+  imageURL: string = null
 
+  kidPhoto: string = ''
+
+  percentage: number = 0
+  croppedImage: any = null
+  @ViewChild(UploadImgComponent) uploadImageComponent: UploadImgComponent
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
@@ -36,7 +43,7 @@ export class EditKidComponent implements OnInit {
   showForm: boolean = false
 
   showProgressbar: boolean = false
-  isKidEdited: boolean = null
+  isKidEdited: boolean = false
   oldImage: String = ''
 
   countries: Array<Country>
@@ -64,16 +71,6 @@ export class EditKidComponent implements OnInit {
 
   ngOnInit() {
     this.showForm = true
-
-    // this.imageURL = localStorage.getItem("imageURL")
-
-    // if (this.imageURL != null) {
-    //   this.fileService.delete(this.imageURL)
-    //   console.log("deleted from ngOniinIt");
-    //   localStorage.removeItem("imageURL")
-
-    // }
-
     this.getkidsgroup()
     this.getAllCountries();
     this.getAllStates();
@@ -86,19 +83,7 @@ export class EditKidComponent implements OnInit {
     ]
     this.getKidById(this.route.snapshot.params['id'])
   }
-  // ngOnDestroy() {
-  //   if (this.isKidEdited == false) {
-  //     if (this.imageURL != null) {
-  //       this.fileService.delete(this.imageURL)
-  //       localStorage.removeItem("imageURL")
-  //       console.log("Removed from destroy");
 
-  //     }
-
-  //     console.log("Bye Bye");
-
-  //   }
-  // }
   handleError(error) {
     console.log(error);
     console.log(error.status);
@@ -113,9 +98,7 @@ export class EditKidComponent implements OnInit {
 
   show(isShow): void {
     this.showForm = isShow
-    this.imageURL = localStorage.getItem("imageURL")
-    localStorage.removeItem("imageURL")
-    this.showImageSpinner=true
+
   }
 
   getKidById(kidId: number) {
@@ -147,7 +130,7 @@ export class EditKidComponent implements OnInit {
           this.talukaSelected = this.kid.village.taluka.talukaId
           this.villageSelected = this.kid.village.villageId
           this.areaSelected = this.kid.area.areaId
-          this.groupSelected=this.kid.group.groupId
+          this.groupSelected = this.kid.group.groupId
         }, error => {
           this.handleError(error)
         })
@@ -156,57 +139,111 @@ export class EditKidComponent implements OnInit {
       })
     })).subscribe(data => {
       this.kid = data
-      this.imageURL = this.kid.photo
+      this.kidPhoto = this.kid.photo
       console.log(this.kid);
     })
   }
 
   saveKid() {
-    console.log(this.imageURL);
-    
-    // if (this.imageURL != null) {
-    //   this.oldImage = this.kid.photo
-    //   this.kid.photo = this.imageURL
-    // }
-    if (this.areaSelected > 0 && this.groupSelected > 0) {
-      this.showProgressbar = true
-      this.kid.photo = this.imageURL
-      this.groupSelected = this.kid.group.groupId
-      this.areaSelected = this.kid.area.areaId
-      this.villageSelected = this.kid.village.villageId
 
-      console.log(this.kid);
-      let dob: String = this.kid.dob
-      let dobdate: String[] = dob.split("-")
-      let dateofbirth = dobdate[0] + "-" + dobdate[1] + "-" + dobdate[2]
-      this.kid.dob = dateofbirth
-      console.log(this.kid.dob);
-      this.kidsService.getAreaById(this.areaSelected).subscribe(areadata => {
-        console.log(areadata)
-        this.kid.area = areadata
-        this.kidsService.kidGroupById(this.groupSelected).pipe(finalize(() => {
-          this.kidsService.villageById(areadata.village.villageId).pipe(finalize(() => {
-            this.kidsService.addKid(this.kid).subscribe(data => {
-              console.log(data)
-              // this.isKidEdited = true
-              // if (this.oldImage != null) {
-              //   this.fileService.delete(this.oldImage)
-              //   localStorage.removeItem("imageURL")
-              // }
-              this.showProgressbar = false
-              this.openEditSnackBar();
-              this.router.navigate(['/user/kids/edit-kids/kids-list'])
-            }, error => {
-              this.handleError(error)
+
+    if (this.croppedImage != null) {
+      this.showProgressbar = true
+      const file = this.uploadImageComponent.image;
+      this.fileService.pushFileToStorage(new FileUpload(file), this.baseUrl).subscribe(
+        percentage => {
+          this.percentage = Math.round(percentage);
+
+          if (this.percentage == 100) {
+
+
+            this.fileService.imageUrl.subscribe(data => {
+              this.imageURL = data
+              if (this.imageURL != null && this.isKidEdited == false) {
+                if (this.areaSelected > 0 && this.groupSelected > 0) {
+                  this.kid.photo = this.imageURL
+                  this.groupSelected = this.kid.group.groupId
+                  this.areaSelected = this.kid.area.areaId
+                  this.villageSelected = this.kid.village.villageId
+
+                  console.log(this.kid);
+                  let dob: String = this.kid.dob
+                  let dobdate: String[] = dob.split("-")
+                  let dateofbirth = dobdate[0] + "-" + dobdate[1] + "-" + dobdate[2]
+                  this.kid.dob = dateofbirth
+                  console.log(this.kid.dob);
+                  this.kidsService.getAreaById(this.areaSelected).subscribe(areadata => {
+                    console.log(areadata)
+                    this.kid.area = areadata
+                    this.kidsService.kidGroupById(this.groupSelected).pipe(finalize(() => {
+                      this.kidsService.villageById(areadata.village.villageId).pipe(finalize(() => {
+                        this.kidsService.addKid(this.kid).subscribe(data => {
+                          console.log(data)
+
+                          this.showProgressbar = false
+                          this.openEditSnackBar();
+                          this.router.navigate(['/user/kids/edit-kids/kids-list'])
+                        }, error => {
+                          this.handleError(error)
+                        })
+                      })).subscribe(data => {
+                        this.kid.village = data
+                      })
+                    })).subscribe(data => {
+                      this.kid.group = data
+                    })
+                  })
+                }
+                this.isKidEdited = true
+              }
+            })
+          }
+        }, error => {
+          this.handleError(error)
+        }
+      ), error => {
+        this.handleError(error)
+      }
+    }
+    else {
+      this.showProgressbar = true
+      if (this.areaSelected > 0 && this.groupSelected > 0) {
+
+        this.groupSelected = this.kid.group.groupId
+        this.areaSelected = this.kid.area.areaId
+        this.villageSelected = this.kid.village.villageId
+
+        console.log(this.kid);
+        let dob: String = this.kid.dob
+        let dobdate: String[] = dob.split("-")
+        let dateofbirth = dobdate[0] + "-" + dobdate[1] + "-" + dobdate[2]
+        this.kid.dob = dateofbirth
+        console.log(this.kid.dob);
+        this.kidsService.getAreaById(this.areaSelected).subscribe(areadata => {
+          console.log(areadata)
+          this.kid.area = areadata
+          this.kidsService.kidGroupById(this.groupSelected).pipe(finalize(() => {
+            this.kidsService.villageById(areadata.village.villageId).pipe(finalize(() => {
+              this.kidsService.addKid(this.kid).subscribe(data => {
+                console.log(data)
+
+                this.showProgressbar = false
+                this.openEditSnackBar();
+                this.router.navigate(['/user/kids/edit-kids/kids-list'])
+              }, error => {
+                this.handleError(error)
+              })
+            })).subscribe(data => {
+              this.kid.village = data
             })
           })).subscribe(data => {
-            this.kid.village = data
+            this.kid.group = data
           })
-        })).subscribe(data => {
-          this.kid.group = data
         })
-      })
+      }
     }
+
+
   }
 
   openEditSnackBar() {
@@ -380,6 +417,10 @@ export class EditKidComponent implements OnInit {
       this.showForm = true
     }
 
+  }
+
+  getCroppedImage(image) {
+    this.croppedImage = image
   }
 
 }

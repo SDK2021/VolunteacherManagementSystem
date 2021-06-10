@@ -25,7 +25,7 @@
                         <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
                         <span class="btn-inner--text ">Add area</span>
                 </button>
-                <p style="background-color: #f8d7da;" class="alert  text-default text-md text-center mt-3"><b>The area can not be deleted which have connection with kids data.</b></p>
+                <p style="background-color: #f8d7da;" class="alert  text-default text-md text-center mt-3"><b>The area can not be deleted which is connected with kids data.</b></p>
                 </div>
              <ng-container *ngIf="isShow">
                 <div class="col-12 justify-content-center">
@@ -96,7 +96,7 @@
                                         <form #form="ngForm">
                                             <div class="col-xl-8 col-10 mt-2 pl-0 ">
                                               <div class="form-group">
-                                                <input (keyup.enter)="saveArea(index)" autocomplete="off" class="text-lg" [(ngModel)]="area.areaName" name="area" #name="ngModel" type="text"
+                                                <input (keyup.enter)="saveArea(index)" autocomplete="off" class="text-lg" [(ngModel)]="a.areaName" name="area" #name="ngModel" type="text"
                                                   class="form-control border-0 m-0 "   style="border-radius: 0px;font-size: 17px;color:#32325d" required>
                                               </div>
                                               <small *ngIf="name.errors?.required && name.touched" class="text-danger">Area name is

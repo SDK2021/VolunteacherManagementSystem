@@ -25,7 +25,7 @@
 
                     <ng-container *ngIf="tab1">
                         <div  class="container">
-                            <app-upload-img [baseUrl]="baseUrl" [isPost]="true" (show)="show($event)"></app-upload-img>
+                            <app-upload-img [baseUrl]="baseUrl" [isPost]="true" (show)="show($event)" (croppedImg)="getCroppedImage($event)"></app-upload-img>
                           </div>
                          
                           <ng-container *ngIf="showForm">
@@ -33,13 +33,7 @@
                             <div class="col-12 justify-content-center">
                                 <form (ngSubmit)="addProject(form) " #form="ngForm">
                                     <div class="mx-auto d-block col-xl-5 col-lg-7 col-10 mt-3 ">
-                                        <!-- <ng-container *ngIf="showImageSpinner">
-                                            <div class="col-12 my-8 ">
-                                                <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                                                </mat-spinner>
-                                            </div>
-                                        </ng-container> -->
-                                        <img src="{{imageURL}}" style="width:100%;" >
+                                        <img [src]="croppedImage" style="width:100%;" >
                                       </div>
                                     <div class="row mt-5 justify-content-center">
                                         
@@ -213,15 +207,13 @@
                                     </div>
     
                                     <hr>
-    
+                                    <p class="text-center"><small *ngIf="disabled" class="text-default text-center">Please wait, Creating project..</small></p>
                                     <ng-container *ngIf="!edit">
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button [disabled]="!form.valid || invalidEndingDate"
+                                            <button [disabled]="!form.valid || invalidEndingDate || disabled"
                                                 class=" mx-auto d-block btn btn-primary btn-round btn-icon">
                                                 <span class="btn-inner--text ">Submit</span>
-                                            </button>
-    
-    
+                                        </button>
                                         </div>
                                     </ng-container>
     

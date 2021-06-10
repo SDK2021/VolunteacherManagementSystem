@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -11,10 +11,12 @@ import { finalize } from 'rxjs/operators';
 import { DialogBoxComponent } from 'src/app/admin/components/dialog-box/dialog-box.component';
 import { EventsService } from 'src/app/admin/shared-services/events/events.service';
 import { ProjectsService } from 'src/app/admin/shared-services/projects.service';
+import { UploadImgComponent } from 'src/app/core/components/upload-img/upload-img.component';
 import { Activity } from 'src/app/core/model/activity';
 import { Country } from 'src/app/core/model/country';
 import { District } from 'src/app/core/model/district';
 import { Event } from 'src/app/core/model/event';
+import { FileUpload } from 'src/app/core/model/file-upload';
 import { Notification } from 'src/app/core/model/notification';
 import { Project } from 'src/app/core/model/project';
 import { State } from 'src/app/core/model/state';
@@ -74,6 +76,10 @@ export class EventsComponent implements OnInit {
   baseUrl:string="/vms/events"
   imageURL:string;
   
+  
+  croppedImage: any = null
+  percentage: number = 0
+  @ViewChild(UploadImgComponent) uploadImageComponent: UploadImgComponent
 
   showSpinner:boolean=false
   noEvents:boolean=false
@@ -85,18 +91,10 @@ export class EventsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.imageURL = localStorage.getItem("imageURL")
-   
-    // if(this.imageURL!=null)
-    // {
-    //   this.fileService.delete(this.imageURL)
-    //   console.log("deleted");
-    //   localStorage.removeItem("imageURL")
-      
-    // }
-  
+
     let date:Date = new Date()
     console.log(date)
+    this.showImageSpinner=true
     this.month=this.monthNames[date.getMonth()]
     //console.log("current"+ this.month)
 
@@ -115,20 +113,7 @@ export class EventsComponent implements OnInit {
     
   }
 
-  // ngOnDestroy()
-  // {
-  //   if(this.isEventCreated==false)
-  //   {
-  //     if(this.imageURL!=null)
-  //     {
-  //       this.fileService.delete(this.imageURL)
-  //       localStorage.removeItem("imageURL")
-  //     }
-       
-  //     console.log("Bye Bye");
-      
-  //   }
-  // }
+
 
   load()
   {
@@ -212,6 +197,7 @@ export class EventsComponent implements OnInit {
 
   getAllEvent(page:number)
   {
+    this.showImageSpinner=true
     this.showSpinner=true
     this.eventService.getAllEvents(page).subscribe(data=>{
       this.events = data['content']
@@ -238,46 +224,70 @@ export class EventsComponent implements OnInit {
 
   addEvent(form:NgForm)
   {
-    if(this.villageSelected > 0 && this.projectSelected > 0)
-    {
-      this.showProgressbar=true
-      console.log(this.event)
-      console.log(this.selectedActivities)
-      this.event.photo = this.imageURL
-      let eventdate:string = this.event.eventDate
-      let sdate:string[] = eventdate.split("-")
-      let eventDate = sdate[1] + "-" +  sdate[2] + "-" + sdate[0]
-      this.event.eventDate = eventDate
-      this.event.notified = false
+    this.showProgressbar=true
+    const file = this.uploadImageComponent.image;
+    this.fileService.pushFileToStorage(new FileUpload(file), this.baseUrl).subscribe(
+      percentage => {
+        this.percentage = Math.round(percentage);
 
-      this.event.eventStartingTime = this.event.eventStartingTime + ":00"
-      this.event.eventEndingTime = this.event.eventEndingTime + ":00"
+        if (this.percentage == 100) {
 
-      this.projectService.getProject(this.projectSelected).pipe(finalize(()=>{
-        this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
-          this.eventService.addEvent(this.event,this.selectedActivities).subscribe(data=>{
-            console.log(data)
-            this.showProgressbar=false
-            //localStorage.removeItem("imageURL")
-            this.openAddSnackBar()
-            this.showTab2(true)
-            form.reset()
-            setTimeout(()=>{
-              this.getAllEvent(0)
-            },2000)
-          }, error => {
-            this.handleError(error)
+
+          this.fileService.imageUrl.subscribe(data => {
+            this.imageURL = data
+            
+            if (this.imageURL != null && this.isEventCreated == false) {
+              if(this.villageSelected > 0 && this.projectSelected > 0)
+              {
+               
+                console.log(this.event)
+                console.log(this.selectedActivities)
+                this.event.photo = this.imageURL
+                let eventdate:string = this.event.eventDate
+                let sdate:string[] = eventdate.split("-")
+                let eventDate = sdate[1] + "-" +  sdate[2] + "-" + sdate[0]
+                this.event.eventDate = eventDate
+                this.event.notified = false
+          
+                this.event.eventStartingTime = this.event.eventStartingTime + ":00"
+                this.event.eventEndingTime = this.event.eventEndingTime + ":00"
+          
+                this.projectService.getProject(this.projectSelected).pipe(finalize(()=>{
+                  this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
+                    this.eventService.addEvent(this.event,this.selectedActivities).subscribe(data=>{
+                      console.log(data)
+                      this.showProgressbar=false
+                      //localStorage.removeItem("imageURL")
+                      this.showImageSpinner=true
+                      this.openAddSnackBar()
+                      this.showTab2(true)
+                      form.reset()
+                      setTimeout(()=>{
+                        this.getAllEvent(0)
+                      },2000)
+                    }, error => {
+                      this.handleError(error)
+                    })
+                  })).subscribe(data=>{
+                    this.event.village = data
+                  },error=>{
+                  console.log(error);
+                  })
+                })).subscribe(data=>{
+                  this.event.project = data
+                },error=>{
+                  console.log(error);
+                }) 
+              }
+              this.isEventCreated = true
+            }
           })
-        })).subscribe(data=>{
-          this.event.village = data
-        },error=>{
-        console.log(error);
-        })
-      })).subscribe(data=>{
-        this.event.project = data
-      },error=>{
-        console.log(error);
-      }) 
+        }
+      }, error => {
+        this.handleError(error)
+      }
+    ), error => {
+      this.handleError(error)
     }
   }
 
@@ -454,10 +464,11 @@ export class EventsComponent implements OnInit {
      this.eventService.deleteEvent(id).subscribe(data=>{
        console.log(data); 
        this.fileService.delete(image) 
-       this.openDeleteSnackBar()  
+      
        setTimeout(() => {
         this.getAllEvent(this.page)
         this.showProgressbar=false
+        this.openDeleteSnackBar()  
        }, 2000);
      }, error => {
       this.handleError(error)
@@ -478,12 +489,6 @@ export class EventsComponent implements OnInit {
   show(isShow):void
   {
     this.showForm=isShow
-    console.log(this.imageURL);
-    
-    this.imageURL = localStorage.getItem("imageURL")
-    // localStorage.removeItem("imageURL")
-    
-    
   }
 
   
@@ -497,5 +502,9 @@ export class EventsComponent implements OnInit {
         this.events.push(event)
       });
     })
+  }
+
+  getCroppedImage(image) {
+    this.croppedImage = image
   }
 }

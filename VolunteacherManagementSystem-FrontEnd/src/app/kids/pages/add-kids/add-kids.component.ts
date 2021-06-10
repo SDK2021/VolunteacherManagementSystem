@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Kid } from 'src/app/core/model/kid';
 import {
@@ -18,6 +18,8 @@ import { Village } from 'src/app/core/model/village';
 import { KidsGroup } from 'src/app/core/model/kids-group';
 import { finalize } from 'rxjs/operators';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
+import { UploadImgComponent } from 'src/app/core/components/upload-img/upload-img.component';
+import { FileUpload } from 'src/app/core/model/file-upload';
 
 
 @Component({
@@ -32,7 +34,13 @@ import { FileUploadService } from 'src/app/core/services/file-upload.service';
 export class AddKidsComponent implements OnInit {
 
   baseUrl:string="/vms/kids/profiles"
-  imageURL:string
+  imageURL: string = null;
+
+  @ViewChild(UploadImgComponent) uploadImageComponent: UploadImgComponent
+
+  croppedImage: any = ''
+
+  percentage: number = 0
 
   heading:string=''
   saveBtn:boolean=false
@@ -69,23 +77,13 @@ export class AddKidsComponent implements OnInit {
 
   namePattern:string="[a-zA-Z ]{3,20}"
 
-  showImageSpinner:boolean=true
+  
 
 
   constructor(private fileService:FileUploadService,private route:ActivatedRoute,private router:Router,private _snackBar: MatSnackBar,private kidsService:KidsService,private addressService : AddressService) {}
 
   ngOnInit() {
    
-    // this.imageURL = localStorage.getItem("imageURL")
-   
-    // if(this.imageURL!=null)
-    // {
-    //   this.fileService.delete(this.imageURL)
-    //   console.log("deleted");
-    //   localStorage.removeItem("imageURL")
-      
-    // }
-
     this.getkidsgroup()
     this.getAllCountries();
     this.getAllStates();
@@ -105,40 +103,7 @@ export class AddKidsComponent implements OnInit {
       "AatmaSiksha","AatmaShodh","AatmaVishesh"
     ]
 
-    // if(this.router.url.endsWith('edit'))
-    // {
-    //   //get Id form param , get kid and set values
-    //   this.heading='Edit'
-    //   this.saveBtn=true
-    //   this.submitBtn=false
-    //   this.isEdit=true
-    //   this.showForm=true
-    //   this.getKidById(this.route.snapshot.params['id'])
-    // }
-    // else
-    // {
-    //   this.heading='Add New'
-    //   this.saveBtn=false
-    //   this.submitBtn=true
-    //   this.isEdit=false
-      
-    // }
   }
-
-  // ngOnDestroy()
-  // {
-  //   if(this.isKidAdded==false)
-  //   {
-  //     if(this.imageURL!=null)
-  //     {
-  //       this.fileService.delete(this.imageURL)
-  //       localStorage.removeItem("imageURL")
-  //     }
-       
-  //     console.log("Bye Bye");
-      
-  //   }
-  // }
 
   handleError(error)
   {
@@ -156,58 +121,76 @@ export class AddKidsComponent implements OnInit {
   }
 
  
-  load()
-  {
-    this.showImageSpinner=false
-  }
+ 
   show(isShow):void
   {
     this.showForm=isShow
-    this.imageURL = localStorage.getItem("imageURL")
-    localStorage.removeItem('imageURL')
   }
   
   addKid(form)
   {
-    if(this.areaSelected > 0)
-    { 
-      this.kid.level = form.level
-      this.kid.standard = form.standard
-      this.showProgressbar=true
-      console.log(this.kid);
-      let photoUrl = this.imageURL
-      this.kid.photo = photoUrl;
-      let dob:String = this.kid.dob
-      let dobdate:String[] = dob.split("-")
-      let dateofbirth = dobdate[1] + "-" +  dobdate[2] + "-" + dobdate[0]
-      this.kid.dob = dateofbirth
-      console.log(this.kid.dob);
-      this.kidsService.getAreaById(this.areaSelected).subscribe(areadata=>{
-        console.log(areadata)
-        this.kid.area = areadata
-        this.kidsService.kidGroupById(this.groupSelected).pipe(finalize(()=>{
-          this.kidsService.villageById(areadata.village.villageId).pipe(finalize(()=>{
-            this.kidsService.addKid(this.kid).subscribe(data=>{
-              console.log(data)
-              //this.isKidAdded=true
-              this.showProgressbar=false
-              //localStorage.removeItem("imageURL")
-              this.openSnackBar();
-              
-              setTimeout(() => {
-                this.router.navigate(['/user'])
-              }, 1500);
-            },error=>{
-              this.handleError(error)
-            })
-          })).subscribe(data=>{
-            this.kid.village = data
+    this.showProgressbar = true
+    const file = this.uploadImageComponent.image;
+    this.fileService.pushFileToStorage(new FileUpload(file), this.baseUrl).subscribe(
+      percentage => {
+        this.percentage = Math.round(percentage);
+
+        if (this.percentage == 100) {
+
+
+          this.fileService.imageUrl.subscribe(data => {
+            this.imageURL = data
+            if (this.imageURL != null && this.isKidAdded == false) {
+              if(this.areaSelected > 0)
+              { 
+                this.kid.level = form.level
+                this.kid.standard = form.standard
+                this.showProgressbar=true
+                console.log(this.kid);
+                let photoUrl = this.imageURL
+                this.kid.photo = photoUrl;
+                let dob:String = this.kid.dob
+                let dobdate:String[] = dob.split("-")
+                let dateofbirth = dobdate[1] + "-" +  dobdate[2] + "-" + dobdate[0]
+                this.kid.dob = dateofbirth
+                console.log(this.kid.dob);
+                this.kidsService.getAreaById(this.areaSelected).subscribe(areadata=>{
+                  console.log(areadata)
+                  this.kid.area = areadata
+                  this.kidsService.kidGroupById(this.groupSelected).pipe(finalize(()=>{
+                    this.kidsService.villageById(areadata.village.villageId).pipe(finalize(()=>{
+                      this.kidsService.addKid(this.kid).subscribe(data=>{
+                        console.log(data)
+                       
+                        this.showProgressbar=false
+                       
+                        this.openSnackBar();
+                        
+                        setTimeout(() => {
+                          this.router.navigate(['/user'])
+                        }, 1500);
+                      },error=>{
+                        this.handleError(error)
+                      })
+                    })).subscribe(data=>{
+                      this.kid.village = data
+                    })
+                  })).subscribe(data=>{
+                    this.kid.group = data
+                  })    
+                })
+              }
+               this.isKidAdded = true
+            }
           })
-        })).subscribe(data=>{
-          this.kid.group = data
-        })    
-      })
+        }
+      }, error => {
+        this.handleError(error)
+      }
+    ),error=>{
+      this.handleError(error)
     }
+   
   }
 
   
@@ -363,6 +346,13 @@ export class AddKidsComponent implements OnInit {
     });
     
   }
+ 
+
+  
+  getCroppedImage(image) {
+    this.croppedImage = image
+  }
+
 
   selectedGroup(event)
   {
@@ -377,5 +367,7 @@ export class AddKidsComponent implements OnInit {
     });
   }
    
+
+
   
 }

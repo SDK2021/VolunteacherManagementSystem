@@ -15,6 +15,7 @@
         <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
         </mat-spinner>
       </ng-container>
+      
       <ng-container *ngIf="vLength">
         <div class="row justify-content-center my-4">
           <div class="col-xl-10 mx-auto d-block">
@@ -39,16 +40,18 @@
         </div>
         <div class="row justify-content-center" infiniteScroll [infiniteScrollDistance]="1"
           [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
-          <div *ngFor="let v of volunteachers | volunteacher: search ;trackBy:trackById"
+          
+          <div *ngFor="let v of volunteachers | volunteacher: search ;trackBy:trackById;let l=length"
             class="col-xl-4 col-lg-6 col-md-9 col-sm-8 mb-6">
-            <!-- | volunteacher: search;trackBy:trackById -->
+            
+            
             <div class="card card-profile profile">
-
-              <a role="button">
-                <p (click)="delete(v.volunteacherId)" class="d-block text-common text-right mt-0 mr-4 mb-0 h1"><b><i
-                      class="text-sm fas fa-trash text-danger"></i></b></p>
-              </a>
-
+              <span  class="d-block text-common text-right mt-0 mr-4 mb-0 h1">
+              <button class="bg-transparent btn-active" style="border: none;">
+                <b><i
+                      class="text-sm fas fa-trash text-danger"></i></b>
+              </button>
+            </span>
               <div class="row justify-content-center">
                 <div class="col-lg-3 order-lg-2 ">
                   <div class="card-profile-image">

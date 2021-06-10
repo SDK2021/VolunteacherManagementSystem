@@ -163,6 +163,8 @@ export class AreasComponent implements OnInit {
     this.openEditSnackBar()
    
     console.log(this.area);
+    this.area=this.areas[index]
+    // alert(this.area.areaName)
     this.addressService.saveArea(this.areas[index]["areaId"],this.area).subscribe(data=>{
       console.log(data);
       setTimeout(() => {

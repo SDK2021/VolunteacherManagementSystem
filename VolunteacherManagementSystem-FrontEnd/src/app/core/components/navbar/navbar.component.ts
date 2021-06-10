@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
 import { UsersService } from 'src/app/user/services/users.service';
 import { User } from '../../model/user';
+import { ProfileService } from 'src/app/shared/shared-services/profile.service';
 
 @Component({
   selector: 'app-navbar',
@@ -24,7 +25,7 @@ export class NavbarComponent implements OnInit {
 
   showImageSpinner:boolean=true
 
-  constructor(location: Location,  private element: ElementRef, private router: Router,private authService:authentication, private userService:UsersService) {
+  constructor(private profileService:ProfileService,location: Location,  private element: ElementRef, private router: Router,private authService:authentication, private userService:UsersService) {
     this.location = location;
   }
   oldImage:string=null
@@ -44,6 +45,7 @@ export class NavbarComponent implements OnInit {
   }
   ngOnInit() {
 
+    
     if(this.router.url.split('/')[1]=="admin")
       this.userType="admin"
     
@@ -54,10 +56,20 @@ export class NavbarComponent implements OnInit {
     this.userService.getUserByEmail(atob(user[0])).subscribe(data=>{
       this.user=data
       if(data.type.typeId==1)
+      {
         this.userType='admin'
-      else
+        this.profileService.adminProfileImage.subscribe(data=>{
+          if(data!=null)
+            this.user.photo=data
+        })
+      }    
+      else{
         this.userType='user'
-        
+        this.profileService.userProfileImage.subscribe(data=>{
+          if(data!=null)
+            this.user.photo=data
+        })
+      }  
       console.log(this.user);
          
     },error=>{

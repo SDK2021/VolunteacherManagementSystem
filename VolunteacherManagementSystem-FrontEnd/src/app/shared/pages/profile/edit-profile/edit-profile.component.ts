@@ -56,6 +56,7 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getProfileDetail()
     this.isShow = true;
+    
   }
 
   handleError(error) {

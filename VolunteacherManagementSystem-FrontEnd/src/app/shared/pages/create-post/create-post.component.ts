@@ -27,6 +27,8 @@ export class CreatePostComponent implements OnInit {
   baseUrl: string = "/vms/users/posts"
   imageURL: string = null;
 
+  croppedImage: any = ''
+  percentage: number = 0
   @ViewChild(UploadImgComponent) uploadImageComponent: UploadImgComponent
 
   showProgressbar: boolean = false
@@ -39,9 +41,7 @@ export class CreatePostComponent implements OnInit {
   timeLinePost: Timelinepost;
   isPostCreated: boolean = false
 
-  croppedImage: any = ''
-
-  percentage: number = 0
+  
 
   constructor(private fileService: FileUploadService, private router: Router, private timelineService: TimeLineService, private _snackBar: MatSnackBar, private _authService: authentication, private userSerice: UsersService) { }
 

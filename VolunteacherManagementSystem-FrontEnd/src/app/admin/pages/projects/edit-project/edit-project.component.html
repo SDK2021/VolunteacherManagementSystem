@@ -22,7 +22,7 @@
                    
                        <ng-container *ngIf="isEdit">
                         <div  class="container">
-                            <app-upload-img [baseUrl]="baseUrl" [isPost]="true" (show)="show($event)"></app-upload-img>
+                            <app-upload-img [baseUrl]="baseUrl" [isPost]="true" (show)="show($event)" (croppedImg)="getCroppedImage($event)"></app-upload-img>
                           </div>
                        </ng-container>
                          
@@ -31,19 +31,28 @@
                             <div class="col-12 justify-content-center">
                                 <form (ngSubmit)="saveProject(form) " #form="ngForm">
                                     <div class="mx-auto d-block col-xl-5 col-lg-7 col-10 mt-3 ">
-                                        <div class="container-img" (click)="edit()" (mouseenter)="mouseEvent()" (mouseleave)="mouseEvent()">
-                                            <!-- <ng-container *ngIf="showImageSpinner">
+                                      <ng-container *ngIf="!croppedImage">
+                                        <div class="container-img" (click)="edit()" (mouseenter)="mouseEvent()" (mouseleave)="mouseEvent()"> 
+                                            <ng-container *ngIf="showImageSpinner">
                                                 <div class="col-12 my-8 ">
                                                     <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
                                                     </mat-spinner>
                                                 </div>
-                                            </ng-container> -->
-                                            <img src="{{imageURL}}"  [ngClass]="{'darkShade':hover}" style="width:100%;" >
-            
+                                            </ng-container>
+                                            <img src={{project.photo}} (load)="load()" [ngClass]="{'darkShade':hover}" style="width:100%;" >
                                             <div style="cursor: pointer;" *ngIf="hover" class="centered display-3">
                                                <i class="fas fa-edit"></i>
                                             </div>
                                         </div>
+                                      </ng-container>
+                                      <ng-container *ngIf="croppedImage">
+                                        <div class="container-img" (click)="edit()" (mouseenter)="mouseEvent()" (mouseleave)="mouseEvent()"> 
+                                            <img [src]="croppedImage" [ngClass]="{'darkShade':hover}" style="width:100%;" >
+                                            <div style="cursor: pointer;" *ngIf="hover" class="centered display-3">
+                                               <i class="fas fa-edit"></i>
+                                            </div>
+                                        </div>
+                                      </ng-container>
                                       </div>
                                     <div class="row mt-5 justify-content-center">
                                         

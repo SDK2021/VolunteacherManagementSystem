@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -11,6 +11,8 @@ import { DialogBoxComponent } from 'src/app/admin/components/dialog-box/dialog-b
 import { KidService } from 'src/app/admin/shared-services/kid.service';
 import { ProjectsService } from 'src/app/admin/shared-services/projects.service';
 import { VolunteachersService } from 'src/app/admin/shared-services/volunteachers.service';
+import { UploadImgComponent } from 'src/app/core/components/upload-img/upload-img.component';
+import { FileUpload } from 'src/app/core/model/file-upload';
 
 import { Kid } from 'src/app/core/model/kid';
 import { Project } from 'src/app/core/model/project';
@@ -29,15 +31,15 @@ export class ProjectComponent implements OnInit {
 
   isShow: boolean = false;
 
+  disabled: boolean = null
 
-  
-  showSpinner:boolean=false
-  noProjects:boolean=false
-  pLength:number
+  showSpinner: boolean = false
+  noProjects: boolean = false
+  pLength: number
 
-  kPage:number=0
+  kPage: number = 0
 
-  isProjectCreated:boolean=null
+  isProjectCreated: boolean = false
 
   showProgressbar: boolean = false
   edit: boolean = false
@@ -46,42 +48,36 @@ export class ProjectComponent implements OnInit {
 
   projects: Array<Project> = new Array()
 
-  page:number=0
-  vPage:number=0
+  page: number = 0
+  vPage: number = 0
   volunteachers: Array<Volunteacher> = []
   kids: Kid[] = []
   selectedVolunteacher: Array<Number> = []
   selectedKids: Array<Number> = []
   project: Project = new Project()
 
-  baseUrl:string="/vms/projects"
-  imageURL:string;
+  baseUrl: string = "/vms/projects"
+  imageURL: string = null;
 
-  message:boolean=false
-  showForm:boolean=false
+  message: boolean = false
+  showForm: boolean = false
 
-  showImageSpinner:boolean=true
+  showImageSpinner: boolean = true
 
-  //remove this
+  croppedImage: any = ''
+  percentage: number = 0
+  @ViewChild(UploadImgComponent) uploadImageComponent: UploadImgComponent
 
 
-  constructor(private fileService:FileUploadService,private dialog:MatDialog,private router:Router, private kidsService: KidService, private vtService: VolunteachersService, private _snackBar: MatSnackBar, private projectService: ProjectsService) {
+  constructor(private fileService: FileUploadService, private dialog: MatDialog, private router: Router, private kidsService: KidService, private vtService: VolunteachersService, private _snackBar: MatSnackBar, private projectService: ProjectsService) {
 
 
   }
 
   ngOnInit(): void {
-    // this.imageURL = localStorage.getItem("imageURL")
-   
-    // if(this.imageURL!=null)
-    // {
-    //   this.fileService.delete(this.imageURL)
-    //   console.log("deleted");
-    //   localStorage.removeItem("imageURL")
-      
-    // }
-    this.kPage=0
-    this.vPage=0
+
+    this.kPage = 0
+    this.vPage = 0
     this.getAllProjects()
     this.getAllVolunteacher(this.vPage);
     this.getAllKids(this.kPage);
@@ -90,63 +86,36 @@ export class ProjectComponent implements OnInit {
 
   }
 
-  // ngOnDestroy()
-  // {
-  //   if(this.isProjectCreated==false)
-  //   {
-  //     if(this.imageURL!=null)
-  //     {
-  //       this.fileService.delete(this.imageURL)
-  //       localStorage.removeItem("imageURL")
-  //     }
-       
-  //     console.log("Bye Bye");
-      
-  //   }
-  // }
-  invalidEndingDate:boolean=false
-  validateDate(startingdate,endingDate)
-  {
+  invalidEndingDate: boolean = false
+  validateDate(startingdate, endingDate) {
     let array: string[] = startingdate.split("-")
     let date = array[1] + "-" + array[2] + "-" + array[0]
-    let projectStartingDate=new Date(date)
+    let projectStartingDate = new Date(date)
 
     let array2: string[] = endingDate.split("-")
     let date2 = array2[1] + "-" + array2[2] + "-" + array2[0]
-    let projectEndingDate=new Date(date2)
+    let projectEndingDate = new Date(date2)
 
-    if(projectEndingDate < projectStartingDate)
-      this.invalidEndingDate=true
+    if (projectEndingDate < projectStartingDate)
+      this.invalidEndingDate = true
     else
-      this.invalidEndingDate=false
+      this.invalidEndingDate = false
 
   }
 
-  load()
-  {
-    this.showImageSpinner=false
-  }
 
-  
-  // show() {
-  //   this.isShow = !this.isShow;
-  // }
-  handleError(error)
-  {
+  handleError(error) {
     console.log(error);
     console.log(error.status);
-    
-    if(error.status===500)
-    {
+
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
-    else if(error.status===400)
-    {
-       this.message=true
-       this.showProgressbar=false
+    else if (error.status === 400) {
+      this.message = true
+      this.showProgressbar = false
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
@@ -162,27 +131,28 @@ export class ProjectComponent implements OnInit {
     this.edit = false
   }
 
-  vtTab:boolean=true
-  kidTab:boolean=false
+  vtTab: boolean = true
+  kidTab: boolean = false
 
-  tab1Class:boolean=true
-  tab2Class:boolean=false
+  tab1Class: boolean = true
+  tab2Class: boolean = false
 
-  showVtTab()
-  {
-    this.vtTab=true
-    this.tab2Class=false
-    this.tab1Class=true
-    this.kidTab=false
+  showVtTab() {
+    this.vtTab = true
+    this.tab2Class = false
+    this.tab1Class = true
+    this.kidTab = false
   }
-  showKidTab()
-  {
-    this.tab1Class=false
-    this.tab2Class=true
-    this.vtTab=false
-    this.kidTab=true
+  showKidTab() {
+    this.tab1Class = false
+    this.tab2Class = true
+    this.vtTab = false
+    this.kidTab = true
   }
-  
+
+  load() {
+    this.showImageSpinner = false
+  }
 
   openAddSnackBar() {
     this._snackBar.open('Added successfully..', 'close', {
@@ -198,44 +168,36 @@ export class ProjectComponent implements OnInit {
       verticalPosition: this.verticalPosition,
     });
   }
- 
+
 
   onSubmit(form: NgForm) {
     console.log(this.project);
   }
 
-  show(isShow):void
-  {
-    this.showImageSpinner=true
-    this.showForm=isShow
-   
-    
-    this.imageURL = localStorage.getItem("imageURL")
-    
-    // localStorage.removeItem("imageURL")
-    console.log(this.imageURL);
+  show(isShow): void {
+    this.showImageSpinner = true
+    this.showForm = isShow
   }
 
   getAllProjects() {
-    this.showSpinner=true
+    this.showSpinner = true
     this.projectService.getAllProjects().subscribe(data => {
       this.projects = data
-      this.showSpinner=false
+      this.showSpinner = false
       console.log(data);
-      
+
       if (data != null) {
         this.pLength = this.projects.length
-        this.noProjects=false
+        this.noProjects = false
       }
       //this.pLength=0
-      if(this.pLength==0)
-      {
-        this.noProjects=true
+      if (this.pLength == 0) {
+        this.noProjects = true
       }
       console.log(this.projects);
       console.log(this.pLength);
-      
-    },error=>{
+
+    }, error => {
       this.handleError(error)
     })
   }
@@ -246,60 +208,138 @@ export class ProjectComponent implements OnInit {
     this.edit = true
   }
 
-  getAllKids(page:number) {
+  getAllKids(page: number) {
     this.kidsService.getAllKids(page).subscribe(data => {
       this.kids = data['content']
       console.log(this.kids);
-      
-    },error=>{
+
+    }, error => {
       this.handleError(error)
     })
   }
 
-  getAllVolunteacher(page:number) {
+  getAllVolunteacher(page: number) {
     this.vtService.getAllVolunteachers(page).subscribe(data => {
       this.volunteachers = data['content']
       console.log(this.volunteachers)
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
   }
 
-  addProject(form:NgForm) {
+  addProject(form: NgForm) {
+    this.disabled = true
     this.showProgressbar = true
-    let today = new Date()
-    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
-    this.project.creationTime = time
-    this.project.photo = this.imageURL
-    // this.project.startingDate = value.startdate.tostring
-    // this.project.endingDate = this.datepipe.transform(statingDate,'dd-MM-yyyy')
-    // this.project.startingDate = statingDate
-    // this.project.endingDate = endingDate
-    let startdate: string = this.project.startingDate
-    let sdate: string[] = startdate.split("-")
-    let startingdate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
-    this.project.startingDate = startingdate
+    if (this.message == true) {
+      this.showProgressbar = true
+      let today = new Date()
+      let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+      this.project.creationTime = time
+      this.project.photo = this.imageURL
+      // alert(this.project.photo)
+      let startdate: string = this.project.startingDate
+      let sdate: string[] = startdate.split("-")
+      let startingdate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
+      this.project.startingDate = startingdate
 
-    let enddate: string = this.project.endingDate
-    let edate: string[] = enddate.split("-")
-    let endingdate = edate[1] + "-" + edate[2] + "-" + edate[0]
-    this.project.endingDate = endingdate
-    console.log(this.selectedKids)
-    this.projectService.addProject(this.project, this.selectedVolunteacher, this.selectedKids).subscribe(data => {
-      console.log(data)
-      this.openAddSnackBar()
-      form.resetForm()
-     // this.isProjectCreated=true
-     setTimeout(() => {
-      this.showProgressbar = false
-      this.getAllProjects()
-      this.showTab2(true)
-     }, 1500);
+      let enddate: string = this.project.endingDate
+      if (enddate != null) {
+        let edate: string[] = enddate.split("-")
+        let endingdate = edate[1] + "-" + edate[2] + "-" + edate[0]
+        this.project.endingDate = endingdate
+      }
+      else {
+        this.project.endingDate = null
+      }
+      console.log(this.selectedKids)
+      this.projectService.addProject(this.project, this.selectedVolunteacher, this.selectedKids).subscribe(data => {
+        console.log(data)
 
-      //this.getAllProjects()
-    },error=>{
-      this.handleError(error)
-    })
+        form.resetForm()
+        // this.isProjectCreated=true
+        this.showImageSpinner = true
+        setTimeout(() => {
+          this.showProgressbar = false
+          this.imageURL = null
+          this.openAddSnackBar()
+          this.disabled = false
+          this.getAllProjects()
+          this.showTab2(true)
+        }, 1500);
+
+        //this.getAllProjects()
+      }, error => {
+        this.disabled = false
+        this.handleError(error)
+      })
+    }
+    else {
+      const file = this.uploadImageComponent.image;
+      this.fileService.pushFileToStorage(new FileUpload(file), this.baseUrl).subscribe(
+        percentage => {
+          this.percentage = Math.round(percentage);
+
+          if (this.percentage == 100) {
+
+
+            this.fileService.imageUrl.subscribe(data => {
+              this.imageURL = data
+
+              if (this.imageURL != null && this.isProjectCreated == false) {
+                this.showProgressbar = true
+                let today = new Date()
+                let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+                this.project.creationTime = time
+                this.project.photo = this.imageURL
+                // alert(this.project.photo)
+                let startdate: string = this.project.startingDate
+                let sdate: string[] = startdate.split("-")
+                let startingdate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
+                this.project.startingDate = startingdate
+
+                let enddate: string = this.project.endingDate
+                if (enddate != null) {
+                  let edate: string[] = enddate.split("-")
+                  let endingdate = edate[1] + "-" + edate[2] + "-" + edate[0]
+                  this.project.endingDate = endingdate
+                }
+                else {
+                  this.project.endingDate = null
+                }
+                console.log(this.selectedKids)
+                this.projectService.addProject(this.project, this.selectedVolunteacher, this.selectedKids).subscribe(data => {
+                  console.log(data)
+
+                  form.resetForm()
+                  // this.isProjectCreated=true
+                  this.showImageSpinner = true
+                  setTimeout(() => {
+                    this.showProgressbar = false
+                    this.imageURL = null
+                    this.openAddSnackBar()
+                    this.disabled = false
+                    this.getAllProjects()
+                    this.showTab2(true)
+                  }, 1500);
+
+                  //this.getAllProjects()
+                }, error => {
+                  this.disabled = false
+                  this.handleError(error)
+                })
+                this.isProjectCreated = true
+              }
+            })
+          }
+        }, error => {
+          this.disabled = false
+          this.handleError(error)
+        }
+      ), error => {
+        this.disabled = false
+        this.handleError(error)
+      }
+    }
 
   }
 
@@ -325,32 +365,36 @@ export class ProjectComponent implements OnInit {
     console.log(this.selectedKids)
   }
 
-  deleteProject(id:number,image:string)
-  {
-    this.showProgressbar=true
-    
-     this.projectService.deleteProject(id).subscribe(data=>{
-       console.log(data);  
-       this.fileService.delete(image)
-       this.openDeleteSnackBar()  
-       setTimeout(() => {
+  deleteProject(id: number, image: string) {
+    this.showProgressbar = true
+
+    this.projectService.deleteProject(id).subscribe(data => {
+      console.log(data);
+      this.fileService.delete(image)
+      this.openDeleteSnackBar()
+      setTimeout(() => {
         this.getAllProjects()
-        this.showProgressbar=false
-       }, 2000);
-     },error=>{
-        this.showProgressbar=false
-        this.handleError(error)
-      })
+        this.showProgressbar = false
+      }, 2000);
+    }, error => {
+      this.showProgressbar = false
+      this.handleError(error)
+    })
   }
 
-  delete(id:number,image:string)
-  {
-    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
-       console.log(data.delete)
-      if(data.delete)
-      { 
-        this.deleteProject(id,image)
+  delete(id: number, image: string) {
+    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
+      console.log(data.delete)
+      if (data.delete) {
+        this.deleteProject(id, image)
       }
     })
   }
+
+  getCroppedImage(image) {
+    this.croppedImage = image
+  }
+
+
+
 }

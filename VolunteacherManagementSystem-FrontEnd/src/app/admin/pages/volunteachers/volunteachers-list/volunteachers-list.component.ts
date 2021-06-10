@@ -126,9 +126,10 @@ export class VolunteachersListComponent implements OnInit {
     this.showProgressbar = true
     this.sharedService.deleteVolunteacher(id).subscribe(data => {
       console.log(data);
-      this.openSnackBar()
+      
       setTimeout(() => {
         this.getAllVoluntecahers(this.page)
+        this.openSnackBar()
         this.showProgressbar = false
       }, 2000);
     }, error => {
