@@ -49,6 +49,7 @@ export class EventsComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
+  disabled:boolean=null
 
   showProgressbar: boolean = false
 
@@ -144,6 +145,7 @@ export class EventsComponent implements OnInit {
   showTab2(show:boolean)
   {
     console.log("tab2"+show)
+    
     this.tab2=show
     this.tab1=false
     this.edit=false
@@ -224,6 +226,7 @@ export class EventsComponent implements OnInit {
 
   addEvent(form:NgForm)
   {
+    this.disabled=true
     this.showProgressbar=true
     const file = this.uploadImageComponent.image;
     this.fileService.pushFileToStorage(new FileUpload(file), this.baseUrl).subscribe(
@@ -256,14 +259,17 @@ export class EventsComponent implements OnInit {
                   this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
                     this.eventService.addEvent(this.event,this.selectedActivities).subscribe(data=>{
                       console.log(data)
-                      this.showProgressbar=false
-                      //localStorage.removeItem("imageURL")
-                      this.showImageSpinner=true
-                      this.openAddSnackBar()
-                      this.showTab2(true)
                       form.reset()
+                      //localStorage.removeItem("imageURL")
+                      this.showImageSpinner=true 
                       setTimeout(()=>{
                         this.getAllEvent(0)
+                        this.openAddSnackBar()
+                        this.showTab2(true)
+                        this.disabled=false
+                        this.showImageSpinner=true
+                        this.showProgressbar=false
+                        
                       },2000)
                     }, error => {
                       this.handleError(error)
@@ -417,6 +423,7 @@ export class EventsComponent implements OnInit {
 
   notifyEvent(eventId,value)
   {
+    this.disabled=true
     this.showProgressbar=true
     this.notification = new Notification()
     console.log(value.target.value)
@@ -443,10 +450,13 @@ export class EventsComponent implements OnInit {
       this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(()=>{
         this.notiService.addNotification(this.notification).subscribe(data=>{
           console.log(data)
-          this.openNotifySnackBar()
+         
+          
           this.router.navigate['admin/events']
           setTimeout(() => { this.getAllEvent(this.page)
-            this.showProgressbar=false }, 1000);
+            this.showProgressbar=false 
+            this.openNotifySnackBar()
+          this.disabled=false}, 1000);
         }, error => {
           this.handleError(error)
         })

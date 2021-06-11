@@ -260,7 +260,8 @@
 
                                    
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button [disabled]="!form.valid"
+                                            <p *ngIf="disabled" class="text-center text-default"><small>Please wait, Creating session...</small></p>
+                                            <button [disabled]="!form.valid || disabled"
                                                 class=" mx-auto d-block btn btn-primary btn-round btn-icon"
                                                 (click)="show();">
                                                 <span class="btn-inner--text ">Submit</span>
@@ -324,18 +325,22 @@
                                 <div class="row justify-content-center">
 
                                     <div class="text-center m-2">
-                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="s.notified == true"
+                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="s.notified == true || disabled"
                                             value="1" (click)="notifySession(s.sessionId,$event)">Notify All</button>
                                     </div>
                                     <div class="text-center m-2">
-                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="s.notified == true"
+                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="s.notified == true || disabled"
                                             value="2" (click)="notifySession(s.sessionId,$event)">Notify LVT</button>
                                     </div>
                                     <div class="text-center m-2">
-                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="s.notified == true"
+                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="s.notified == true || disabled"
                                             value="3" (click)="notifySession(s.sessionId,$event)">Notify
                                             VolunTeacher</button>
                                     </div>
+                                    
+                                </div>
+                                <div class="text-center m-2">
+                                    <p *ngIf="disabled" class="text-center text-default"><small>Please wait, Notifying ...</small></p>
                                 </div>
 
                             </div>
@@ -345,8 +350,8 @@
 
                     <div class="col-12">
                         <div class="text-center m-2">
-                            <a routerLink="/admin/sessions/all" style="background-color: rgba(231, 121, 194, 0.26);"
-                                class="btn  text-dark border-0">View All</a>
+                            <a routerLink="/admin/sessions/all" 
+                                class="btn btn-dribbble text-white border-0">View All</a>
                         </div>
                     </div>
                 </div>

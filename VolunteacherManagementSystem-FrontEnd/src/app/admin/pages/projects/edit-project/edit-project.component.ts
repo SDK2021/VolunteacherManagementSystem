@@ -43,6 +43,8 @@ export class EditProjectComponent implements OnInit {
 
   hover: boolean = false
 
+  disabled:boolean=null
+
   showImageSpinner: boolean = true
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
@@ -179,7 +181,7 @@ export class EditProjectComponent implements OnInit {
   }
 
   saveProject(form: NgForm) {
-
+    this.disabled=true
     this.showProgressbar = true
     if (this.croppedImage != null) {
       const file = this.uploadImageComponent.image;
@@ -218,6 +220,7 @@ export class EditProjectComponent implements OnInit {
 
                   this.showProgressbar = false
                   this.openEditSnackBar()
+                  this.disabled=false
                   this.router.navigate(['/admin/projects'])
                 }, error => {
                   this.handleError(error)
@@ -257,6 +260,7 @@ export class EditProjectComponent implements OnInit {
 
         this.showProgressbar = false
         this.openEditSnackBar()
+        this.disabled=false
         this.router.navigate(['/admin/projects'])
       }, error => {
         this.handleError(error)

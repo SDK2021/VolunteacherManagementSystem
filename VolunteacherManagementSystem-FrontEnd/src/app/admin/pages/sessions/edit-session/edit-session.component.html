@@ -25,84 +25,7 @@
                         <div class="col-12 justify-content-center">
                             <form class="mt-5" (ngSubmit)="saveSession(form)" #form="ngForm">
                                 <div class="row justify-content-center">
-                                    <!-- <div class="col-12 col-sm-7 col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-group">Select Country</label>
-                                            <select class="form-control form-control-alternative" id="input-group"
-                                                (change)="selectedCountry($event)">
-                                                <option selected value="0">Select</option>
-                                                <option class="combobox" [value]="c.countryId" disabled
-                                                    *ngFor="let c of countries;trackBy: trackCountriesById"
-                                                    [selected]="c.countryId == 8">{{c.countryName}}
-                                                </option>
-                                            </select>                                            
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-7 col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-group">Select State</label>
-                                            <select class="form-control form-control-alternative" id="input-group"
-                                                (change)="selectedState($event)">
-                                                <option selected value="0">Select</option>
-                                                <option class="combobox" [value]="s.stateId"
-                                                    *ngFor="let s of states;trackBy: trackStatesById"
-                                                    [selected]="s.stateId==7">{{s.stateName}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-7 col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-group">Select District</label>
-                                            <select class="form-control form-control-alternative" id="input-group"
-                                                (change)="selectedDistrict($event)">
-                                                <option class="combobox" value="0" selected>Select</option>
-                                                <option class="combobox" [value]="d.districtId"
-                                                    *ngFor="let d of districts;trackBy: trackDistrictsById"
-                                                    [selected]="d.districtId==141&&Show">{{d.districtName}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-7 col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-group">Select Taluka</label>
-                                            <select class="form-control form-control-alternative" id="input-group"
-                                                (change)="selectedTaluka($event)">
-                                                <option class="combobox" value="0" selected>Select</option>
-                                                <option class="combobox" [value]="t.talukaId"
-                                                    *ngFor="let t of talukas;trackBy: trackTalukasById"
-                                                    [selected]="t.talukaId==35&&Show">{{t.talukaName}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-7 col-md-6 ">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-group">Select Village</label>
-                                            <select class="form-control form-control-alternative" id="input-group"
-                                                (change)="selectedVillage($event)">
-                                                <option class="combobox" value="0" selected>Select</option>
-                                                <option class="combobox" [selected]="session.village.villageId == v.villageId" [value]="v.villageId"
-                                                    *ngFor="let v of villages;trackBy: trackVillagesById">
-                                                    {{v.villageName}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-6 col-sm-7">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-group">Select Project</label>
-                                            <select class="form-control form-control-alternative" id="input-group"
-                                                (change)="selectedProject($event)">
-                                                <option class="combobox" value="0" selected>Select</option>
-                                                <option class="combobox" [selected] = "session.project.projectId == p.projectId" [value]="p.projectId"
-                                                    *ngFor="let p of projects">{{p.projectName}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div> -->
+                               
                                     <div class="col-12 col-sm-7 col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Select Country</label>
@@ -227,7 +150,8 @@
 
                                     
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button type="submit"
+                                            <p *ngIf="disabled" class="text-center text-default"><small>Please wait, editing session ...</small></p>
+                                            <button type="submit" [disabled]="!form.valid || disabled"
                                                 class=" mx-auto d-block btn btn-primary btn-round btn-icon">
                                                 <span class="btn-inner--text ">Save</span>
                                             </button>

@@ -41,6 +41,8 @@ export class EditEventComponent implements OnInit {
 
   oldImage: string = null
 
+  disabled:boolean=null
+
   baseUrl: string = "/vms/events"
   Show: boolean = true;
 
@@ -260,6 +262,7 @@ export class EditEventComponent implements OnInit {
   }
 
   saveEvent() {
+    this.disabled=true
     this.showProgressbar = true
     if (this.croppedImage != null) {
       const file = this.uploadImageComponent.image;
@@ -323,6 +326,7 @@ export class EditEventComponent implements OnInit {
 
                         this.showProgressbar = false
                         this.openEditSnackBar()
+                        this.disabled=false
                         setTimeout(() => {
                           this.router.navigate(['/admin/events'])
                         }, 500)
@@ -398,6 +402,7 @@ export class EditEventComponent implements OnInit {
               console.log(data)
               this.showProgressbar = false
               this.openEditSnackBar()
+              this.disabled=false
               setTimeout(() => {
                 this.router.navigate(['/admin/events'])
               }, 500)

@@ -36,8 +36,9 @@ export class CreateSessionsComponent implements OnInit {
   session: Session = new Session()
   projects: Array<Project> = []
   notification: Notification = new Notification();
-  
 
+
+  disabled: boolean = null
   showProgressbar: boolean = false
 
 
@@ -64,12 +65,12 @@ export class CreateSessionsComponent implements OnInit {
   villageSelected: number;
   projectSelected: number;
 
-  page:number=0
-  totalPages:number
+  page: number = 0
+  totalPages: number
 
-  showSpinner:boolean=false
-  noSessions:boolean=false
-  sLength:number
+  showSpinner: boolean = false
+  noSessions: boolean = false
+  sLength: number
 
 
   constructor(private router: Router, private authService: authentication, private notiService: NotificationsService, private userService: UsersService, private projectService: ProjectsService, private addressService: AddressService, private _snackBar: MatSnackBar, private dialog: MatDialog, private sessionService: SessionsService) {
@@ -77,7 +78,7 @@ export class CreateSessionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.page=0
+    this.page = 0
     let date: Date = new Date()
     console.log(date)
     this.month = this.monthNames[date.getMonth()]
@@ -105,17 +106,14 @@ export class CreateSessionsComponent implements OnInit {
     this.projectSelected = 0;
   }
 
-  handleError(error)
-  {
+  handleError(error) {
     console.log(error);
     console.log(error.status);
-    
-    if(error.status===500)
-    {
+
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
@@ -149,7 +147,7 @@ export class CreateSessionsComponent implements OnInit {
       verticalPosition: this.verticalPosition,
     });
   }
- 
+
   openDeleteSnackBar() {
     this._snackBar.open('Deleted successfully..', 'close', {
       duration: 2000,
@@ -171,25 +169,24 @@ export class CreateSessionsComponent implements OnInit {
 
   }
 
-  getSessionsByMonthAndYear(page:number) {
-    this.showSpinner=true
+  getSessionsByMonthAndYear(page: number) {
+    this.showSpinner = true
     let today: Date = new Date()
-    this.sessionService.getSessionsByMonthAndYear(page,today.getMonth() + 1, today.getFullYear()).subscribe(data => {
+    this.sessionService.getSessionsByMonthAndYear(page, today.getMonth() + 1, today.getFullYear()).subscribe(data => {
       this.sessions = data['content']
       this.totalPages = data['totalPages']
       console.log(this.sessions);
-      this.showSpinner=false
+      this.showSpinner = false
       if (data != null) {
         this.sLength = this.sessions.length
-        this.noSessions=false
+        this.noSessions = false
       }
       //this.sLength=0
-      if(this.sLength==0)
-      {
-        this.noSessions=true
+      if (this.sLength == 0) {
+        this.noSessions = true
       }
 
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
   }
@@ -197,16 +194,16 @@ export class CreateSessionsComponent implements OnInit {
   isEdit() {
     this.edit = true
     this.tab1 = true
-    this.tab2 = false   
+    this.tab2 = false
   }
 
-  
 
- 
+
+
   addSession(form) {
     //console.log(form)
-    if(this.villageSelected > 0 && this.projectSelected >0)
-    {
+    this.disabled = true
+    if (this.villageSelected > 0 && this.projectSelected > 0) {
       this.showProgressbar = true
       let sessiondate: string = this.session.sessionDate
       let sdate: string[] = sessiondate.split("-")
@@ -221,13 +218,15 @@ export class CreateSessionsComponent implements OnInit {
         this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
           this.sessionService.addSession(this.session).subscribe(data => {
             console.log(data)
-            this.showProgressbar = false
-            this.openAddSnackBar()
-            this.showTab2(true)
-            setTimeout(()=>{
+
+            setTimeout(() => {
               this.getSessionsByMonthAndYear(0)
-            },2000)
-          },error=>{
+              this.showProgressbar = false
+              this.openAddSnackBar()
+              this.showTab2(true)
+              this.disabled = false
+            }, 2000)
+          }, error => {
             this.handleError(error)
           })
         })).subscribe(data => {
@@ -244,7 +243,7 @@ export class CreateSessionsComponent implements OnInit {
   getProjects() {
     this.projectService.getAllProjects().subscribe(data => {
       this.projects = data
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
   }
@@ -257,7 +256,7 @@ export class CreateSessionsComponent implements OnInit {
   getAllCountries() {
     this.addressService.getCountries().subscribe(data => {
       this.countries = data
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
   }
@@ -271,7 +270,7 @@ export class CreateSessionsComponent implements OnInit {
   getAllStates() {
     this.addressService.getStates(8).subscribe(data => {
       this.states = data;
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
   }
@@ -284,10 +283,9 @@ export class CreateSessionsComponent implements OnInit {
     this.districtSelected = 0
     this.talukas = []
     this.villages = []
-    if(event.target.value > 0)
-    {
-      this.addressService.getDistricts(event.target.value).subscribe(data=>{
-      this.districts = data
+    if (event.target.value > 0) {
+      this.addressService.getDistricts(event.target.value).subscribe(data => {
+        this.districts = data
       })
     }
   }
@@ -295,7 +293,7 @@ export class CreateSessionsComponent implements OnInit {
   getAllDistricts() {
     this.addressService.getDistricts(7).subscribe(data => {
       this.districts = data;
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
   }
@@ -303,15 +301,14 @@ export class CreateSessionsComponent implements OnInit {
   selectedDistrict(event) {
     this.villageSelected = 0
     this.talukaSelected = 0
-    if(event.target.value > 0)
-    {
+    if (event.target.value > 0) {
       this.districtSelected = event.target.value;
-      this.addressService.getTalukas(event.target.value).subscribe(data=>{
-      this.talukas = data
-      this.villages = []
+      this.addressService.getTalukas(event.target.value).subscribe(data => {
+        this.talukas = data
+        this.villages = []
       })
     }
-    else{
+    else {
       this.talukas = []
       this.villages = []
       this.districtSelected = 0
@@ -321,7 +318,7 @@ export class CreateSessionsComponent implements OnInit {
   getAllTalukas() {
     this.addressService.getTalukas(141).subscribe(data => {
       this.talukas = data
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
   }
@@ -339,7 +336,7 @@ export class CreateSessionsComponent implements OnInit {
   getAllVillages() {
     this.addressService.getVillages(35).subscribe(data => {
       this.villages = data
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
   }
@@ -351,7 +348,8 @@ export class CreateSessionsComponent implements OnInit {
 
 
   notifySession(sessionId, value) {
-    this.showProgressbar=true
+    this.showProgressbar = true
+    this.disabled = true
     console.log(value.target.value)
     let authUser: string[] = []
     this.notification = new Notification()
@@ -374,61 +372,61 @@ export class CreateSessionsComponent implements OnInit {
       this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(() => {
         this.notiService.addNotification(this.notification).subscribe(data => {
           console.log(data)
-          this.openNotifySnackBar()
-          setTimeout(() => { this.getSessionsByMonthAndYear(0)
-            this.showProgressbar=false }, 1000);
-        },error=>{
+
+          setTimeout(() => {
+            this.getSessionsByMonthAndYear(0)
+            this.showProgressbar = false
+            this.openNotifySnackBar()
+            this.disabled = false
+          }, 1000);
+        }, error => {
           this.handleError(error)
         })
       })).subscribe(data => {
         this.notification.createdBy = data
       })
     })).subscribe(data => {
-      this.notification.session = data  
+      this.notification.session = data
     })
- 
+
   }
 
   trackById(index: number, s: Session) {
     return s.sessionId
   }
 
-  deleteSession(id:number)
-  {
-    this.showProgressbar=true
-     this.sessionService.deleteSession(id).subscribe(data=>{
-       console.log(data);  
-       this.openDeleteSnackBar()  
-       setTimeout(() => {
+  deleteSession(id: number) {
+    this.showProgressbar = true
+    this.sessionService.deleteSession(id).subscribe(data => {
+      console.log(data);
+      this.openDeleteSnackBar()
+      setTimeout(() => {
         this.getSessionsByMonthAndYear(this.page)
-        this.showProgressbar=false
-       }, 2000);
-     },error=>{
+        this.showProgressbar = false
+      }, 2000);
+    }, error => {
       this.handleError(error)
     })
   }
 
-  delete(id:number)
-  {
-    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
-       console.log(data.delete)
-      if(data.delete)
-      { 
+  delete(id: number) {
+    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
+      console.log(data.delete)
+      if (data.delete) {
         this.deleteSession(id)
       }
     })
   }
 
   onScroll() {
-    if(this.page<this.totalPages)
-    {
+    if (this.page < this.totalPages) {
       this.page += 1
       this.getPageableEvent(this.page);
     }
   }
   getPageableEvent(page: number) {
-    let today:Date=new Date()
-    this.sessionService.getSessionsByMonthAndYear(page,today.getMonth() + 1, today.getFullYear()).subscribe(data => {
+    let today: Date = new Date()
+    this.sessionService.getSessionsByMonthAndYear(page, today.getMonth() + 1, today.getFullYear()).subscribe(data => {
       data['content'].forEach(session => {
         this.sessions.push(session)
       });

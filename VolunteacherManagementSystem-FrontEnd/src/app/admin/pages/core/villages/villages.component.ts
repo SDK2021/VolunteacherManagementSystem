@@ -28,6 +28,8 @@ export class VillagesComponent implements OnInit {
 
   isShow:boolean=false;
 
+  disabled:boolean=null
+
   showProgressbar:boolean=false
   showSpinner:boolean=false
   noVillages:boolean=false
@@ -162,17 +164,20 @@ export class VillagesComponent implements OnInit {
 
   addVillage(form:NgForm)
   {
+    this.disabled=true
     this.showProgressbar = true
     this.addressService.getTalukaById(this.talukaSelected).pipe(finalize(()=>{
       this.projectService.addVillage(this.village).subscribe(data=>{
         console.log(data)
-        this.showProgressbar = false
-        this.openSnackBar()
-        this.showTab1(false)
-        this.showTab2(true)
+       
         form.reset()
-        setTimeout(()=>{
+        setTimeout(()=>{ 
           this.getAllVillages()
+          this.showProgressbar = false
+          this.openSnackBar()
+          this.showTab1(false)
+          this.showTab2(true)
+          this.disabled=false
         },2000)
        
       },error=>{

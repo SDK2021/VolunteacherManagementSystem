@@ -47,6 +47,8 @@ export class EditSessionComponent implements OnInit {
   talukas: Array<Taluka>
   villages: Array<Village>
 
+  disabled:boolean=null
+
   stateSelected: number;
   districtSelected: number;
   talukaSelected: number;
@@ -159,6 +161,7 @@ export class EditSessionComponent implements OnInit {
   }
   saveSession()
   {
+    this.disabled=true
     if(this.villageSelected > 0 && this.projectSelected > 0)
     {
       console.log(this.sessionDate + " " + this.session.sessionDate+"Uprvali first");
@@ -194,9 +197,11 @@ export class EditSessionComponent implements OnInit {
         this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
           this.sessionService.editSession(this.session.sessionId,this.session).subscribe(data => {
             console.log(data)
-            this.showProgressbar = false
-            this.openEditSnackBar()
+         
             setTimeout(()=>{
+              this.showProgressbar = false
+              this.openEditSnackBar()
+              this.disabled=false
               this.router.navigate(['/admin/sessions'])
             },2000)
           },error=>{

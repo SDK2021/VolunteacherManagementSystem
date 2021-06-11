@@ -230,7 +230,8 @@
                                    
                                   
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button [disabled]="!form.valid" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
+                                            <p *ngIf="disabled" class="text-center text-default"><small>Please wait, Creating School..</small></p>
+                                            <button [disabled]="!form.valid || disabled" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
                                                 <span class="btn-inner--text ">Submit</span>
                                             </button>
                                           </div>

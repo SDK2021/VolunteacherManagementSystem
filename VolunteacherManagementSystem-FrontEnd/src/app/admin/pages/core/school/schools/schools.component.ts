@@ -43,6 +43,8 @@ export class SchoolsComponent implements OnInit {
   isShow:boolean=false;
   Show:boolean=true;
 
+  disabled:boolean=null
+
   stateTouched:boolean = false
   districtTouched:boolean = false
   talukaTouched:boolean = false
@@ -179,6 +181,7 @@ export class SchoolsComponent implements OnInit {
    
   addSchool(form)
   {
+    this.disabled=true
     this.showProgressbar=true
     this.school.stream = form.stream
     this.school.status = form.status
@@ -195,13 +198,15 @@ export class SchoolsComponent implements OnInit {
 
       this.schoolService.addSchool(this.school).subscribe(data=>{
         console.log(data)
-        this.showProgressbar=false
-        this.openAddSnackBar()
-        this.showTab2(true)
-        this.showTab1(false)
+       
         
         setTimeout(()=>{
           this.getAllSchools(this.page)
+          this.showProgressbar=false
+          this.openAddSnackBar()
+          this.showTab2(true)
+          this.showTab1(false)
+          this.disabled=false
           this.school=null
         },2000)
        

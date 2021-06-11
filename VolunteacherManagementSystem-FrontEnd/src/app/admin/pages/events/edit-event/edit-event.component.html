@@ -210,7 +210,8 @@
     
                                     
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button type="submit" [disabled]="!form.valid" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
+                                            <p *ngIf="disabled" class="text-center text-default"><small>Please wait, Editing event..</small></p>
+                                            <button type="submit" [disabled]="!form.valid || disabled" class=" mx-auto d-block btn btn-primary btn-round btn-icon">
                                                 <span class="btn-inner--text ">Save</span>
                                             </button>
         

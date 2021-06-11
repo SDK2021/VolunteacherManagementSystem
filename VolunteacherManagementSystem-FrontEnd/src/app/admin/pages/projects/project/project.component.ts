@@ -129,6 +129,7 @@ export class ProjectComponent implements OnInit {
     this.tab2 = show
     this.tab1 = false
     this.edit = false
+   
   }
 
   vtTab: boolean = true
@@ -264,6 +265,7 @@ export class ProjectComponent implements OnInit {
           this.openAddSnackBar()
           this.disabled = false
           this.getAllProjects()
+          this.showImageSpinner=true
           this.showTab2(true)
         }, 1500);
 
@@ -320,6 +322,7 @@ export class ProjectComponent implements OnInit {
                     this.disabled = false
                     this.getAllProjects()
                     this.showTab2(true)
+                    this.showImageSpinner=true
                   }, 1500);
 
                   //this.getAllProjects()

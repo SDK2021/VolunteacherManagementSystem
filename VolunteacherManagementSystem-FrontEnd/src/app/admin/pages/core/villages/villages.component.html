@@ -99,7 +99,8 @@
                                         </div>
                                     </div>
                                     <div class="col-12 text-center mt-4 mb-2 ">
-                                        <button type="submit" [disabled]="!form.valid"
+                                        <p *ngIf="disabled" class="text-center text-default"><small>Please wait, Creating village</small></p>
+                                        <button type="submit" [disabled]="!form.valid || disabled"
                                             class="btn btn-primary btn-round btn-icon">
                                             <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
                                             <span class="btn-inner--text " (click)="show()">Add </span>

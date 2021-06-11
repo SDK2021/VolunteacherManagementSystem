@@ -50,6 +50,7 @@ export class EditSchoolComponent implements OnInit {
   districts:Array<District>
   talukas:Array<Taluka>
   villages:Array<Village>
+  disabled:boolean=null
 
   // stateTouched:boolean = false
   // districtTouched:boolean = false
@@ -227,6 +228,7 @@ export class EditSchoolComponent implements OnInit {
 
   saveSchool()
   {
+    this.disabled=true
     console.log(this.villageSelected);
     
     if(this.villageSelected !=0 && this.school.status !=null && this.school.stream !=null)
@@ -247,6 +249,7 @@ export class EditSchoolComponent implements OnInit {
         setTimeout(()=>{
           this.showProgressbar=false
           this.openEditSnackBar()
+          this.disabled=false
          this.router.navigate(['/admin/schools'])
         },2000)
       },error=>{

@@ -225,7 +225,8 @@
                                         </div>
 
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button type="submit" [disabled]="!form.valid"
+                                            <p *ngIf="disabled" class="text-center text-default"><small>Please wait, Creating event..</small></p>
+                                            <button type="submit" [disabled]="!form.valid || disabled"
                                                 class=" mx-auto d-block btn btn-primary btn-round btn-icon">
                                                 <span class="btn-inner--text ">Submit</span>
                                             </button>
@@ -305,19 +306,21 @@
                                 <div class="row justify-content-center mb-2">
 
                                     <div class="text-center m-2">
-                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="e.notified == 1"
+                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="e.notified == 1 || disabled"
                                             value="1" (click)="notifyEvent(e.eventId,$event)">Notify All</button>
                                     </div>
                                     <div class="text-center m-2">
-                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="e.notified == 1"
+                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="e.notified == 1 || disabled"
                                             value="2" (click)="notifyEvent(e.eventId,$event)">Notify LVT</button>
                                     </div>
                                     <div class="text-center m-2">
-                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="e.notified == 1"
+                                        <button class="btn btn-primary btn-sm mt-2 p-2" [disabled]="e.notified == 1 || disabled"
                                             value="3" (click)="notifyEvent(e.eventId,$event)">Notify
                                             VolunTeacher</button>
                                     </div>
+                                   
                                 </div>
+                                <p *ngIf="disabled" class="text-center text-default"><small>Please wait, Notifying..</small></p>
                             </div>
 
                         </div>

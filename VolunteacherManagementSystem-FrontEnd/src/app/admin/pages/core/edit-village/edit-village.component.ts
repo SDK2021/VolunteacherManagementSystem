@@ -33,6 +33,7 @@ export class EditVillageComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
   search:string=''
+  disabled:boolean=null
 
   stateSelected:number;_
   districtSelected:number;
@@ -86,6 +87,7 @@ export class EditVillageComponent implements OnInit {
 
   saveVillage()
   {
+    this.disabled=true
     if(this.talukaSelected != 0)
     {
       this.showProgressbar=true
@@ -97,6 +99,7 @@ export class EditVillageComponent implements OnInit {
           this.openSnackBar()
           this.router.navigate(['/admin/villages'])
           console.log(data);
+          this.disabled=false
         })
       })).subscribe(data=>{
         this.village.taluka = data
