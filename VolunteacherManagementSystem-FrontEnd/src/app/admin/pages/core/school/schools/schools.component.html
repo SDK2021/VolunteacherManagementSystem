@@ -371,10 +371,11 @@
                                             <i  class="fas fa-edit text-lg text-primary"></i>
                                         </div>
                                     </td>
-                                    <td style="cursor: pointer;" (click)="delete(s.schoolId)">
+                                    <td style="cursor: pointer;" >
                                         <div class="text-center ">
-                                            <i mat-button
-                                                class="fas fa-trash text-lg text-danger"></i>
+                                            <button class="btn bg-transparent" [disabled]="disabled" (click)="delete(s.schoolId)">
+                                                <i class="fas fa-trash text-lg text-danger"></i>
+                                            </button>
                                         </div>
                                     </td>
     

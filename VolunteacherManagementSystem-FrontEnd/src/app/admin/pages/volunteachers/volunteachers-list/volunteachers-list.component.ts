@@ -34,6 +34,8 @@ export class VolunteachersListComponent implements OnInit {
 
   volunteachers: Array<Volunteacher> = new Array()
 
+  disabled:boolean=null
+
   showImageSpinner:boolean=true
 
   constructor(private router: Router, private dialog: MatDialog, private _snackBar: MatSnackBar, private sharedService: VolunteachersService) {
@@ -123,6 +125,7 @@ export class VolunteachersListComponent implements OnInit {
   }
 
   deleteVolunteacher(id: number) {
+    this.disabled=true
     this.showProgressbar = true
     this.sharedService.deleteVolunteacher(id).subscribe(data => {
       console.log(data);
@@ -130,6 +133,7 @@ export class VolunteachersListComponent implements OnInit {
       setTimeout(() => {
         this.getAllVoluntecahers(this.page)
         this.openSnackBar()
+        this.disabled=false
         this.showProgressbar = false
       }, 2000);
     }, error => {

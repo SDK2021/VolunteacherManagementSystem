@@ -1,3 +1,14 @@
+<style>
+  .btn{
+    border: none;
+    box-shadow: none;
+  }
+  .btn:active
+  {
+    border: none;
+    box-shadow: none;
+  }
+</style>
 <ng-container *ngIf="showProgressbar">
   <div style="z-index: 100;position: -webkit-sticky;position:sticky;top:0;">
     <mat-progress-bar mode="indeterminate" style="color:white;"></mat-progress-bar>
@@ -47,9 +58,8 @@
             
             <div class="card card-profile profile">
               <span  class="d-block text-common text-right mt-0 mr-4 mb-0 h1">
-              <button class="bg-transparent btn-active" style="border: none;">
-                <b><i
-                      class="text-sm fas fa-trash text-danger"></i></b>
+              <button class="btn bg-transparent" [disabled]="disabled" (click)="delete(v.volunteacherId)">
+                <b><i class="text-sm fas fa-trash text-danger"></i></b>
               </button>
             </span>
               <div class="row justify-content-center">

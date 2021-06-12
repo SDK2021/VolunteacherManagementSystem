@@ -58,10 +58,8 @@
                                             </div>
                                         </div>
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button type="submit" [disabled]="!form.valid"
-                                                class=" mx-auto d-block btn btn-primary btn-round btn-icon">
-    
-                                                <span class="btn-inner--icon"><i class="fas fa-plus fa-lg"></i></span>
+                                            <button type="submit" [disabled]="!form.valid || disabled"
+                                                class=" mx-auto d-block btn btn-dribbble btn-round btn-icon">
                                                 <span class="btn-inner--text ">Add</span>
                                             </button>
     
@@ -117,7 +115,9 @@
                                 </td>
                                 <td>
                                     <div style="cursor: pointer;" class="col-3 text-right ">
-                                        <i (click)="delete(a.activityId)" class="fas fa-trash text-lg text-danger"></i>
+                                        <button class="btn bg-transparent" [disabled]="disabled" (click)="delete(a.activityId)">
+                                            <i  class="fas fa-trash text-lg text-danger"></i>
+                                        </button>
                                     </div>
                                 </td>
     
@@ -173,12 +173,11 @@
                                             </div>
                                         </div>
                                         <div class="col-12 mt-4 mb-2 ">
-                                            <button type="submit" [disabled]="!form.valid"
+                                            <p *ngIf="disabled" class="text-center text-default "><small>PLease wait, Editing activity</small></p>
+                                            <button type="submit" [disabled]="!form.valid || disabled"
                                                 class=" mx-auto d-block btn btn-primary btn-round btn-icon">
                                                 <span class="btn-inner--text ">Save</span>
                                             </button>
-    
-    
                                         </div>
                                     </div>
                                 </form>

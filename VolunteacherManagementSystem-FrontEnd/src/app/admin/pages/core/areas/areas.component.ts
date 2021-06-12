@@ -19,112 +19,103 @@ import { KidService } from 'src/app/admin/shared-services/kid.service';
   styleUrls: ['./areas.component.css']
 })
 export class AreasComponent implements OnInit {
-  isShow:boolean=false
-  villageId:number;
-  area:Area = new Area()
+  isShow: boolean = false
+  villageId: number;
+  area: Area = new Area()
 
-  showSpinner:boolean=false
-  noAreas:boolean=false
-  aLength:number
+  showSpinner: boolean = false
+  noAreas: boolean = false
+  aLength: number
+
+  disabled: boolean = null
 
   showProgressbar: boolean = false
 
-  constructor(private kidService:KidService, private router:Router,private projectService:ProjectsService,private addressService:AddressService, private route:ActivatedRoute,private dialog:MatDialog, private _snackBar: MatSnackBar) { }
-  areas:Array<Area> = []
+  constructor(private kidService: KidService, private router: Router, private projectService: ProjectsService, private addressService: AddressService, private route: ActivatedRoute, private dialog: MatDialog, private _snackBar: MatSnackBar) { }
+  areas: Array<Area> = []
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   ngOnInit(): void {
     this.getAllArea()
     this.villageId = this.route.snapshot.params['id']
   }
-  show()
-  {
-    this.isShow=!this.isShow
+  show() {
+    this.isShow = !this.isShow
   }
 
-  getAllArea()
-  {
-    this.showSpinner=true
-    this.addressService.getAreas(this.route.snapshot.params['id']).pipe(finalize(()=>{
-      this.kidService.getAllKidslist().subscribe(data=>{
-        let flag=0
+  getAllArea() {
+    this.showSpinner = true
+    this.addressService.getAreas(this.route.snapshot.params['id']).pipe(finalize(() => {
+      this.kidService.getAllKidslist().subscribe(data => {
+        let flag = 0
         for (let area of this.areas) {
           flag = 0
-          for (let kid of data) 
-          {
-            if(kid.area.areaId === area.areaId)
-            {
+          for (let kid of data) {
+            if (kid.area.areaId === area.areaId) {
               flag = 1
-              console.log("Area:"+area.areaId);
-              break 
+              console.log("Area:" + area.areaId);
+              break
             }
           }
-          if(flag==1)
-          {
+          if (flag == 1) {
             area.isDelete = true
           }
-          else
-          {
+          else {
             area.isDelete = false
           }
         }
         console.log(this.areas);
-        this.showSpinner=false
+        this.showSpinner = false
         if (data != null) {
           this.aLength = this.areas.length
-          this.noAreas=false
+          this.noAreas = false
         }
         //this.aLength=0
-        if(this.aLength==0)
-        {
-          this.noAreas=true
+        if (this.aLength == 0) {
+          this.noAreas = true
         }
       })
-    })).subscribe(data=>{
+    })).subscribe(data => {
       this.areas = data
     })
   }
-  editArea(index:number) {
-    
-    console.log(this.areas.filter(post=>post));
-    
-    console.log(this.areas[index]["isEdit"]=!this.areas[index]["isEdit"])
-    this.area.areaName=this.areas[index]["areaName"]
+  editArea(index: number) {
+
+    console.log(this.areas.filter(post => post));
+
+    console.log(this.areas[index]["isEdit"] = !this.areas[index]["isEdit"])
+    this.area.areaName = this.areas[index]["areaName"]
     console.log(this.areas[index]["areaId"]);
-    
-   
+
+
   }
 
-  handleError(error)
-  {
-    console.log(error);        
-    if(error.status===500)
-    {
+  handleError(error) {
+    console.log(error);
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
-      
+
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
-  addArea(form:NgForm)
-  {
-    this.showProgressbar=true
-    this.addressService.getVillageByid(this.villageId).pipe(finalize(()=>{
-      this.projectService.addArea(this.area).subscribe(data=>{
+  addArea(form: NgForm) {
+    this.showProgressbar = true
+    this.addressService.getVillageByid(this.villageId).pipe(finalize(() => {
+      this.projectService.addArea(this.area).subscribe(data => {
         console.log(data)
         this.openAddSnackBar()
         form.reset()
         this.show()
-        setTimeout(()=>{
+        setTimeout(() => {
           this.getAllArea()
-          this.showProgressbar=false
-        },2000)
-      },error=>{
+          this.showProgressbar = false
+        }, 2000)
+      }, error => {
         this.handleError(error)
       })
-    })).subscribe(data=>{
+    })).subscribe(data => {
       this.area.village = data
     })
   }
@@ -157,49 +148,48 @@ export class AreasComponent implements OnInit {
     });
   }
 
-  saveArea(index:number)
-  {
-    
-    this.openEditSnackBar()
-   
+  saveArea(index: number) {
+
+
+
     console.log(this.area);
-    this.area=this.areas[index]
+    this.area = this.areas[index]
     // alert(this.area.areaName)
-    this.addressService.saveArea(this.areas[index]["areaId"],this.area).subscribe(data=>{
+    this.addressService.saveArea(this.areas[index]["areaId"], this.area).subscribe(data => {
       console.log(data);
       setTimeout(() => {
         this.getAllArea()
-        this.areas[index]["isEdit"]=false
+        this.areas[index]["isEdit"] = false
+        this.openEditSnackBar()
       }, 1000);
     })
-    
+
   }
 
-  deleteArea(id:number)
-  {
-    this.showProgressbar=true
-     this.addressService.deleteArea(id).subscribe(data=>{
-       console.log(data);  
-       this.openDeleteSnackBar()  
-       setTimeout(() => {
+  deleteArea(id: number) {
+    this.disabled = true
+    this.showProgressbar = true
+    this.addressService.deleteArea(id).subscribe(data => {
+      console.log(data);
+      setTimeout(() => {
         this.getAllArea()
-        this.showProgressbar=false
-       }, 2000);
-     },error=>{
+        this.showProgressbar = false
+        this.openDeleteSnackBar()
+        this.disabled = false
+      }, 2000);
+    }, error => {
       this.handleError(error)
     })
   }
 
-  delete(id:number)
-  {
-    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
-       console.log(data.delete)
-      if(data.delete)
-      { 
+  delete(id: number) {
+    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
+      console.log(data.delete)
+      if (data.delete) {
         this.deleteArea(id)
       }
     })
-    
+
   }
 
   openDeleteSnackBar() {

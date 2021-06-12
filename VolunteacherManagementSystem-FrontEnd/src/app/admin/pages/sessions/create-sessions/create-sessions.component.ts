@@ -199,7 +199,7 @@ export class CreateSessionsComponent implements OnInit {
 
 
 
-
+  
   addSession(form) {
     //console.log(form)
     this.disabled = true
@@ -223,7 +223,11 @@ export class CreateSessionsComponent implements OnInit {
               this.getSessionsByMonthAndYear(0)
               this.showProgressbar = false
               this.openAddSnackBar()
-              this.showTab2(true)
+              
+              // this.showTab2(true)
+              form.reset()
+              form.project="Select"
+              
               this.disabled = false
             }, 2000)
           }, error => {
@@ -401,7 +405,7 @@ export class CreateSessionsComponent implements OnInit {
       console.log(data);
       this.openDeleteSnackBar()
       setTimeout(() => {
-        this.getSessionsByMonthAndYear(this.page)
+        this.getSessionsByMonthAndYear(0)
         this.showProgressbar = false
       }, 2000);
     }, error => {

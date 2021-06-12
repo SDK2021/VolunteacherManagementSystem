@@ -29,6 +29,8 @@ export class EventsListComponent implements OnInit {
   previousDisabled:boolean = true
   nextDisabled:boolean = false
   totalEventsPages:number
+  
+  disabled:boolean=null;
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
@@ -109,14 +111,17 @@ export class EventsListComponent implements OnInit {
 
   deleteEvent(id:number,image:string)
   {
+    this.disabled=true
     this.showProgressbar=true
      this.eventService.deleteEvent(id).subscribe(data=>{
        console.log(data); 
        this.fileService.delete(image)
-       this.openDeleteSnackBar()  
+       
        setTimeout(() => {
         this.getAllEvents(this.page)
         this.showProgressbar=false
+        this.openDeleteSnackBar() 
+        this.disabled=false
        }, 2000);
      }, error => {
       this.handleError(error)

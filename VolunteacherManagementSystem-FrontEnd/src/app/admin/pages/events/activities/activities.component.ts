@@ -16,48 +16,45 @@ import { Router } from '@angular/router';
   styleUrls: ['./activities.component.css']
 })
 export class ActivitiesComponent implements OnInit {
-  isShow:boolean=false
+  isShow: boolean = false
 
-  activities:Array<Activity>
+  activities: Array<Activity>
 
   showProgressbar: boolean = false
 
-  page:number=0
+  page: number = 0
+
+  disabled: boolean = null
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  isEdit:boolean=false
-  activity: Activity=new Activity()
-  constructor(private router:Router,private dialog:MatDialog, private _snackBar: MatSnackBar, private eventService:EventsService) { 
+  isEdit: boolean = false
+  activity: Activity = new Activity()
+  constructor(private router: Router, private dialog: MatDialog, private _snackBar: MatSnackBar, private eventService: EventsService) {
   }
 
   ngOnInit(): void {
     this.getAllActivities()
   }
 
-  handleError(error)
-  {
+  handleError(error) {
     console.log(error);
     console.log(error.status);
-    
-    if(error.status===500)
-    {
+
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
 
-  show()
-  {
-    this.isShow=!this.isShow
+  show() {
+    this.isShow = !this.isShow
   }
 
-  openDialog()
-  {
+  openDialog() {
     this.dialog.open(DialogBoxComponent)
     this.openDeletedSnackBar()
   }
@@ -86,84 +83,86 @@ export class ActivitiesComponent implements OnInit {
     });
   }
 
-  onSubmit()
-  {
+  onSubmit() {
     console.log(this.activity);
     this.show()
   }
 
-  getAllActivities()
-  {
-    this.eventService.getActivities().subscribe(data=>{
-      this.activities=data
+  getAllActivities() {
+    this.eventService.getActivities().subscribe(data => {
+      this.activities = data
       console.log(this.activities);
-      
-    },error=>{
+
+    }, error => {
       this.handleError(error)
     })
   }
 
-  addActivity(form:NgForm)
-  {
-    this.showProgressbar=true
-    this.eventService.addActivity(this.activity).subscribe(data=>{
+  addActivity(form: NgForm) {
+    this.disabled = true
+    this.showProgressbar = true
+    this.eventService.addActivity(this.activity).subscribe(data => {
       console.log(data)
-      this.openAddedSnackBar()
+
       this.show()
       form.reset()
-      setTimeout(()=>{
+      setTimeout(() => {
         this.getAllActivities()
-        this.showProgressbar=false
-      },2000)
-    },error=>{
+        this.showProgressbar = false
+        this.openAddedSnackBar()
+        this.disabled = false
+      }, 2000)
+    }, error => {
       this.handleError(error)
     })
   }
 
-  trackById(index :number,activity:Activity)
-  {
-      return activity.activityId
+  trackById(index: number, activity: Activity) {
+    return activity.activityId
   }
 
-  deleteActivity(id:number)
-  {
-    this.showProgressbar=true
-     this.eventService.deleteActivity(id).subscribe(data=>{
-       console.log(data);  
-       this.openDeletedSnackBar()  
-       setTimeout(() => {
+  deleteActivity(id: number) {
+    this.disabled = true
+    this.showProgressbar = true
+    this.eventService.deleteActivity(id).subscribe(data => {
+      console.log(data);
+
+      setTimeout(() => {
         this.getAllActivities()
-        this.showProgressbar=false
-       }, 2000);
-     },error=>{
+        this.showProgressbar = false
+        this.openDeletedSnackBar()
+        this.disabled = false
+      }, 2000);
+    }, error => {
       this.handleError(error)
     })
   }
 
-  delete(id:number)
-  {
-    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
-       console.log(data.delete)
-      if(data.delete)
-      { 
+  delete(id: number) {
+    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
+      console.log(data.delete)
+      if (data.delete) {
         this.deleteActivity(id)
       }
     })
   }
 
-  edit(id:number)
-  {
-    this.isEdit=true
-    this.eventService.getActivityById(id).subscribe(data=>{
-      this.activity=data
+  edit(id: number) {
+    this.isEdit = true
+    this.eventService.getActivityById(id).subscribe(data => {
+      this.activity = data
       console.log(data)
     })
   }
 
-  saveActivity()
-  {
-    this.eventService.updateActivity(this.activity.activityId,this.activity).subscribe(data=>{
+  saveActivity() {
+    this.disabled = true
+    this.eventService.updateActivity(this.activity.activityId, this.activity).subscribe(data => {
       console.log(data);
+      this.disabled = false
+      this.isEdit = false
+    }, error => {
+      this.handleError(error)
     })
   }
 }

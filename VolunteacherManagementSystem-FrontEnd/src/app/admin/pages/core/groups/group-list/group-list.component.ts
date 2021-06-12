@@ -38,6 +38,8 @@ export class GroupListComponent implements OnInit {
   showSpinner:boolean=false
   showProgressbar: boolean = false
 
+  disabled:boolean=null
+
   isError:boolean=false
 
   constructor(private addressService:AddressService,private router:Router,private kids: KidService, private kidsService: KidsService, private route: ActivatedRoute, private _snackBar: MatSnackBar) {
@@ -93,14 +95,17 @@ export class GroupListComponent implements OnInit {
   }
 
   addGroup(form:NgForm) {
+    this.disabled=true
     this.showProgressbar = true
     this.kids.addKidsGroup(this.kidsGroup).subscribe(data => {
       console.log(data)
-      this.openSnackBar()
+      
       form.reset()
       setTimeout(() => {
         this.getkidsgroup()
         this.showProgressbar = false
+        this.openSnackBar()
+        this.disabled=false
       }, 2000)
     },error=>{
       this.handleError(error)
@@ -108,10 +113,14 @@ export class GroupListComponent implements OnInit {
   }
 
   saveGroup(){
+    this.disabled=true
     console.log(this.kidsGroup);
     this.kidsService.editKidsGroup(this.kidsGroup.groupId,this.kidsGroup).subscribe(data=>{
       console.log(data);
-      
+      this.disabled=false
+      this.isEdit=false
+    },error=>{
+      this.handleError(error)
     })
 
     

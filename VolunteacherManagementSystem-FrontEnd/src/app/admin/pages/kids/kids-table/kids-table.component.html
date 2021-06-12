@@ -1,3 +1,15 @@
+
+<style>
+    .btn{
+      border: none;
+      box-shadow: none;
+    }
+    .btn:active
+    {
+      border: none;
+      box-shadow: none;
+    }
+  </style>
 <div class=" pb-0 pt-0 pt-md-6 bg-primary">
     <!-- style="background-color:#3687f1" -->
     <div class="container-fluid mb-0">
@@ -169,9 +181,9 @@
     
     
     
-                                        <td style="cursor: pointer;" (click)="delete(k.kidId)" class="text-center">
-                                            <p class="text-center mb-0" mat-button> <i
-                                                    class="fas fa-trash text-danger text-lg"></i></p>
+                                        <td style="cursor: pointer;"  class="text-center">
+                                            <button class="btn bg-transparent" [disabled]="disabled" (click)="delete(k.kidId)"> <p class="text-center mb-0" mat-button> <i
+                                            class="fas fa-trash text-danger text-lg"></i></p></button>
                                         </td>
     
                                     </tr>

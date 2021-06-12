@@ -31,6 +31,8 @@ export class KidsTableComponent implements OnInit {
   showSpinner:boolean=false
   noKids:boolean=false
 
+  disabled:boolean=null
+
   page:number=0
   totalKidPages:number
   previousDisabled:boolean = true
@@ -73,12 +75,15 @@ export class KidsTableComponent implements OnInit {
 
   deleteKid(id:number)
   {
+    this.disabled=true
     this.showProgressbar=true
      this.kidService.deleteKid(id).subscribe(data=>{
        console.log(data);  
        this.openSnackBar()  
+       
        setTimeout(() => {
         this.getAllKids(this.page)
+        this.disabled=false
         this.showProgressbar=false
        }, 2000);
      },error=>{

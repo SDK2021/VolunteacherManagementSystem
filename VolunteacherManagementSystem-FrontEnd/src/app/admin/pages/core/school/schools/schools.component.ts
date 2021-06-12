@@ -363,13 +363,16 @@ export class SchoolsComponent implements OnInit {
  
   deleteSchool(id:number)
   {
+    this.disabled=true
     this.showProgressbar=true
      this.schoolService.deleteSchool(id).subscribe(data=>{
        console.log(data);  
-       this.openDeleteSnackBar()  
+  
        setTimeout(() => {
         this.getAllSchools(this.page)
         this.showProgressbar=false
+        this.disabled=false
+        this.openDeleteSnackBar()
        }, 2000);
      },error=>{
       this.handleError(error)

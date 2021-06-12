@@ -132,7 +132,9 @@
                                         </td>
                                         <td  style="cursor: pointer;" class=" text-center ">
                                             <div class="col-3  ">
-                                                <i (click)="delete(s.sessionId)"  class="fas fa-trash text-lg text-danger"></i>
+                                                <button class="btn bg-transparent" [disabled]="disabled" (click)="delete(s.sessionId)">
+                                                    <i class="fas fa-trash text-lg text-danger"></i>
+                                                </button>
                                             </div>
                                         </td>
     
