@@ -18,6 +18,7 @@ export class KidReportComponent implements OnInit {
   public salesChart;
   public clicked: boolean = true;
   public clicked1: boolean = false;
+  showkidsReportComparision: boolean = true
   
   kidReport:Kidsreport=new Kidsreport()
 
@@ -119,9 +120,9 @@ export class KidReportComponent implements OnInit {
             {
               data: [this.kidReport.discipline, this.kidReport.goshthi, this.kidReport.abhivyakti],
               backgroundColor: [
-                "blueviolet",
-                "lightpink",
-                "indigo"
+                "#fff200",
+                "hotpink",
+                "#5e72e4"
               ]
             }
           ],
@@ -204,7 +205,7 @@ export class KidReportComponent implements OnInit {
       if (this.kidReports.length >= 3) {
         console.log("Hello");
         
-        // this.showkidsReportComparision = true
+         this.showkidsReportComparision = true
 
         let totalReport1: number = ((this.kidReports[0].abhivyakti + this.kidReports[0].artCraft + this.kidReports[0].discipline + this.kidReports[0].english + this.kidReports[0].games
           + this.kidReports[0].goshthi + this.kidReports[0].gujarati + this.kidReports[0].literature + this.kidReports[0].maths + this.kidReports[0].prayer + this.kidReports[0].sports + this.kidReports[0].volunteaching) * 100) / 120
@@ -247,6 +248,10 @@ export class KidReportComponent implements OnInit {
             }]
           }
         })
+      }
+      else
+      {
+        this.showkidsReportComparision = false
       }
     },error=>{
       this.handleError(error)

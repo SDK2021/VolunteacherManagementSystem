@@ -33,6 +33,9 @@ export class CreatePostComponent implements OnInit {
 
   showProgressbar: boolean = false
 
+  disabled:boolean=null;
+
+
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
@@ -72,6 +75,7 @@ export class CreatePostComponent implements OnInit {
   }
 
   createPost() {
+    this.disabled=true
 
     this.showProgressbar = true
     const file = this.uploadImageComponent.image;
@@ -105,6 +109,7 @@ export class CreatePostComponent implements OnInit {
                     console.log(data)
                     this.isPostCreated = true
                     this.showProgressbar = false
+                    this.disabled=false
                     this.router.navigate(['/user/posts'])
                   }, error => {
                     this.handleError(error)

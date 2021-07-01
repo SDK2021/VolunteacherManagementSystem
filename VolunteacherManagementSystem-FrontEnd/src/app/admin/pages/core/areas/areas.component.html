@@ -134,7 +134,7 @@
                                         <div class="col-3 mx-auto d-block ">
                                             <button class="btn bg-transparent" [disabled]="disabled"
                                                 (click)="delete(a.areaId)">
-                                                <i *ngIf="!a.isDelete " style="cursor: pointer;"
+                                                <i *ngIf="!a.isDelete || disabled" style="cursor: pointer;"
                                                     class="fas fa-trash  text-lg text-danger"></i>
                                             </button>
                                         </div>

@@ -110,7 +110,7 @@
             
                                                         <p class="text-center">Please confirm are you joining?</p>
                                                         <div class="text-center my-4">
-                                                            <button [disabled]="n.session.disable == true" 
+                                                            <button [disabled]="n.session.disable == true || disabled" 
                                                                 class="btn btn-primary mx-4 text-white justify-content-between rounded px-4 py-2"
                                                                 (click)="openSessionDialog(n.session.sessionId)">Attend</button>
                                                         
@@ -137,7 +137,7 @@
                                                             on {{n.event.eventDate | date:'mediumDate'}} {{n.event.eventStartingTime}} to {{n.event.eventEndingTime}} at
                                                             {{n.event.village.villageName}}</p>
                                                         <div class="text-center my-4">
-                                                            <button [disabled]="n.event.disable == true"
+                                                            <button [disabled]="n.event.disable == true || disabled"
                                                                 class="btn btn-dribbble mx-4 text-white justify-content-between rounded px-4 py-2"
                                                                 (click)="openEventDialog(n.event.eventId)">Join</button>
                                                         </div>

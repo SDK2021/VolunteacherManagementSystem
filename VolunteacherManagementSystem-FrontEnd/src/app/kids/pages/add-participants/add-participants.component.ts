@@ -40,6 +40,7 @@ export class AddParticipantsComponent implements OnInit {
   filter:string;
   showProgressbar:boolean=false
   disabled:boolean=true
+  showMsg:boolean=null
 
   eventId: number;
   kidslist: Array<Kid> = new Array()
@@ -87,10 +88,14 @@ export class AddParticipantsComponent implements OnInit {
   }
 
   addParticipatedKids() {
+    this.disabled=true
+    this.showMsg=true
     this.showProgressbar=true
     this.kidsService.addParticipants(this.kidsParticipateIds, this.eventId).subscribe(data => {
       this.showProgressbar=false
       this.openSnackBar()
+      this.disabled=false
+      this.showMsg=false
       this.router.navigate(['/user/kids/event-participation'])
       console.log(data)
     }, error => {

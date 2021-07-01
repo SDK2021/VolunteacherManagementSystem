@@ -27,7 +27,6 @@ export const ROUTES: RouteInfo[] = [
     
 
     ],showChild:false},
-    { path: 'donation', title: 'Donate',  icon: 'ni ni-money-coins text-green', class: '' ,children:[],showChild:false},
     { path: 'profile/posts', title: 'Profile',  icon:'ni ni-single-02 text-pink', class: '',children:[],showChild:false },
 
 ];

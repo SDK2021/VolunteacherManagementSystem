@@ -255,7 +255,8 @@
                                         <!-- Model Should be there successfully added or not -->
                                        <ng-container>
                                         <div class="col-12 text-center mt-4 mb-4 ">
-                                            <button [disabled]="!form.valid" 
+                                            <p *ngIf="disabled" class="text-center text-default"><small>Please wait, Adding kid</small></p>
+                                            <button [disabled]="!form.valid || disabled" 
                                                 class="btn btn-primary">Add</button>
                                         </div>
                                        </ng-container>

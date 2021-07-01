@@ -11,5 +11,6 @@ export class Village {
     totalVolunteachers:number = 0
     totalSessions:number = 0
     totalLVTS:number = 0
+    isDelete:boolean = false
     
 }

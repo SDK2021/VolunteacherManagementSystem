@@ -103,6 +103,7 @@
                                 </ng-container>
                             </ng-container>
                             <div class="text-center mt-4 mb-4">
+                                <p *ngIf="showMsg" class="text-center text-default"><small>Please wait, Processing..</small></p>
                                 <button [disabled]="disabled" (click) = "addParticipatedKids()" class="btn btn-primary">Submit</button>
                             </div>
                         </div>

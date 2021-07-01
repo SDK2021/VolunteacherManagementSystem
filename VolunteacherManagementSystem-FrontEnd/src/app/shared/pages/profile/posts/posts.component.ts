@@ -194,7 +194,7 @@ export class PostsComponent implements OnInit {
     this.showProgressbar=true
     this.postService.deleteTimelinePost(id).subscribe(data =>{
       console.log(data)
-      this.fileService.delete(image)
+      // this.fileService.delete(image)
     this.openDeleteSnackBar()
     this.getposts(this.page)
     this.showProgressbar=false

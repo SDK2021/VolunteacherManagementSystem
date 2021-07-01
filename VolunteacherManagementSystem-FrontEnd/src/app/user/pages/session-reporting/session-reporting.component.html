@@ -46,7 +46,8 @@
                   class="form-control form-control-alternative"></textarea>
               </div>
               <div class="text-center mt-4 mb-4">
-                <button type="submit" [disabled]="!form.valid" class="btn btn-primary">Submit</button>
+                <p *ngIf="disabled" class="text-center text-default"><small>Please wait...</small></p>
+                <button type="submit" [disabled]="!form.valid || disabled" class="btn btn-primary">Submit</button>
               </div>
             </form>
           </div>

@@ -35,14 +35,17 @@ export class EditProfileComponent implements OnInit {
   districtSelected: number
   // editProfile:FormGroup
 
+  disabled:boolean=null
+
 
   showProgressbar:boolean=false
   volunteacher: Volunteacher = new Volunteacher()
   user: User
   firstName: string
   lastName: string
-  isShow: boolean;
+  isShow: boolean = false;
   villageSelected: number
+  updateEmail:String
   dob: string
   constructor(private router: Router, private addressService: AddressService, private profileService: ProfileService, private fb: FormBuilder, private _snackBar: MatSnackBar, private userServeice: UsersService, private authService: authentication) { }
 
@@ -50,12 +53,11 @@ export class EditProfileComponent implements OnInit {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    console.warn(this.editProfile.value);
+    console.warn(this.editProfile.value);  
   }
 
   ngOnInit(): void {
     this.getProfileDetail()
-    this.isShow = true;
     
   }
 
@@ -96,8 +98,12 @@ export class EditProfileComponent implements OnInit {
     if (volunteacher.user.type.typeId == 3) {
       this.editProfile.get(['otherInfo', 'schoolName']).setValue(volunteacher.school)
       this.editProfile.get(['contactInfo', 'village']).setValue(volunteacher.village.villageId)
+      this.isShow = true;
+     
+      
     }
     else {
+      
       this.isShow = false;
     }
   }
@@ -111,6 +117,7 @@ export class EditProfileComponent implements OnInit {
     this.volunteacher.user.gender = this.editProfile.get(['userInfo', 'gender']).value
     this.volunteacher.user.dob = this.editProfile.get(['userInfo', 'dob']).value
     this.volunteacher.user.email = this.editProfile.get(['contactInfo', 'email']).value
+
     this.volunteacher.user.phoneNumber = this.editProfile.get(['contactInfo', 'phone']).value
     this.volunteacher.pincode = this.editProfile.get(['contactInfo', 'pincode']).value
 
@@ -126,6 +133,7 @@ export class EditProfileComponent implements OnInit {
 
   }
   saveProfile() {
+    this.disabled=true
     this.showProgressbar=true
     this.getVolunteacherForm()
     console.log(this.volunteacher);
@@ -143,10 +151,22 @@ export class EditProfileComponent implements OnInit {
     this.addressService.getDistrictById(this.editProfile.get(['contactInfo', 'city']).value).pipe(finalize(() => {
       if (this.volunteacher.user.type.typeId == 3) {
         this.addressService.getVillageByid(this.editProfile.get(['contactInfo', 'village']).value).pipe(finalize(() => {
-          this.userServeice.saveVolunteacher(this.volunteacher.volunteacherId, this.volunteacher).subscribe(data => {
+          this.userServeice.saveVolunteacher(this.volunteacher.volunteacherId, this.volunteacher).pipe(finalize(()=>{
+            if(!(this.volunteacher.user.email === this.updateEmail))
+            {
+              let authuser: string[];     
+              let password: string
+          
+              authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
+              password = authuser[1];
+              
+              localStorage.setItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME,btoa(this.volunteacher.user.email.toString()) + " " +password)
+            }
+          })).subscribe(data => {
             this.showProgressbar=false
             console.log(data + "  edited")
             this.openSnackBar()
+            this.disabled=false
             this.router.navigate(['/user/profile/posts'])
             
           }, error => {
@@ -162,6 +182,7 @@ export class EditProfileComponent implements OnInit {
           this.showProgressbar=false
           console.log(data + "  edited")
           this.openSnackBar()
+          this.disabled=false
           this.router.navigate(['/user/profile/posts'])
         }, error => {
           this.handleError(error)
@@ -185,9 +206,11 @@ export class EditProfileComponent implements OnInit {
     this.userServeice.getUserByEmail(username).pipe(finalize(() => {
       this.profileService.getVolunteacherByUser(userId).pipe(finalize(() => {
         this.addressService.getDistricts(this.volunteacher.district.state.stateId).pipe(finalize(() => {
-          if (this.volunteacher.user.userId == 3) {
+          if (this.volunteacher.user.type.typeId == 3) {
             this.addressService.getVillages(this.volunteacher.village.taluka.talukaId).subscribe(data => {
               this.villages = data
+              console.log(this.villages);
+              
             }, error => {
               this.handleError(error)
             })
@@ -200,6 +223,7 @@ export class EditProfileComponent implements OnInit {
         })
       })).subscribe(data => {
         this.volunteacher = data
+        this.updateEmail = this.volunteacher.user.email
         this.dob = this.volunteacher.user.dob
         this.districtSelected = this.volunteacher.district.districtId
         this.setProfileValue(this.volunteacher);

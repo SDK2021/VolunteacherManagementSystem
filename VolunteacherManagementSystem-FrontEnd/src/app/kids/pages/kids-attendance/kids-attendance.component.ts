@@ -40,6 +40,8 @@ export class KidsAttendanceComponent implements OnInit {
   selectedArea: number
   selectedGroup: number
 
+  disabledMessage:boolean=null
+
   showImageSpinner: boolean = true
 
   kidslist: Array<Kid>=new Array()
@@ -125,6 +127,8 @@ export class KidsAttendanceComponent implements OnInit {
   }
 
   addSessionAttendance() {
+    this.disabled=true
+    this.disabledMessage=true
     this.showProgressbar = true
     this.attendance = new Attendance();
     let sessionId = this.route.snapshot.params['id'];
@@ -135,6 +139,8 @@ export class KidsAttendanceComponent implements OnInit {
           console.log(data)
           this.showProgressbar = false
           this.openSnackBar()
+          this.disabled=false
+          this.disabledMessage=false
           this.router.navigate(['/user/sessions/sessions-list'])
 
         }, error => {

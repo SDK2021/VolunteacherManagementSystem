@@ -112,53 +112,44 @@
                 <div class="col-12 ">
                   <div class="card card-blog p-xl-5">
                     <div class="card-image mt-xl--7">
-                      <img class="img img-raised" src="{{e.photo}}"> 
+                      <img class="img img-raised" src="{{e.photo}}">
                       <div class="ripple-cont"></div>
                     </div>
                     <div class="table mt-xl-6">
                       <p class="display-3 text-center text-middle text-dark">{{e.title}}</p>
                       <h3 class="text-center"> <i class="ni ni-square-pin "></i>
-                        <span class="ml-2 mb-0 text-big">{{e.village.villageName}} {{e.village.taluka.talukaName}},{{e.village.taluka.district.state.stateName}}</span>
+                        <span class="ml-2 mb-0 text-big">{{e.village.villageName}}
+                          {{e.village.taluka.talukaName}},{{e.village.taluka.district.state.stateName}}</span>
                       </h3>
                       <h2 class="text-center font-weight-light mt-4">{{e.eventData}}</h2>
 
-                      <h3 class="text-center text-big m-4">This event will be organised on <b> {{e.eventDate | date:"mediumDate"}} </b>.
-                         You can join any day. For joining register your self. You will be notified.</h3>
-                        <hr class="mt-6">
-                        <h3 class="display-3 mt-4" *ngIf = "e.activities.length > 0">
-                          Activities
-                        </h3>
-                        <div  class="row justify-content-center p-2" *ngFor="let a of e.activities;let i=index">
-                          <div class="col-12 col-xl-6 col-lg-8 ">
-                              <div class="container card p-2 mb-2 shadow-dark {{colors[i%3]}}">
-                                  <p class="display-4 text-center fw-normal mb-0 text-dark">{{a.activityName}}</p>
-                                 
-                                  <p class="text-center pt-0  text-dark">{{a.description}}</p>
-                                  
-                              </div>
-                          </div>
-                          <!-- <div class="col-12 col-xl-6 col-lg-8 ">
-                            <div class="container card p-2 mb-4 shadow-dark bg-lightblue" >
-                                <p class="display-4 text-center fw-normal mb-0 text-dark">Cricket</p>
-                               
-                                <p class="text-center pt-0  text-dark">You can teach kids about basics cricket.</p>
-                                
-                            </div>
-                        </div>
+                      <h3 class="text-center text-big m-4">This event will be organised on <b> {{e.eventDate |
+                          date:"mediumDate"}} </b>.
+                        You can join any day. For joining register your self. You will be notified.</h3>
+                      
+                     <ng-container *ngIf="e.activities.length">
+                      <hr class="mt-6">
+                      <h3 class="display-3 mt-4" *ngIf="e.activities.length > 0">
+                        Activities
+                      </h3>
+                      <div class="row justify-content-center p-2" *ngFor="let a of e.activities;let i=index">
                         <div class="col-12 col-xl-6 col-lg-8 ">
-                          <div class="container card p-2 mb-4 shadow-dark bg-lightyellow" >
-                              <p class="display-4 text-center fw-normal mb-0 text-dark">FootBall</p>
-                             
-                              <p class="text-center pt-0  text-dark">You can teach kids about basics of football.</p>
-                              
-                          </div> 
-                      </div>-->
-                          </div>
+                          <div class="container card p-2 mb-2 shadow-dark {{colors[i%3]}}">
+                            <p class="display-4 text-center fw-normal mb-0 text-dark">{{a.activityName}}</p>
 
-                          <hr>
-                          <p class="text-center h3 text-muted">Join us to enjoy and to share your incredible knowledge with our kids</p> 
-                      <div class="text-center mt-xl-4"><a routerLink="/event/{{e.eventId}}/event-registration" class="btn btn-primary m-2"
-                          style="color:white;">JOIN</a></div>
+                            <p class="text-center pt-0  text-dark">{{a.description}}</p>
+
+                          </div>
+                        </div>
+
+                      </div>
+                     </ng-container>
+
+                      <hr>
+                      <p class="text-center h3 text-muted">Join us to enjoy and to share your incredible knowledge with
+                        our kids</p>
+                      <div class="text-center mt-xl-4"><a routerLink="/event/{{e.eventId}}/event-registration"
+                          class="btn btn-primary m-2" style="color:white;">JOIN</a></div>
                     </div>
                   </div>
                 </div>
@@ -265,35 +256,23 @@
           <h4 class="lead">
             Doing good is a simple and universal vision. Give your helping hand to develop our villages.
           </h4>
-          <div class="btn-wrapper">
-            <div class="text-center mt-xl-4"><a [routerLink]="['/donate']" class="btn text-white btn-default mt-3 mt-md-0"
-              style="color:white;">Donate</a></div>
-    
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-  <section class="py-7" style="background-color: lightblue;">
-    <div class="container">
-      <div class="row row-grid justify-content-center">
-        <div class="col-12 text-center">
-          <h2 class="display-3">Contact Us </h2>
+          <hr class="mt-6">
+          <h2 class="display-3 mt-5">Contact Us </h2>
 
           <ul class="list-unstyled mt-5 align-items-center">
             <li class="py-2 ">
               <div class="text-center ">
                 <div>
-                 <a target="_blank" style="color: darkslateblue;" href="http://volunteacher.in/"> <i class="ni ni-world-2 "></i>
-                  <span class="ml-2 mb-0 text-big">www.volunteacher.in</span></a>
+                  <a target="_blank" style="color: darkslateblue;" href="http://volunteacher.in/"> <i
+                      class="ni ni-world-2 "></i>
+                    <span class="ml-2 mb-0 text-big">www.volunteacher.in</span></a>
                 </div>
               </div>
             </li>
             <li class="py-2">
               <div class="text-center ">
                 <div>
-                  <i class="fa fa-phone " style="color: darkslateblue;" ></i>
+                  <i class="fa fa-phone " style="color: darkslateblue;"></i>
                   <span style="color: darkslateblue;" class="ml-2 mb-0 text-big">+91 99250 05837</span>
                 </div>
               </div>
@@ -307,6 +286,21 @@
               </div>
             </li>
           </ul>
+          <!-- <div class="btn-wrapper">
+            <div class="text-center mt-xl-4"><a [routerLink]="['/donate']" class="btn text-white btn-default mt-3 mt-md-0"
+              style="color:white;">Donate</a></div>
+    
+          </div> -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <section class="py-7 bg-white">
+    <div class="container">
+      <div class="row row-grid justify-content-center">
+        <div class="col-12 text-center">
+
 
         </div>
       </div>

@@ -38,6 +38,8 @@ export class NotificationComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
+  disabled:boolean=null
+
   constructor(private dialog: MatDialog, private _snackBar: MatSnackBar, private router: Router, private eventService: EventsService, private notiService: NotificationsService, private authService: authentication, private userService: UsersService, private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
@@ -207,7 +209,8 @@ export class NotificationComponent implements OnInit {
     });
   }
 
-  addSessionVolunteacher(value) {
+  addSessionVolunteacher(value) { 
+    this.disabled=true
     this.showProgressbar = true
     console.log(value)
     let authuser: string[];
@@ -221,7 +224,7 @@ export class NotificationComponent implements OnInit {
         this.notiService.addVolunteacher(this.attendedUsers, value).subscribe(data => {
           console.log(data)
           this.showProgressbar = false
-          this.openSnackBar()
+         
           this.attendedUsers = []
           setTimeout(() => {
             console.log("Hello Krunal #TheProjectPartner");
@@ -231,7 +234,11 @@ export class NotificationComponent implements OnInit {
             for(let i=0;i<=this.page;i++)
             {
               this.getAllNotifications(i)
+              
             }
+            this.openSnackBar()
+            this.disabled=false
+            
           }, 1000);
         }, error => {
           this.handleError(error)
@@ -246,6 +253,7 @@ export class NotificationComponent implements OnInit {
   }
 
   addEventVolunteacher(value) {
+    this.disabled=true
     this.showProgressbar = true
     console.log(value)
     let authuser: string[];
@@ -262,15 +270,17 @@ export class NotificationComponent implements OnInit {
         this.notiService.addVTParticipant(users, value).subscribe(data => {
           console.log(data)
           this.showProgressbar = false
-          this.openSnackBar()
+        
           setTimeout(() => {
-            console.log("Hello Krunal #TheProjectPartner");
+            // console.log("Hello Krunal #TheProjectPartner");
             this.notifications = []
             
             for(let i=0;i<=this.page;i++)
             {
               this.getAllNotifications(i)
             }
+            this.openSnackBar()
+            this.disabled=false
           }, 1000);
         }, error => {
           this.handleError(error)

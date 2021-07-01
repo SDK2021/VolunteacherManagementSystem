@@ -29,6 +29,8 @@ export class Kid {
     age:number=0
     totalSessions:number;
 
+    isReport:boolean = false
+
     attendance:boolean=false
     checked:boolean = false
     

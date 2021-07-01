@@ -42,7 +42,8 @@
                                
 
                                 <div class="text-center mt-4 mb-4">
-                                    <button  (click)="createPost()" class="btn btn-primary">Post</button>
+                                    <p *ngIf="disabled" class="text-center text-default "><small>Please wait, Creating post</small></p>
+                                    <button type="submit" [disabled]="!form.valid || disabled" (click)="createPost()" class="btn btn-primary">Post</button>
                                 </div>
                                 
                             </form>

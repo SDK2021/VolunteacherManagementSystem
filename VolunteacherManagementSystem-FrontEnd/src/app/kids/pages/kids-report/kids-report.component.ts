@@ -26,9 +26,10 @@ export class KidsReportComponent implements OnInit {
   showSpinner: boolean = false
 
   kidReports: Kidsreport[] = new Array()
-  showkidsReportComparision: boolean = false
+  showkidsReportComparision: boolean = true
 
   showImageSpinner: boolean = true
+  isKidReport:boolean = false
 
   constructor(private kidsService: KidsService, private router: Router, private kidService: KidsService, private route: ActivatedRoute) { }
 
@@ -51,15 +52,24 @@ export class KidsReportComponent implements OnInit {
   }
 
   getKidReportByKid(id: number) {
+    console.log("Heloo");
     this.showSpinner = true
     this.kidsService.getLatestKidReport(id).subscribe(data => {
       this.kidReport = data
-
-      console.log(data);
+     
+      
+      if(this.kidReport == null)
+      {
+        this.isKidReport = true;  
+      }
+      else
+      {
+        this.getAllKidsReport()
+        this.kidReport.kid = this.calculateAge(this.kidReport.kid)
+      }
 
       this.showSpinner = false
-      this.kidReport.kid = this.calculateAge(this.kidReport.kid)
-      console.log(this.kidReport);
+    
 
     }, error => {
       this.handleError(error)
@@ -70,9 +80,9 @@ export class KidsReportComponent implements OnInit {
   ngOnInit(): void {
     this.kidReport.kid = new Kid()
     this.kidReport.kid.area = new Area()
-
-    this.getAllKidsReport()
     this.getKidReportByKid(this.route.snapshot.params['id'])
+    
+    
 
     //this.getKidReportById(this.route.snapshot.params['id'])
     this.n = 25
@@ -122,16 +132,16 @@ export class KidsReportComponent implements OnInit {
             {
               data: [this.kidReports[0].discipline, this.kidReports[0].goshthi, this.kidReports[0].abhivyakti],
               backgroundColor: [
-                "blueviolet",
-                "lightpink",
-                "indigo"
+                "#fff200",
+                "hotpink ",
+                "#5e72e4"
               ]
             }
           ],
 
         }
       })
-      var chartOrders = document.getElementById('chart-orders');
+      var chartOrders = document.getElementById('chart-perfomance');
 
       var performanceChart = new Chart(chartOrders, {
         type: 'bar',
@@ -174,7 +184,7 @@ export class KidsReportComponent implements OnInit {
           ]
         }
       })
-      var chartProgress = document.getElementById('chart-sales')
+      var chartProgress = document.getElementById('chart-progress')
       if (this.kidReports.length >= 3) {
         console.log("Hello");
         
@@ -221,6 +231,10 @@ export class KidsReportComponent implements OnInit {
             }]
           }
         })
+      }
+      else
+      {
+        this.showkidsReportComparision = false
       }
     })
   }

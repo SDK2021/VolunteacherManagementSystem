@@ -13,6 +13,7 @@ import { KidService } from 'src/app/admin/shared-services/kid.service';
 import { AddressService } from 'src/app/shared/shared-services/address.service';
 import { DialogBoxComponent } from 'src/app/admin/components/dialog-box/dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-group-list',
   templateUrl: './group-list.component.html',
@@ -42,7 +43,7 @@ export class GroupListComponent implements OnInit {
 
   isError:boolean=false
 
-  constructor(private addressService:AddressService,private router:Router,private kids: KidService, private kidsService: KidsService, private route: ActivatedRoute, private _snackBar: MatSnackBar) {
+  constructor(private kidService:KidService, private dialog:MatDialog, private addressService:AddressService,private router:Router,private kids: KidService, private kidsService: KidsService, private route: ActivatedRoute, private _snackBar: MatSnackBar) {
     this.colors = ["bg-deeppink","bg-info","bg-danger", "bg-yellow", "bg-purple"];
   }
 
@@ -72,7 +73,26 @@ export class GroupListComponent implements OnInit {
 
   getkidsgroup() {
     this.showSpinner=true
-    this.kidsService.getkidsgrouplist().subscribe(data => {
+    this.kidsService.getkidsgrouplist().pipe(finalize(()=>{
+      this.kidService.getAllKidslist().subscribe(data => {
+        let flag = 0
+        for (let group of this.groups) {
+          flag = 0
+          for (let kid of data) {
+            if (kid.group.groupId === group.groupId) {
+              flag = 1              
+              break
+            }
+          }
+          if (flag == 1) {
+            group.isDelete = true
+          }
+          else {
+            group.isDelete = false
+          }
+        }
+      })
+    })).subscribe(data => {
       this.groups = data;
       this.showSpinner=false
       if (data != null) {
@@ -106,6 +126,7 @@ export class GroupListComponent implements OnInit {
         this.showProgressbar = false
         this.openSnackBar()
         this.disabled=false
+        this.show()
       }, 2000)
     },error=>{
       this.handleError(error)
@@ -119,6 +140,7 @@ export class GroupListComponent implements OnInit {
       console.log(data);
       this.disabled=false
       this.isEdit=false
+      this.kidsGroup=new KidsGroup()
     },error=>{
       this.handleError(error)
     })
@@ -135,6 +157,14 @@ export class GroupListComponent implements OnInit {
   }
 
   openEditSnackBar() {
+    this._snackBar.open('Edited successfully..', 'close', {
+      duration: 2000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
+  }
+
+  openDeleteSnackBar() {
     this._snackBar.open('Edited successfully..', 'close', {
       duration: 2000,
       horizontalPosition: this.horizontalPosition,
@@ -161,6 +191,31 @@ export class GroupListComponent implements OnInit {
   {
     this.isEdit=true
     this.getGroup(id)
+  }
+
+  deleteGroup(id: number) {
+    this.disabled = true
+    this.showProgressbar = true
+    this.addressService.deleteGroup(id).subscribe(data => {
+      console.log(data);
+      setTimeout(() => {
+        this.getkidsgroup()
+        this.showProgressbar = false
+        this.openDeleteSnackBar()
+        this.disabled = false
+      }, 2000);
+    }, error => {
+      this.handleError(error)
+    })
+  }
+
+  delete(id: number) {
+    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
+      console.log(data.delete)
+      if (data.delete) {
+        this.deleteGroup(id)
+      }
+    })
   }
 
 }

@@ -16,12 +16,26 @@ export class KidsReportsListComponent implements OnInit {
   kidId:number
   year:number=2021
 
-  years:number[]=[2021,2022,2023,2024,2025]
+  years:number[]=[2018]
   kidsReports:Array<Kidsreport>=new Array()
 
   constructor(private router:Router, private route:ActivatedRoute,private kidService:KidService) { }
 
   ngOnInit(): void {
+    let today:Date=new Date()
+    let year=today.getFullYear()
+    this.years.push(today.getFullYear())
+    for(let i=0;i<year-2018;i++)
+    {
+      year-=1
+      this.years.push(year)
+    }
+     
+
+       this.years=this.years.sort()
+    console.log(this.years);
+    
+    // if(today.getDate()==1 && today.getMonth()==1)
     this.kidId=this.route.snapshot.params['id']
     this.getAllReports(this.kidId,this.year)
   }

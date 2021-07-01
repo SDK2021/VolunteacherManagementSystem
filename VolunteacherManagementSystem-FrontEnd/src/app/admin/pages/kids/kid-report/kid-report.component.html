@@ -6,7 +6,7 @@
 </div>
 <div class="row justify-content-center" >
     
-        <div class="col-xl-10 mt-5 p-0">
+        <div class="col-xl-12 mt-5 p-0">
 
             <div class="container-fluid">
                 <div class="card">
@@ -116,7 +116,7 @@
                             <!--Another chart-->
                             
                         </div>
-
+                    <ng-container *ngIf="showkidsReportComparision">
                         <div class=" row mt-5">
                             <div class="col-12">
                                 <h4>This compares previous and current growth of kid.</h4>
@@ -156,6 +156,41 @@
                                 </div>
                               </div>
                         </div>
+                    </ng-container>
+                    <ng-container *ngIf='kidReport.remarks!=""'>
+                        <div class="my-4">
+                            <h2>Remarks</h2>
+                            <div class="col-12">
+                                {{kidReport.remarks}}
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <hr>
+                    <h2>Marks</h2>
+                    <div class="row justify-content-center">
+                        
+                        <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
+                            Gujarati : {{kidReport.gujarati}}
+                        </div>
+                        <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
+                            English : {{kidReport.english}}
+                        </div>
+                        <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
+                            Maths : {{kidReport.maths}}
+                        </div>
+                    </div>
+
+                    <hr>
+
+
+                    <div class="my-4">
+                        <h2>Other Interest Areas</h2>
+                        <div class="col-12">
+                            {{kidReport.interestArea}}
+                        </div>
+                    </div>
+
                         <!--Chart over-->
                     </div>
                 </div>

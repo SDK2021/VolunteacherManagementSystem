@@ -16,6 +16,7 @@ import { Taluka } from 'src/app/core/model/taluka';
 import { finalize } from 'rxjs/operators';
 import { ProjectsService } from 'src/app/admin/shared-services/projects.service';
 import { Router } from '@angular/router';
+import { KidService } from 'src/app/admin/shared-services/kid.service';
 @Component({
   selector: 'app-villages',
   templateUrl: './villages.component.html',
@@ -58,7 +59,7 @@ export class VillagesComponent implements OnInit {
   Show:boolean=true
 
 
-  constructor(private router:Router,fb: FormBuilder,private projectService:ProjectsService,private addressService:AddressService, private dialog:MatDialog , private _snackBar: MatSnackBar) { 
+  constructor(private kidService:KidService, private router:Router,fb: FormBuilder,private projectService:ProjectsService,private addressService:AddressService, private dialog:MatDialog , private _snackBar: MatSnackBar) { 
     this.options = fb.group({
       color: this.colorControl,
       fontSize: this.fontSizeControl,
@@ -70,7 +71,7 @@ export class VillagesComponent implements OnInit {
     this.stateSelected = 8
     this.districtSelected = 141
     this.talukaSelected = 35
- 
+
     this.getAllVillages();
 
   }
@@ -128,6 +129,14 @@ export class VillagesComponent implements OnInit {
     });
   }
 
+  openDeleteSnackBar() {
+    this._snackBar.open('Deleted successfully..', 'close', {
+      duration: 2000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
+  }
+
   onSubmit(from:NgForm)
   {
     console.log(this.village)
@@ -136,7 +145,29 @@ export class VillagesComponent implements OnInit {
   getAllVillages()
   {
     this.showSpinner=true
-    this.addressService.getAllVillages().subscribe(data=>{
+    this.addressService.getAllVillages().pipe(finalize(()=>{
+       this.kidService.getAllKidslist().subscribe(data => {
+        let flag = 0
+        for (let village of this.villages) {
+          flag = 0
+          for (let kid of data) {
+            if (kid.area.village.villageId === village.villageId) {
+              flag = 1
+              console.log("Area:" + village.villageId);
+              break
+            }
+          }
+          if (flag == 1) {
+            village.isDelete = true
+          }
+          else {
+            village.isDelete = false
+          }
+        }
+        console.log(this.village);
+      
+      })
+    })).subscribe(data=>{
       this.villages=data
       this.showSpinner=false
       if (data != null) {
@@ -274,6 +305,32 @@ export class VillagesComponent implements OnInit {
           this.villages = data
         })
     }
+  }
+
+  deleteVillage(id: number) {
+    this.disabled = true
+    this.showProgressbar = true
+    this.addressService.deleteVillage(id).subscribe(data => {
+      console.log(data);
+      setTimeout(() => {
+        this.getAllVillages()
+        this.showProgressbar = false
+        this.openDeleteSnackBar()
+        this.disabled = false
+      }, 2000);
+    }, error => {
+      this.handleError(error)
+    })
+  }
+
+  delete(id: number) {
+    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
+      console.log(data.delete)
+      if (data.delete) {
+        this.deleteVillage(id)
+      }
+    })
+
   }
 
 }

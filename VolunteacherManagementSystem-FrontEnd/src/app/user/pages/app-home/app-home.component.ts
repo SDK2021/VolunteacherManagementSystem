@@ -44,6 +44,7 @@ export class AppHomeComponent implements OnInit {
   events: Array<Event>
 
   wish: string = ''
+  disabled:boolean=null
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
@@ -100,7 +101,7 @@ export class AppHomeComponent implements OnInit {
       this.wish = "Good Evening"
     }
     else {
-      this.wish = "Good Night"
+      this.wish = "Good Evening"
     }
   }
 
@@ -174,7 +175,6 @@ export class AppHomeComponent implements OnInit {
         console.log(this.users)
         if (data != null) {
           this.uLength = this.users.length
-
         }
         this.showNewVolunteacher = false
       }, error => {
@@ -254,6 +254,7 @@ export class AppHomeComponent implements OnInit {
   // }
 
   addEventVolunteacher(value) {
+    this.disabled=true
     this.showProgressbar = true
     console.log(value)
     let authuser: string[];
@@ -270,10 +271,12 @@ export class AppHomeComponent implements OnInit {
         this.notiService.addVTParticipant(users, value).subscribe(data => {
           console.log(data)
           this.showProgressbar = false
-          this.openSnackBar()
+          this.disabled=false
           setTimeout(() => {
             console.log("Hello Krunal #TheProjectPartner");
             this.getEvents()
+            this.openSnackBar()
+            
           }, 1000);
         }, error => {
           this.handleError(error)

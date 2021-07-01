@@ -453,7 +453,7 @@ export class EventsComponent implements OnInit {
          
           
           this.router.navigate['admin/events']
-          setTimeout(() => { this.getAllEvent(this.page)
+          setTimeout(() => { this.getAllEvent(0)
             this.showProgressbar=false 
             this.openNotifySnackBar()
           this.disabled=false}, 1000);

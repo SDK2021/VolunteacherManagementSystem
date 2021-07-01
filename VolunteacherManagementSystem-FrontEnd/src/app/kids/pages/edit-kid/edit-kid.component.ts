@@ -63,6 +63,7 @@ export class EditKidComponent implements OnInit {
   edit: boolean = false
   kid: Kid = new Kid();
 
+  disabled:boolean=null
   showImageSpinner: boolean = true
   namePattern: string = "[a-zA-Z ]{3,20}"
 
@@ -146,7 +147,7 @@ export class EditKidComponent implements OnInit {
 
   saveKid() {
 
-
+    this.disabled=true
     if (this.croppedImage != null) {
       this.showProgressbar = true
       const file = this.uploadImageComponent.image;
@@ -182,6 +183,7 @@ export class EditKidComponent implements OnInit {
 
                           this.showProgressbar = false
                           this.openEditSnackBar();
+                          this.disabled=false
                           this.router.navigate(['/user/kids/edit-kids/kids-list'])
                         }, error => {
                           this.handleError(error)
@@ -229,6 +231,7 @@ export class EditKidComponent implements OnInit {
 
                 this.showProgressbar = false
                 this.openEditSnackBar();
+                this.disabled=false
                 this.router.navigate(['/user/kids/edit-kids/kids-list'])
               }, error => {
                 this.handleError(error)

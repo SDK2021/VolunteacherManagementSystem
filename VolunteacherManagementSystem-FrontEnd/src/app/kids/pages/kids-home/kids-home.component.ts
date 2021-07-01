@@ -16,6 +16,11 @@ export class KidsHomeComponent implements OnInit {
   noEvents:boolean=false
   eLength:number
 
+  disabled:boolean=false
+
+  colors=['bg-primary','yellow','bg-dribble']
+  textColors=["white",'dark','white']
+
   page:number=0
 
   constructor(private _auth:authentication,private router:Router,private eventService:EventsService) {}

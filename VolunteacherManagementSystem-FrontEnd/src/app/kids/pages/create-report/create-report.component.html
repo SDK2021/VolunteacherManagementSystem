@@ -50,7 +50,7 @@
                                  
                                     <div class="row">
                                         <div class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
-                                            {{kid.age}}
+                                            Age:{{kid.age}}
                                         </div>
                                         <div *ngIf="kid.gender===1" class="col col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-2">
                                            Gender: Male
@@ -263,8 +263,8 @@
 
 
                                         <div class="text-center col-auto bp2">
-
-                                            <button  [disabled]="!form.valid" 
+                                            <p *ngIf="disabled" class="text-center text-default"><small>Please Wait, Submitting...</small></p>
+                                            <button  [disabled]="!form.valid || disabled" 
                                                 type="submit"  class="btn btn-primary">Submit</button>
 
                                         </div>

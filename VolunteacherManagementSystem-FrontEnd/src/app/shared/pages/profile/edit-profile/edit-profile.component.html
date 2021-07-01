@@ -57,7 +57,7 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label  class="form-control-label" for="input-email">Email address</label>
-              <input readonly autocomplete="off" formControlName="email" type="email" id="input-email" class="form-control form-control-alternative" value="jesse@example.com">
+              <input autocomplete="off" formControlName="email" type="email" id="input-email" class="form-control form-control-alternative" value="jesse@example.com">
               <small class="text-danger" *ngIf="(editProfile.get('contactInfo.email').errors?.required && editProfile.get('contactInfo.email').touched)">Email is required is required</small>
               <small class="text-danger" *ngIf="(editProfile.get('contactInfo.email').errors?.email)">Invalid email</small>
             </div>
@@ -80,7 +80,7 @@
               <small class="text-danger" *ngIf="(editProfile.get('contactInfo.pincode').errors?.pattern)">Invalid pincode</small>
             </div>
           </div>
-          <div class="col-lg-4"  hidden = "{{isShow}}" >
+          <div class="col-lg-4"  [hidden] = "!isShow==true" >
             <div class="form-group">
               <label class="form-control-label" for="input-village">Village</label>
               <select  formControlName="village" class="form-control form-control-alternative" id="input-village">
@@ -121,7 +121,7 @@
             </div>
           </div>
         </div>
-        <div class="row" hidden = "{{isShow}}">
+        <div class="row"  [hidden] = "!isShow==true">
           <div class="col-md-12">
             <div class="form-group">
               <label class="form-control-label" for="input-school">School Name</label>
@@ -132,7 +132,8 @@
         </div>
         <div class="text-center mt-4 mb-4">
           <!-- [disabled]="!editProfile.valid"  -->
-          <button  type="submit"  class="btn btn-info">Save</button>
+          <p *ngIf="disabled" class="text-center text-default"><small>Please Wait, Editing..</small></p>
+          <button  type="submit" [disabled]=' !editProfile.valid || disabled'  class="btn btn-dribbble">Save</button>
         </div>
       </div>   
     </form>

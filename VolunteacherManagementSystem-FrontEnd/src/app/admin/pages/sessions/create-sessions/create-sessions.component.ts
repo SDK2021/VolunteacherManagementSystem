@@ -224,7 +224,7 @@ export class CreateSessionsComponent implements OnInit {
               this.showProgressbar = false
               this.openAddSnackBar()
               
-              // this.showTab2(true)
+               this.showTab2(true)
               form.reset()
               form.project="Select"
               

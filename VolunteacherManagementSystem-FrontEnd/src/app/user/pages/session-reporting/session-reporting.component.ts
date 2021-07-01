@@ -24,6 +24,7 @@ export class SessionReportingComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
+  disabled:boolean=null
 
   today:Date=new Date()
   constructor(private router:Router,private userService:UsersService,private authService:authentication, private route:ActivatedRoute,private sessionService:SessionsService, private _snackBar: MatSnackBar) { }
@@ -59,6 +60,7 @@ export class SessionReportingComponent implements OnInit {
 
   addSessionReport()
   {
+    this.disabled=true
     this.showProgressbar=true
     let authUser:string[]
     authUser=localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
@@ -68,6 +70,7 @@ export class SessionReportingComponent implements OnInit {
           this.sessionService.addSessionReporting(this.feedback).subscribe(data=>{
             this.showProgressbar=false
             this.openSnackBar()
+            this.disabled=false
             this.router.navigate(['/user'])
           console.log(data);
         

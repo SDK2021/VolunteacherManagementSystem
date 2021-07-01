@@ -18,6 +18,8 @@ export class TimeLineComponent implements OnInit {
   isLiked=false
   userType:string
 
+  disabled:boolean=null
+
   showImageSpinner:boolean=true
 
   page:number=0
@@ -80,19 +82,19 @@ export class TimeLineComponent implements OnInit {
       this.handleError(error)
     })
   }
-  like(id:number):void{
-    if(this.posts[id].isLiked==false)
-    {
-      this.liked="text-danger"
-      this.posts[id].isLiked=true
-    }
-    else
-    {
-      this.liked="text-dark"
-      this.posts[id].isLiked=false
-    }
+  // like(id:number):void{
+  //   if(this.posts[id].isLiked==false)
+  //   {
+  //     this.liked="text-danger"
+  //     this.posts[id].isLiked=true
+  //   }
+  //   else
+  //   {
+  //     this.liked="text-dark"
+  //     this.posts[id].isLiked=false
+  //   }
       
-  }
+  // }
 
   getUserType():string
   {

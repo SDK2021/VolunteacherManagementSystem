@@ -96,4 +96,14 @@ export class AddressService {
   {
     return this.http.delete(`${"http://localhost:9090/vms/areas/"}${areaId}`).pipe(retry(3))
   }
+
+  deleteVillage(viilageId:number)
+  {
+    return this.http.delete(`${"http://localhost:9090/vms/villages/"}${viilageId}`).pipe(retry(3));
+  }
+
+  deleteGroup(id:number)
+  {
+    return this.http.delete(`${"http://localhost:9090/vms/kids-groups/"}${id}`).pipe(retry(3))
+  }
 }

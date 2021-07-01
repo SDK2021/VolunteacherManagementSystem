@@ -1,3 +1,14 @@
+<style>
+    .btn {
+        border: none;
+        box-shadow: none;
+    }
+
+    .btn:active {
+        border: none;
+        box-shadow: none;
+    }
+</style>
 <div class=" pb-0 pt-0 pt-md-6  bg-primary">
     <div class="container-fluid mb-0">
 
@@ -146,6 +157,8 @@
                                     </div>
                                 </div>
                             </form>
+                            <p style="background-color: #f8d7da;" class="alert  text-default text-md text-center mt-3">
+                                <b>The village can not be deleted which is connected with kids data.</b></p>
                         </div>
                     </div>
                     <div class="table-responsive mt-4">
@@ -165,9 +178,9 @@
                                     <th>
                                         <h3 class=" text-center">Edit</h3>
                                     </th>
-                                    <!-- <th>
+                                    <th>
                                         <h4 class="ml-3">Delete</h4>
-                                    </th> -->
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -192,12 +205,14 @@
                                             <i class="fas fa-edit text-lg text-primary "></i>
                                         </div>
                                     </td>
-                                    <!-- <td>
+                                    <td >
                                         <div class="col-3 text-right ">
-                                            <i mat-button (click)="openDialog()"
-                                                class="fas fa-trash text-lg text-danger"></i>
+                                            <button *ngIf="!v.isDelete" class="btn bg-transparent" [disabled]="disabled"
+                                            (click)="delete(v.villageId)">
+                                                <i mat-button 
+                                                class="fas fa-trash text-lg text-danger"></i></button>
                                         </div>
-                                    </td> -->
+                                    </td>
 
 
                                 </tr>

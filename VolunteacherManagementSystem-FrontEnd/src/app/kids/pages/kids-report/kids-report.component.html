@@ -1,11 +1,16 @@
+
+
+
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
+        
         <div class="header-body">
             <h1 class=" text-white title">Analyze reports</h1>
         </div>
     </div>
 </div>
 <!-- Page content -->
+<ng-container *ngIf="!isKidReport">
 <div class="container-fluid mt--7" style="background-color: #172b4d;">
     <div class="row">
         <div class="col p-0">
@@ -122,7 +127,7 @@
 
                                                    
                                                     <div class="chart">
-                                                        <canvas id="chart-orders" class="chart-canvas"></canvas>
+                                                        <canvas id="chart-perfomance" class="chart-canvas"></canvas>
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,7 +135,7 @@
                                         <!--Another chart-->
 
                                     </div>
-                                    <ng-container >
+                                    <ng-container *ngIf="showkidsReportComparision">
                                         <div class="row" >
                                             <div class="col-12">
                                                 <h4>This compares previous and current growth of kid.</h4>
@@ -165,7 +170,7 @@
                                                         <!-- Chart -->
                                                         <div class="chart">
                                                             <!-- Chart wrapper -->
-                                                            <canvas id="chart-sales" class="chart-canvas"></canvas>
+                                                            <canvas id="chart-progress" class="chart-canvas"></canvas>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -218,3 +223,10 @@
         </div>
     </div>
 </div>
+</ng-container>
+<ng-container *ngIf="isKidReport">
+    <div class="col-12 col-xl-10 mx-auto d-block my-xl-6 my-4 py-xl-7 py-6">
+        <p class="text-center text-xl"><i class="fas fa-child"></i></p>
+        <p class="text-xl text-center text-lg"><b>No kids Report found.</b></p>
+    </div>
+</ng-container>

@@ -51,6 +51,8 @@ export class AddKidsComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   levels:Array<string>
 
+  disabled:boolean=null
+
   standards:Array<number>=[1,2,3,4,5,6,7,8,9,10,11,12]
   area: Array<Area>
   isShow:boolean=true
@@ -129,6 +131,7 @@ export class AddKidsComponent implements OnInit {
   
   addKid(form)
   {
+    this.disabled=true
     this.showProgressbar = true
     const file = this.uploadImageComponent.image;
     this.fileService.pushFileToStorage(new FileUpload(file), this.baseUrl).subscribe(
@@ -136,7 +139,6 @@ export class AddKidsComponent implements OnInit {
         this.percentage = Math.round(percentage);
 
         if (this.percentage == 100) {
-
 
           this.fileService.imageUrl.subscribe(data => {
             this.imageURL = data
@@ -167,6 +169,7 @@ export class AddKidsComponent implements OnInit {
                         this.openSnackBar();
                         
                         setTimeout(() => {
+                          this.disabled=false
                           this.router.navigate(['/user'])
                         }, 1500);
                       },error=>{

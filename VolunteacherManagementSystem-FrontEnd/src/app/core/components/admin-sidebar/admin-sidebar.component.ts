@@ -44,10 +44,10 @@ export const ROUTES: RouteInfo[] = [
 
   ] ,showChild:false,adjustment:'ml-7 pl-3 '},
   { path: 'schools', title: 'Schools',  icon:'fas fa-school text-info', class: '' ,children:[],showChild:false,adjustment:'ml-7 pl-2 '},
-  { path: 'donation', title: 'Donation',  icon:'fas fa-hand-holding-usd text-success', class: '',children:[
+  // { path: 'donation', title: 'Donation',  icon:'fas fa-hand-holding-usd text-success', class: '',children:[
 
 
-  ] ,showChild:false,adjustment:''},
+  // ] ,showChild:false,adjustment:''},
   { path: 'report', title: 'Report',  icon:'fas fa-file-invoice text-primary', class: '',children:[
 
     

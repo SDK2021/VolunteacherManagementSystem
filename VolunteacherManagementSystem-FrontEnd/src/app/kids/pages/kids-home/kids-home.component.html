@@ -102,8 +102,8 @@
                 </ng-container>
                 <ng-container *ngIf="eLength">
                     <div class="row justify-content-center p-4">
-                        <div *ngFor="let e of events" class="col-12 col-xl-6 col-lg-8  ">
-                            <div class="container card p-2 mb-4 bg-primary"
+                        <div *ngFor="let e of events;let i=index" class="col-12 col-xl-6 col-lg-8  ">
+                            <div class="container card p-2 mb-4 {{colors[i%3]}}"
                                 style=" box-shadow: 2px 2px 50px rgba(163, 160, 160, 0.2);">
                                 <div class="col-auto">
     
@@ -113,9 +113,9 @@
                                             style="min-width:20%;height:150px">
                                     </div>
                                 </div>
-                                <p class="display-4 text-center fw-normal mb-0 text-white">{{e.title}}</p>
+                                <p class="display-4 text-center fw-normal mb-0 text-{{textColors[i%3]}}">{{e.title}}</p>
     
-                                <p class="text-center pt-0  text-white">On {{e.eventDate | date:'mediumDate'}} at {{e.village.villageName}} , {{e.village.taluka.district.districtName}} , {{e.village.taluka.district.state.stateName}}</p>
+                                <p class="text-center pt-0  text-{{textColors[i%3]}}">On {{e.eventDate | date:'mediumDate'}} at {{e.village.villageName}} , {{e.village.taluka.district.districtName}} , {{e.village.taluka.district.state.stateName}}</p>
                                 <div class="text-center mb-2">
                                     <a routerLink="/user/kids/event/{{e.eventId}}/add-participants"  class="btn btn-white">Kids Participation</a>
                                 </div>

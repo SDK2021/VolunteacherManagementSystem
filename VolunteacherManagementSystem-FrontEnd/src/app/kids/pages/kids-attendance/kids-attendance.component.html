@@ -80,6 +80,7 @@
                 </li>
               </ul>
               <div class="text-center mt-4 mb-4">
+                <p *ngIf="disabledMessage" class="text-center text-default"><small>Please wait..</small></p>
                 <button [disabled]="disabled" (click)="addSessionAttendance()" class="btn btn-primary">Submit</button>
               </div>
             </div>

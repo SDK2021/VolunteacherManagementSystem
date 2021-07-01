@@ -100,8 +100,17 @@
                             <h3 class="mt-3 text-uppercase mb-0">{{g.groupName}}</h3>
                             
                           </div>
-                          <div (click)="edit(g.groupId)" style="cursor: pointer;"  class="col-auto p-0 mt-2 mr-2">
-                            <i class="text-primary fas fa-edit text-md"></i>
+                          <div style="cursor: pointer;"  class="col-auto p-0 mt-2 mr-2">
+                            <li class="nav-item" ngbDropdown placement="bottom-right">
+                              <a class="nav-link p-0" role="button" ngbDropdownToggle>
+                                  <p class=" p-0  text-right mt-0 mr-4 mb-0 h1"><b><i
+                                              class="fas fa-ellipsis-v text-muted text-sm"></i></b></p>
+                              </a>
+                              <div style="cursor: pointer;" class="p-2 dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
+                                  <h4 class="text-center" (click)="edit(g.groupId)">Edit</h4>
+                                  <h4 *ngIf="!g.isDelete" (click)="delete(g.groupId)" class="mb- text-center">Delete</h4>
+                              </div>
+                          </li>
                           </div>
                         </div>
                         <h4 class="mt-3 mb-0  text-sm" style="color: black;">
