@@ -48,9 +48,8 @@ public class Project {
 	@Column(nullable = false, columnDefinition = "DATE")
 	private Calendar startingDate;
 	
-	@NotNull
 	@JsonFormat(shape = Shape.STRING, pattern = "MM-dd-yyyy")
-	@Column(nullable = false, columnDefinition = "DATE")
+	@Column(nullable = true, columnDefinition = "DATE")
 	private Calendar endingDate;
 	
 	@NotNull

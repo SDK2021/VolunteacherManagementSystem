@@ -72,7 +72,12 @@ public class KidsReportServiceImpl implements KidsReportService{
 	{
 		try {
 			 List<KidsReport>  kidsReportList = kidsReportRepository.findAllByKidKidId(kidId,Sort.by("createdDate").descending());
-			return ResponseEntity.status(HttpStatus.OK).body(kidsReportList.get(0));
+			 System.out.println(kidsReportList.size());
+			 if(kidsReportList.size() > 0)
+				 	return ResponseEntity.status(HttpStatus.OK).body(kidsReportList.get(0));
+			 else {
+				 return ResponseEntity.status(HttpStatus.OK).body(null);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids report");
