@@ -15,7 +15,6 @@ import { TabsComponent } from './components/tabs/tabs.component';
 import { SchoolsComponent } from './pages/core/school/schools/schools.component';
 import { AreasComponent } from './pages/core/areas/areas.component';
 import { ProjectComponent } from './pages/projects/project/project.component';
-import { PaymentsComponent } from './pages/donation/payments/payments.component';
 import { CreateSessionsComponent } from './pages/sessions/create-sessions/create-sessions.component';
 import { SharedModule } from '../shared/shared.module';
 import { AllSessionsComponent } from './pages/sessions/all-sessions/all-sessions.component';
@@ -31,7 +30,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { ReportsListComponent } from './pages/reports/reports-list/reports-list.component';
 import { ReportComponent } from './pages/reports/report/report.component';
 import { VillagePipe } from './filters/village.pipe';
 import { SessionPipe } from './filters/session.pipe';
@@ -42,7 +40,6 @@ import { KidsPipe } from './filters/kids.pipe';
 import { FeedbackPipe } from './filters/feedback.pipe';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DialogBoxComponent } from './components/dialog-box/dialog-box.component';
-import { KidsTableComponent } from './pages/kids/kids-table/kids-table.component';
 import { VolunteacherPipe } from './filters/volunteacher.pipe';
 import { TimeLineComponent } from './pages/time-line/time-line/time-line.component';
 import { KidReportComponent } from './pages/kids/kid-report/kid-report.component';
@@ -73,7 +70,6 @@ import { UserPipe } from './filters/user.pipe';
     SchoolsComponent,
     AreasComponent,
     ProjectComponent,
-    PaymentsComponent,
     CreateSessionsComponent,
     AllSessionsComponent,
     EventsComponent,
@@ -84,7 +80,6 @@ import { UserPipe } from './filters/user.pipe';
     ApplicantRequestComponent,
     EventDetailsComponent,
     ProjectDetailsComponent,
-    ReportsListComponent,
     ReportComponent,
     VillagePipe,
     SessionPipe,
@@ -94,7 +89,6 @@ import { UserPipe } from './filters/user.pipe';
     KidsPipe,
     FeedbackPipe,
     DialogBoxComponent,
-    KidsTableComponent,
     VolunteacherPipe,
     TimeLineComponent,
     KidReportComponent,

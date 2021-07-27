@@ -34,6 +34,18 @@ public class AdminController {
 		return applicantRequestService.requestList(page);
 	}
 	
+	@GetMapping("/reject-requests")
+	public ResponseEntity<Object> getAllRejectedRequestsList()
+	{
+		return applicantRequestService.allRejectedRequests();
+	}
+	
+	@GetMapping("/accept-requests")
+	public ResponseEntity<Object> getAllAcceptedRequestsList()
+	{
+		return applicantRequestService.allAcceptedRequests();
+	}
+	
 	@PostMapping("/request-success/{id}")
 	public ResponseEntity<Object> requestSuccess(@PathVariable int id)
 	{

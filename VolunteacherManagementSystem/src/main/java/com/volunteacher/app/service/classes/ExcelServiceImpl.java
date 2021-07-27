@@ -273,7 +273,7 @@ public class ExcelServiceImpl implements ExcelService {
 	public ResponseEntity<Object> downloadSchools() {
 		try {
 			
-			String[] columns = {"School Id","School Name","Vilage","Starting Date","Phone Number", "Stream","Total Labs","Total Student","Requirements"};
+			String[] columns = {"School Id","School Name","Vilage","Starting Date","Phone Number", "Type","Total Teachers","Total Student","Requirements","Grade","Lab?"};
 			Workbook workbook = new XSSFWorkbook();
 			ByteArrayOutputStream opstream = new  ByteArrayOutputStream();
 			
@@ -301,10 +301,15 @@ public class ExcelServiceImpl implements ExcelService {
 				
 				row.createCell(3).setCellValue(school.getStartingDate().get(Calendar.DAY_OF_MONTH) + "/" + school.getStartingDate().get(Calendar.MONTH) + "/" + school.getStartingDate().get(Calendar.YEAR));
 				row.createCell(4).setCellValue(school.getPhoneNumber());	
-				row.createCell(5).setCellValue(school.getStream());	
-				row.createCell(6).setCellValue(school.getTotalLabs());	
+				row.createCell(5).setCellValue(school.getType());	
+				row.createCell(6).setCellValue(school.getTotalTeachers());	
 				row.createCell(7).setCellValue(school.getTotalStudent());
 				row.createCell(8).setCellValue(school.getRequirements());
+				row.createCell(9).setCellValue(school.getGrade());
+				if(school.isLab() == true)
+					row.createCell(10).setCellValue("YES");
+				else
+					row.createCell(10).setCellValue("NO");
 				
 			}
 			
@@ -317,6 +322,8 @@ public class ExcelServiceImpl implements ExcelService {
 		     sheet.autoSizeColumn(6);
 		     sheet.autoSizeColumn(7);
 		     sheet.autoSizeColumn(8);
+		     sheet.autoSizeColumn(9);
+		     sheet.autoSizeColumn(10);
 			
 			workbook.write(opstream);
 			HttpHeaders header = new HttpHeaders();

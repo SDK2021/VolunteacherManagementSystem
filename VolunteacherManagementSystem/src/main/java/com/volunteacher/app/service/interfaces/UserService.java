@@ -34,4 +34,6 @@ public interface UserService {
 	
 	public ResponseEntity<Object> totalVolunteacherBySessionVillage(int villageId);
 	
+	public ResponseEntity<Object> usersByUserType(int page,int id);
+	
 }

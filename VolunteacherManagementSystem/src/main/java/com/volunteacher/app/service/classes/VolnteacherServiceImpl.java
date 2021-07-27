@@ -189,4 +189,52 @@ public class VolnteacherServiceImpl implements VolunteacherService {
 		}
 	}
 
+	@Override
+	public ResponseEntity<Object> getAllVolunteachersByStatus(int page,int id) {
+		try {
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Volunteacher> volunteacherList = (Page<Volunteacher>) volunteacherRepository.findAllByStatus(pageable,id);
+			return ResponseEntity.status(HttpStatus.OK).body(volunteacherList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Volunteachers By Status");
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> getAllVolunteachersByVillage(int page,int id) {
+		try {
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Volunteacher> volunteacherList = (Page<Volunteacher>) volunteacherRepository.findAllByVillageVillageId(pageable, id);
+			return ResponseEntity.status(HttpStatus.OK).body(volunteacherList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Volunteachers By Village");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> getAllVolunteachersByUserType(int page, int type) {
+		try {
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Volunteacher> volunteacherList = (Page<Volunteacher>) volunteacherRepository.findAllByUserTypeTypeId(pageable, type);
+			return ResponseEntity.status(HttpStatus.OK).body(volunteacherList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Volunteachers By usertype");
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> getAllVolunteachersByProject(int page, int project) {
+		try {
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Volunteacher> volunteacherList = (Page<Volunteacher>) volunteacherRepository.findByProject(pageable, project);
+			return ResponseEntity.status(HttpStatus.OK).body(volunteacherList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Volunteachers By Project");
+		}
+	}
+
 }

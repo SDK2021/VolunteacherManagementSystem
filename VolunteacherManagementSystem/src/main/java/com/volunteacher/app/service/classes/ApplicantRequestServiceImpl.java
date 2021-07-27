@@ -1,5 +1,7 @@
 package com.volunteacher.app.service.classes;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -66,6 +68,32 @@ public class ApplicantRequestServiceImpl implements ApplicantRequestService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Applicant request list");
 		}
 	}
+	
+	@Override
+	public ResponseEntity<Object> allRejectedRequests()
+	{
+		try {
+			List<ApplicantRequest> requestList = (List<ApplicantRequest>) applicantRequestRepository.getAllRejectedRequests();
+			return ResponseEntity.status(HttpStatus.OK).body(requestList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Applicant request list");
+		}
+	}
+	
+	
+	@Override
+	public ResponseEntity<Object> allAcceptedRequests()
+	{
+		try {
+			List<ApplicantRequest> requestList = (List<ApplicantRequest>) applicantRequestRepository.getAllAcceptedRequests();
+			return ResponseEntity.status(HttpStatus.OK).body(requestList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Applicant request list");
+		}
+	}
+	
 	
 	@Override
 	public ResponseEntity<Object> requestById(int id)

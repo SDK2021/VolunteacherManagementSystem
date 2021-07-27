@@ -3,6 +3,9 @@ package com.volunteacher.app.service.classes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.User;
 import com.volunteacher.app.model.UserType;
+import com.volunteacher.app.model.Volunteacher;
 import com.volunteacher.app.repository.NotificationRepository;
 import com.volunteacher.app.repository.UserRepository;
 import com.volunteacher.app.repository.UserTypeRepository;
@@ -198,6 +202,19 @@ public class UserServiceImpl implements UserService {
 			 e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on total User by session village");
 		}
+	}
+
+	@Override
+	public ResponseEntity<Object> usersByUserType(int page, int id) {
+		try {
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<User> userList = (Page<User>) userRepository.findAllByType(pageable, id);
+			return ResponseEntity.status(HttpStatus.OK).body(userList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch User By User Type");
+		}
+		
 	}
 	
 }

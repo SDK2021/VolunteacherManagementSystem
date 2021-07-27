@@ -29,4 +29,12 @@ public interface VolunteacherService {
 	public ResponseEntity<Object> getNewVolunteachers(int page);
 	
 	public ResponseEntity<Object> getAllNewVolunteachers();
+	
+	public ResponseEntity<Object> getAllVolunteachersByStatus(int page,int id);
+	
+	public ResponseEntity<Object> getAllVolunteachersByVillage(int page,int id);
+	
+	public ResponseEntity<Object> getAllVolunteachersByUserType(int page,int type);
+	
+	public ResponseEntity<Object> getAllVolunteachersByProject(int page,int project);
 }

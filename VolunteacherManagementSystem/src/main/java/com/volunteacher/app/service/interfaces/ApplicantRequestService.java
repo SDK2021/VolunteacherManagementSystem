@@ -21,4 +21,8 @@ public interface ApplicantRequestService {
 	public ResponseEntity<Object> successRequest(int requestId);
 	
 	public ResponseEntity<Object> rejectRequest(int requestId);
+	
+	public ResponseEntity<Object> allRejectedRequests();
+	
+	public ResponseEntity<Object> allAcceptedRequests();
 }

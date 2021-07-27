@@ -60,4 +60,7 @@ public interface KidRepository extends PagingAndSortingRepository<Kid, Long>{
 	
 	@Query(value = "select COUNT(*) from kid where village_village_id = :villageId",nativeQuery = true)
 	int totalKidsVillage(int villageId);
+	
+	public Page<Kid> findAllByStandard(Pageable pageable,int std); 
+	
 }

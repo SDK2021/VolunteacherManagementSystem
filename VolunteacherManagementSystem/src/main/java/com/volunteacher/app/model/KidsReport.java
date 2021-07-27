@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -83,7 +82,7 @@ public class KidsReport {
 	
 	@NotNull
 	@Column(nullable =  false, length = 3)
-	private int literature;
+	private int science;
 	
 //	@NotNull
 //	@Column(nullable =  false, length = 3)
@@ -225,14 +224,7 @@ public class KidsReport {
 	}
 
 
-	public int getLiterature() {
-		return literature;
-	}
-
-
-	public void setLiterature(int literature) {
-		this.literature = literature;
-	}
+	
 
 
 //	public int getAttendance() {
@@ -249,6 +241,14 @@ public class KidsReport {
 		return remarks;
 	}
 
+
+	public int getScience() {
+		return science;
+	}
+
+	public void setScience(int science) {
+		this.science = science;
+	}
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;

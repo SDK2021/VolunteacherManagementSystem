@@ -54,7 +54,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	public ResponseEntity<Object> attendanceByGroup(int groupId) 
 	{
 		try {
-			List<Attendance> attendanceList = attendanceRepository.findAllByGroupGroupId(groupId);
+			List<Attendance> attendanceList = attendanceRepository.findAllByKidsGroupGroupId(groupId);
 			return ResponseEntity.status(HttpStatus.OK).body(attendanceList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	public ResponseEntity<Object> attendanceByGroupAndSession(int groupId, Long sessionId) 
 	{
 		try {
-			Attendance attendance = attendanceRepository.findAllByGroupGroupIdAndSessionSessionId(groupId, sessionId);
+			List<Attendance> attendance = attendanceRepository.findAllByKidsGroupGroupIdAndSessionSessionId(groupId, sessionId);
 			return ResponseEntity.status(HttpStatus.OK).body(attendance);
 		} catch (Exception e) {
 			e.printStackTrace();

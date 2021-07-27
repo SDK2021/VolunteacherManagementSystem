@@ -1,6 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { KidsTableComponent } from '../../pages/kids/kids-table/kids-table.component';
 
 @Component({
   selector: 'app-dialog-box',

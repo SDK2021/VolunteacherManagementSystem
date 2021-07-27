@@ -128,5 +128,23 @@ public class EventController {
 	{
 		return eventService.getTotalEvents();
 	}
+	
+	@GetMapping("/events-village")
+	public ResponseEntity<Object> getEventsByVillage(@RequestParam("page") int page,@RequestParam("village") int villageId)
+	{
+		return eventService.eventsByVillage(page, villageId);
+	}
+	
+	@GetMapping("/events-project")
+	public ResponseEntity<Object> getEventsByProject(@RequestParam("page") int page,@RequestParam("project") int pid)
+	{
+		return eventService.eventsByProject(page, pid);
+	}
+	
+	@GetMapping("/events-time")
+	public ResponseEntity<Object> getEventsByTime(@RequestParam("page") int page,@RequestParam("month") int month,@RequestParam("year") int year)
+	{
+		return eventService.eventsByTime(page, month, year);
+	}
 
 }

@@ -8,9 +8,10 @@ import com.volunteacher.app.model.Attendance;
 
 public interface AttendanceRepository extends PagingAndSortingRepository<Attendance, Long> {
 	
-	public List<Attendance> findAllByGroupGroupId(int groupid);
+	public List<Attendance> findAllByKidsGroupGroupId(int groupid);
 	
-	public Attendance findAllByGroupGroupIdAndSessionSessionId(int groupId,Long sessionId);
+	public List<Attendance> findAllByKidsGroupGroupIdAndSessionSessionId(int groupId,Long sessionId);
+	
 	
 	public List<Attendance> findAllBySessionSessionId(Long groupid);
 }

@@ -116,4 +116,16 @@ public class SessionController {
 	{
 		return sessionService.totalSessionsByVillage(villageId);
 	}
+	
+	@GetMapping("/sessions-village")
+	public ResponseEntity<Object> getSessionsByVillage(@RequestParam("page") int page,@RequestParam("village") int villageId)
+	{
+		return sessionService.sessionsByVillage(page, villageId);
+	}
+	
+	@GetMapping("/sessions-project")
+	public ResponseEntity<Object> getSessionsByProject(@RequestParam("page") int page,@RequestParam("project") int pid)
+	{
+		return sessionService.sessionsByProject(page, pid);
+	}
 }

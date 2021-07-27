@@ -11,7 +11,9 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -39,8 +41,17 @@ public class School {
 	@Column(length = 6)
 	private int pincode;
 	
-	@Column(length = 5)
-	private int totalLabs;
+	@NotNull
+	@Column(nullable = false)
+	private boolean lab;
+	
+	@NotNull 
+	@Column(nullable = false,length = 20)
+	private String grade;
+	
+	@NotNull
+	@Column(nullable = false)
+	private int  totalTeachers;
 	
 	@NotNull
 	@Column(nullable = false, length = 10, unique = true)
@@ -52,7 +63,7 @@ public class School {
 	
 	@NotNull
 	@Column(nullable = false, length = 30)
-	private String stream;
+	private String type;
 	
 	@NotNull
 	@Column(nullable = false, length = 4)
@@ -93,14 +104,6 @@ public class School {
 		this.pincode = pincode;
 	}
 
-	public int getTotalLabs() {
-		return totalLabs;
-	}
-
-	public void setTotalLabs(int totalLabs) {
-		this.totalLabs = totalLabs;
-	}
-
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -117,12 +120,13 @@ public class School {
 		this.startingDate = startingDate;
 	}
 
-	public String getStream() {
-		return stream;
+	
+	public String getType() {
+		return type;
 	}
 
-	public void setStream(String stream) {
-		this.stream = stream;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public int getTotalStudent() {
@@ -156,4 +160,29 @@ public class School {
 	public void setRequirements(String requirements) {
 		this.requirements = requirements;
 	}
+
+	public boolean isLab() {
+		return lab;
+	}
+
+	public void setLab(boolean lab) {
+		this.lab = lab;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public int getTotalTeachers() {
+		return totalTeachers;
+	}
+
+	public void setTotalTeachers(int totalTeachers) {
+		this.totalTeachers = totalTeachers;
+	}
+	
 }

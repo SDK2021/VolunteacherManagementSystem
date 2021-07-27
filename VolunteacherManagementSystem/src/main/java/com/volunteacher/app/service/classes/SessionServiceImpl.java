@@ -264,5 +264,29 @@ public class SessionServiceImpl implements SessionService {
 		}
 		
 	}
+	
+	@Override
+	public ResponseEntity<Object> sessionsByProject(int page,int pid) {
+		try {
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Session> sessions = (Page<Session>)sessionRepository.findAllByProjectProjectId(pageable, pid);
+			return ResponseEntity.status(HttpStatus.OK).body(sessions);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Session by project id: "+ pid);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> sessionsByVillage(int page,int vid) {
+		try {
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Session> sessions = (Page<Session>)sessionRepository.findAllByVillageVillageId(pageable, vid);
+			return ResponseEntity.status(HttpStatus.OK).body(sessions);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Session by village id: "+ vid);
+		}
+	}
 
 }

@@ -1,6 +1,5 @@
 package com.volunteacher.app.controller;
 
-import org.apache.xmlbeans.impl.xb.xsdschema.TotalDigitsDocument.TotalDigits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -247,5 +246,11 @@ public class KidsController {
 	public ResponseEntity<Object> createKidsAttendance(@RequestBody Attendance attendance,@RequestHeader("KidsIds") String[] kidsIds)
 	{
 		return this.attendanceService.addKidsAttendance(attendance, kidsIds);
+	}
+	
+	@GetMapping("/kids-by-standard")
+	public ResponseEntity<Object> kidsByStandard(@RequestParam("page") int page,@RequestParam("std") int std)
+	{
+		return kidService.kidsByStandard(page, std);
 	}
 }

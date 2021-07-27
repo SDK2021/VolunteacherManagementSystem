@@ -168,4 +168,28 @@ public class UserController {
 	{
 		return volunteacherService.getVolunteacherStatus(vid);
 	}
+	
+	@GetMapping("/volunteacher-by-status")
+	public ResponseEntity<Object> volunteacherByStatus(@RequestParam("page") int page, @RequestParam("status") int status)
+	{
+		return volunteacherService.getAllVolunteachersByStatus(page, status);
+	}
+	
+	@GetMapping("/volunteacher-type")
+	public ResponseEntity<Object> volunteacherByType(@RequestParam("page") int page, @RequestParam("type") int type)
+	{
+		return volunteacherService.getAllVolunteachersByUserType(page, type);
+	}
+	
+	@GetMapping("/volunteacher-village")
+	public ResponseEntity<Object> volunteacherByVillage(@RequestParam("page") int page, @RequestParam("village") int village)
+	{
+		return volunteacherService.getAllVolunteachersByVillage(page, village);
+	}
+	
+	@GetMapping("/volunteacher-project")
+	public ResponseEntity<Object> volunteacherByProject(@RequestParam("page") int page, @RequestParam("project") int project)
+	{
+		return volunteacherService.getAllVolunteachersByProject(page, project);
+	}
 }

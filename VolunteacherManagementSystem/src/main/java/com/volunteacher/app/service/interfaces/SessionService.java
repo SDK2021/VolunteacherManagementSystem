@@ -43,4 +43,8 @@ public interface SessionService {
 	public ResponseEntity<Object> getTotalHoursSessions();
 	
 	public ResponseEntity<Object> totalSessionsByVillage(int villageId);
+	
+	public ResponseEntity<Object> sessionsByProject(int page, int pid);
+	
+	public ResponseEntity<Object> sessionsByVillage(int page, int vid);
 }

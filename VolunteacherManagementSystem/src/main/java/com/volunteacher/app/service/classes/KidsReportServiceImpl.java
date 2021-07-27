@@ -99,7 +99,7 @@ public class KidsReportServiceImpl implements KidsReportService{
 			updateKidReport.setGoshthi(kidReport.getGoshthi());
 			updateKidReport.setGujarati(kidReport.getGujarati());
 			updateKidReport.setInterestArea(kidReport.getInterestArea());
-			updateKidReport.setLiterature(kidReport.getLiterature());
+			updateKidReport.setScience(kidReport.getScience());
 			updateKidReport.setMaths(kidReport.getMaths());
 			updateKidReport.setPrayer(kidReport.getPrayer());
 			updateKidReport.setRemarks(kidReport.getRemarks());

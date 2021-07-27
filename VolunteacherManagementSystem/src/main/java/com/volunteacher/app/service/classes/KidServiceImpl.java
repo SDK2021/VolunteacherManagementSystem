@@ -314,4 +314,18 @@ public class KidServiceImpl implements KidService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Total Kids");
 		}
 	}
+	
+	@Override
+	public ResponseEntity<Object> kidsByStandard(int page,int std) 
+	{
+		try {
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Kid> kidsList = (Page<Kid>) kidRepository.findAllByStandard(pageable, std);
+			 return ResponseEntity.status(HttpStatus.OK).body(kidsList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Kids By Standard");
+		}
+	}
 }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DonateComponent } from './pages/donate/donate.component';
 import { EventParticipationComponent } from './pages/event-participation/event-participation.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,7 +13,7 @@ import { VolunteacherFormComponent } from './pages/volunteacher-form/volunteache
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @NgModule({
-  declarations: [DonateComponent, EventParticipationComponent,LoginComponent,RegisterComponent,HomeComponent, VolunteacherFormComponent],
+  declarations: [ EventParticipationComponent,LoginComponent,RegisterComponent,HomeComponent, VolunteacherFormComponent],
   imports: [
     CommonModule,
 

@@ -45,4 +45,12 @@ public interface SessionRepository extends PagingAndSortingRepository<Session, L
 	
 	@Query(value = "select COUNT(*) from session where village_village_id =:villageId",nativeQuery = true)
 	int totalSessionsByVillage(int villageId);
+	
+	public Page<Session> findAllByProjectProjectId(Pageable pageable, int pid);
+	
+	public Page<Session> findAllByVillageVillageId(Pageable pageable, int vid);
+	
+	
+	
+	
 }

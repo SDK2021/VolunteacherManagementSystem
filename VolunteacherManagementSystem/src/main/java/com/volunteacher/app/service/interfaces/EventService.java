@@ -32,4 +32,10 @@ public interface EventService {
 	
 	public ResponseEntity<Object> getTotalEvents();
 	
+	public ResponseEntity<Object> eventsByProject(int page, int pid);
+	
+	public ResponseEntity<Object> eventsByVillage(int page, int vid);
+	
+	public ResponseEntity<Object> eventsByTime(int page, int month, int year);
+	
 }

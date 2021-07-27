@@ -52,4 +52,6 @@ public interface KidService {
 	
 	public ResponseEntity<Object> deleteKidsGroup(int id);
 	
+	public ResponseEntity<Object> kidsByStandard(int page,int id);
+	
 }

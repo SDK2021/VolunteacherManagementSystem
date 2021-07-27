@@ -31,6 +31,15 @@ public interface VolunteacherRepository extends PagingAndSortingRepository<Volun
 	@Query(value ="select * from volunteacher where DATE(NOW()) < DATE_ADD(joining_date,INTERVAL 1 YEAR) ORDER BY joining_date DESC",nativeQuery = true)
 	public List<Volunteacher> newAllVolunteachers();
 	
+	public Page<Volunteacher> findAllByStatus(Pageable pageable,int id);
+	
+	public Page<Volunteacher> findAllByVillageVillageId(Pageable pageable,int id);
+	
+	public Page<Volunteacher> findAllByUserTypeTypeId(Pageable pageable,int type);
+	
+	@Query(value = "select * from volunteacher where user_user_id in (select users_user_id from project_users where projects_project_id = :project)",nativeQuery = true)
+	public Page<Volunteacher> findByProject(Pageable pageable, int project);
+	
 	@Transactional
 	@Modifying
 	@Query(value="DELETE FROM project_users WHERE users_user_id =:id",nativeQuery = true)

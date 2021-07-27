@@ -68,8 +68,10 @@ public class SchoolServiceImpl implements SchoolService {
 			updateSchool.setPincode(school.getPincode());
 			updateSchool.setStartingDate(school.getStartingDate());
 			updateSchool.setStatus(school.getStatus());
-			updateSchool.setStream(school.getStream());
-			updateSchool.setTotalLabs(school.getTotalLabs());
+			updateSchool.setType(school.getType());
+			updateSchool.setGrade(school.getGrade());
+			updateSchool.setLab(school.isLab());
+			updateSchool.setTotalTeachers(school.getTotalTeachers());
 			updateSchool.setTotalStudent(school.getTotalStudent());
 			updateSchool.setVillage(school.getVillage());
 			updateSchool.setRequirements(school.getRequirements());

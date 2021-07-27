@@ -8,7 +8,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UploadImgComponent } from './upload-img/upload-img.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import  {  PdfViewerModule  }  from  'ng2-pdf-viewer';
-import { PdfsViewerComponent } from './pdfs-viewer/pdfs-viewer.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -43,7 +42,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     NavbarComponent,
     SidebarComponent,
     UploadImgComponent,
-    PdfsViewerComponent,
     PageNotFoundComponent,
     AdminSidebarComponent,
     ForgotPasswordComponent,
@@ -56,7 +54,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     NavbarComponent,
     SidebarComponent,
     UploadImgComponent,
-    PdfsViewerComponent,
     AdminSidebarComponent
   ]
 })

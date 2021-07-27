@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,13 +27,12 @@ public class Attendance {
 	@Column(length=10)
 	private Long attendanceId;
 	
-	@NotNull
+
 	@ManyToOne
 	private Session session; 
 	
-	@OneToOne
-	@NotNull
-	private KidsGroup group;
+	@ManyToOne
+	private KidsGroup kidsGroup;
 
 	@ManyToMany
 	private List<Kid> kids;
@@ -57,13 +54,16 @@ public class Attendance {
 		this.session = session;
 	}
 
-	public KidsGroup getGroup() {
-		return group;
+
+	public KidsGroup getKidsGroup() {
+		return kidsGroup;
 	}
 
-	public void setGroup(KidsGroup group) {
-		this.group = group;
+
+	public void setKidsGroup(KidsGroup kidsGroup) {
+		this.kidsGroup = kidsGroup;
 	}
+
 
 	public List<Kid> getKids() {
 		return kids;

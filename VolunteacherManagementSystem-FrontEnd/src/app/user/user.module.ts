@@ -11,7 +11,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
-import { DonationComponent } from './pages/donation/donation.component';
 
 import { MatInputModule } from '@angular/material/input';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -25,7 +24,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     AppHomeComponent,
     SessionReportingComponent,
     ResetPasswordComponent,
-    DonationComponent,
   ],
   imports: [
     CommonModule,

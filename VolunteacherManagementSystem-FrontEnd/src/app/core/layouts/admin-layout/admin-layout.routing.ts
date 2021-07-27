@@ -9,7 +9,6 @@ import { VolunteachersListComponent } from 'src/app/admin/pages/volunteachers/vo
 import { VillagesComponent } from 'src/app/admin/pages/core/villages/villages.component';
 import { SchoolsComponent } from 'src/app/admin/pages/core/school/schools/schools.component';
 import { ProjectComponent } from 'src/app/admin/pages/projects/project/project.component';
-import { PaymentsComponent } from 'src/app/admin/pages/donation/payments/payments.component';
 import { CreateSessionsComponent } from 'src/app/admin/pages/sessions/create-sessions/create-sessions.component';
 import { AllSessionsComponent } from 'src/app/admin/pages/sessions/all-sessions/all-sessions.component';
 import { EventsComponent } from 'src/app/admin/pages/events/events/events.component';
@@ -22,9 +21,7 @@ import { UploadContentComponent } from 'src/app/admin/pages/core/content/upload-
 import { ApplicantRequestComponent } from 'src/app/admin/pages/core/applicant-request/applicant-request.component';
 import { EventDetailsComponent } from 'src/app/admin/pages/events/event-details/event-details.component';
 import { ProjectDetailsComponent } from 'src/app/admin/pages/projects/project-details/project-details.component';
-import { ReportsListComponent } from 'src/app/admin/pages/reports/reports-list/reports-list.component';
 import { ReportComponent } from 'src/app/admin/pages/reports/report/report.component';
-import { KidsTableComponent } from 'src/app/admin/pages/kids/kids-table/kids-table.component';
 import { CreatePostComponent } from 'src/app/admin/pages/time-line/create-post/create-post.component';
 import { KidReportComponent } from 'src/app/admin/pages/kids/kid-report/kid-report.component';
 import { AttendanceComponent } from 'src/app/admin/pages/attendance/attendance/attendance.component';
@@ -58,8 +55,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'schools', component: SchoolsComponent},
     { path: 'schools/:id/edit', component: EditSchoolComponent},
     { path: 'projects', component: ProjectComponent},
-    { path: 'donation', component: PaymentsComponent},
-    { path: 'kids-list', component: KidsTableComponent},
     { path: 'sessions/:id/attendance', component: AttendanceComponent},
     { path: 'sessions/:id/edit', component: EditSessionComponent},
     { path: 'sessions', component: CreateSessionsComponent},

@@ -16,6 +16,7 @@ import com.volunteacher.app.exception.ResourceNotFoundException;
 import com.volunteacher.app.model.Activity;
 import com.volunteacher.app.model.Event;
 import com.volunteacher.app.model.Kid;
+import com.volunteacher.app.model.Session;
 import com.volunteacher.app.repository.ActivityRepository;
 import com.volunteacher.app.repository.EventRepository;
 import com.volunteacher.app.repository.KidRepository;
@@ -194,6 +195,42 @@ public class EventServiceImpl implements EventService{
 		{
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetching total Kids by event");
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> eventsByProject(int page,int pid) {
+		try {
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Event> events = (Page<Event>)eventRepository.findAllByProjectProjectId(pageable, pid);
+			return ResponseEntity.status(HttpStatus.OK).body(events);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Events by project id: "+ pid);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Object> eventsByVillage(int page,int vid) {
+		try {
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Event> events = (Page<Event>)eventRepository.findAllByVillageVillageId(pageable, vid);
+			return ResponseEntity.status(HttpStatus.OK).body(events);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Events by village id: "+ vid);
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> eventsByTime(int page, int month, int year) {
+		try {
+			Pageable pageable = PageRequest.of(page, 10);
+			Page<Event> events = (Page<Event>)eventRepository.eventsByTime(pageable, month, year);
+			return ResponseEntity.status(HttpStatus.OK).body(events);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error on fetch Events by time...");
 		}
 	}
 }
