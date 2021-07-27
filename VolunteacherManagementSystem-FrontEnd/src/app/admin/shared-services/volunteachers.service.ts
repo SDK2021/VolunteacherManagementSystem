@@ -73,7 +73,18 @@ export class VolunteachersService {
   
     return this.http.get<Applicantrequest[]>(`${"http://localhost:9090/vms/applicant-requests?page="}${page}`)
     .pipe(retry(3));
-    
+  }
+
+  getAllRejectedrequests():Observable<Applicantrequest[]>{
+  
+    return this.http.get<Applicantrequest[]>(`${"http://localhost:9090/vms/reject-requests"}`)
+    .pipe(retry(3));
+  }
+
+  getAllAcceptedrequests():Observable<Applicantrequest[]>{
+  
+    return this.http.get<Applicantrequest[]>(`${"http://localhost:9090/vms/accept-requests"}`)
+    .pipe(retry(3));
   }
 
   getVoluntecherByid(id:number):Observable<Volunteacher>
@@ -85,4 +96,25 @@ export class VolunteachersService {
   {
       return this.http.delete(`${"http://localhost:9090/vms/volunteachers/"}${id}`).pipe(retry(3))
   }
+
+  getVolunteachersByUserType(page:number, type:number):Observable<Volunteacher[]>
+  {
+    return this.http.get<Volunteacher[]>(`${"http://localhost:9090/vms/volunteacher-type?page="}${page}${"&type="}${type}`).pipe(retry(3))
+  }
+
+  getVolunteachersByVillage(page:number,vid:number):Observable<Volunteacher[]>
+  {
+    return this.http.get<Volunteacher[]>(`${"http://localhost:9090/vms/volunteacher-village?page="}${page}${"&village="}${vid}`).pipe(retry(3))
+  }
+
+  getVolunteachersByStatus(page:number,status:number):Observable<Volunteacher[]>
+  {
+    return this.http.get<Volunteacher[]>(`${"http://localhost:9090/vms/volunteacher-by-status?page="}${page}${"&status="}${status}`).pipe(retry(3))
+  }
+
+  getVolunteachersByProject(page:number,project:number):Observable<Volunteacher[]>
+  {
+    return this.http.get<Volunteacher[]>(`${"http://localhost:9090/vms/volunteacher-project?page="}${page}${"&project="}${project}`).pipe(retry(3))
+  }
+
 }

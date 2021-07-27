@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Area } from 'src/app/core/model/area';
 import { Country } from 'src/app/core/model/country';
@@ -45,12 +45,14 @@ export class AddressComponent implements OnInit {
   areaSelected:number;
   groupSelected:number;
 
+
   constructor(private  adminKids:AdminKidsListComponent, private attendanceKid:KidsAttendanceComponent, private addKid:AddKidsComponent, private router:Router ,
     private addressService:AddressService,private kidsService:KidsService ,private _kids:KidsListComponent,private addParti:AddParticipantsComponent) {
 
    }
 
   ngOnInit(): void {
+     
     this.isShow = true
     this.getkidsgroup()
     this.getAllCountries();

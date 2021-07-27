@@ -30,37 +30,69 @@
                             <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
                             </mat-spinner>
                         </ng-container>
-                        <ng-container *ngIf="kLength">
-                            <div class="row justify-content-center my-4">
-                                <div class="col-xl-10 mx-auto d-block">
+                        <div class="row justify-content-center my-4">
+                            <div class="col-xl-10 mx-auto d-block">
 
-                                    <form class="example-container ">
-                                        <div class="col-lg-6 col-md-7 col-sm-7 mx-auto d-block">
-                                            <div class="form-group mb-0">
-                                                <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
-                                                    <div class="input-group bg-white input-group-alternative p-0 border border-white"
-                                                        style="border-radius: 30px; ">
-                                                        <div class="input-group-prepend  ">
-                                                            <span class="input-group-text p-0 m-2"><i
-                                                                    class="fas fa-search"></i></span>
-                                                        </div>
-                                                        <input autocomplete="off" class="form-control p-0 "
-                                                            style="border-radius: 30px;" placeholder="Search"
-                                                            type="text" (blur)="focus = false" [(ngModel)]="search"
-                                                            name="search">
+                                <div class="row justify-content-center mx-3">
+                                    <div class="col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-filter">Select Filter</label>
+                                            <select class="form-control form-control-alternative" id="input-filter" (change)="selectedFilter($event)">
+                                                <option value="0" selected>Select</option>
+                                                <option value="1">Level</option>
+                                                <option value="2">Standard</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div *ngIf='showLevels' class="col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-level">Select Level</label>
+                                            <select class="form-control form-control-alternative" id="input-level" (change)="selectedLevel($event)">
+                                                <option value="1">Aatmashiksha</option>
+                                                <option value="2">Aatmashodh</option>
+                                                <option value="3">Aatmavishesh</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div *ngIf='showStandards' class="col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-std">Select Standard</label>
+                                            <select class="form-control form-control-alternative" id="input-std" (change)="selectedStandard($event)">
+                                                <option *ngFor="let s of standards"  [value]="s" [selected]="s==1" >{{s}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form class="example-container ">
+                                    <div class="col-lg-6 col-md-7 col-sm-7 mx-auto d-block">
+                                        <div class="form-group mb-0">
+                                            <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
+                                                <div class="input-group bg-white input-group-alternative p-0 border border-white"
+                                                    style="border-radius: 30px; ">
+                                                    <div class="input-group-prepend  ">
+                                                        <span class="input-group-text p-0 m-2"><i
+                                                                class="fas fa-search"></i></span>
                                                     </div>
+                                                    <input autocomplete="off" class="form-control p-0 "
+                                                        style="border-radius: 30px;" placeholder="Search"
+                                                        type="text" (blur)="focus = false" [(ngModel)]="search"
+                                                        name="search">
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
-                            <ng-container *ngIf="kidslist.length==0">
-                                <div class="col-12 col-xl-10 mx-auto d-block my-xl-6 my-4 py-xl-7 py-6">
-                                    <p class="text-center text-xl"><i class="fas fa-child"></i></p>
-                                    <p class="text-xl text-center text-lg"><b>No kids found.</b></p>
-                                </div>
-                            </ng-container>
+                        </div>
+                        <ng-container *ngIf="kidslist.length==0">
+                            <div class="col-12 col-xl-10 mx-auto d-block my-xl-6 my-4 py-xl-7 py-6">
+                                <p class="text-center text-xl"><i class="fas fa-child"></i></p>
+                                <p class="text-xl text-center text-lg"><b>No kids found.</b></p>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="kLength">
+                            
+                            
                             <ng-container *ngIf="kidslist.length!=0">
                                 <div class="card-body p-0 p-lg-4 ">
                                     <!-- List group -->

@@ -129,18 +129,54 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10">
+                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10 ">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-lab">Total Labs</label>
-                                            <input autocomplete="off" type="number" id="input-lab"
-                                                class="form-control form-control-alternative" placeholder="Total Lab"
-                                                name="lab" #labs="ngModel" [(ngModel)]="school.totalLabs" required >
-                                                <small *ngIf="labs.errors?.required && labs.touched"
-                                                class="text-danger">Total labs are required</small>
-                                                <!-- <small *ngIf="labs.errors?.minlength"
-                                                class="text-danger">range</small> -->
+                                            <label class="form-control-label" for="input-grade">Grade</label>
+                                            <input autocomplete="off" type="text" id="input-grade"
+                                                class="form-control form-control-alternative" placeholder="School's Grade"
+                                                name="grade" #grade="ngModel" [(ngModel)]="school.grade" required
+                                                maxlength="20">
+                                            <small *ngIf="grade.errors?.required && grade.touched"
+                                                class="text-danger">Grade is
+                                                required</small>
+                                                <small *ngIf="grade.errors?.pattern"
+                                                class="text-danger">Grade invalid
+                                                </small>
                                         </div>
                                     </div>
+
+                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10">
+                                        <div class="form-group">
+                                          <label class="form-control-label" for="input-gender">Have a lab?</label>
+                                          <div class="pl-lg-4">
+                                            <div class="row">
+                                              <div class="col-lg-3 col-4 ml-4">
+                                                <div class="form-group">
+                        
+                                                  <input #lab="ngModel" value="true" [(ngModel)]="school.lab" name="lab"
+                                                    class="form-check-input" type="radio" name="flexRadioDefault" id="input-yes" required>
+                                                  <label class="form-check-label" for="input-yes">
+                                                    Yes
+                                                  </label>
+                                                </div>
+                                              </div>
+                        
+                                              <div class="col-lg-3 col-4 ml-4">
+                                                <div class="form-group">
+                                                  <input #lab="ngModel" value="false" [(ngModel)]="school.lab" name="lab"
+                                                    class="form-check-input" type="radio" name="flexRadioDefault" id="input-no" required>
+                                                  <label class="form-check-label" for="input-no">
+                                                    No
+                                                  </label>
+                                                </div>
+                                              </div><br>
+                                              <small *ngIf="!lab.valid&& form.submitted" class="text-danger">Lab is required</small>
+                                            </div>
+                                          </div>
+                                        </div>
+                                     
+                                </div>
+
 
 
 
@@ -156,6 +192,17 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-teachers">Total
+                                                Teachers</label>
+                                            <input autocomplete="off" type="number" id="input-teachers"
+                                                class="form-control form-control-alternative" 
+                                                placeholder="Total Teachers" name="teachers" #teachers="ngModel" [(ngModel)]="school.totalTeachers" required>
+                                                <small *ngIf="teachers.errors?.required && teachers.touched"
+                                                class="text-danger">Total teachers are required</small>
+                                        </div>
+                                    </div>
                                     <!-- <div class="col-12 col-sm-7 col-md-10 col-lg-6 col-xl-4">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-group">Status</label>
@@ -166,17 +213,17 @@
                                             </select>
                                         </div>
                                     </div> -->
-
+                                   
                                     <div class="col-xl-4 col-lg-6 col-12 col-sm-7 col-md-10 ">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-stream">Stream</label>
+                                            <label class="form-control-label" for="input-type">Type</label>
                                             
-                                            <select [(ngModel)]="school.stream" [ngClass]="{'ng-invalid':school.stream==0}" class="form-control form-control-alternative" id="input-stream"
-                                                name="stream">
+                                            <select [(ngModel)]="school.type" [ngClass]="{'ng-invalid':school.stream==0}" class="form-control form-control-alternative" id="input-stream"
+                                                name="type">
                                                 <option selected value="">Select</option>
-                                                <option *ngFor="let s of stream" [selected] = "school.stream === s" [value]='s'>{{s}}</option>
+                                                <option *ngFor="let t of type" [selected] = "school.type === t" [value]='t'>{{t}}</option>
                                             </select>
-                                            <small *ngIf = "school.stream==0" class="text-danger">Stream is required</small>
+                                            <small *ngIf = "school.type==0" class="text-danger">Type is required</small>
                                         </div>                                        
                                     </div>
 

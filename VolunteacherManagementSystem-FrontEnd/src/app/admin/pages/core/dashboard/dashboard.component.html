@@ -144,12 +144,6 @@
                         <div class="col-auto">
                           <!-- Avatar -->
                           <div class="avatar rounded-circle">
-                            <ng-container *ngIf="showImageSpinner">
-                              <div class="col-12 my-8 ">
-                                  <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                                  </mat-spinner>
-                              </div>
-                          </ng-container>
                             <img  src="{{a.createdBy.photo}}" (load)="load()">
                           </div>
                         </div>
@@ -359,12 +353,6 @@
                   <div class="col-auto">
                     <!-- Avatar -->
                     <div class="avatar rounded-circle">
-                      <ng-container *ngIf="showImageSpinner">
-                        <div class="col-12 my-8 ">
-                            <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                            </mat-spinner>
-                        </div>
-                    </ng-container>
                       <img (load)="load()" src="{{v.user.photo}}">
                     </div>
                   </div>
@@ -416,12 +404,6 @@
                   <div class="col-auto mt--4 ">
                     <!-- Avatar -->
                     <div class="avatar rounded-circle">
-                      <ng-container *ngIf="showImageSpinner">
-                        <div class="col-12 my-8 ">
-                            <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                            </mat-spinner>
-                        </div>
-                    </ng-container>
                       <img (load)="load()" src="{{r.user.photo}}">
                     </div>
                   </div>

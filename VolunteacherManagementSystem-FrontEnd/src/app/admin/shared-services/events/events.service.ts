@@ -106,4 +106,19 @@ export class EventsService {
   {
     return this.http.put<Activity>(`${"http://localhost:9090/vms/activities/"}${activityId}`,activity).pipe(retry(3))
   }
+
+  getEventsByProject(page:number,pid:number):Observable<Event[]>
+  {
+    return this.http.get<Event[]>(`${"http://localhost:9090/vms/events-project?page="}${page}${"&project="}${pid}`).pipe(retry(3))
+  }
+
+  getEventsByVillage(page:number,vid:number):Observable<Event[]>
+  {
+    return this.http.get<Event[]>(`${"http://localhost:9090/vms/events-village?page="}${page}${"&village="}${vid}`).pipe(retry(3))
+  }
+
+  getEventsByTime(page:number, month:number,year:number)
+  {
+    return this.http.get<Event[]>(`${"http://localhost:9090/vms/events-time?page="}${page}${"&month="}${month}${"&year="}${year}`).pipe(retry(3))
+  }
 }

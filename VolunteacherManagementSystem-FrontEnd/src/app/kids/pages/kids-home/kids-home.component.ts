@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { EventsService } from 'src/app/admin/shared-services/events/events.service';
 import { Event } from 'src/app/core/model/event';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
+import { AppHomeService } from 'src/app/user/services/app-home.service';
 
 @Component({
   selector: 'app-kids-home',
@@ -23,7 +24,7 @@ export class KidsHomeComponent implements OnInit {
 
   page:number=0
 
-  constructor(private _auth:authentication,private router:Router,private eventService:EventsService) {}
+  constructor(private appHomeService:AppHomeService,private _auth:authentication,private router:Router,private eventService:EventsService) {}
 
   ngOnInit() {
     this.page=0
@@ -48,7 +49,7 @@ export class KidsHomeComponent implements OnInit {
   getEvents(page:number)
   {
     this.showSpinner=true
-    this.eventService.getAllEvents(page).subscribe(data=>{
+    this.appHomeService.getEvents(page).subscribe(data=>{
         this.events=data['content']
         this.showSpinner=false
         if(data!=null)

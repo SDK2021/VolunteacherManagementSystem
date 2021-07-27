@@ -14,41 +14,39 @@ import {
 })
 export class ApplicantRequestComponent implements OnInit {
 
-  applicantRequests:Array<Applicantrequest>
-  count:number=0
-  totalPages:number
+  applicantRequests: Array<Applicantrequest>
+  count: number = 0
+  totalPages: number
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  showProgressbar:boolean=false
-  
-  showSpinner:boolean=false
-  noRequests:boolean=false
-  rLength:number
+  showProgressbar: boolean = false
 
-  page:number=0
+  showSpinner: boolean = false
+  noRequests: boolean = false
+  rLength: number
 
-  disable:boolean=null
+  showButtons: boolean = true
+  page: number = 0
 
-  constructor(private router:Router,private volunteacherService:VolunteachersService,private _snackBar: MatSnackBar) { }
+  disable: boolean = null
+
+  constructor(private router: Router, private volunteacherService: VolunteachersService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.page=0
-  this.getAllApplicantrequests(this.page);
+    this.page = 0
+    this.getAllApplicantrequests(this.page);
 
   }
 
-  handleError(error)
-  {
+  handleError(error) {
     console.log(error);
     console.log(error.status);
-    
-    if(error.status===500)
-    {
+
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
@@ -67,84 +65,141 @@ export class ApplicantRequestComponent implements OnInit {
     });
   }
   onScroll() {
-    if(this.page < this.totalPages)
-    {
+    if (this.page < this.totalPages) {
       this.page += 1
       this.getPageableEvent(this.page);
     }
   }
   getPageableEvent(page: number) {
-    this.volunteacherService.getApplicantrequests(page).subscribe(data =>{
+    this.volunteacherService.getApplicantrequests(page).subscribe(data => {
       data['content'].forEach(request => {
         this.applicantRequests.push(request)
       });
     })
   }
 
-  accept(value)
-  {
-    this.disable=true
-    this.showProgressbar=true
-    this.volunteacherService.acceptRequest(value).subscribe(data=>{
+  accept(value) {
+    this.disable = true
+    this.showProgressbar = true
+    this.volunteacherService.acceptRequest(value).subscribe(data => {
       setTimeout(() => {
         this.openAcceptSnackBar()
-         this.getAllApplicantrequests(0)
-        this.showProgressbar=false
-        this.disable=false
+        this.getAllApplicantrequests(0)
+        this.showProgressbar = false
+        this.disable = false
       }, 2000);
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
-    
+
   }
 
-  denied(value)
-  {
-    this.disable=true
-    this.showProgressbar=true
-    this.volunteacherService.deniedRequest(value).subscribe(data=>{
+  denied(value) {
+    this.disable = true
+    this.showProgressbar = true
+    this.volunteacherService.deniedRequest(value).subscribe(data => {
       setTimeout(() => {
         this.openDeniedSnackBar()
-        this.showProgressbar=false
-        this.disable=false
+        this.showProgressbar = false
+        this.disable = false
         this.getAllApplicantrequests(0)
       }, 2000);
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
 
   }
 
-  getAllApplicantrequests(page:number)
-  {
-    this.showSpinner=true
-    this.volunteacherService.getApplicantrequests(page).subscribe(data =>{
-      this.applicantRequests=data['content'];
+  getAllApplicantrequests(page: number) {
+    this.showSpinner = true
+    this.volunteacherService.getApplicantrequests(page).subscribe(data => {
+      this.applicantRequests = data['content'];
       this.totalPages = data['totalPages']
-      this.showSpinner=false
+      this.showSpinner = false
       if (data != null) {
         this.rLength = this.applicantRequests.length
-        this.noRequests=false
+        this.noRequests = false
       }
       //this.rLength=0
-      if(this.rLength==0)
-      {
-        this.noRequests=true
+      if (this.rLength == 0) {
+        this.noRequests = true
       }
       console.log(data);
 
-    },error=>{
+    }, error => {
       this.handleError(error)
     });
-    
+
+    this.rLength = 0
+
   }
 
-  myFun(index,a:Applicantrequest)
-  {
-      
-      this.count=1;
-      console.log(this.count+1)
+  getAcceptedRequests() {
+    this.showSpinner = true
+    this.volunteacherService.getAllAcceptedrequests().subscribe(data => {
+      this.applicantRequests = data;
+      this.showSpinner = false
+      if (data != null) {
+        this.rLength = this.applicantRequests.length
+        this.noRequests = false
+      }
+      //this.rLength=0
+      if (this.rLength == 0) {
+        this.noRequests = true
+      }
+      console.log(data);
+
+    }, error => {
+      this.handleError(error)
+    });
+    this.rLength = 0
   }
+
+  getRejectedRequests() {
+    this.showSpinner = true
+    this.volunteacherService.getAllRejectedrequests().subscribe(data => {
+      this.applicantRequests = data
+      this.showSpinner = false
+      if (data != null) {
+        this.rLength = this.applicantRequests.length
+        this.noRequests = false
+      }
+      //this.rLength=0
+      if (this.rLength == 0) {
+        this.noRequests = true
+      }
+      console.log(data);
+
+    }, error => {
+      this.handleError(error)
+    });
+    this.rLength = 0
+  }
+
+  myFun(index, a: Applicantrequest) {
+
+    this.count = 1;
+    console.log(this.count + 1)
+  }
+
+  selectedCategory(event) {
+
+    if (event.target.value === '1') {
+      this.showButtons = true
+      this.getAllApplicantrequests(0)
+    }
+    else if (event.target.value === '2') {
+      this.showButtons = false
+      this.getAcceptedRequests()
+    }
+    else {
+      this.showButtons = false
+      this.getRejectedRequests()
+    }
+
+
+  }
+
 
 
 }

@@ -54,7 +54,7 @@
                     <select class="form-control form-control-alternative" id="input-group" 
                     (change)="selectedVillage($event)" name="village" #village="ngModel" ngModel>
                         <option class="combobox" value="" selected>Select</option>
-                        <option class="combobox" [value]="v.villageId" *ngFor="let v of villages;trackBy: trackVillagesById">{{v.villageName}}
+                        <option class="combobox"  [value]="v.villageId" *ngFor="let v of villages;trackBy: trackVillagesById">{{v.villageName}}
                         </option>
                     </select>
                     <!-- <small class="text-danger" *ngIf="((village.touched&&village.invalid)||(village.touched&&villageSelected==0))">Village is Required</small> -->

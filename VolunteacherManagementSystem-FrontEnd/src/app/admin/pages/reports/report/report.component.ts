@@ -248,7 +248,7 @@ export class ReportComponent implements OnInit {
   this.dd = {
   	content: [
 	    {
-	      text:[{text: 'AIREP Annual Report   ', style: 'header'}, {text:this.year, style: 'header'}]  		 
+	      text:[{text: 'AIREP Annual Report ' , style: 'header'}, {text:this.year, style: 'header'}]  		 
 	    },
 	    {
 	        text: '_______________________________________________________________________________________________\n',      
@@ -256,7 +256,7 @@ export class ReportComponent implements OnInit {
 	    },
       {
         text: '_______________________________________________________________________________________________\n',      
-        style:'hr'
+        style:'hr1'
       },
 	    {
 			style: 'p1',
@@ -391,13 +391,21 @@ export class ReportComponent implements OnInit {
 			fontSize: 38,
 			bold: true,
             alignment: 'center',
-            color: 'gray'
+            color: 'black'
 		},
 		hr: {
 			fontSize: 12,
 			margin:0,
 			padding:0,
 			bold: true,
+      color:"brown"
+		},
+    hr1: {
+			fontSize: 12,
+			margin:0,
+			padding:0,
+			bold: true,
+      color:"orange"
 		},
 		quote: {
 			italics: true

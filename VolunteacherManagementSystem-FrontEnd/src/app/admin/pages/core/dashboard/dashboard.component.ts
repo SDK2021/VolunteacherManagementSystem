@@ -53,10 +53,7 @@ export class DashboardComponent implements OnInit {
   totalNotificationPages:number
   totalAnnouncementPages:number
   totalUserPages:number
-  showImageSpinner:boolean=true
-
-
-
+  
 
   noAnnouncement:boolean=false
   noUsers:boolean=false
@@ -131,10 +128,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  load()
-  {
-    this.showImageSpinner=false
-  }
+  
   getPageableAnnouncements(page: number) {
     this.homeService.getAnnouncements(page).subscribe(data => {
       data['content'].forEach(announcement => {

@@ -36,5 +36,5 @@ export class Kidsreport {
 
 	english: number;
 
-	literature:number;
+	science:number;
 }

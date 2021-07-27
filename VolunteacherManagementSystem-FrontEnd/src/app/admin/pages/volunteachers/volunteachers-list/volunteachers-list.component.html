@@ -22,6 +22,61 @@
       <p style="cursor: pointer;" class="text-right mr-3 text-white" (click)="download()"> <i
           class="fas fa-download display-4"></i></p>
 
+          <div class="col-12">
+            <div class="row justify-content-center mx-3">
+                <div class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <label class="form-control-label" for="input-filter">Select Filter</label>
+                        <select class="form-control form-control-alternative" id="input-filter" (change)="selectedFilter($event)">
+                            <option value="0" selected>Select</option>
+                            <option value="1">Project</option>
+                            <option value="2">Village</option>
+                            <option value="3">Status</option>
+                            <option value="4">User Type</option>
+                        </select>
+                    </div>
+                </div>
+                <div *ngIf='showProjects' class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <label class="form-control-label" for="input-project">Select Project</label>
+                        <select class="form-control form-control-alternative" id="input-project" (change)="selectedProject($event)">
+                            <option *ngFor="let p of projects;let index=index" [value]="p.projectId" [selected]="index==0">{{p.projectName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div *ngIf='showVillages' class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <label class="form-control-label" for="input-village">Select Village</label>
+                        <select class="form-control form-control-alternative" id="input-village" (change)="selectedVillage($event)">
+                            <option *ngFor="let v of villages;let index=index"  [value]="v.villageId" [selected]="index==0" >{{v.villageName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div *ngIf='showStatus' class="col-sm-6 col-12">
+                   
+                        <div class="form-group ">
+                            <label class="form-control-label" for="input-status">Status</label>
+                            <select class="form-control form-control-alternative" id="input-status" (change)="selectedStatus($event)">
+                                <option value="0" selected>Active</option>
+                                <option value="1">InActive</option>
+                            </select>
+                        </div>
+                    
+                </div>
+                <div *ngIf='showTypes' class="col-sm-6 col-12">
+                
+                      <div class="form-group ">
+                          <label class="form-control-label" for="input-type">User Type</label>
+                          <select class="form-control form-control-alternative" id="input-type" (change)="selectedType($event)">
+                              <option value="2" selected>Volunteachers</option>
+                              <option value="3">Local Volunteachers</option>
+                          </select>
+                      </div>
+                  
+              </div>
+            </div>
+        </div>
+        
       <ng-container *ngIf="showSpinner">
         <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
         </mat-spinner>

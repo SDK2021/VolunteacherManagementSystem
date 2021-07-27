@@ -175,11 +175,11 @@ export class KidsReportComponent implements OnInit {
           }
         },
         data: {
-          labels: ["Prayer", "Games", "Sports", "Literature", "Art", "Volunteaching"],
+          labels: ["Prayer", "Games", "Sports", "Science", "Art", "Volunteaching"],
           datasets: [
             {
               label: "Performance",
-              data: [this.kidReports[0].prayer, this.kidReports[0].games, this.kidReports[0].sports, this.kidReports[0].literature, this.kidReports[0].artCraft, this.kidReports[0].volunteaching]
+              data: [this.kidReports[0].prayer, this.kidReports[0].games, this.kidReports[0].sports, this.kidReports[0].science, this.kidReports[0].artCraft, this.kidReports[0].volunteaching]
             }
           ]
         }
@@ -191,13 +191,13 @@ export class KidsReportComponent implements OnInit {
         this.showkidsReportComparision = true
 
         let totalReport1: number = ((this.kidReports[0].abhivyakti + this.kidReports[0].artCraft + this.kidReports[0].discipline + this.kidReports[0].english + this.kidReports[0].games
-          + this.kidReports[0].goshthi + this.kidReports[0].gujarati + this.kidReports[0].literature + this.kidReports[0].maths + this.kidReports[0].prayer + this.kidReports[0].sports + this.kidReports[0].volunteaching) * 100) / 120
+          + this.kidReports[0].goshthi + this.kidReports[0].gujarati + this.kidReports[0].science + this.kidReports[0].maths + this.kidReports[0].prayer + this.kidReports[0].sports + this.kidReports[0].volunteaching) * 100) / 120
 
         let totalReport2: number = ((this.kidReports[1].abhivyakti + this.kidReports[1].artCraft + this.kidReports[1].discipline + this.kidReports[1].english + this.kidReports[1].games
-          + this.kidReports[1].goshthi + this.kidReports[1].gujarati + this.kidReports[1].literature + this.kidReports[1].maths + this.kidReports[1].prayer + this.kidReports[1].sports + this.kidReports[1].volunteaching) * 100) / 120
+          + this.kidReports[1].goshthi + this.kidReports[1].gujarati + this.kidReports[1].science + this.kidReports[1].maths + this.kidReports[1].prayer + this.kidReports[1].sports + this.kidReports[1].volunteaching) * 100) / 120
 
         let totalReport3: number = ((this.kidReports[2].abhivyakti + this.kidReports[2].artCraft + this.kidReports[2].discipline + this.kidReports[2].english + this.kidReports[2].games
-          + this.kidReports[2].goshthi + this.kidReports[2].gujarati + this.kidReports[2].literature + this.kidReports[2].maths + this.kidReports[2].prayer + this.kidReports[2].sports + this.kidReports[2].volunteaching) * 100) / 120
+          + this.kidReports[2].goshthi + this.kidReports[2].gujarati + this.kidReports[2].science + this.kidReports[2].maths + this.kidReports[2].prayer + this.kidReports[2].sports + this.kidReports[2].volunteaching) * 100) / 120
 
         console.log(+totalReport1 + " " + +totalReport3 + " " + +totalReport2);
        

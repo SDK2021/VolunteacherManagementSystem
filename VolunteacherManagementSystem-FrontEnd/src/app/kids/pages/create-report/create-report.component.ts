@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { authentication } from 'src/app/home/shared-services/authentication.service';
 import {
@@ -32,35 +32,7 @@ export class CreateReportComponent implements OnInit {
 
   showImageSpinner:boolean=true
 
-  kidsReport = this.fb.group({
-    personalInfo:this.fb.group({
-      kidName:['',[Validators.required,Validators.pattern('^[a-zA-z ]{3,20}$')]],
-      gender:['',Validators.required],
-      dob:['',Validators.required],
-      standard:['',Validators.required],
-      school:['',[Validators.required,Validators.pattern('^.{3,20}$')]],
-    }),
-   
-    interestArea:['',Validators.required],
-    remarks:['',Validators.required],
-    subjects: this.fb.group({
-      gujarati: ['',Validators.required,Validators.max(100)],
-      english: ['',Validators.required],
-      maths: ['',Validators.required],
-    }),
-    personality: this.fb.group({
-      discipline: ['',Validators.required],
-      prayer: ['',Validators.required],
-      goshthi: ['',Validators.required],
-      games: ['',Validators.required],
-      abhivyakti: ['',Validators.required],
-      volunteaching: ['',Validators.required],
-      sports: ['',Validators.required],
-      art: ['',Validators.required],
-      literature: ['',Validators.required],
-    }),
-  });
-
+ 
 
   formatLabel(value: number) {
     if (value >= 1000) {

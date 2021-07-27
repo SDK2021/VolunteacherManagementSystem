@@ -9,10 +9,12 @@ export class School {
     schoolId:number;
     schoolName:string;
     pincode:number;
-    totalLabs:number;
     phoneNumber:string;
     startingDate:string;
-    stream:String;
+    type:String;
+    totalTeachers:number;
+    lab:boolean;
+    grade:string;
     totalStudent:number;
     status:number;
     village:Village;

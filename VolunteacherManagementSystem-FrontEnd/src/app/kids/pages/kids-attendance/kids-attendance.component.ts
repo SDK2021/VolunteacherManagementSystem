@@ -12,6 +12,7 @@ import {
 import { KidsGroup } from 'src/app/core/model/kids-group';
 import { Attendance } from 'src/app/core/model/attendance';
 import { finalize } from 'rxjs/operators';
+import { SessionsService } from 'src/app/admin/shared-services/sessions/sessions.service';
 @Component({
   selector: 'app-kids-attendance',
   templateUrl: './kids-attendance.component.html',
@@ -49,13 +50,19 @@ export class KidsAttendanceComponent implements OnInit {
   groupSelected: number = 0
   attendance: Attendance;
   groups: Array<KidsGroup>
-  constructor(private route: ActivatedRoute, private kidsService: KidsService, private _auth: authentication, private router: Router, private _snackBar: MatSnackBar) {
+
+  defaultVillage:number=1
+  constructor(private sessionService:SessionsService,private route: ActivatedRoute, private kidsService: KidsService, private _auth: authentication, private router: Router, private _snackBar: MatSnackBar) {
     this.villages = ["Timba", "Paldi"];
   }
 
   ngOnInit() {
     this.getkidsgroup()
-
+    this.sessionService.sessionById(this.route.snapshot.params['id']).subscribe(data=>{
+      this.defaultVillage=data.village.villageId
+    })
+    console.log(this.defaultVillage);
+    
   }
 
   handleError(error) {
@@ -147,7 +154,7 @@ export class KidsAttendanceComponent implements OnInit {
           this.handleError(error)
         })
       })).subscribe(data => {
-        this.attendance.group = data
+        this.attendance.kidsGroup = data
       })
     })).subscribe(data => {
       this.attendance.session = data

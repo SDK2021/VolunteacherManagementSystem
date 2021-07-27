@@ -10,6 +10,11 @@ import {
 } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogBoxComponent } from 'src/app/admin/components/dialog-box/dialog-box.component';
+import { Project } from 'src/app/core/model/project';
+import { Village } from 'src/app/core/model/village';
+import { AddressService } from 'src/app/shared/shared-services/address.service';
+import { ProjectsService } from 'src/app/admin/shared-services/projects.service';
+import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-all-sessions',
   templateUrl: './all-sessions.component.html',
@@ -36,13 +41,46 @@ export class AllSessionsComponent implements OnInit {
 
   disabled: boolean = null
 
-  constructor(private router: Router, private sessionService: SessionsService, private _snackBar: MatSnackBar, private dialog: MatDialog) {
+  currentYear: number = new Date().getFullYear()
+  currentMonth: number = new Date().getMonth()
+
+  projects: Project[] = new Array()
+  villages: Village[] = new Array()
+  months: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  years: number[] = [2018]
+
+  monthSelected: number = new Date().getMonth() + 1
+  yearSelected = new Date().getFullYear()
+  projectSelected: number = null
+  villageSelected: number = null
+
+  filter: number = null
+
+
+  showProjects: boolean = false
+  showVillages: boolean = false
+  showTime: boolean = false
+
+  constructor(private addressService: AddressService, private projectService: ProjectsService, private router: Router, private sessionService: SessionsService, private _snackBar: MatSnackBar, private dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
     this.page = 0
     this.getAllSessions(this.page)
+    this.getProjects()
+    this.getAllVillages()
+
+    //add year
+
+    let today: Date = new Date()
+    let year = today.getFullYear()
+    this.years.push(today.getFullYear())
+    for (let i = 0; i < year - 2018; i++) {
+      year -= 1
+      this.years.push(year)
+    }
+    this.years = this.years.sort()
   }
 
   handleError(error) {
@@ -132,7 +170,15 @@ export class AllSessionsComponent implements OnInit {
 
     if (this.page < this.totalSessionsPages - 1) {
       this.page += 1
-      this.getPageableKids(this.page);
+      if (this.filter == 1)
+        this.getPageableSessionsByProject(this.page, this.projectSelected)
+      else if (this.filter == 2)
+        this.getPageableSessionsByVillage(this.page, this.villageSelected)
+      else if (this.filter == 3)
+        this.getPageableSessionsByTime(this.page, this.monthSelected, this.yearSelected)
+      else
+        this.getPageableSessions(this.page);
+
       this.previousDisabled = false
     }
     if (this.page == this.totalSessionsPages - 1) {
@@ -143,16 +189,49 @@ export class AllSessionsComponent implements OnInit {
   previousPage() {
     if (this.page > -1) {
       this.page -= 1
-      this.getPageableKids(this.page);
+      if (this.filter == 1)
+        this.getPageableSessionsByProject(this.page, this.projectSelected)
+      else if (this.filter == 2)
+        this.getPageableSessionsByVillage(this.page, this.villageSelected)
+      else if (this.filter == 3)
+        this.getPageableSessionsByTime(this.page, this.monthSelected, this.yearSelected)
+      else
+        this.getPageableSessions(this.page);
+
       this.nextDisabled = false
     }
     if (this.page == 0) {
       this.previousDisabled = true
     }
   }
-  getPageableKids(page: number) {
+
+  getPageableSessions(page: number) {
     this.showSpinner = true
     this.sessionService.getAllSessions(page).subscribe(data => {
+      this.sessions = data['content']
+      this.showSpinner = false
+    })
+  }
+
+  getPageableSessionsByProject(page: number, pId: number) {
+    this.showSpinner = true
+    this.sessionService.getSessionsByProject(page, pId).subscribe(data => {
+      this.sessions = data['content']
+      this.showSpinner = false
+    })
+  }
+
+  getPageableSessionsByVillage(page: number, vId: number) {
+    this.showSpinner = true
+    this.sessionService.getSessionsByVillage(page, vId).subscribe(data => {
+      this.sessions = data['content']
+      this.showSpinner = false
+    })
+  }
+
+  getPageableSessionsByTime(page: number, month: number, year: number) {
+    this.showSpinner = true
+    this.sessionService.getSessionsByMonthAndYear(page, month, year).subscribe(data => {
       this.sessions = data['content']
       this.showSpinner = false
     })
@@ -161,4 +240,180 @@ export class AllSessionsComponent implements OnInit {
   trackById(index, s: Session) {
     return s.sessionId
   }
+
+  //Getting projects and villages for filters
+  getProjects() {
+    this.projectService.getAllProjects().pipe(finalize(() => {
+      this.projectSelected = this.projects[0].projectId
+    })).subscribe(data => {
+      this.projects = data
+    }, error => {
+      this.handleError(error)
+    })
+  }
+
+  getAllVillages() {
+    this.addressService.getVillages(35).pipe(finalize(() => {
+      this.villageSelected = this.villages[0].villageId
+    })).subscribe(data => {
+      this.villages = data
+    }, error => {
+      this.handleError(error)
+    })
+  }
+
+
+  //get Filtered Sessions
+
+  getSessionsByProject(page: number, pId: number) {
+    this.showSpinner = true
+    this.sessionService.getSessionsByProject(page, pId).subscribe(data => {
+      this.sessions = data['content']
+      this.totalSessionsPages = data['totalPages']
+      if (this.totalSessionsPages == 1) {
+        this.nextDisabled = true
+      }
+      this.showSpinner = false
+      if (data != null) {
+        this.sLength = this.sessions.length
+        this.noSessions = false
+      }
+      //this.sLength=0
+      if (this.sLength == 0) {
+        this.noSessions = true
+      }
+      console.log(this.sessions);
+
+    }, error => {
+      this.handleError(error)
+    })
+  }
+
+  getSessionsByVillage(page: number, vId: number) {
+    this.showSpinner = true
+    this.sessionService.getSessionsByVillage(page, vId).subscribe(data => {
+      this.sessions = data['content']
+      this.totalSessionsPages = data['totalPages']
+      if (this.totalSessionsPages == 1) {
+        this.nextDisabled = true
+      }
+      this.showSpinner = false
+      if (data != null) {
+        this.sLength = this.sessions.length
+        this.noSessions = false
+      }
+      //this.sLength=0
+      if (this.sLength == 0) {
+        this.noSessions = true
+      }
+      console.log(this.sessions);
+
+    }, error => {
+      this.handleError(error)
+    })
+  }
+
+  getSessionsByTime(page: number, month: number, year: number) {
+    this.showSpinner = true
+    this.sessionService.getSessionsByMonthAndYear(page, month, year).subscribe(data => {
+      this.sessions = data['content']
+      this.totalSessionsPages = data['totalPages']
+      if (this.totalSessionsPages == 1) {
+        this.nextDisabled = true
+      }
+      this.showSpinner = false
+      if (data != null) {
+        this.sLength = this.sessions.length
+        this.noSessions = false
+      }
+      //this.sLength=0
+      if (this.sLength == 0) {
+        this.noSessions = true
+      }
+      console.log(this.sessions);
+
+    }, error => {
+      this.handleError(error)
+    })
+  }
+
+
+  //Get Filtered Sessions on change events
+
+  selectedProject(event) {
+    this.projectSelected = event.target.value
+    this.previousDisabled = true
+    this.nextDisabled = false
+    this.getSessionsByProject(0, event.target.value)
+  }
+
+  selectedVillage(event) {
+    this.previousDisabled = true
+    this.nextDisabled = false
+    this.villageSelected = event.target.value
+    this.getSessionsByVillage(0, event.target.value)
+  }
+
+  selectedYear(event) {
+    this.previousDisabled = true
+    this.nextDisabled = false
+    this.yearSelected = event.target.value
+    this.getSessionsByTime(0, this.monthSelected, this.yearSelected)
+  }
+
+  selectedMonth(event) {
+    this.previousDisabled = true
+    this.nextDisabled = false
+    this.monthSelected = event.target.value
+    this.getSessionsByTime(0, this.monthSelected, this.yearSelected)
+  }
+
+  //Selecting main filter
+
+  selectedFilter(event) {
+    if (event.target.value === '1') {
+      this.previousDisabled = true
+      this.nextDisabled = false
+      this.filter = 1
+      this.page = 0
+      this.showVillages = false
+      this.showTime = false
+      this.showProjects = true
+      this.getSessionsByProject(0, this.projects[0].projectId)
+    }
+    else if (event.target.value === '2') {
+      this.previousDisabled = true
+      this.nextDisabled = false
+      this.filter = 2
+      this.page = 0
+      this.showTime = false
+      this.showProjects = false
+      this.showVillages = true
+      this.getSessionsByVillage(0, this.villages[0].villageId)
+    }
+    else if (event.target.value === '3') {
+      this.previousDisabled = true
+      this.nextDisabled = false
+      this.filter = 3
+      this.page = 0
+      this.showProjects = false
+      this.showVillages = false
+      this.showTime = true
+      let today = new Date()
+      this.getSessionsByTime(0, today.getMonth() + 1, today.getFullYear())
+    }
+    else {
+      this.previousDisabled = true
+      this.nextDisabled = false
+      this.filter = 4
+      this.page = 0
+      this.showProjects = false
+      this.showVillages = false
+      this.showTime = false
+      this.getAllSessions(0)
+    }
+  }
+
+
+
 }

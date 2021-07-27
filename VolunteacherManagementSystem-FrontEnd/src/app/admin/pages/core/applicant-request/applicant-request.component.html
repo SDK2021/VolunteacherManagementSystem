@@ -18,6 +18,19 @@
                     <div class="col-12">
                         <h1 class="mb-0 text-center">Requests</h1>
                         <hr>
+                        <div class="container">
+                            <div class="row">
+                                <div class="mx-auto d-block col-12 col-sm-7 col-md-6">
+                                    <div class="form-group">
+                                        <select class="form-control form-control-alternative" id="input-year" (change)="selectedCategory($event)">
+                                            <option value="1" selected>Pending</option>
+                                            <option value="2">Accepted</option>
+                                            <option value="3">Rejected</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <ng-container *ngIf="showSpinner">
                             <mat-spinner class="mx-auto my-4" color="primary" [diameter]="40">
                             </mat-spinner>
@@ -51,7 +64,7 @@
                                                     <b>{{a.emailId}}</b>
                                                     or <b>{{a.phoneNumber}}</b>
                                                 </div>
-                                                <div class="col-sm-auto col-12 text-center m-3">
+                                                <div class="col-sm-auto col-12 text-center m-3" *ngIf="showButtons">
                                                    <button (click)="accept(a.requestId)" class="btn pr-0 bg-transparent border-0 btn-icon" [disabled]="disable" > <i  style="cursor: pointer;" class="fas  fa-check text-lg text-success mr-4"></i></button>
                                                    <button  (click)="denied(a.requestId)" class="btn  bg-transparent border-0 btn-icon" [disabled]="disable" > <i style="cursor: pointer;" class="fas fa-times text-lg text-danger"></i></button>
                                                 </div>

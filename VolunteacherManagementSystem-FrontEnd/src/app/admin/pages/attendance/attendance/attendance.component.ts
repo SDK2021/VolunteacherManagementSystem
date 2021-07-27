@@ -17,33 +17,32 @@ import { KidsService } from 'src/app/kids/shared-services/kids.service';
 })
 export class AttendanceComponent implements OnInit {
 
-  tab1:boolean
-  tab2:boolean=true
+  tab1: boolean
+  tab2: boolean = true
 
-  isShow:boolean=false;
-  kids:Kid[]=new Array()
-  allKids:Kid[]=new Array()
+  isShow: boolean = false;
+  kids: Kid[] = new Array()
+  allKids: Kid[] = new Array()
 
-  groups:KidsGroup[]=new Array()
-  groupId:number
-  users:Array<User>=new Array()
-  showVtSpinner:boolean=false
-  showSpinner:boolean=false
-  showImageSpinner:boolean=true
-  noUsers:boolean=false
-  noKids:boolean=false
-  groupTouched:boolean = false
-  uLength:number
-  kLength:number
- 
+  groups: KidsGroup[] = new Array()
+  groupId: number
+  users: Array<User> = new Array()
+  showVtSpinner: boolean = false
+  showSpinner: boolean = false
+  noUsers: boolean = false
+  noKids: boolean = false
+  groupTouched: boolean = false
+  uLength: number
+  kLength: number
 
-  session:Session=new Session()
 
-  search:string=''
-  constructor(private kidsService:KidsService,private router:Router,private sessionService:SessionsService,private route:ActivatedRoute) { }
+  session: Session = new Session()
+
+  search: string = ''
+  constructor(private kidsService: KidsService, private router: Router, private sessionService: SessionsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-   
+
     this.getUsersBySession(this.route.snapshot.params['id'])
     this.getkidsgroup()
     this.groupId = 0
@@ -51,170 +50,153 @@ export class AttendanceComponent implements OnInit {
     //this.getAllKidsByGroup(1,this.route.snapshot.params['id'])
   }
 
-  handleError(error)
-  {
+  handleError(error) {
     console.log(error);
     console.log(error.status);
-    
-    if(error.status===500)
-    {
+
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
 
 
-  load()
-  {
-    this.showImageSpinner=false
+  
+  show() {
+    this.isShow = !this.isShow;
   }
 
-  show()
-  {
-    this.isShow=!this.isShow;
-  }
-
-  showTab1(show:boolean)
-  {
-    console.log("tab1"+show)
-    this.tab1=show
+  showTab1(show: boolean) {
+    console.log("tab1" + show)
+    this.tab1 = show
     this.getSession()
   }
-  showTab2(show:boolean)
-  {
-    console.log("tab2"+show)
-    this.tab2=show
+  showTab2(show: boolean) {
+    console.log("tab2" + show)
+    this.tab2 = show
   }
 
-  getUsersBySession(id:number)
-  {
-    this.showVtSpinner=true
-      this.sessionService.sessionById(id).subscribe(data=>{
-        this.users=data.users
-        this.showVtSpinner=false
-        if (data != null) {
-          this.uLength = this.users.length
-          this.noUsers=false
-        }
-        //this.vLength=0
-        if(this.uLength==0)
-        {
-          this.noUsers=true
-        }
-      },error=>{
-        this.handleError(error)
-      })
+  getUsersBySession(id: number) {
+    this.showVtSpinner = true
+    this.sessionService.sessionById(id).subscribe(data => {
+      this.users = data.users
+      this.showVtSpinner = false
+      if (data != null) {
+        this.uLength = this.users.length
+        this.noUsers = false
+      }
+      //this.vLength=0
+      if (this.uLength == 0) {
+        this.noUsers = true
+      }
+    }, error => {
+      this.handleError(error)
+    })
   }
 
-  touched()
-  {
+  touched() {
     console.log("Touched");
 
     this.groupTouched = true
     console.log(this.groupTouched);
-    
+
   }
 
-  selectedGroup(event)
-  {    
+  selectedGroup(event) {
     this.groupId = event.target.value;
-    if(this.groupId==0)
+    if (this.groupId == 0)
       this.groupTouched = true
     console.log(this.groupId);
-    this.noKids=false
-    this.kLength=0
- //   this.getKidsAttendance(this.groupId,this.route.snapshot.params['id'])
-   if(this.groupId > 0) 
-      this.getAllKidsByGroup(0,this.session.village.villageId,this.groupId)
+    this.noKids = false
+    this.kLength = 0
+    //   this.getKidsAttendance(this.groupId,this.route.snapshot.params['id'])
+    if (this.groupId > 0)
+      this.getAllKidsByGroup(0, this.session.village.villageId, this.groupId)
   }
 
-  getSession()
-  {
-    this.sessionService.sessionById(this.route.snapshot.params['id']).subscribe(data=>{
-      this.session=data
+  getSession() {
+    this.sessionService.sessionById(this.route.snapshot.params['id']).subscribe(data => {
+      this.session = data
     })
   }
-  getkidsgroup()
-  {
-    this.kidsService.getkidsgrouplist().subscribe(data =>{
-      this.groups=data;
-      this.groupId=data[0].groupId
-    },error=>{
+  getkidsgroup() {
+    this.kidsService.getkidsgrouplist().subscribe(data => {
+      this.groups = data;
+      this.groupId = data[0].groupId
+    }, error => {
       this.handleError(error)
-     });
-    
+    });
+
   }
 
-  getKidsAttendance(gid:number,sid:number)
-  {
-    this.showSpinner=true
-    this.sessionService.getKidsAttendance(gid,sid).subscribe(data=>{
+  getKidsAttendance(gid: number, sid: number) {
+    this.showSpinner = true
+    this.sessionService.getKidsAttendance(gid, sid).subscribe(data => {
       console.log(data);
-      
-        this.kids=data.kids
-        this.showSpinner=false
+
+      data.forEach(a => {
+        a.kids.forEach(k => {
+          this.kids.push(k)
+        })
+      });
+      this.showSpinner = false
+      if (data != null) {
+        this.kLength = this.kids.length
+        this.noKids = false
+      }
+      //this.kLength=0
+      if (this.kLength == 0) {
+        this.noKids = true
+      }
+    }, error => {
+      this.handleError(error)
+    })
+  }
+
+  getAllKidsByGroup(page: number, villageId: number, groupId: number) {
+    this.showSpinner = true
+    this.sessionService.getKidsAttendance(this.groupId, this.route.snapshot.params['id']).pipe(finalize(() => {
+      this.kidsService.getAllKidsByVillageAndGroup(page, villageId, groupId).pipe(finalize(() => {
+
+      })).subscribe(data => {
+        this.showSpinner = false
+        this.allKids = data['content']
+        console.log(this.allKids);
+        for (let k of this.allKids) {
+          for (let kid of this.kids) {
+            if (kid.kidId == k.kidId) {
+              k.attendance = true
+              break
+            }
+            else {
+              k.attendance = false
+            }
+          }
+        }
         if (data != null) {
-          this.kLength = this.kids.length
-          this.noKids=false
+          this.kLength = this.allKids.length
+          this.noKids = false
         }
         //this.kLength=0
-        if(this.kLength==0)
-        {
-          this.noKids=true
+        if (this.kLength == 0) {
+          this.noKids = true
         }
-      },error=>{
-        this.handleError(error)
-      })
-  }
-
-  getAllKidsByGroup(page:number,villageId:number,groupId:number)
-  {
-    this.showSpinner=true
-    this.sessionService.getKidsAttendance(this.groupId,this.route.snapshot.params['id']).pipe(finalize(()=>{
-      this.kidsService.getAllKidsByVillageAndGroup(page,villageId,groupId).pipe(finalize(()=>{
-
-      })).subscribe(data=>{
-        this.showSpinner=false
-          this.allKids=data['content']
-          console.log(this.allKids);
-            for(let k of this.allKids)
-            {
-              for(let kid of this.kids)
-              {                              
-                if(kid.kidId == k.kidId)
-                {
-                  k.attendance=true
-                  break
-                }
-              else
-                {
-                  k.attendance=false
-                }
-              }
-          }
-          if (data != null) {
-            this.kLength = this.allKids.length
-            this.noKids=false
-          }
-          //this.kLength=0
-          if(this.kLength==0)
-          {
-            this.noKids=true
-          }
-        });
-    })).subscribe(k=>{
+      });
+    })).subscribe(k => {
       console.log(k);
-      
-      if(k!=null)
-      {
-        this.kids=k.kids     
+
+      if (k != null) {
+        k.forEach(a => {
+          a.kids.forEach(k => {
+            this.kids.push(k)
+          })
+        });
       }
       console.log(this.kids);
-      
+
     })
-     
+
   }
 }

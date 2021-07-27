@@ -25,7 +25,7 @@ import { NgForm } from '@angular/forms';
 })
 export class EditSchoolComponent implements OnInit {
 
-  stream:Array<string>
+  type:Array<string>
   showProgressbar: boolean = false
 
 
@@ -66,7 +66,7 @@ export class EditSchoolComponent implements OnInit {
 
   constructor(private route:ActivatedRoute,private router:Router,private addressService:AddressService, private dialog:MatDialog, private _snackBar: MatSnackBar, private schoolService:SchoolService) { 
 
-    this.stream=[
+    this.type=[
       "Primary School",
       "Seconadary School",
       "Higher Secondary School",
@@ -231,7 +231,7 @@ export class EditSchoolComponent implements OnInit {
     this.disabled=true
     console.log(this.villageSelected);
     
-    if(this.villageSelected !=0 && this.school.status !=null && this.school.stream !=null)
+    if(this.villageSelected !=0 && this.school.status !=null && this.school.type !=null)
     {
     console.log(this.school);
     this.showProgressbar=true

@@ -20,9 +20,8 @@ export const ROUTES: RouteInfo[] = [
   { path: '', title: 'Dashboard',  icon: 'ni ni-shop text-primary', class: '' ,children:[], showChild:false,adjustment:''},
   { path: 'post', title: 'Timeline',  icon: 'fas fa-images text-danger', class: '' ,children:[],showChild:false,adjustment:''},
   { path: 'volunteachers', title: 'Volunteachers',  icon:'fas fa-users text-yellow', class: '',children:[],showChild:false ,adjustment:''},
-  { path: 'kids-list', title: 'Kids',  icon:'fas fa-child text-info', class: 'fas fa-chevron-right text-muted' ,children:[
+  { path: 'kids', title: 'Kids',  icon:'fas fa-child text-info', class: '' ,children:[
 
-    { path: 'kids', title: 'Kids Reports',  icon:'fab fa-readme text-info', class: '' ,children:[]},
     { path: 'groups', title: 'Groups',  icon:'ni ni-single-02 text-pink', class: '' ,children:[]},
 
   ],showChild:false,adjustment:'ml-8 pl-1'},

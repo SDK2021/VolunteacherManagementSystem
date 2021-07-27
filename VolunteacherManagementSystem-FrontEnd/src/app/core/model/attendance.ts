@@ -10,7 +10,7 @@ export class Attendance {
 	
 	session:Session; 
 	
-	group:KidsGroup;
+	kidsGroup:KidsGroup;
 
 	kids:Kid[];
 }

@@ -77,9 +77,9 @@ export class SessionsService {
     return this.httpclient.delete(`${"http://localhost:9090/vms/session-reports/"}${id}`).pipe(retry(3))
   }
 
-  getKidsAttendance(gid:number,sid:number):Observable<Attendance>
+  getKidsAttendance(gid:number,sid:number):Observable<Attendance[]>
   {
-    return this.httpclient.get<Attendance>(`${"http://localhost:9090/vms/attendance?groupId="}${gid}${"&sessionId="}${sid}`).pipe(retry(3))
+    return this.httpclient.get<Attendance[]>(`${"http://localhost:9090/vms/attendance?groupId="}${gid}${"&sessionId="}${sid}`).pipe(retry(3))
   }
 
   
@@ -97,4 +97,16 @@ export class SessionsService {
   {
     return this.httpclient.get<Content[]>(`${"http://localhost:9090/vms/contents"}`).pipe(retry(3))
   }
+
+  getSessionsByProject(page:number,pid:number):Observable<Session[]>
+  {
+    return this.httpclient.get<Session[]>(`${"http://localhost:9090/vms/sessions-project?page="}${page}${"&project="}${pid}`).pipe(retry(3))
+  }
+
+  getSessionsByVillage(page:number,vid:number):Observable<Session[]>
+  {
+    return this.httpclient.get<Session[]>(`${"http://localhost:9090/vms/sessions-village?page="}${page}${"&village="}${vid}`).pipe(retry(3))
+  }
+
+  
 }
