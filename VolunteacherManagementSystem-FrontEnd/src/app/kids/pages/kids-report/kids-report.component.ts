@@ -28,7 +28,7 @@ export class KidsReportComponent implements OnInit {
   kidReports: Kidsreport[] = new Array()
   showkidsReportComparision: boolean = true
 
-  showImageSpinner: boolean = true
+  
   isKidReport:boolean = false
 
   constructor(private kidsService: KidsService, private router: Router, private kidService: KidsService, private route: ActivatedRoute) { }
@@ -46,10 +46,6 @@ export class KidsReportComponent implements OnInit {
   }
 
   personalityChart: any
-
-  load() {
-    this.showImageSpinner = false
-  }
 
   getKidReportByKid(id: number) {
     console.log("Heloo");

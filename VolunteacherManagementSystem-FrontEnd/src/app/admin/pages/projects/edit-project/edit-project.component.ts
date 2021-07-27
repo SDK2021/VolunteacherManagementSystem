@@ -45,8 +45,6 @@ export class EditProjectComponent implements OnInit {
 
   disabled:boolean=null
 
-  showImageSpinner: boolean = true
-
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
@@ -56,10 +54,6 @@ export class EditProjectComponent implements OnInit {
     this.getProject(this.route.snapshot.params['id'])
     this.getVolunteachers()
     this.getKids()
-  }
-
-  load() {
-    this.showImageSpinner = false
   }
 
   invalidEndingDate: boolean = false
@@ -148,7 +142,6 @@ export class EditProjectComponent implements OnInit {
   show(isShow): void {
     this.showForm = isShow
     this.hover = false
-    this.showImageSpinner = true
   }
   openEditSnackBar() {
     this._snackBar.open('Edited successfully..', 'close', {
@@ -282,7 +275,6 @@ export class EditProjectComponent implements OnInit {
     this.kidTab = false
   }
   showKidTab() {
-    this.showImageSpinner = true
     this.tab1Class = false
     this.tab2Class = true
     this.vtTab = false

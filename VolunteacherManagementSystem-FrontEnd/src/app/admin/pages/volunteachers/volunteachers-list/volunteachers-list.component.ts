@@ -47,8 +47,6 @@ export class VolunteachersListComponent implements OnInit {
 
   disabled: boolean = null
 
-  showImageSpinner: boolean = true
-
   projects: Project[] = new Array()
   villages: Village[] = new Array()
 
@@ -80,11 +78,6 @@ export class VolunteachersListComponent implements OnInit {
     else {
       this.router.navigate(['error-page'])
     }
-  }
-
-
-  load() {
-    this.showImageSpinner = false
   }
 
   blob: Blob = new Blob()

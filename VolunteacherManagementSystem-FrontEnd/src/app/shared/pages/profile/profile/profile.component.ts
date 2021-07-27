@@ -37,7 +37,6 @@ export class ProfileComponent implements OnInit {
   isVt: boolean = false
   show: boolean = true
 
-  showImageSpinner: boolean = true
   constructor(private navbar: NavbarComponent, private vtService: VolunteachersService, private route: ActivatedRoute, private authService: authentication, private userService: UsersService, private profileService: ProfileService, private router: Router) {
 
   }
@@ -107,10 +106,6 @@ export class ProfileComponent implements OnInit {
       this.profileImg = "team-4-800x800.jpg"
     }
 
-  }
-
-  load() {
-    this.showImageSpinner = false
   }
 
   handleError(error) {

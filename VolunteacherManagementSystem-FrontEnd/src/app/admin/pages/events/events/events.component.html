@@ -279,22 +279,17 @@
                                     </div>
                                 </li>
                                 <div class="container-img">
-                                    <ng-container *ngIf="showImageSpinner">
-                                        <div class="col-12 my-8 ">
-                                            <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                                            </mat-spinner>
-                                        </div>
-                                    </ng-container>
-                                    <img (load)="load()" src="{{e.photo}}" 
+                                  
+                                    <img  src="{{e.photo}}" 
                                         style="width:100%; filter: brightness(50%);">
 
-                                    <ng-container *ngIf="!showImageSpinner">
+                                    
                                         <div class="centered text-lg"><b>{{e.title}}</b> <br>
                                             <a routerLink="/admin/events/{{e.eventId}}/event-details"><button
                                                     class="btn bg-gradient-danger text-white p-2 mt-3">View
                                                     Details</button></a>
                                         </div>
-                                    </ng-container>
+                                   
                                 </div>
                                 <!-- <img src="../../../../../assets/img/home/mnmr.jpg" alt="Image placeholder" class="card-img-top"> -->
                                 <div class="card-body pb-0 pt-4">

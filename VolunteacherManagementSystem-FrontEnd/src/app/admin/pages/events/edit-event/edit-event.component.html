@@ -40,14 +40,7 @@
                                        </ng-container>
                                        <ng-container *ngIf="!croppedImage">
                                         <div class="container-img" (click)="edit()" (mouseenter)="mouseEvent()" (mouseleave)="mouseEvent()">
-                                            
-                                            <ng-container *ngIf="showImageSpinner">
-                                                <div class="col-12 my-8 ">
-                                                    <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                                                    </mat-spinner>
-                                                </div>
-                                            </ng-container>
-                                            <img  src="{{event.photo}}" (load)="load()"  [ngClass]="{'darkShade':hover}" style="width:100%;" >
+                                            <img  src="{{event.photo}}"  [ngClass]="{'darkShade':hover}" style="width:100%;" >
             
                                             <div style="cursor: pointer;"  *ngIf="hover" class="centered display-3">
                                                <i class="fas fa-edit"></i>

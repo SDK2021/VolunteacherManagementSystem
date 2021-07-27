@@ -16,13 +16,7 @@
           <a class="nav-link" role="button" ngbDropdownToggle>
             <div class="media align-items-center">
               <div class="avatar avatar-sm rounded-circle">
-                <ng-container *ngIf="showImageSpinner">
-                  <div class="col-12 p-0 my-8 ">
-                      <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                      </mat-spinner>
-                  </div>
-              </ng-container>
-                <img (load)="load()" src="{{user.photo}}" class="img-fluid">
+                <img src="{{user.photo}}" class="img-fluid">
             </div>
             </div>
           </a>

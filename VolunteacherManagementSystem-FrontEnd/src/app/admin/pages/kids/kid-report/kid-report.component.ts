@@ -24,8 +24,6 @@ export class KidReportComponent implements OnInit {
 
   showSpinner:boolean=false
 
-  showImageSpinner:boolean=true
-
   personalityChart:any
 
   kidReports:Array<Kidsreport>=new Array()
@@ -72,12 +70,6 @@ export class KidReportComponent implements OnInit {
     this.getKidReportById(this.route.snapshot.params['rid'])
   }
 
-
-  
-  load()
-  {
-    this.showImageSpinner=false
-  }
 
   handleError(error)
   {

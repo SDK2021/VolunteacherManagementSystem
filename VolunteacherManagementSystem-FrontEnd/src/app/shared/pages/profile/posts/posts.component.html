@@ -60,13 +60,7 @@
                   <div class="d-flex align-items-center">
 
                     <div class="avatar rounded-circle">
-                      <ng-container *ngIf="showImageSpinner">
-                        <div class="col-12 my-8 ">
-                          <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                          </mat-spinner>
-                        </div>
-                      </ng-container>
-                      <img (load)="load()" src="{{p.createdBy.photo}}">
+                      <img  src="{{p.createdBy.photo}}">
                     </div>
 
 

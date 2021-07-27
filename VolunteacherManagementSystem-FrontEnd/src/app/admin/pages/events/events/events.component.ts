@@ -35,74 +35,74 @@ import { UsersService } from 'src/app/user/services/users.service';
 export class EventsComponent implements OnInit {
 
   monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+    "July", "August", "September", "October", "November", "December"
   ];
-  month:string
-  year:number
-  tab1:boolean
-  tab2:boolean=true
-  edit:boolean=false
-  events:Array<any>
-  isShow:boolean=false;
-  Show:boolean = true;
-  showForm:boolean=false
+  month: string
+  year: number
+  tab1: boolean
+  tab2: boolean = true
+  edit: boolean = false
+  events: Array<any>
+  isShow: boolean = false;
+  Show: boolean = true;
+  showForm: boolean = false
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  disabled:boolean=null
+  disabled: boolean = null
 
   showProgressbar: boolean = false
 
-  event:Event=new Event()
-  notification:Notification;
-  countries:Array<Country>
-  states:Array<State>
-  districts:Array<District>
-  talukas:Array<Taluka>
-  villages:Array<Village>
+  event: Event = new Event()
+  notification: Notification;
+  countries: Array<Country>
+  states: Array<State>
+  districts: Array<District>
+  talukas: Array<Taluka>
+  villages: Array<Village>
 
-  stateSelected:number;
-  districtSelected:number;
-  talukaSelected:number;
-  villageSelected:number;
-  projectSelected:number;
-  activities:Array<Activity>
-  selectedActivities:Array<Number> =  []
-  projects:Array<Project> = []
+  stateSelected: number;
+  districtSelected: number;
+  talukaSelected: number;
+  villageSelected: number;
+  projectSelected: number;
+  activities: Array<Activity>
+  selectedActivities: Array<Number> = []
+  projects: Array<Project> = []
 
-  isEventCreated:boolean=false
+  isEventCreated: boolean = false
 
-  page:number=0
+  page: number = 0
 
-  baseUrl:string="/vms/events"
-  imageURL:string;
-  
-  
+  baseUrl: string = "/vms/events"
+  imageURL: string;
+
+
   croppedImage: any = null
   percentage: number = 0
   @ViewChild(UploadImgComponent) uploadImageComponent: UploadImgComponent
 
-  showSpinner:boolean=false
-  noEvents:boolean=false
-  eLength:number
+  showSpinner: boolean = false
+  noEvents: boolean = false
+  eLength: number
 
-  showImageSpinner:boolean=true
 
-  constructor(private fileService:FileUploadService,private dialog:MatDialog,private router:Router,private notiService:NotificationsService,private userService:UsersService, private authService:authentication, private projectService:ProjectsService, private addressService: AddressService,private _snackBar: MatSnackBar, private eventService:EventsService) { }
+
+  constructor(private fileService: FileUploadService, private dialog: MatDialog, private router: Router, private notiService: NotificationsService, private userService: UsersService, private authService: authentication, private projectService: ProjectsService, private addressService: AddressService, private _snackBar: MatSnackBar, private eventService: EventsService) { }
 
   ngOnInit(): void {
 
 
-    let date:Date = new Date()
+    let date: Date = new Date()
     console.log(date)
-    this.showImageSpinner=true
-    this.month=this.monthNames[date.getMonth()]
+
+    this.month = this.monthNames[date.getMonth()]
     //console.log("current"+ this.month)
 
     this.stateSelected = 7
     this.districtSelected = 141
     this.talukaSelected = 35
-    this.year=date.getFullYear()
+    this.year = date.getFullYear()
     this.getAllActivities()
     this.getAllCountries();
     this.getAllStates();
@@ -111,44 +111,36 @@ export class EventsComponent implements OnInit {
     this.getAllVillages();
     this.getProjects();
     this.getAllEvent(this.page);
-    
+
   }
 
 
 
-  load()
-  {
-    this.showImageSpinner=false
-  }
-  
-  handleError(error)
-  {
+
+
+  handleError(error) {
     console.log(error);
     console.log(error.status);
-    
-    if(error.status===500)
-    {
+
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
 
 
-  showTab1(show:boolean)
-  {
-    console.log("tab1"+show)
-    this.tab1=show
+  showTab1(show: boolean) {
+    console.log("tab1" + show)
+    this.tab1 = show
   }
-  showTab2(show:boolean)
-  {
-    console.log("tab2"+show)
-    
-    this.tab2=show
-    this.tab1=false
-    this.edit=false
+  showTab2(show: boolean) {
+    console.log("tab2" + show)
+
+    this.tab2 = show
+    this.tab1 = false
+    this.edit = false
   }
 
   openAddSnackBar() {
@@ -177,57 +169,52 @@ export class EventsComponent implements OnInit {
     });
   }
 
-  onSubmit()
-  {
+  onSubmit() {
     console.log(this.event);
-    
+
   }
 
-  
-  getAllActivities()
-  {
-    this.eventService.getActivities().subscribe(data=>{
-      this.activities=data
+
+  getAllActivities() {
+    this.eventService.getActivities().subscribe(data => {
+      this.activities = data
       console.log(this.activities);
-      
+
     }, error => {
       this.handleError(error)
     })
   }
 
- 
 
-  getAllEvent(page:number)
-  {
-    this.showImageSpinner=true
-    this.showSpinner=true
-    this.eventService.getAllEvents(page).subscribe(data=>{
+
+  getAllEvent(page: number) {
+
+    this.showSpinner = true
+    this.eventService.getAllEvents(page).subscribe(data => {
       this.events = data['content']
-      this.showSpinner=false
+      this.showSpinner = false
       if (data != null) {
         this.eLength = data['content'].length
-        this.noEvents=false
+        this.noEvents = false
       }
       //this.eLength=0
-      if(this.eLength==0)
-      {
-        this.noEvents=true
+      if (this.eLength == 0) {
+        this.noEvents = true
       }
       console.log(this.events);
       console.log(this.eLength);
-      
-      
+
+
     }, error => {
       this.handleError(error)
     })
   }
 
-  
 
-  addEvent(form:NgForm)
-  {
-    this.disabled=true
-    this.showProgressbar=true
+
+  addEvent(form: NgForm) {
+    this.disabled = true
+    this.showProgressbar = true
     const file = this.uploadImageComponent.image;
     this.fileService.pushFileToStorage(new FileUpload(file), this.baseUrl).subscribe(
       percentage => {
@@ -238,52 +225,51 @@ export class EventsComponent implements OnInit {
 
           this.fileService.imageUrl.subscribe(data => {
             this.imageURL = data
-            
+
             if (this.imageURL != null && this.isEventCreated == false) {
-              if(this.villageSelected > 0 && this.projectSelected > 0)
-              {
-               
+              if (this.villageSelected > 0 && this.projectSelected > 0) {
+
                 console.log(this.event)
                 console.log(this.selectedActivities)
                 this.event.photo = this.imageURL
-                let eventdate:string = this.event.eventDate
-                let sdate:string[] = eventdate.split("-")
-                let eventDate = sdate[1] + "-" +  sdate[2] + "-" + sdate[0]
+                let eventdate: string = this.event.eventDate
+                let sdate: string[] = eventdate.split("-")
+                let eventDate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
                 this.event.eventDate = eventDate
                 this.event.notified = false
-          
+
                 this.event.eventStartingTime = this.event.eventStartingTime + ":00"
                 this.event.eventEndingTime = this.event.eventEndingTime + ":00"
-          
-                this.projectService.getProject(this.projectSelected).pipe(finalize(()=>{
-                  this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
-                    this.eventService.addEvent(this.event,this.selectedActivities).subscribe(data=>{
+
+                this.projectService.getProject(this.projectSelected).pipe(finalize(() => {
+                  this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
+                    this.eventService.addEvent(this.event, this.selectedActivities).subscribe(data => {
                       console.log(data)
                       form.reset()
                       //localStorage.removeItem("imageURL")
-                      this.showImageSpinner=true 
-                      setTimeout(()=>{
+
+                      setTimeout(() => {
                         this.getAllEvent(0)
                         this.openAddSnackBar()
                         this.showTab2(true)
-                        this.disabled=false
-                        this.showImageSpinner=true
-                        this.showProgressbar=false
-                        
-                      },2000)
+                        this.disabled = false
+
+                        this.showProgressbar = false
+
+                      }, 2000)
                     }, error => {
                       this.handleError(error)
                     })
-                  })).subscribe(data=>{
+                  })).subscribe(data => {
                     this.event.village = data
-                  },error=>{
-                  console.log(error);
+                  }, error => {
+                    console.log(error);
                   })
-                })).subscribe(data=>{
+                })).subscribe(data => {
                   this.event.project = data
-                },error=>{
+                }, error => {
                   console.log(error);
-                }) 
+                })
               }
               this.isEventCreated = true
             }
@@ -297,51 +283,44 @@ export class EventsComponent implements OnInit {
     }
   }
 
-  getProjects()
-  {
-    this.projectService.getAllProjects().subscribe(data=>{
+  getProjects() {
+    this.projectService.getAllProjects().subscribe(data => {
       this.projects = data
     }, error => {
       this.handleError(error)
     })
   }
 
-  selectedProject(event)
-  {
-    if(event.target.value > 0)
-    {
+  selectedProject(event) {
+    if (event.target.value > 0) {
       this.projectSelected = event.target.value;
       console.log(event.target.value);
     }
   }
-    
-  getAllCountries()
-  {
-    this.addressService.getCountries().subscribe(data=>{
+
+  getAllCountries() {
+    this.addressService.getCountries().subscribe(data => {
       this.countries = data
     }, error => {
       this.handleError(error)
     })
   }
 
-  selectedCountry(event)
-  {
-    this.addressService.getStates(event.target.value).subscribe(data=>{
+  selectedCountry(event) {
+    this.addressService.getStates(event.target.value).subscribe(data => {
       this.states = data
     })
   }
 
-  getAllStates() 
-  {
-    this.addressService.getStates(8).subscribe(data=>{
+  getAllStates() {
+    this.addressService.getStates(8).subscribe(data => {
       this.states = data;
     }, error => {
       this.handleError(error)
     })
   }
 
-  selectedState(event)
-  {
+  selectedState(event) {
     this.stateSelected = event.target.value;
     this.Show = false
     this.villageSelected = 0
@@ -349,165 +328,150 @@ export class EventsComponent implements OnInit {
     this.districtSelected = 0
     this.talukas = []
     this.villages = []
-    if(event.target.value > 0)
-    {
-      this.addressService.getDistricts(event.target.value).subscribe(data=>{
-      this.districts = data
+    if (event.target.value > 0) {
+      this.addressService.getDistricts(event.target.value).subscribe(data => {
+        this.districts = data
       })
     }
   }
 
-  getAllDistricts() 
-  {
-    this.addressService.getDistricts(7).subscribe(data=>{
-    this.districts = data;
+  getAllDistricts() {
+    this.addressService.getDistricts(7).subscribe(data => {
+      this.districts = data;
     }, error => {
       this.handleError(error)
     })
   }
 
-  selectedDistrict(event)
-  {
+  selectedDistrict(event) {
     this.villageSelected = 0
     this.talukaSelected = 0
-    if(event.target.value > 0)
-    {
+    if (event.target.value > 0) {
       this.districtSelected = event.target.value;
-      this.addressService.getTalukas(event.target.value).subscribe(data=>{
-      this.talukas = data
-      this.villages = []
+      this.addressService.getTalukas(event.target.value).subscribe(data => {
+        this.talukas = data
+        this.villages = []
       })
     }
-    else{
+    else {
       this.talukas = []
       this.villages = []
       this.districtSelected = 0
     }
   }
 
-  getAllTalukas() 
-  {
-    this.addressService.getTalukas(141).subscribe(data=>{
-    this.talukas = data
+  getAllTalukas() {
+    this.addressService.getTalukas(141).subscribe(data => {
+      this.talukas = data
     }, error => {
       this.handleError(error)
     })
   }
 
-  selectedTaluka(event)
-  {
+  selectedTaluka(event) {
     this.talukaSelected = event.target.value;
     console.log(event.target.value);
-    if(event.target.value > 0)
-    {
-          this.addressService.getVillages(event.target.value).subscribe(data=>{
-          this.villages = data
-        })
+    if (event.target.value > 0) {
+      this.addressService.getVillages(event.target.value).subscribe(data => {
+        this.villages = data
+      })
     }
   }
 
-  getAllVillages() 
-  {
-    this.addressService.getVillages(35).subscribe(data=>{
-    this.villages = data
+  getAllVillages() {
+    this.addressService.getVillages(35).subscribe(data => {
+      this.villages = data
     }, error => {
       this.handleError(error)
     })
   }
 
-  selectedVillage(event)
-  {
+  selectedVillage(event) {
     this.villageSelected = event.target.value;
     console.log(event.target.value);
   }
 
-  notifyEvent(eventId,value)
-  {
-    this.disabled=true
-    this.showProgressbar=true
+  notifyEvent(eventId, value) {
+    this.disabled = true
+    this.showProgressbar = true
     this.notification = new Notification()
     console.log(value.target.value)
-    let authUser:string[] = []
+    let authUser: string[] = []
     this.notification = new Notification()
-    if(value.target.value == 1)
-    {
+    if (value.target.value == 1) {
       this.notification.userType = "ALL"
     }
 
-    if(value.target.value == 2)
-    {
+    if (value.target.value == 2) {
       this.notification.userType = "LOCAL VOLUNTEACHER"
     }
 
-    if(value.target.value == 3)
-    {
+    if (value.target.value == 3) {
       this.notification.userType = "VOLUNTEACHER"
     }
-    
+
     this.notification.notificationType = "event"
-    this.eventService.getEventById(eventId).pipe(finalize(()=>{
+    this.eventService.getEventById(eventId).pipe(finalize(() => {
       authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
-      this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(()=>{
-        this.notiService.addNotification(this.notification).subscribe(data=>{
+      this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(() => {
+        this.notiService.addNotification(this.notification).subscribe(data => {
           console.log(data)
-         
-          
+
+
           this.router.navigate['admin/events']
-          setTimeout(() => { this.getAllEvent(0)
-            this.showProgressbar=false 
+          setTimeout(() => {
+            this.getAllEvent(0)
+            this.showProgressbar = false
             this.openNotifySnackBar()
-          this.disabled=false}, 1000);
+            this.disabled = false
+          }, 1000);
         }, error => {
           this.handleError(error)
         })
-      })).subscribe(data=>{
+      })).subscribe(data => {
         this.notification.createdBy = data
       })
-    })).subscribe(data=>{
+    })).subscribe(data => {
       this.notification.event = data
     })
   }
 
-  deleteEvent(id:number,image:string)
-  {
-    this.showProgressbar=true
-     this.eventService.deleteEvent(id).subscribe(data=>{
-       console.log(data); 
-       this.fileService.delete(image) 
-      
-       setTimeout(() => {
+  deleteEvent(id: number, image: string) {
+    this.showProgressbar = true
+    this.eventService.deleteEvent(id).subscribe(data => {
+      console.log(data);
+      this.fileService.delete(image)
+
+      setTimeout(() => {
         this.getAllEvent(this.page)
-        this.showProgressbar=false
-        this.openDeleteSnackBar()  
-       }, 2000);
-     }, error => {
+        this.showProgressbar = false
+        this.openDeleteSnackBar()
+      }, 2000);
+    }, error => {
       this.handleError(error)
     })
   }
 
-  delete(id:number,image:string)
-  {
-    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
-       console.log(data.delete)
-      if(data.delete)
-      { 
-        this.deleteEvent(id,image)
+  delete(id: number, image: string) {
+    this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
+      console.log(data.delete)
+      if (data.delete) {
+        this.deleteEvent(id, image)
       }
     })
   }
 
-  show(isShow):void
-  {
-    this.showForm=isShow
+  show(isShow): void {
+    this.showForm = isShow
   }
 
-  
+
   onScroll() {
     this.page += 1
-   this.getPageableEvent(this.page);
+    this.getPageableEvent(this.page);
   }
   getPageableEvent(page: number) {
-    this.eventService.getAllEvents(page).subscribe(data=>{
+    this.eventService.getAllEvents(page).subscribe(data => {
       data['content'].forEach(event => {
         this.events.push(event)
       });

@@ -17,13 +17,8 @@
         <div class="col-xl-10 px-lg-4 px-md-4 ">
             <div class="card card-blog p-xl-5">
                 <div class="card-image mt-xl--7 mx-xl-7 mx-lg-6 mx-md-4 mx-3">
-                    <ng-container *ngIf="showImageSpinner">
-                        <div class="col-12 my-8 ">
-                            <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="30">
-                            </mat-spinner>
-                        </div>
-                    </ng-container>
-                    <img (load)="load()" class="img img-raised" src="{{event.photo}}">
+                    
+                    <img  class="img img-raised" src="{{event.photo}}">
                     <div class="ripple-cont"></div>
                 </div>
                 <div class="table mt-xl-6 mt-lg-5 mt-md-4">

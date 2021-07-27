@@ -62,8 +62,6 @@ export class ProjectComponent implements OnInit {
   message: boolean = false
   showForm: boolean = false
 
-  showImageSpinner: boolean = true
-
   croppedImage: any = ''
   percentage: number = 0
   @ViewChild(UploadImgComponent) uploadImageComponent: UploadImgComponent
@@ -151,10 +149,6 @@ export class ProjectComponent implements OnInit {
     this.kidTab = true
   }
 
-  load() {
-    this.showImageSpinner = false
-  }
-
   openAddSnackBar() {
     this._snackBar.open('Added successfully..', 'close', {
       duration: 2000,
@@ -176,7 +170,6 @@ export class ProjectComponent implements OnInit {
   }
 
   show(isShow): void {
-    this.showImageSpinner = true
     this.showForm = isShow
   }
 
@@ -258,14 +251,12 @@ export class ProjectComponent implements OnInit {
 
         form.resetForm()
         // this.isProjectCreated=true
-        this.showImageSpinner = true
         setTimeout(() => {
           this.showProgressbar = false
           this.imageURL = null
           this.openAddSnackBar()
           this.disabled = false
           this.getAllProjects()
-          this.showImageSpinner=true
           this.showTab2(true)
         }, 1500);
 
@@ -314,7 +305,6 @@ export class ProjectComponent implements OnInit {
 
                   form.resetForm()
                   // this.isProjectCreated=true
-                  this.showImageSpinner = true
                   setTimeout(() => {
                     this.showProgressbar = false
                     this.imageURL = null
@@ -322,7 +312,6 @@ export class ProjectComponent implements OnInit {
                     this.disabled = false
                     this.getAllProjects()
                     this.showTab2(true)
-                    this.showImageSpinner=true
                   }, 1500);
 
                   //this.getAllProjects()

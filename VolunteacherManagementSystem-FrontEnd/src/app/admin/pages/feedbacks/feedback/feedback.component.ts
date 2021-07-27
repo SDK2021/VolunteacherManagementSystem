@@ -26,7 +26,7 @@ export class FeedbackComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  showImageSpinner:boolean=true
+
 
   page:number=0
   totalPages:number
@@ -61,10 +61,7 @@ export class FeedbackComponent implements OnInit {
     });
   }
 
-  load()
-  {
-    this.showImageSpinner=false
-  }
+ 
   
   getAllFeedbacks(page:number,id:number)
   {

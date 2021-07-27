@@ -25,14 +25,7 @@
                                 <!-- Card body -->
                                 <div class="card-body">
                                     <a routerLink="user/kids/set-photo">
-                                        <ng-container *ngIf="showImageSpinner">
-                                            <div class="col-12">
-                                                <mat-spinner class="mx-auto d-block my-4" color="primary"
-                                                    [diameter]="20">
-                                                </mat-spinner>
-                                            </div>
-                                        </ng-container>
-                                        <img (load)="load()" src="{{kid.photo}}"
+                                        <img  src="{{kid.photo}}"
                                             class="mt--6 rounded-circle img-center img-fluid shadow shadow-lg--hover"
                                             style="width: 140px;">
                                     </a>

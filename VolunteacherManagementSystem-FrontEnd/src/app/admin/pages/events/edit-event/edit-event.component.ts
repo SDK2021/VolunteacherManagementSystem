@@ -61,7 +61,7 @@ export class EditEventComponent implements OnInit {
   selectedActivities: Array<number> = new Array()
   projects: Array<Project> = []
 
-  showImageSpinner: boolean = true
+
 
   isEventEdited: boolean = false
 
@@ -102,7 +102,6 @@ export class EditEventComponent implements OnInit {
   show(isShow): void {
     this.showForm = isShow
     this.hover = false
-    this.showImageSpinner = true
   }
 
   mouseEvent() {
@@ -257,9 +256,7 @@ export class EditEventComponent implements OnInit {
     })
   }
 
-  load() {
-    this.showImageSpinner = false
-  }
+ 
 
   saveEvent() {
     this.disabled=true

@@ -16,8 +16,6 @@ export class ProjectDetailsComponent implements OnInit {
   totalKids: number=0
   totalSessions: number=0
 
-  showImageSpinner:boolean=true
-
   showSpinner: boolean = false
   constructor(private router: Router, private projectService: ProjectsService, private route: ActivatedRoute) { }
 
@@ -45,11 +43,7 @@ export class ProjectDetailsComponent implements OnInit {
     }
   }
 
-  load()
-  {
-    this.showImageSpinner=false
-  }
-
+  
   getPorject(id: number) {
     this.showSpinner = true
     this.projectService.getProject(id).subscribe(data => {

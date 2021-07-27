@@ -21,7 +21,6 @@ export class ProjectsComponent implements OnInit {
   pLength: number
   noProjects: boolean = false
 
-  showImageSpinner: boolean = true
   constructor(private router: Router, private route: ActivatedRoute, private authService: authentication, private userService: UsersService, private profileService: ProfileService) {
 
   }
@@ -50,9 +49,6 @@ export class ProjectsComponent implements OnInit {
     }
   }
 
-  load() {
-    this.showImageSpinner = false
-  }
   getAllProjectList() {
     this.showSpinner = true
     let username: string;

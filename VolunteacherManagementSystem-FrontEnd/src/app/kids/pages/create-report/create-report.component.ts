@@ -30,10 +30,6 @@ export class CreateReportComponent implements OnInit {
 
   showProgressbar:boolean=false
 
-  showImageSpinner:boolean=true
-
- 
-
   formatLabel(value: number) {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
@@ -66,12 +62,6 @@ export class CreateReportComponent implements OnInit {
     {
       this.router.navigate(['error-page'])
     }
-  }
-
-  
-  load()
-  {
-    this.showImageSpinner=false
   }
 
   getKidById(kidId: number) {

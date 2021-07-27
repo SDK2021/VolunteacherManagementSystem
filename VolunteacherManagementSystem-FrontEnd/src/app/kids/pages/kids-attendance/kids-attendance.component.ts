@@ -43,8 +43,6 @@ export class KidsAttendanceComponent implements OnInit {
 
   disabledMessage:boolean=null
 
-  showImageSpinner: boolean = true
-
   kidslist: Array<Kid>=new Array()
   presentkids: Number[] = []
   groupSelected: number = 0
@@ -86,10 +84,6 @@ export class KidsAttendanceComponent implements OnInit {
     }
   }
 
-
-  load() {
-    this.showImageSpinner = false
-  }
   getPageableKids(page: number) {
     if (this.filter === "vga") {
       this.kidsService.getAllKidsByAreaAndGroupAndVillage(page, this.selectedArea, this.selectedGroup, this.selectedVillage).subscribe(data => {

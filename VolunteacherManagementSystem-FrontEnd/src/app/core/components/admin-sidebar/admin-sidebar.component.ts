@@ -88,8 +88,6 @@ export class AdminSidebarComponent implements OnInit {
   user:User=new User()
   userType:string=''
 
-  showImageSpinner:boolean=true
-  
   constructor(private profileService:ProfileService,private userService:UsersService,private authService:authentication,private router: Router) {
    // this.showChildren(3)
    }
@@ -158,10 +156,4 @@ export class AdminSidebarComponent implements OnInit {
    
   }
 
-  
-  load()
-  {
-    this.showImageSpinner=false
-  }
-  
 }

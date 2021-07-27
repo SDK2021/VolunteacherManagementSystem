@@ -123,13 +123,7 @@
                   <div class="card-profile-image">
                    
                     <a routerLink="/admin/volunteachers/{{v.user.userId}}/profile/posts">
-                      <img src="{{v.user.photo}}" (load)="load()" class="mt-5 rounded-circle img-center">
-                      <ng-container *ngIf="showImageSpinner">
-                        <div class="col-12 ">
-                          <mat-spinner class="mx-auto d-block  " color="primary" [diameter]="25">
-                          </mat-spinner>
-                        </div>
-                      </ng-container>
+                      <img src="{{v.user.photo}}" class="mt-5 rounded-circle img-center">
                     </a>
                     
                   </div>

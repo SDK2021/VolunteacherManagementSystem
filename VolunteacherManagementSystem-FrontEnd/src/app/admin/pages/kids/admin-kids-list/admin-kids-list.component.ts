@@ -42,7 +42,6 @@ export class AdminKidsListComponent implements OnInit {
   filter: string
   @Input() label: string
 
-  showImageSpinner: boolean = true
 
   search: string = ''
 
@@ -74,9 +73,7 @@ export class AdminKidsListComponent implements OnInit {
     }
   }
 
-  load() {
-    this.showImageSpinner = false
-  }
+ 
   onScroll() {
     console.log("Hello");
 

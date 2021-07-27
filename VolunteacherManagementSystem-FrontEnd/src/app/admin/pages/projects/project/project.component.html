@@ -117,15 +117,8 @@
                                                         <div class="row align-items-center">
                                                             <div class="col-auto">
                                                                 <!-- Avatar -->
-                                                                <div class="avatar rounded-circle">
-                                                                    <!-- <ng-container *ngIf="showImageSpinner">
-                                                                        <div class="col-12 my-8 ">
-                                                                            <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                                                                            </mat-spinner>
-                                                                        </div>
-                                                                    </ng-container> -->
-                                                                    <img 
-                                                                        src="{{v.user.photo}}">
+                                                                <div class="avatar rounded-circle"> 
+                                                                    <img  src="{{v.user.photo}}">
                                                                 </div>
                                                             </div>
                                                             <div class="col ml--2">
@@ -167,15 +160,8 @@
                                                                 <div class="row align-items-center">
                                                                     <div class="col-auto">
                                                                         <!-- Avatar -->
-                                                                        <!-- <ng-container *ngIf="showImageSpinner">
-                                                                            <div class="col-12 my-8 ">
-                                                                                <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                                                                                </mat-spinner>
-                                                                            </div>
-                                                                        </ng-container> -->
-                                                                        <div class="avatar rounded-circle">
-                                                                            <img 
-                                                                                src="{{k.photo}}">
+                                                                       <div class="avatar rounded-circle">
+                                                                            <img src="{{k.photo}}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col ml--2">
@@ -261,21 +247,12 @@
                                     </div>
                                 </li>
                                 <div class="container-img p-xl-1">
-                                    <ng-container *ngIf="showImageSpinner">
-                                        <div class="col-12 my-8 ">
-                                            <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                                            </mat-spinner>
-                                        </div>
-                                    </ng-container>
-                                    <img (load)="load()" class=" p-1" src="{{p.photo}}" 
-                                        style="width:100%; filter: brightness(50%);">
-                                    <ng-container *ngIf="!showImageSpinner">
+                                   <img class=" p-1" src="{{p.photo}}" style="width:100%; filter: brightness(50%);">
                                         <div class="centered display-4">{{p.projectName}} <br>
                                             <h2 class="text-white">{{p.startingDate|date:'yyyy'}}</h2>
                                             <a routerLink="/admin/projects/{{p.projectId}}/project-details"><button
                                                     class="btn text-white bg-gradient-danger">Explore</button></a>
                                         </div>
-                                    </ng-container>
                                 </div>
 
                             </div>

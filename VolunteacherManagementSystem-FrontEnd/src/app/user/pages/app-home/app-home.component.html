@@ -110,13 +110,7 @@
                           <!-- Avatar -->
                           
                           <div class="avatar rounded-circle">
-                            <ng-container *ngIf="showImageSpinner">
-                              <div class="col-12 my-8 ">
-                                  <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                                  </mat-spinner>
-                              </div>
-                          </ng-container>
-                            <img (load)="load()" src="{{a.createdBy.photo}}">
+                           <img  src="{{a.createdBy.photo}}">
                           </div>
                         </div>
                         <div class="col ml--2">
@@ -221,13 +215,7 @@
                     <div class="card">
 
                       <div class="d-flex align-items-center">
-                        <ng-container *ngIf="showImageSpinner">
-                          <div class="col-12 my-8 ">
-                              <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                              </mat-spinner>
-                          </div>
-                      </ng-container>
-                        <div><img (load)="load()"  src="{{e.photo}}"
+                        <div><img  src="{{e.photo}}"
                             class="img-fluid rounded cover"></div>
                       </div>
                       <div class="card-body" style="background-color: rgba(243, 243, 243, 0.61);">

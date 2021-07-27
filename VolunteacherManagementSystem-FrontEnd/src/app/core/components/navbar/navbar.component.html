@@ -15,13 +15,7 @@
           <div class="media align-items-center">
           
              <span class="avatar avatar-sm rounded-circle">
-              <ng-container *ngIf="showImageSpinner">
-                <div class="col-12 my-8 p-0 ">
-                    <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                    </mat-spinner>
-                </div>
-            </ng-container>
-              <img (load)="load()" src="{{user.photo}}">
+              <img src="{{user.photo}}">
             </span>
             <div class="media-body ml-2 d-none d-md-block">
               <span class="mb-0 text-sm  font-weight-bold">{{user.userName}}</span>

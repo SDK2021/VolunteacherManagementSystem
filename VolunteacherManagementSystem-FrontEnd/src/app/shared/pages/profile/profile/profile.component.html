@@ -1,4 +1,5 @@
-<div class=" pb-4 pt-0 pt-lg-0 d-flex align-items-center " style="min-height: 400px; background-image: url(assets/img/banners/profile-banner.gif); background-size: cover; background-position: center;">
+<div class=" pb-4 pt-0 pt-lg-0 d-flex align-items-center "
+  style="min-height: 400px; background-image: url(assets/img/banners/profile-banner.gif); background-size: cover; background-position: center;">
   <!-- Mask -->
   <span class="mask bg-gradient-danger opacity-8"></span>
   <!-- Header container -->
@@ -21,26 +22,10 @@
           <div class="col-lg-3 order-lg-2">
             <div class="card-profile-image">
               <ng-container *ngIf="isVt">
-               
-                  <img (load)="load()" src="{{volunteacher.user.photo}}" class="rounded-circle">
-                  <ng-container *ngIf="showImageSpinner">
-                    <div class="col-12  ">
-                        <mat-spinner class="mx-auto d-block my-4" color="primary" [diameter]="20">
-                        </mat-spinner>
-                    </div>
-                </ng-container>
-              
+                <img src="{{volunteacher.user.photo}}" class="rounded-circle">
               </ng-container>
               <ng-container *ngIf="!isVt">
-               
-                  <img (load)="load()" src="{{user.photo}}" class="rounded-circle">
-                  <ng-container *ngIf="showImageSpinner">
-                    <div class="col-12 mt-6 p-0 ">
-                        <mat-spinner class="mx-auto d-block" color="primary" [diameter]="20">
-                        </mat-spinner>
-                    </div>
-                </ng-container>
-               
+                <img src="{{user.photo}}" class="rounded-circle">
               </ng-container>
             </div>
           </div>
@@ -50,16 +35,16 @@
           <div class="row">
             <div class="col">
               <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                <button *ngIf="show" class="btn bg-transparent border-0 "  [routerLink]="['projects']">
-                  <span class="heading"  style="font-size: 18px;color: #525f7f;"><b>{{totalProject}}</b></span><br>
+                <button *ngIf="show" class="btn bg-transparent border-0 " [routerLink]="['projects']">
+                  <span class="heading" style="font-size: 18px;color: #525f7f;"><b>{{totalProject}}</b></span><br>
                   <span class="text-primary">Projects</span>
                 </button>
                 <button class="btn  bg-transparent border-0 " [routerLink]="['posts']">
-                  <span class="heading"  style="font-size: 18px;color: #525f7f;"><b>{{totalPosts}}</b></span><br>
+                  <span class="heading" style="font-size: 18px;color: #525f7f;"><b>{{totalPosts}}</b></span><br>
                   <span class="text-primary">Posts</span>
                 </button>
                 <button *ngIf="show" class="btn bg-transparent border-0 " style="pointer-events: none;">
-                  <span class="heading"  style="font-size: 18px;color: #525f7f;"><b>{{totalSessions}}</b></span><br>
+                  <span class="heading" style="font-size: 18px;color: #525f7f;"><b>{{totalSessions}}</b></span><br>
                   <span class="text-primary">Sessions</span>
                 </button>
               </div>
@@ -69,47 +54,49 @@
             <h3>
               {{user.userName}}
             </h3>
-            
-          
+
+
             <div class="h5">
               <i class="ni business_briefcase-24 mr-2"></i>{{volunteacher.experience}}
             </div>
             <hr class="my-4 " />
             <div class="">
-            <ng-container *ngIf="isVt">
-              <div class="text-center" *ngIf="volunteacher.user.type.type=='VOLUNTEACHER'">
-                <i class="ni ni-square-pin mr-3 mb-3"></i>{{volunteacher.district.districtName}},{{volunteacher.district.state.stateName}}
-              </div>
-              <div class="text-center" *ngIf="volunteacher.user.type.type=='LOCAL VOLUNTEACHER'" >
-                <i class="ni  ni-square-pin mr-3 mb-3"></i>{{volunteacher.village.villageName}},{{volunteacher.district.state.stateName}}
-              </div>
-              <div class="text-center" *ngIf="volunteacher.user.type.type=='LOCAL VOLUNTEACHER'">
-                <i class="fas fa-school mr-3 mb-3"></i>{{volunteacher.school}}
-              </div>
-              <div class="text-center" *ngIf="volunteacher.user.type.type=='VOLUNTEACHER'">
-                <i class="fas fa-university mr-3 mb-3"></i>{{volunteacher.employerName}}
-              </div>
-              <div class="text-center">
-                <i class="fas fa-envelope mr-3 mb-3"></i>{{volunteacher.user.email}}
-              </div>
-              <div class="text-center">
-                <i class="fas fa-phone mr-3"></i>{{volunteacher.user.phoneNumber}}
-              </div>
-            </ng-container>
-            <ng-container *ngIf="!isVt">
-              <div class="text-center">
-                <i class="fas fa-envelope mr-3 mb-3"></i>{{user.email}}
-              </div>
-              <div class="text-center">
-                <i class="fas fa-phone mr-3"></i>{{user.phoneNumber}}
-              </div>
-            </ng-container>
-  
+              <ng-container *ngIf="isVt">
+                <div class="text-center" *ngIf="volunteacher.user.type.type=='VOLUNTEACHER'">
+                  <i
+                    class="ni ni-square-pin mr-3 mb-3"></i>{{volunteacher.district.districtName}},{{volunteacher.district.state.stateName}}
+                </div>
+                <div class="text-center" *ngIf="volunteacher.user.type.type=='LOCAL VOLUNTEACHER'">
+                  <i
+                    class="ni  ni-square-pin mr-3 mb-3"></i>{{volunteacher.village.villageName}},{{volunteacher.district.state.stateName}}
+                </div>
+                <div class="text-center" *ngIf="volunteacher.user.type.type=='LOCAL VOLUNTEACHER'">
+                  <i class="fas fa-school mr-3 mb-3"></i>{{volunteacher.school}}
+                </div>
+                <div class="text-center" *ngIf="volunteacher.user.type.type=='VOLUNTEACHER'">
+                  <i class="fas fa-university mr-3 mb-3"></i>{{volunteacher.employerName}}
+                </div>
+                <div class="text-center">
+                  <i class="fas fa-envelope mr-3 mb-3"></i>{{volunteacher.user.email}}
+                </div>
+                <div class="text-center">
+                  <i class="fas fa-phone mr-3"></i>{{volunteacher.user.phoneNumber}}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!isVt">
+                <div class="text-center">
+                  <i class="fas fa-envelope mr-3 mb-3"></i>{{user.email}}
+                </div>
+                <div class="text-center">
+                  <i class="fas fa-phone mr-3"></i>{{user.phoneNumber}}
+                </div>
+              </ng-container>
+
             </div>
             <!-- <p>Complted M.Sc in AI ML ,currently working at Google. Pursuing PhD in Canada</p> -->
-            <a *ngIf="editProfile"  [routerLink]="['edit-profile']" class="btn btn-info mt-3">Edit Profile</a>
+            <a *ngIf="editProfile" [routerLink]="['edit-profile']" class="btn btn-info mt-3">Edit Profile</a>
 
-           
+
 
           </div>
         </div>

@@ -23,8 +23,6 @@ export class NavbarComponent implements OnInit {
   userType:string=''
   user:User = new User()
 
-  showImageSpinner:boolean=true
-
   constructor(private profileService:ProfileService,location: Location,  private element: ElementRef, private router: Router,private authService:authentication, private userService:UsersService) {
     this.location = location;
   }
@@ -77,11 +75,6 @@ export class NavbarComponent implements OnInit {
     })
   }
 
-  
-  load()
-  {
-    this.showImageSpinner=false
-  }
 
   logout()
   {
