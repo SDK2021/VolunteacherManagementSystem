@@ -31,14 +31,13 @@ export class RegisterComponent implements OnInit {
     this.showProgressbar=true
     this.applicantRequest.status = 0;
     //this.applicantRequest.requestDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    console.log(this.applicantRequest)
+
     this._userService.registration(this.applicantRequest).subscribe(data=>{
       this.invalidMobileNumber = false
       this.disabled=false
       this.invalidEmail = false
       this.showProgressbar=false
       this.showForm=false
-      console.log(data)
     },
       error =>{ 
         if(error.status == 409)

@@ -91,14 +91,12 @@ export class EditVillageComponent implements OnInit {
     if(this.talukaSelected != 0)
     {
       this.showProgressbar=true
-      console.log("Hello");
       
       this.addressService.getTalukaById(this.talukaSelected).pipe(finalize(()=>{
         this.addressService.saveVillage(this.village.villageId,this.village).subscribe(data=>{
           this.showProgressbar=false
           this.openSnackBar()
           this.router.navigate(['/admin/villages'])
-          console.log(data);
           this.disabled=false
         })
       })).subscribe(data=>{
@@ -106,7 +104,6 @@ export class EditVillageComponent implements OnInit {
       },error=>{
         this.handleError(error)
       })
-      console.log(this.village);
       
     }
   }
@@ -125,10 +122,7 @@ export class EditVillageComponent implements OnInit {
     });
   }
 
-  onSubmit(from:NgForm)
-  {
-    console.log(this.village)
-  }
+ 
 
   trackById(index:number,village:Village)
   {
@@ -142,7 +136,6 @@ export class EditVillageComponent implements OnInit {
     this.showProgressbar = true
     this.addressService.getTalukaById(this.talukaSelected).pipe(finalize(()=>{
       this.projectService.addVillage(this.village).subscribe(data=>{
-        console.log(data)
         this.showProgressbar = false
         this.openSnackBar()
         form.reset()

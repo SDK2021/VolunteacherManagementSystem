@@ -53,7 +53,6 @@ export class AttendanceComponent implements OnInit {
   handleError(error) {
     console.log(error);
     console.log(error.status);
-
     if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
@@ -69,12 +68,10 @@ export class AttendanceComponent implements OnInit {
   }
 
   showTab1(show: boolean) {
-    console.log("tab1" + show)
     this.tab1 = show
     this.getSession()
   }
   showTab2(show: boolean) {
-    console.log("tab2" + show)
     this.tab2 = show
   }
 
@@ -97,18 +94,13 @@ export class AttendanceComponent implements OnInit {
   }
 
   touched() {
-    console.log("Touched");
-
     this.groupTouched = true
-    console.log(this.groupTouched);
-
   }
 
   selectedGroup(event) {
     this.groupId = event.target.value;
     if (this.groupId == 0)
       this.groupTouched = true
-    console.log(this.groupId);
     this.noKids = false
     this.kLength = 0
     //   this.getKidsAttendance(this.groupId,this.route.snapshot.params['id'])
@@ -134,8 +126,6 @@ export class AttendanceComponent implements OnInit {
   getKidsAttendance(gid: number, sid: number) {
     this.showSpinner = true
     this.sessionService.getKidsAttendance(gid, sid).subscribe(data => {
-      console.log(data);
-
       data.forEach(a => {
         a.kids.forEach(k => {
           this.kids.push(k)
@@ -163,7 +153,6 @@ export class AttendanceComponent implements OnInit {
       })).subscribe(data => {
         this.showSpinner = false
         this.allKids = data['content']
-        console.log(this.allKids);
         for (let k of this.allKids) {
           for (let kid of this.kids) {
             if (kid.kidId == k.kidId) {
@@ -185,8 +174,6 @@ export class AttendanceComponent implements OnInit {
         }
       });
     })).subscribe(k => {
-      console.log(k);
-
       if (k != null) {
         k.forEach(a => {
           a.kids.forEach(k => {
@@ -194,8 +181,6 @@ export class AttendanceComponent implements OnInit {
           })
         });
       }
-      console.log(this.kids);
-
     })
 
   }

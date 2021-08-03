@@ -64,7 +64,6 @@ export class ContentComponent implements OnInit {
       this.shows = true
       this.sessionService.getContentByGroup(groupId).subscribe(data=>{
       this.pdfSource = data.contentData
-      console.log(data.contentData)
       },error=>{
         this.handleError(error)
       })
@@ -74,8 +73,6 @@ export class ContentComponent implements OnInit {
   {
     this.sessionService.getAllContents().subscribe(data=>{
       this.contents=data
-      console.log(this.contents);
-      
       },error=>{
         this.handleError(error)
       })
@@ -83,10 +80,8 @@ export class ContentComponent implements OnInit {
 
   groupSelected(event)
   {
-    console.log(event.target.value);
     this.groupId = event.target.value
     this.getContent(this.groupId)
   }
-
 
 }

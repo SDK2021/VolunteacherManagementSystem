@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit {
     this.getAdminNotifications(this.page)
     this.getNewUsers(this.page)
     this.getRequirements()
-    console.log(this.width)
+   
   }
 
   handleError(error)
@@ -121,8 +121,6 @@ export class DashboardComponent implements OnInit {
   onScroll() {
     if(this.page  < this.totalAnnouncementPages - 1)
     {
-      console.log("Hello");
-      
       this.page += 1
       this.getPageableAnnouncements(this.page);
     }
@@ -144,8 +142,6 @@ export class DashboardComponent implements OnInit {
     this.homeService.getAnnouncements(page).subscribe(data => {
       this.announcements = data['content']
       this.totalAnnouncementPages = data['totalPages']  
-      console.log(this.totalAnnouncementPages);
-      
       this.showSpinner=false
       if (data != null) {
         this.aLength = this.announcements.length
@@ -155,7 +151,6 @@ export class DashboardComponent implements OnInit {
       {
         this.noAnnouncement=true
       }
-      console.log(this.announcements)
       
     },error=>{
       this.handleError(error)
@@ -176,7 +171,6 @@ export class DashboardComponent implements OnInit {
     authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
     this.userService.getUserByEmail(atob(authuser[0])).subscribe(data => {
       this.user = data
-      console.log(this.user);
     },error=>{
       this.handleError(error)
     })
@@ -185,7 +179,6 @@ export class DashboardComponent implements OnInit {
   deleteAnnouncement(id: number) {
     this.showProgressbar = true
     this.dashboardService.deleteAnnouncement(id).subscribe(data => {
-      console.log(data);
       this.openDeleteSnackBar()
       setTimeout(() => {
         this.getAnnouncements(this.page)
@@ -198,7 +191,7 @@ export class DashboardComponent implements OnInit {
 
   delete(id: number) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
+    
       if (data.delete) {
         this.deleteAnnouncement(id)
       }
@@ -225,9 +218,7 @@ export class DashboardComponent implements OnInit {
     this.showSpinner=true;
     this.dashboardService.getTotalvolunteachers().subscribe(data=>{
       this.totalVolunteachers=data
-      console.log(data);
       this.showSpinner=false;
-      console.log(this.totalVolunteachers);
     },error=>{
       this.handleError(error)
     })
@@ -236,7 +227,6 @@ export class DashboardComponent implements OnInit {
   getTotalKids() {
       this.dashboardService.getTotalKids().subscribe(data=>{
         this.totalKids=data
-        console.log(this.totalKids);
       },error=>{
         this.handleError(error)
       })
@@ -246,9 +236,7 @@ export class DashboardComponent implements OnInit {
     this.showSpinner=true;
     this.dashboardService.getTotalSesssions().subscribe(data=>{
       this.totalSessions=data
-      console.log(data);
       this.showSpinner=false;
-      console.log(this.totalSessions);
     },error=>{
       this.handleError(error)
     })
@@ -259,9 +247,7 @@ export class DashboardComponent implements OnInit {
     this.showSpinner=true;
     this.dashboardService.getTotalEvents().subscribe(data=>{
       this.totalEvents=data
-      console.log(data);
       this.showSpinner=false;
-      console.log(this.totalEvents);
     },error=>{
       this.handleError(error)
     })
@@ -299,7 +285,6 @@ export class DashboardComponent implements OnInit {
       {
         this.noNotifications=true
       }
-      console.log(this.notifications)
       this.showSpinner=false
     },error=>{
       this.handleError(error)
@@ -319,7 +304,6 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getNewUsers(this.userPage).subscribe(data => {
       data['content'].forEach(n => {
         this.newUsers.push(n)
-        console.log(n+" push .... s");
         
       });
     },error=>{
@@ -330,7 +314,7 @@ export class DashboardComponent implements OnInit {
   {
     this.announcementDisable=true
     this.showProgressbar=true
-    console.log(this.announcement);
+  
     
     if(this.authService.isUserLogin())
     {
@@ -344,7 +328,6 @@ export class DashboardComponent implements OnInit {
           this.openSnackBar()
           this.announcement.data=""
           this.getAnnouncements(0)
-          console.log(data); 
         },error=>{
           this.handleError(error)
         })
@@ -367,7 +350,7 @@ export class DashboardComponent implements OnInit {
       {
         this.noUsers=true
       }
-      console.log(this.newUsers)
+     
       this.showSpinner=false
     },error=>{
       this.handleError(error)
@@ -378,7 +361,6 @@ export class DashboardComponent implements OnInit {
     this.showSpinner=true
     this.dashboardService.getRequirements().subscribe(data => {
       this.requirements = data
-      console.log(data);
       if (data != null) {
         this.rLength = this.requirements.length
         this.noRequirements=false
@@ -388,7 +370,7 @@ export class DashboardComponent implements OnInit {
       {
         this.noRequirements=true
       }
-      console.log(this.requirements)
+     
       this.showSpinner=false
     },error=>{
       this.handleError(error)

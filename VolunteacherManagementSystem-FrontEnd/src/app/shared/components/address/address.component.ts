@@ -181,9 +181,9 @@ export class AddressComponent implements OnInit {
   selectedTaluka(event)
   {
     this.talukaSelected = event.target.value;
-    console.log(event.target.value);
+    
     this.talukaSelected = event.target.value;
-    console.log(event.target.value);
+    
     if(event.target.value != 0)
     {
           this.addressService.getVillages(event.target.value).subscribe(data=>{
@@ -247,7 +247,7 @@ export class AddressComponent implements OnInit {
   selectedVillage(event)
   {
     this.villageSelected = event.target.value;
-    console.log(event.target.value);
+    
     if(event.target.value!=0)
     {
         this.addressService.getAreas(event.target.value).subscribe(data=>{

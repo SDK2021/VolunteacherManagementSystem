@@ -65,12 +65,12 @@ export class ResetPasswordComponent implements OnInit {
       this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(()=>{
       this.userService.updatePassword(val.newPass,user.userId,val.oldPass).subscribe(data=>
       {
-          console.log(data + "success");
-          this.router.navigate(['login'])
+          console.log(data + "success");          
           this.updateSuccessfully = true
           this.showProgressbar=false
           this.openSnackBar()
-          this.oldPsinvalid = false
+          this.oldPsinvalid = false 
+          localStorage.setItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME,authUser[0] + " " +btoa(val.newPass))         
       },error=>{
         if(error.status == 400)
         {

@@ -18,7 +18,6 @@ export class AdminCanActivateGuard implements CanActivate {
   }
 
   authenticateUser() {
-    console.log("Helo");
     
     if (this.authService.isUserLogin()) {
       let authuser: string[];

@@ -42,7 +42,6 @@ export class ApplicantRequestComponent implements OnInit {
   handleError(error) {
     console.log(error);
     console.log(error.status);
-
     if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
@@ -124,8 +123,6 @@ export class ApplicantRequestComponent implements OnInit {
       if (this.rLength == 0) {
         this.noRequests = true
       }
-      console.log(data);
-
     }, error => {
       this.handleError(error)
     });
@@ -147,8 +144,6 @@ export class ApplicantRequestComponent implements OnInit {
       if (this.rLength == 0) {
         this.noRequests = true
       }
-      console.log(data);
-
     }, error => {
       this.handleError(error)
     });
@@ -168,8 +163,6 @@ export class ApplicantRequestComponent implements OnInit {
       if (this.rLength == 0) {
         this.noRequests = true
       }
-      console.log(data);
-
     }, error => {
       this.handleError(error)
     });
@@ -177,9 +170,7 @@ export class ApplicantRequestComponent implements OnInit {
   }
 
   myFun(index, a: Applicantrequest) {
-
     this.count = 1;
-    console.log(this.count + 1)
   }
 
   selectedCategory(event) {

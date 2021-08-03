@@ -44,16 +44,13 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.volunteacher.user = new User()
     this.volunteacher.user.type = new Usertype()
-    console.log(this.router.url.split('/'));
+    this.router.url.split('/');
     let array: Array<string> = this.router.url.split('/')
-    console.log(array);
-    // this.router.navigate([''])
+
     setTimeout(() => {
       this.navbar.ngOnInit()
     }, 2000);
 
-
-    console.log("ng on init call");
 
 
     if (array[1] === "admin") {
@@ -63,15 +60,14 @@ export class ProfileComponent implements OnInit {
         this.isVt = true
         this.editProfile = false
         this.subHeading = false
-        // this.getVolunteacher(this.route.snapshot.params['id'])
-        // console.log(this.volunteacher);
+  
 
         this.getVolunteacherInfo(this.route.snapshot.params['id'])
 
         this.heading = true
       }
       else {
-        // this.isVt=true
+
         this.show = false
         this.totalProject = 0;
         this.totalSessions = 0;
@@ -90,7 +86,7 @@ export class ProfileComponent implements OnInit {
             this.userType = 'user'
           this.getTotalPosts(this.user.userId)
         })
-        // this.getTotalProjectByUser();
+
         this.profileImg = "team-4-800x800.jpg"
 
       }
@@ -135,7 +131,7 @@ export class ProfileComponent implements OnInit {
         this.getTotalSessions(userId)
         this.getVolunteacher(userId)
       })).subscribe(data => {
-        console.log(data)
+
         this.totalProject = data
       }, error => {
         this.handleError(error)
@@ -148,7 +144,7 @@ export class ProfileComponent implements OnInit {
 
   getTotalSessions(userId: number) {
     this.profileService.getTotalSessions(userId).subscribe(data => {
-      console.log(data)
+
       this.totalSessions = data
     }, error => {
       this.handleError(error)
@@ -157,7 +153,7 @@ export class ProfileComponent implements OnInit {
 
   getTotalPosts(userId: number) {
     this.profileService.getTotalPosts(userId).subscribe(data => {
-      console.log(data)
+ 
       this.totalPosts = data
     }, error => {
       this.handleError(error)
@@ -169,7 +165,7 @@ export class ProfileComponent implements OnInit {
       this.volunteacher = data
       this.user=this.volunteacher.user
       this.volunteacher.experience = this.calculateExperience(new Date(this.volunteacher.joiningDate))
-      console.log(this.volunteacher)
+
     }, error => {
       this.handleError(error)
     })
@@ -178,7 +174,7 @@ export class ProfileComponent implements OnInit {
   calculateExperience(jDate: Date): string {
 
     let joiningDate: Date = new Date(jDate)
-    console.log(joiningDate);
+
     let currentMonth = new Date().getMonth()
     let currentDate = new Date().getDate()
     let currentYear = new Date().getFullYear()
@@ -208,7 +204,7 @@ export class ProfileComponent implements OnInit {
       this.getVolunteacher(id)
       
     })).subscribe(data => {
-      console.log(data)
+
       this.totalProject = data
     }, error => {
       this.handleError(error)

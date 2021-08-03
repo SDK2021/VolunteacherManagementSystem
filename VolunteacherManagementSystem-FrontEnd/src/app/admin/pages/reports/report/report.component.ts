@@ -63,9 +63,7 @@ export class ReportComponent implements OnInit {
     this.showSpinner=true;
     this.dashboardService.getTotalvolunteachers().subscribe(data=>{
       this.totalVolunteachers=data
-      console.log(data);
       this.showSpinner=false;
-      console.log(this.totalVolunteachers);
     },error=>{
       this.handleError(error)
     })
@@ -74,7 +72,6 @@ export class ReportComponent implements OnInit {
   getTotalKids() {
       this.dashboardService.getTotalKids().subscribe(data=>{
         this.totalKids=data
-        console.log(this.totalKids);
       },error=>{
         this.handleError(error)
       })
@@ -84,9 +81,7 @@ export class ReportComponent implements OnInit {
     this.showSpinner=true;
     this.dashboardService.getTotalSesssions().subscribe(data=>{
       this.totalSessions=data
-      console.log(data);
       this.showSpinner=false;
-      console.log(this.totalSessions);
     },error=>{
       this.handleError(error)
     })
@@ -97,9 +92,7 @@ export class ReportComponent implements OnInit {
     this.showSpinner=true;
     this.dashboardService.getTotalEvents().subscribe(data=>{
       this.totalEvents=data
-      console.log(data);
       this.showSpinner=false;
-      console.log(this.totalEvents);
     },error=>{
       this.handleError(error)
     })
@@ -107,10 +100,8 @@ export class ReportComponent implements OnInit {
 
   getAllNewVolunteacher()
   {
-    console.log("Hello");
     
     this.reportService.getAllNewUsers().subscribe(data=>{
-      console.log(data);
       for (let vt of data) {
         if(vt.user.type.typeId == 2)
         {
@@ -129,7 +120,6 @@ export class ReportComponent implements OnInit {
   getAllNewKids()
   {
     this.reportService.getAllNewKids().subscribe(data=>{
-      console.log(data); 
       this.totalNewKids = data
     })
   }
@@ -137,7 +127,6 @@ export class ReportComponent implements OnInit {
   getTotalHours()
   {
     this.reportService.getTotalHours().subscribe(data=>{
-      console.log(data);
       this.totalHours = data
     })
   }
@@ -155,7 +144,7 @@ export class ReportComponent implements OnInit {
           })
 
           this.reportService.getTotalUsersBySessionVillage(village.villageId).subscribe(data=>{
-            console.log(data + " " +village.villageId);
+         
             village.totalVolunteachers = 0
             village.totalLVTS = 0
             for (let user of data) 
@@ -186,7 +175,6 @@ export class ReportComponent implements OnInit {
       {
         this.reportService.getTotalKidsByVillage(village.villageId).subscribe(data=>{
           village.totalKids = data
-          console.log("Hello1");
         })
       }
       
@@ -195,7 +183,6 @@ export class ReportComponent implements OnInit {
       {
         this.reportService.getTotalSessionByVillage(village.villageId).subscribe(data=>{
           village.totalSessions = data
-          console.log("Hello2");
         })
       }
       for (let village of this.villages) 
@@ -215,7 +202,6 @@ export class ReportComponent implements OnInit {
                 village.totalLVTS += 1
               }
             }
-            console.log("village" + village.villageId);
             
             this.dd.content.push(
             {

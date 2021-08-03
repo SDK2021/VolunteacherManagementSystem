@@ -19,7 +19,6 @@ export class UserCanActivateGuard implements CanActivate {
   }
 
   authenticateUser() {
-    console.log("Helooo");
     
     
     if (this.authService.isUserLogin()) {

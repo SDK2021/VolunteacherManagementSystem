@@ -80,9 +80,8 @@ export class CreateSessionsComponent implements OnInit {
   ngOnInit(): void {
     this.page = 0
     let date: Date = new Date()
-    console.log(date)
     this.month = this.monthNames[date.getMonth()]
-    //console.log("current"+ this.month)
+   
     this.year = date.getFullYear()
     this.sessions = []
     this.countries = []
@@ -123,12 +122,10 @@ export class CreateSessionsComponent implements OnInit {
   }
 
   showTab1(show: boolean) {
-    console.log("tab1" + show)
     this.tab1 = show
     this.tab2 = false
   }
   showTab2(show: boolean) {
-    console.log("tab2" + show)
     this.tab2 = show
     this.tab1 = false
     this.edit = false
@@ -164,10 +161,7 @@ export class CreateSessionsComponent implements OnInit {
     });
   }
 
-  onSubmit(form: NgForm) {
-    console.log(this.session);
-
-  }
+ 
 
   getSessionsByMonthAndYear(page: number) {
     this.showSpinner = true
@@ -175,7 +169,6 @@ export class CreateSessionsComponent implements OnInit {
     this.sessionService.getSessionsByMonthAndYear(page, today.getMonth() + 1, today.getFullYear()).subscribe(data => {
       this.sessions = data['content']
       this.totalPages = data['totalPages']
-      console.log(this.sessions);
       this.showSpinner = false
       if (data != null) {
         this.sLength = this.sessions.length
@@ -201,7 +194,6 @@ export class CreateSessionsComponent implements OnInit {
 
   
   addSession(form) {
-    //console.log(form)
     this.disabled = true
     if (this.villageSelected > 0 && this.projectSelected > 0) {
       this.showProgressbar = true
@@ -217,7 +209,7 @@ export class CreateSessionsComponent implements OnInit {
       this.projectService.getProject(this.projectSelected).pipe(finalize(() => {
         this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
           this.sessionService.addSession(this.session).subscribe(data => {
-            console.log(data)
+           
 
             setTimeout(() => {
               this.getSessionsByMonthAndYear(0)
@@ -254,7 +246,6 @@ export class CreateSessionsComponent implements OnInit {
 
   selectedProject(event) {
     this.projectSelected = event.target.value;
-    console.log(event.target.value);
   }
 
   getAllCountries() {
@@ -329,7 +320,6 @@ export class CreateSessionsComponent implements OnInit {
 
   selectedTaluka(event) {
     this.talukaSelected = event.target.value;
-    console.log(event.target.value);
     if (event.target.value != 0) {
       this.addressService.getVillages(event.target.value).subscribe(data => {
         this.villages = data
@@ -347,14 +337,13 @@ export class CreateSessionsComponent implements OnInit {
 
   selectedVillage(event) {
     this.villageSelected = event.target.value;
-    console.log(event.target.value);
+ 
   }
 
 
   notifySession(sessionId, value) {
     this.showProgressbar = true
     this.disabled = true
-    console.log(value.target.value)
     let authUser: string[] = []
     this.notification = new Notification()
     if (value.target.value == 1) {
@@ -375,8 +364,7 @@ export class CreateSessionsComponent implements OnInit {
       authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
       this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(() => {
         this.notiService.addNotification(this.notification).subscribe(data => {
-          console.log(data)
-
+        
           setTimeout(() => {
             this.getSessionsByMonthAndYear(0)
             this.showProgressbar = false
@@ -402,7 +390,7 @@ export class CreateSessionsComponent implements OnInit {
   deleteSession(id: number) {
     this.showProgressbar = true
     this.sessionService.deleteSession(id).subscribe(data => {
-      console.log(data);
+      
       this.openDeleteSnackBar()
       setTimeout(() => {
         this.getSessionsByMonthAndYear(0)
@@ -415,7 +403,7 @@ export class CreateSessionsComponent implements OnInit {
 
   delete(id: number) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
+    
       if (data.delete) {
         this.deleteSession(id)
       }

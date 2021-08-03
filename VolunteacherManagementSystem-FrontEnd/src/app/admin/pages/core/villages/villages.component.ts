@@ -107,12 +107,10 @@ export class VillagesComponent implements OnInit {
 
   showTab1(show:boolean)
   {
-    console.log("tab1"+show)
     this.tab1=show
   }
   showTab2(show:boolean)
   {
-    console.log("tab2"+show)
     this.tab2=show
   }
 
@@ -137,11 +135,7 @@ export class VillagesComponent implements OnInit {
     });
   }
 
-  onSubmit(from:NgForm)
-  {
-    console.log(this.village)
-  }
-
+  
   getAllVillages()
   {
     this.showSpinner=true
@@ -153,7 +147,6 @@ export class VillagesComponent implements OnInit {
           for (let kid of data) {
             if (kid.area.village.villageId === village.villageId) {
               flag = 1
-              console.log("Area:" + village.villageId);
               break
             }
           }
@@ -164,7 +157,6 @@ export class VillagesComponent implements OnInit {
             village.isDelete = false
           }
         }
-        console.log(this.village);
       
       })
     })).subscribe(data=>{
@@ -179,7 +171,6 @@ export class VillagesComponent implements OnInit {
       {
         this.noVillages=true
       }
-      console.log(this.villages);
       
     },error=>{
       this.handleError(error)
@@ -199,8 +190,6 @@ export class VillagesComponent implements OnInit {
     this.showProgressbar = true
     this.addressService.getTalukaById(this.talukaSelected).pipe(finalize(()=>{
       this.projectService.addVillage(this.village).subscribe(data=>{
-        console.log(data)
-       
         form.reset()
         setTimeout(()=>{ 
           this.getAllVillages()
@@ -298,7 +287,6 @@ export class VillagesComponent implements OnInit {
   selectedTaluka(event)
   {
     this.talukaSelected = event.target.value;
-    console.log(event.target.value);
     if(event.target.value > 0)
     {
           this.addressService.getVillages(event.target.value).subscribe(data=>{
@@ -311,7 +299,6 @@ export class VillagesComponent implements OnInit {
     this.disabled = true
     this.showProgressbar = true
     this.addressService.deleteVillage(id).subscribe(data => {
-      console.log(data);
       setTimeout(() => {
         this.getAllVillages()
         this.showProgressbar = false
@@ -325,7 +312,6 @@ export class VillagesComponent implements OnInit {
 
   delete(id: number) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
       if (data.delete) {
         this.deleteVillage(id)
       }

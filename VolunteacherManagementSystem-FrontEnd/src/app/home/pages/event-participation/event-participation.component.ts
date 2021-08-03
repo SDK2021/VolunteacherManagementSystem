@@ -55,11 +55,10 @@ export class EventParticipationComponent implements OnInit {
     let dob:string = this.eventParticipant.dob
     let pdob:string[] = dob.split("-")
     this.eventParticipant.dob = pdob[1] +"-" + pdob[2] + "-" + pdob[0]
-    console.log(this.eventParticipant);
     let eventid:number  = this.route.snapshot.params['id'];
     this.eventService.getEventById(eventid).pipe(finalize(()=>{
           this.eventService.addParticipant(this.eventParticipant).subscribe(data=>{
-            console.log(data)
+          
             this.showProgressbar=false
             this.showForm=false
           },error=>{

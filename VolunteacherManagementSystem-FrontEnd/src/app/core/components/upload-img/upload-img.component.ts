@@ -93,11 +93,10 @@ export class UploadImgComponent implements OnInit {
     let imageName: string
 
     this.croppedImage = event.base64;
-    //console.log(this.croppedImage);
     let randomString = this.randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
     this.selectedFileName += randomString
     this.image = this.dataURLtoFile(this.croppedImage, this.selectedFileName);
-    console.log(this.image);
+   
 
   }
 
@@ -138,7 +137,6 @@ export class UploadImgComponent implements OnInit {
     this.showError = false
     this.selectedFiles = event.target.files;
     this.selectedFileName = this.selectedFiles.item(0).name
-    console.log(this.selectedFiles.item(0).name);
 
   }
 
@@ -148,42 +146,7 @@ export class UploadImgComponent implements OnInit {
     this.hide()
   }
 
-  // upload(): void {
-
-  //   this.showProgressbar = true
-  //   const file = this.image;
-  //   this.selectedFiles = undefined;
-
-  //   this.currentFileUpload = new FileUpload(file);
-  //   this.uploadService.pushFileToStorage(this.currentFileUpload, this.baseUrl).subscribe(
-  //     percentage => {
-  //       this.percentage = Math.round(percentage);
-  //       if (this.percentage === 100) {
-
-  //         //if (this.imagecnt == 0) {
-
-  //           setTimeout(() => {
-  //             this.showProgressbar = false
-  //             this._snackBar.open('Image uploaded successfully..', 'close', {
-  //               duration: 2000,
-  //               horizontalPosition: this.horizontalPosition,
-  //               verticalPosition: this.verticalPosition,
-  //             });
-  //             this.hide(); console.log("Hello post");
-  //           }, 1000);
-  //           //this.imagecnt++;
-  //        // }
-  //         // this.createPost.imageURL = localStorage.getItem("imageURL")
-  //         // console.log(this.createPost.imageURL);
-
-  //       }
-  //     }, error => {
-  //       this.handleError(error)
-  //     }
-
-  //   )
-
-  // }
+ 
 
   dataURLtoFile(dataurl, filename) {
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],

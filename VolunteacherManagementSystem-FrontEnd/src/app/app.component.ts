@@ -16,31 +16,6 @@ export class AppComponent {
 
   ngOnInit() {
     
-  //   if(this.authService.isUserLogin())
-  //   {
-  //     let authUser :string[];
-  //     let user:User;
-
-  //     authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ")
-  //     this.userService.getUserByEmail(atob(authUser[0])).subscribe(data=>{
-  //       user = data
-  //       console.log(user);
-        
-  //       if(user.type.typeId == 1)
-  //       {
-  //         this.router.navigate(['/admin'])
-  //       }
-  //       else
-  //       {
-  //         this.router.navigate(['/user'])
-  //       }
-  //     })
-    
-  //   }
-  //   else
-  //   {
-  //     this.router.navigate(['/login'])
-  //   }
-  // }
+  
   }
 }

@@ -111,9 +111,8 @@ export class CreatePostComponent implements OnInit {
                 authUser = localStorage.getItem(this._authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
                 this.userSerice.getUserByEmail(atob(authUser[0])).pipe(finalize(() => {
                   this.timeLinePost.createdBy = user
-                  console.log(this.timeLinePost)
                   this.timelineService.createTimelinePost(this.timeLinePost).subscribe(data => {
-                    console.log(data)
+                    
                     this.isPostCreated = true
                     this.showProgressbar = false
                     this.disabled=false
@@ -123,7 +122,6 @@ export class CreatePostComponent implements OnInit {
                   })
                 })).subscribe(data => {
                   user = data
-                  console.log(data)
                 })
               }
               this.isPostCreated = true

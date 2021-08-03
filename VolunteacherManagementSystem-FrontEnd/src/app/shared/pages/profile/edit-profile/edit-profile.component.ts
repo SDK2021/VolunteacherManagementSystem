@@ -136,8 +136,7 @@ export class EditProfileComponent implements OnInit {
     this.disabled=true
     this.showProgressbar=true
     this.getVolunteacherForm()
-    console.log(this.volunteacher);
-    console.log(this.volunteacher);
+  
     if (this.villageSelected = 0) {
       this.villageSelected = this.volunteacher.village.villageId
     }
@@ -164,7 +163,6 @@ export class EditProfileComponent implements OnInit {
             }
           })).subscribe(data => {
             this.showProgressbar=false
-            console.log(data + "  edited")
             this.openSnackBar()
             this.disabled=false
             this.router.navigate(['/user/profile/posts'])
@@ -180,7 +178,6 @@ export class EditProfileComponent implements OnInit {
         this.volunteacher.village = null
         this.userServeice.saveVolunteacher(this.volunteacher.volunteacherId, this.volunteacher).subscribe(data => {
           this.showProgressbar=false
-          console.log(data + "  edited")
           this.openSnackBar()
           this.disabled=false
           this.router.navigate(['/user/profile/posts'])
@@ -209,7 +206,6 @@ export class EditProfileComponent implements OnInit {
           if (this.volunteacher.user.type.typeId == 3) {
             this.addressService.getVillages(this.volunteacher.village.taluka.talukaId).subscribe(data => {
               this.villages = data
-              console.log(this.villages);
               
             }, error => {
               this.handleError(error)
@@ -217,9 +213,6 @@ export class EditProfileComponent implements OnInit {
           }
         })).subscribe(data => {
           this.districts = data
-
-          console.log(this.districtSelected);
-
         })
       })).subscribe(data => {
         this.volunteacher = data
@@ -230,7 +223,6 @@ export class EditProfileComponent implements OnInit {
       })
     })).subscribe(data => {
       this.user = data;
-      console.log(this.user)
       userName = this.user.userName.split(" ")
       this.firstName = userName[0]
       this.lastName = userName[1]

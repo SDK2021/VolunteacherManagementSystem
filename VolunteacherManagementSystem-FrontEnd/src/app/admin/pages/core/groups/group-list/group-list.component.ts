@@ -118,8 +118,6 @@ export class GroupListComponent implements OnInit {
     this.disabled=true
     this.showProgressbar = true
     this.kids.addKidsGroup(this.kidsGroup).subscribe(data => {
-      console.log(data)
-      
       form.reset()
       setTimeout(() => {
         this.getkidsgroup()
@@ -137,7 +135,6 @@ export class GroupListComponent implements OnInit {
     this.disabled=true
     console.log(this.kidsGroup);
     this.kidsService.editKidsGroup(this.kidsGroup.groupId,this.kidsGroup).subscribe(data=>{
-      console.log(data);
       this.disabled=false
       this.isEdit=false
       this.kidsGroup=new KidsGroup()
@@ -173,9 +170,6 @@ export class GroupListComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log(form.value);
-    console.log(this.kidsGroup);
-
     this.show()
   }
 
@@ -197,7 +191,6 @@ export class GroupListComponent implements OnInit {
     this.disabled = true
     this.showProgressbar = true
     this.addressService.deleteGroup(id).subscribe(data => {
-      console.log(data);
       setTimeout(() => {
         this.getkidsgroup()
         this.showProgressbar = false
@@ -211,7 +204,6 @@ export class GroupListComponent implements OnInit {
 
   delete(id: number) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
       if (data.delete) {
         this.deleteGroup(id)
       }

@@ -32,19 +32,18 @@ export class NotificationComponent implements OnInit {
   sessions: Session[] = []
   participantUser: Participant;
   today: Date = new Date()
-  page:number = 0
-  totalPages:number
+  page: number = 0
+  totalPages: number
   showProgressbar: boolean = false
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  disabled:boolean=null
+  disabled: boolean = null
 
   constructor(private dialog: MatDialog, private _snackBar: MatSnackBar, private router: Router, private eventService: EventsService, private notiService: NotificationsService, private authService: authentication, private userService: UsersService, private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
-    if(!this.authService.isUserLogin)
-    {
+    if (!this.authService.isUserLogin) {
       this.router.navigate(['login'])
     }
     this.getAllNotifications(this.page)
@@ -76,12 +75,12 @@ export class NotificationComponent implements OnInit {
       email = atob(authuser[0]);
       this.userService.getUserByEmail(email).subscribe(
         (data) => {
-          console.log(data)
+
           this.user = data
           this.usertype = this.user.type.type;
-          console.log(this.usertype);
-          this.notificationService.getNotifications(page, this.usertype).pipe(finalize(()=>{
-           
+
+          this.notificationService.getNotifications(page, this.usertype).pipe(finalize(() => {
+
             for (let notification of this.notifications) {
               if (notification.event != null) {
                 this.events.push(notification.event)
@@ -98,18 +97,18 @@ export class NotificationComponent implements OnInit {
 
               for (let i = 0; i < this.events.length; i++) {
                 for (let user of this.events[i].users) {
-                  if (user.userId == userId ) {
+                  if (user.userId == userId) {
                     this.events[i].disable = true
                     break
                   }
-                  
+
                 }
               }
 
 
               for (let i = 0; i < this.sessions.length; i++) {
                 for (let user of this.sessions[i].users) {
-                  if (user.userId == userId ) {
+                  if (user.userId == userId) {
                     this.sessions[i].disable = true
                     break
                   }
@@ -117,30 +116,28 @@ export class NotificationComponent implements OnInit {
                     this.sessions[i].disable = true
                   }
                 }
-               
-                
+
+
               }
 
             })).subscribe(data => {
               userId = data.userId
             })
           })).subscribe(data => {
-            console.log(data);            
-            this.notifications =  this.notifications.concat(data['content'])
-            console.log(this.notifications);
+
+            this.notifications = this.notifications.concat(data['content'])
+
             for (let i = 0; i < this.notifications.length; i++) {
-             if(this.notifications[i].session!=null)
-             {
-              if (this.isSessionDisable(this.notifications[i].session)) {
-                this.notifications[i].session.disable = true
+              if (this.notifications[i].session != null) {
+                if (this.isSessionDisable(this.notifications[i].session)) {
+                  this.notifications[i].session.disable = true
+                }
               }
-             }
-             if(this.notifications[i].event!=null)
-             {
-              if (this.isEventDisable(this.notifications[i].event)) {
-                this.notifications[i].event.disable = true
+              if (this.notifications[i].event != null) {
+                if (this.isEventDisable(this.notifications[i].event)) {
+                  this.notifications[i].event.disable = true
+                }
               }
-             }
             }
             this.totalPages = data['totalPages']
           });
@@ -150,38 +147,34 @@ export class NotificationComponent implements OnInit {
     }
   }
 
-  isSessionDisable(session:Session):boolean {
+  isSessionDisable(session: Session): boolean {
 
     let currentDate: Date = new Date()
     let sDate: string = session.sessionDate
     let sTime: string = session.endingTime
     let h: string = sTime.split(":")[0]
     let m: string = sTime.split(":")[1]
-    //let s: string = sTime.split(":")[2]
+
     let d = new Date(sDate)
     d.setHours(Number.parseInt(h))
     d.setMinutes(Number.parseInt(m))
-    //d.setSeconds(Number.parseInt(s))
 
-    console.log(d);
-    console.log(currentDate);
-    
+
 
 
     if (currentDate > d) {
       return true
     }
-    else
-    {
-      console.log("in else");
+    else {
+
       return false
     }
-     
-  
+
+
 
   }
 
-  isEventDisable(event:Event):boolean {
+  isEventDisable(event: Event): boolean {
 
     let currentDate: Date = new Date()
     let sDate: string = event.eventDate
@@ -196,7 +189,7 @@ export class NotificationComponent implements OnInit {
       return true
     }
     else
-     return false
+      return false
 
   }
 
@@ -209,10 +202,10 @@ export class NotificationComponent implements OnInit {
     });
   }
 
-  addSessionVolunteacher(value) { 
-    this.disabled=true
+  addSessionVolunteacher(value) {
+    this.disabled = true
     this.showProgressbar = true
-    console.log(value)
+
     let authuser: string[];
     let email: string;
 
@@ -222,30 +215,28 @@ export class NotificationComponent implements OnInit {
       email = atob(authuser[0]);
       this.userService.getUserByEmail(email).pipe(finalize(() => {
         this.notiService.addVolunteacher(this.attendedUsers, value).subscribe(data => {
-          console.log(data)
+
           this.showProgressbar = false
-         
+
           this.attendedUsers = []
           setTimeout(() => {
-            console.log("Hello Krunal #TheProjectPartner");
-            console.log(this.page);
+
             this.notifications = []
-            
-            for(let i=0;i<=this.page;i++)
-            {
+
+            for (let i = 0; i <= this.page; i++) {
               this.getAllNotifications(i)
-              
+
             }
             this.openSnackBar()
-            this.disabled=false
-            
+            this.disabled = false
+
           }, 1000);
         }, error => {
           this.handleError(error)
         })
       })).subscribe(
         (data) => {
-          console.log(data)
+
           this.attendedUsers.push(data)
 
         })
@@ -253,9 +244,9 @@ export class NotificationComponent implements OnInit {
   }
 
   addEventVolunteacher(value) {
-    this.disabled=true
+    this.disabled = true
     this.showProgressbar = true
-    console.log(value)
+
     let authuser: string[];
     let email: string;
     let users: User[] = []
@@ -265,22 +256,21 @@ export class NotificationComponent implements OnInit {
       authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
       email = atob(authuser[0]);
       this.userService.getUserByEmail(email).pipe(finalize(() => {
-        console.log(users);
+
 
         this.notiService.addVTParticipant(users, value).subscribe(data => {
-          console.log(data)
+
           this.showProgressbar = false
-        
+
           setTimeout(() => {
-            // console.log("Hello Krunal #TheProjectPartner");
+
             this.notifications = []
-            
-            for(let i=0;i<=this.page;i++)
-            {
+
+            for (let i = 0; i <= this.page; i++) {
               this.getAllNotifications(i)
             }
             this.openSnackBar()
-            this.disabled=false
+            this.disabled = false
           }, 1000);
         }, error => {
           this.handleError(error)
@@ -294,7 +284,7 @@ export class NotificationComponent implements OnInit {
 
   openSessionDialog(id: number) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
+
       if (data.delete) {
         this.addSessionVolunteacher(id)
       }
@@ -302,7 +292,7 @@ export class NotificationComponent implements OnInit {
   }
   openEventDialog(id: number) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
+
       if (data.delete) {
         this.addEventVolunteacher(id)
       }
@@ -310,16 +300,15 @@ export class NotificationComponent implements OnInit {
   }
 
   onScroll() {
-    console.log("Hello");
-    
-    if(this.page < this.totalPages - 1)
-    {
+
+
+    if (this.page < this.totalPages - 1) {
       this.page += 1
       this.getPageablePosts(this.page);
     }
   }
   getPageablePosts(page: number) {
-   this.getAllNotifications(page)
+    this.getAllNotifications(page)
   }
 
 

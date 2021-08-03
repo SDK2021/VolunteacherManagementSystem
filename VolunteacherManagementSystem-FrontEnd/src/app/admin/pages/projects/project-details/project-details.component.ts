@@ -49,7 +49,6 @@ export class ProjectDetailsComponent implements OnInit {
     this.projectService.getProject(id).subscribe(data => {
       this.project = data
       this.showSpinner = false
-      console.log(this.project);
 
     }, error => {
       this.handleError(error)

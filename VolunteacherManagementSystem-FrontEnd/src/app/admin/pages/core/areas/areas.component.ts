@@ -53,7 +53,6 @@ export class AreasComponent implements OnInit {
           for (let kid of data) {
             if (kid.area.areaId === area.areaId) {
               flag = 1
-              console.log("Area:" + area.areaId);
               break
             }
           }
@@ -64,7 +63,7 @@ export class AreasComponent implements OnInit {
             area.isDelete = false
           }
         }
-        console.log(this.areas);
+       
         this.showSpinner = false
         if (data != null) {
           this.aLength = this.areas.length
@@ -81,8 +80,7 @@ export class AreasComponent implements OnInit {
   }
   editArea(index: number) {
 
-    console.log(this.areas.filter(post => post));
-
+   
     console.log(this.areas[index]["isEdit"] = !this.areas[index]["isEdit"])
     this.area.areaName = this.areas[index]["areaName"]
     console.log(this.areas[index]["areaId"]);
@@ -104,7 +102,6 @@ export class AreasComponent implements OnInit {
     this.showProgressbar = true
     this.addressService.getVillageByid(this.villageId).pipe(finalize(() => {
       this.projectService.addArea(this.area).subscribe(data => {
-        console.log(data)
         this.openAddSnackBar()
         form.reset()
         this.show()
@@ -119,12 +116,6 @@ export class AreasComponent implements OnInit {
       this.area.village = data
     })
   }
-
-  // openDialog()
-  // {
-  //   this.dialog.open(DialogBoxComponent)
-  //   this.openSnackBar()
-  // }
 
   openSnackBar() {
     this._snackBar.open('Deleted successfully..', 'close', {
@@ -149,14 +140,10 @@ export class AreasComponent implements OnInit {
   }
 
   saveArea(index: number) {
-
-
-
-    console.log(this.area);
     this.area = this.areas[index]
     // alert(this.area.areaName)
     this.addressService.saveArea(this.areas[index]["areaId"], this.area).subscribe(data => {
-      console.log(data);
+    
       setTimeout(() => {
         this.getAllArea()
         this.areas[index]["isEdit"] = false
@@ -170,7 +157,7 @@ export class AreasComponent implements OnInit {
     this.disabled = true
     this.showProgressbar = true
     this.addressService.deleteArea(id).subscribe(data => {
-      console.log(data);
+      
       setTimeout(() => {
         this.getAllArea()
         this.showProgressbar = false
@@ -184,7 +171,6 @@ export class AreasComponent implements OnInit {
 
   delete(id: number) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
       if (data.delete) {
         this.deleteArea(id)
       }

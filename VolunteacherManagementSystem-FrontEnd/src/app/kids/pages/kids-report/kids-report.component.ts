@@ -48,7 +48,7 @@ export class KidsReportComponent implements OnInit {
   personalityChart: any
 
   getKidReportByKid(id: number) {
-    console.log("Heloo");
+    
     this.showSpinner = true
     this.kidsService.getLatestKidReport(id).subscribe(data => {
       this.kidReport = data
@@ -80,7 +80,7 @@ export class KidsReportComponent implements OnInit {
     
     
 
-    //this.getKidReportById(this.route.snapshot.params['id'])
+    
     this.n = 25
 
     this.datasets = [
@@ -95,12 +95,7 @@ export class KidsReportComponent implements OnInit {
     parseOptions(Chart, chartOptions());
 
 
-    // var performanceChart = new Chart(chartOrders, {
-    //   type: 'bar',
-    //   options: this.performanceChart.options,
-    //   data: this.performanceChart.data
-    // });
-
+    
 
     var chartPie = document.getElementById('chart-pie');
 
@@ -114,7 +109,7 @@ export class KidsReportComponent implements OnInit {
   getAllKidsReport() {
     this.kidService.getKidReport(this.route.snapshot.params['id']).subscribe(data => {
       this.kidReports = data
-      console.log(this.kidReports);
+      
 
       var chartPie = document.getElementById('chart-pie');
       this.personalityChart = new Chart(chartPie, {
@@ -182,7 +177,7 @@ export class KidsReportComponent implements OnInit {
       })
       var chartProgress = document.getElementById('chart-progress')
       if (this.kidReports.length >= 3) {
-        console.log("Hello");
+   
         
         this.showkidsReportComparision = true
 
@@ -195,7 +190,7 @@ export class KidsReportComponent implements OnInit {
         let totalReport3: number = ((this.kidReports[2].abhivyakti + this.kidReports[2].artCraft + this.kidReports[2].discipline + this.kidReports[2].english + this.kidReports[2].games
           + this.kidReports[2].goshthi + this.kidReports[2].gujarati + this.kidReports[2].science + this.kidReports[2].maths + this.kidReports[2].prayer + this.kidReports[2].sports + this.kidReports[2].volunteaching) * 100) / 120
 
-        console.log(+totalReport1 + " " + +totalReport3 + " " + +totalReport2);
+        
        
         
 
@@ -247,20 +242,15 @@ export class KidsReportComponent implements OnInit {
     let bDate = new Date(kid.dob)
 
     let diffInSec = Math.abs(currentDate.getTime() - bDate.getTime())
-    console.log(diffInSec);
+ 
 
     kid.age = (diffInSec / (1000 * 3600 * 24) / 365) + 1
     let array: Array<string> = kid.age.toString().split('.')
     kid.age = Number.parseInt(array[0])
-    console.log(kid.age)
+ 
 
     return kid
 
   }
-
-
-
-
-
 
 }

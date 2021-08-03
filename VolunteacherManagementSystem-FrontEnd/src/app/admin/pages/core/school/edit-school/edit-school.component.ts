@@ -52,13 +52,6 @@ export class EditSchoolComponent implements OnInit {
   villages:Array<Village>
   disabled:boolean=null
 
-  // stateTouched:boolean = false
-  // districtTouched:boolean = false
-  // talukaTouched:boolean = false
-  // villageTouched:boolean = false
-  // streamTouched:boolean = false
-  // statusTouched:boolean = false
-
   status:Array<string>=["Good","Better","Under Construction"]
 
   school:School=new School()
@@ -104,13 +97,6 @@ export class EditSchoolComponent implements OnInit {
     });
   }
 
-  onSubmit()
-  {
-    console.log(this.school); 
-  }
-
- 
-  
 
   getAllCountries()
   {
@@ -178,7 +164,6 @@ export class EditSchoolComponent implements OnInit {
   selectedTaluka(event)
   {
     this.talukaSelected = event.target.value;
-    console.log(event.target.value);
     if(event.target.value > 0)
     {
           this.addressService.getVillages(event.target.value).subscribe(data=>{
@@ -194,7 +179,6 @@ export class EditSchoolComponent implements OnInit {
 
   getSchool(schoolId)
   {
-    console.log(schoolId);
     this.schoolService.getSchoolById(schoolId).pipe(finalize(()=>{
       this.addressService.getVillages(this.school.village.taluka.talukaId).pipe(finalize(()=>{
           this.addressService.getTalukas(this.districtSelected).pipe(finalize(()=>{
@@ -222,20 +206,16 @@ export class EditSchoolComponent implements OnInit {
     })).subscribe(data=>{      
       this.school = data
       this.schoolDate = this.school.startingDate
-      console.log(data);
     })
   }
 
   saveSchool()
   {
     this.disabled=true
-    console.log(this.villageSelected);
     
     if(this.villageSelected !=0 && this.school.status !=null && this.school.type !=null)
     {
-    console.log(this.school);
     this.showProgressbar=true
-    console.log(this.school)
     this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
       if(!(this.schoolDate === this.school.startingDate))
       {
@@ -245,7 +225,7 @@ export class EditSchoolComponent implements OnInit {
         this.school.startingDate = startingdate
       }
       this.schoolService.editSchool(this.school.schoolId,this.school).subscribe(data=>{
-        console.log(data)
+      
         setTimeout(()=>{
           this.showProgressbar=false
           this.openEditSnackBar()

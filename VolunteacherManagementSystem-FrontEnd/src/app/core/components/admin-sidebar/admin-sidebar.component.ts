@@ -132,7 +132,6 @@ export class AdminSidebarComponent implements OnInit {
         })
       }  
        
-     console.log(this.user);
         
    },error=>{
      this.handleError(error)
@@ -141,10 +140,9 @@ export class AdminSidebarComponent implements OnInit {
 
   showChildren(index:number)
   {
-    console.log("Show children called..");
     
     this.menuItems = ROUTES.filter(menuItem => menuItem);
-    console.log(this.menuItems[index]["showChild"]=!this.menuItems[index]["showChild"]);  
+    this.menuItems[index]["showChild"]=!this.menuItems[index]["showChild"]  
     if( this.menuItems[index]["class"]==="fas fa-chevron-down text-primary")
     {     
       this.menuItems[index]["class"]="fas fa-chevron-right text-muted"

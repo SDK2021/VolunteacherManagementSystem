@@ -21,9 +21,8 @@ export class ForgotPasswordComponent implements OnInit {
   sendOTP(val)
   {
     this.showSpinner=true
-    console.log(val.username);
     this.userService.sendOTP(val.username).subscribe(data=>{
-      console.log(data)
+     
       this.showSpinner=false
       setTimeout(() => {
         this.router.navigate(['forgot-password/send-otp'])

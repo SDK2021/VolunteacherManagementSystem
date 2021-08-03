@@ -72,7 +72,7 @@ export class SessionReportingComponent implements OnInit {
             this.openSnackBar()
             this.disabled=false
             this.router.navigate(['/user'])
-          console.log(data);
+         
         
       },error=>{
         this.handleError(error)

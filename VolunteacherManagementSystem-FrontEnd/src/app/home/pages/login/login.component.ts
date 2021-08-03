@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.loginAuthentication(value.username,value.password).subscribe(
       (data) => 
       { 
-        console.log("success" + data);
         this.invalidLogin = false
         this.successLogin = true
         let authUser :string[];
@@ -49,7 +48,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ")
       this.userService.getUserByEmail(atob(authUser[0])).subscribe(data=>{
         user = data
-        console.log(user);
         
         if(user.type.typeId == 1)
         {
@@ -63,13 +61,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       },
       (error) => 
       {
-      console.log(error);
        this.invalidLogin = true;
        this.successLogin = false;
        this.handleError(error)
       },
     );
-    console.log(value);
   }
   
 }

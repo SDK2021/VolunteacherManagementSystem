@@ -17,7 +17,7 @@ export class AttendanceComponent implements OnInit {
 
   ngOnInit() {
     let date:Date = new Date()
-    console.log(date)
+    
     this.month=this.monthNames[date.getMonth()]
     //console.log("current"+ this.month)
     this.year=date.getFullYear()

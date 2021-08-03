@@ -119,11 +119,9 @@ export class ProjectComponent implements OnInit {
   }
 
   showTab1(show: boolean) {
-    console.log("tab1" + show)
     this.tab1 = show
   }
   showTab2(show: boolean) {
-    console.log("tab2" + show)
     this.tab2 = show
     this.tab1 = false
     this.edit = false
@@ -165,9 +163,7 @@ export class ProjectComponent implements OnInit {
   }
 
 
-  onSubmit(form: NgForm) {
-    console.log(this.project);
-  }
+  
 
   show(isShow): void {
     this.showForm = isShow
@@ -178,7 +174,6 @@ export class ProjectComponent implements OnInit {
     this.projectService.getAllProjects().subscribe(data => {
       this.projects = data
       this.showSpinner = false
-      console.log(data);
 
       if (data != null) {
         this.pLength = this.projects.length
@@ -188,8 +183,6 @@ export class ProjectComponent implements OnInit {
       if (this.pLength == 0) {
         this.noProjects = true
       }
-      console.log(this.projects);
-      console.log(this.pLength);
 
     }, error => {
       this.handleError(error)
@@ -205,7 +198,6 @@ export class ProjectComponent implements OnInit {
   getAllKids(page: number) {
     this.kidsService.getAllKids(page).subscribe(data => {
       this.kids = data['content']
-      console.log(this.kids);
 
     }, error => {
       this.handleError(error)
@@ -215,7 +207,6 @@ export class ProjectComponent implements OnInit {
   getAllVolunteacher(page: number) {
     this.vtService.getAllVolunteachers(page).subscribe(data => {
       this.volunteachers = data['content']
-      console.log(this.volunteachers)
     }, error => {
       this.handleError(error)
     })
@@ -245,9 +236,8 @@ export class ProjectComponent implements OnInit {
       else {
         this.project.endingDate = null
       }
-      console.log(this.selectedKids)
       this.projectService.addProject(this.project, this.selectedVolunteacher, this.selectedKids).subscribe(data => {
-        console.log(data)
+       
 
         form.resetForm()
         // this.isProjectCreated=true
@@ -299,9 +289,8 @@ export class ProjectComponent implements OnInit {
                 else {
                   this.project.endingDate = null
                 }
-                console.log(this.selectedKids)
                 this.projectService.addProject(this.project, this.selectedVolunteacher, this.selectedKids).subscribe(data => {
-                  console.log(data)
+                
 
                   form.resetForm()
                   // this.isProjectCreated=true
@@ -343,7 +332,6 @@ export class ProjectComponent implements OnInit {
       let index: number = this.selectedVolunteacher.indexOf(event.target.value)
       this.selectedVolunteacher.splice(index, 1)
     }
-    console.log(this.selectedVolunteacher)
   }
 
   selectKids(event) {
@@ -354,14 +342,12 @@ export class ProjectComponent implements OnInit {
       let index: number = this.selectedKids.indexOf(event.target.value)
       this.selectedKids.splice(index, 1)
     }
-    console.log(this.selectedKids)
   }
 
   deleteProject(id: number, image: string) {
     this.showProgressbar = true
 
     this.projectService.deleteProject(id).subscribe(data => {
-      console.log(data);
       this.fileService.delete(image)
       this.openDeleteSnackBar()
       setTimeout(() => {
@@ -376,7 +362,6 @@ export class ProjectComponent implements OnInit {
 
   delete(id: number, image: string) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
       if (data.delete) {
         this.deleteProject(id, image)
       }

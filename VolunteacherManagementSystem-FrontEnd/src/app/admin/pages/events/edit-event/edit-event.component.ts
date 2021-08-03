@@ -41,7 +41,7 @@ export class EditEventComponent implements OnInit {
 
   oldImage: string = null
 
-  disabled:boolean=null
+  disabled: boolean = null
 
   baseUrl: string = "/vms/events"
   Show: boolean = true;
@@ -78,7 +78,6 @@ export class EditEventComponent implements OnInit {
     this.event.village = new Village()
     this.event.project = new Project()
     let date: Date = new Date()
-    console.log(date)
     this.getAllActivities()
     this.getAllCountries();
     this.getAllStates();
@@ -131,7 +130,6 @@ export class EditEventComponent implements OnInit {
       this.event = data
       this.oldImage = this.event.photo
       this.eventDate = this.event.eventDate
-      console.log(this.event);
       this.addressService.getVillages(this.event.village.taluka.talukaId).pipe(finalize(() => {
         this.addressService.getTalukas(this.districtSelected).pipe(finalize(() => {
           this.addressService.getDistricts(this.stateSelected).subscribe(data => {
@@ -174,7 +172,6 @@ export class EditEventComponent implements OnInit {
 
   selectedProject(event) {
     this.projectSelected = event.target.value;
-    console.log(event.target.value);
   }
 
   getAllCountries() {
@@ -233,7 +230,6 @@ export class EditEventComponent implements OnInit {
 
   selectedTaluka(event) {
     this.talukaSelected = event.target.value;
-    console.log(event.target.value);
     if (event.target.value != 0) {
       this.addressService.getVillages(event.target.value).subscribe(data => {
         this.villages = data
@@ -243,23 +239,21 @@ export class EditEventComponent implements OnInit {
 
   selectedVillage(event) {
     this.villageSelected = event.target.value;
-    console.log(event.target.value);
   }
 
   getAllActivities() {
     this.eventService.getActivities().subscribe(data => {
       this.activities = data
-      console.log(this.activities);
 
     }, error => {
       this.handleError(error)
     })
   }
 
- 
+
 
   saveEvent() {
-    this.disabled=true
+    this.disabled = true
     this.showProgressbar = true
     if (this.croppedImage != null) {
       const file = this.uploadImageComponent.image;
@@ -275,12 +269,6 @@ export class EditEventComponent implements OnInit {
 
               // alert("Photo from service" + data)
               if (this.imageURL != null && this.isEventEdited == false) {
-                console.log(this.villageSelected);
-                console.log(this.projectSelected);
-                console.log(this.event.eventData);
-
-
-                console.log(this.event);
 
                 if (this.villageSelected > 0 && this.projectSelected > 0 && this.event.eventData != "") {
                   if (this.villageSelected == null) {
@@ -295,13 +283,11 @@ export class EditEventComponent implements OnInit {
                       this.selectedActivities.push(activity.activityId)
                     }
                   }
-                  console.log(this.selectedActivities);
 
                   this.event.photo = this.imageURL
 
                   if (!(this.eventDate === this.event.eventDate)) {
                     let eventdate: string = this.event.eventDate
-                    console.log(eventdate);
 
                     let sdate: string[] = eventdate.split("-")
                     let eventDate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
@@ -309,7 +295,6 @@ export class EditEventComponent implements OnInit {
                   }
 
                   this.event.notified = false
-                  console.log(this.event.eventDate);
 
                   this.event.eventStartingTime = this.event.eventStartingTime + ":00"
                   this.event.eventEndingTime = this.event.eventEndingTime + ":00"
@@ -317,13 +302,13 @@ export class EditEventComponent implements OnInit {
                   this.projectService.getProject(this.projectSelected).pipe(finalize(() => {
                     this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
                       this.eventService.editEvent(this.event.eventId, this.event, this.selectedActivities).subscribe(data => {
-                        console.log(data)
+                      
                         // alert("edited event:" + data)
                         this.fileService.imageUrl.next(null)
 
                         this.showProgressbar = false
                         this.openEditSnackBar()
-                        this.disabled=false
+                        this.disabled = false
                         setTimeout(() => {
                           this.router.navigate(['/admin/events'])
                         }, 500)
@@ -335,12 +320,12 @@ export class EditEventComponent implements OnInit {
                     })).subscribe(data => {
                       this.event.village = data
                     }, error => {
-                      console.log(error);
                     })
                   })).subscribe(data => {
                     this.event.project = data
                   }, error => {
                     console.log(error);
+                    
                   })
                 }
                 this.isEventEdited = true
@@ -356,12 +341,6 @@ export class EditEventComponent implements OnInit {
     }
     else {
       this.showProgressbar = true
-      console.log(this.villageSelected);
-      console.log(this.projectSelected);
-      console.log(this.event.eventData);
-
-
-      console.log(this.event);
 
       if (this.villageSelected > 0 && this.projectSelected > 0 && this.event.eventData != "") {
         if (this.villageSelected == null) {
@@ -376,11 +355,9 @@ export class EditEventComponent implements OnInit {
             this.selectedActivities.push(activity.activityId)
           }
         }
-        console.log(this.selectedActivities);
 
         if (!(this.eventDate === this.event.eventDate)) {
           let eventdate: string = this.event.eventDate
-          console.log(eventdate);
 
           let sdate: string[] = eventdate.split("-")
           let eventDate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
@@ -388,7 +365,6 @@ export class EditEventComponent implements OnInit {
         }
 
         this.event.notified = false
-        console.log(this.event.eventDate);
 
         this.event.eventStartingTime = this.event.eventStartingTime + ":00"
         this.event.eventEndingTime = this.event.eventEndingTime + ":00"
@@ -396,10 +372,10 @@ export class EditEventComponent implements OnInit {
         this.projectService.getProject(this.projectSelected).pipe(finalize(() => {
           this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
             this.eventService.editEvent(this.event.eventId, this.event, this.selectedActivities).subscribe(data => {
-              console.log(data)
+            
               this.showProgressbar = false
               this.openEditSnackBar()
-              this.disabled=false
+              this.disabled = false
               setTimeout(() => {
                 this.router.navigate(['/admin/events'])
               }, 500)

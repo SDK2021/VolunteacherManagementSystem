@@ -72,7 +72,7 @@ export class ChangePasswordComponent implements OnInit {
       username = localStorage.getItem("username").split(" ");
     this.userService.updatePassword(val.newPass,+username[0]).subscribe(data=>
       {
-        console.log(data + "success");
+      
         this.router.navigate(['login'])
         this.updateSuccessfully = true
         this.openSnackBar()

@@ -90,7 +90,6 @@ export class SidebarComponent implements OnInit {
         })
       }  
        
-     console.log(this.user);
         
    },error=>{
      this.handleError(error)
@@ -106,10 +105,9 @@ export class SidebarComponent implements OnInit {
 
   showChildren(index:number)
   {
-    console.log("Show children called..");
     
     this.menuItems = ROUTES.filter(menuItem => menuItem);
-    console.log(this.menuItems[index]["showChild"]=!this.menuItems[index]["showChild"]);  
+    this.menuItems[index]["showChild"]=!this.menuItems[index]["showChild"];  
     if( this.menuItems[index]["class"]==="ni ni-bold-down text-primary")
     {     
       this.menuItems[index]["class"]="ni ni-bold-right text-muted"

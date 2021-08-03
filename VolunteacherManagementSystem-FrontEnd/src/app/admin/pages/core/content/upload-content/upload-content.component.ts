@@ -37,8 +37,11 @@ export class UploadContentComponent implements OnInit {
   groupId:number
   shows:boolean = false
 
- 
+  isFileUploaded:boolean=false
 
+  fileUrl:string=null
+
+  percentage:number=0
 
 
   constructor( private router: Router,private kidsService:KidsService, private sessionService:SessionsService, private uploadService: FileUploadService,private _sharedservice:KidsService, private _snackBar: MatSnackBar) { }
@@ -47,6 +50,8 @@ export class UploadContentComponent implements OnInit {
     this.getkidsgroup()
     this.getContent(1)
     this.getAllContents()
+
+    
   }
 
   handleError(error)
@@ -73,10 +78,7 @@ export class UploadContentComponent implements OnInit {
   getkidsgroup()
   {
     this._sharedservice.getkidsgrouplist().subscribe(data =>{
-      this.groups=data;
-      
-      console.log(this.groups);
-      
+      this.groups=data; 
     },error=>{
       this.handleError(error)
     });
@@ -100,7 +102,6 @@ export class UploadContentComponent implements OnInit {
   
   groupSelected(event)
   {
-    console.log(event.target.value);
     this.groupId = event.target.value
     this.getContent(this.groupId)
   }
@@ -109,7 +110,6 @@ export class UploadContentComponent implements OnInit {
   selectedFile(event): void {
     this.selectedFiles = event.target.files;
     this.selectedFileName = this.selectedFiles.item(0).name
-    console.log(this.selectedFileName);
   }
 
   uploadContent()
@@ -119,23 +119,27 @@ export class UploadContentComponent implements OnInit {
      this.uploadService.pushFileToStorage(this.currentFileUpload, "/vms/content").subscribe( 
         percentage => { 
           
-            if(percentage == 100)
-            {
-              setTimeout(() => {
-                this.showProgressbar=false
-                this._snackBar.open('File uploaded successfully..', 'close', {
-                duration: 2000,
-                horizontalPosition: this.horizontalPosition,
-                verticalPosition: this.verticalPosition,
-                
-              }); 
-                this.addContent();
-                
-                }, 2000);
-            }
-
-           console.log( localStorage.getItem("imageURL"));
-        
+          if (percentage == 100) {
+            this.uploadService.imageUrl.subscribe(data => {
+              this.fileUrl = data
+              //alert("in component..." + this.imageURL)
+              if (this.fileUrl != null && this.isFileUploaded== false) {
+                setTimeout(() => {
+                  this.showProgressbar=false
+                  this._snackBar.open('File uploaded successfully..', 'close', {
+                  duration: 2000,
+                  horizontalPosition: this.horizontalPosition,
+                  verticalPosition: this.verticalPosition,
+                  
+                }); 
+                  this.addContent();
+                  
+                  }, 2000);
+                 this.isFileUploaded = true
+              }
+            })
+          }
+           
       },error=>{
         this.handleError(error)
       }
@@ -146,12 +150,9 @@ export class UploadContentComponent implements OnInit {
   addContent()
   {
     this.content = new Content()
-    this.content.contentData = localStorage.getItem("imageURL")
-    console.log( this.content.contentData);
-    console.log(this.content);
+    this.content.contentData=this.fileUrl
     this.kidsService.kidGroupById(this.groupId).pipe(finalize(()=>{
       this.sessionService.addContent(this.content).subscribe(data=>{
-        console.log(data);
         setTimeout(() => {
           this.getAllContents()
         }, 1000);
@@ -170,7 +171,6 @@ export class UploadContentComponent implements OnInit {
       this.shows = true
       this.sessionService.getContentByGroup(groupId).subscribe(data=>{
       this.pdfSource = data.contentData
-      console.log(data.contentData)
       },error=>{
         this.handleError(error)
       })
@@ -179,9 +179,7 @@ export class UploadContentComponent implements OnInit {
   getAllContents()
   {
     this.sessionService.getAllContents().subscribe(data=>{
-      this.contents=data
-      console.log(this.contents);
-      
+      this.contents=data 
       },error=>{
         this.handleError(error)
       })

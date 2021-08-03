@@ -18,7 +18,6 @@ export class SessionsService {
 
   
   getNotifications(page:number,month:number,year:number,usertype:String):Observable<Notification[]>{
-    console.log(usertype)
     return this.httpclient.get<Notification[]>(`${"http://localhost:9090/vms/notifications?page="}${page}${"&month="}${month}${"&year="}${year}${"&usertype="}${usertype}`)
     .pipe(retry(3));
   }

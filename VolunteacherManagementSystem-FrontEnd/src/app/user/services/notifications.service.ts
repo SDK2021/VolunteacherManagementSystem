@@ -16,7 +16,7 @@ export class NotificationsService {
 
   
   getNotifications(page:number,usertype:String):Observable<Notification[]>{
-    console.log(usertype)
+  
     let today:Date =new Date()
     return this._httpclient.get<Notification[]>(`${"http://localhost:9090/vms/users-notifications?page="}${page}${"&month="}${today.getMonth()+1}${"&year="}${today.getFullYear()}${"&usertype="}${usertype}`)
     .pipe(retry(3));

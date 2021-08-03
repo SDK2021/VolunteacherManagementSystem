@@ -89,7 +89,6 @@ export class FeedbackComponent implements OnInit {
     this.showProgressbar=true
     
      this.sessionService.deleteSessionReport(id).subscribe(data=>{
-       console.log(data);  
        this.openSnackBar()  
        setTimeout(() => {
         this.getAllFeedbacks(0,this.route.snapshot.params['id'])
@@ -103,7 +102,6 @@ export class FeedbackComponent implements OnInit {
   delete(id:number,image:string)
   {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
-       console.log(data.delete)
       if(data.delete)
       { 
         this.deleteFeedback(id)

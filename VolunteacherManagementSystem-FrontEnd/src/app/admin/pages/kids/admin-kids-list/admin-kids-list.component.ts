@@ -75,8 +75,6 @@ export class AdminKidsListComponent implements OnInit {
 
  
   onScroll() {
-    console.log("Hello");
-
     if (this.page < this.totalKidsPages - 1) {
       this.page += 1
       if(this.filterSelected==1)
@@ -168,7 +166,6 @@ export class AdminKidsListComponent implements OnInit {
       this.kLength = this.kidslist.length
       this.showSpinner = false
       this.kidslist = this.calculateAge(this.kidslist)
-      console.log(this.kidslist);
 
     });
   }
@@ -180,7 +177,6 @@ export class AdminKidsListComponent implements OnInit {
         if (kid.village.taluka.talukaId == talukaId) {
           this.kidslist.concat(kid)
           this.kidslist = this.calculateAge(this.kidslist)
-          console.log(this.kidslist);
         }
       }
     });
@@ -193,8 +189,6 @@ export class AdminKidsListComponent implements OnInit {
     this.kidsService.getAllKidsByVillage(0, villageId).subscribe(data => {
       this.kidslist = data['content']
       this.kidslist = this.calculateAge(this.kidslist)
-      console.log(this.kidslist);
-      console.log(this.kidslist)
 
     })
   }
@@ -206,7 +200,6 @@ export class AdminKidsListComponent implements OnInit {
     this.kidsService.getAllKidsByArea(0, areaId).subscribe(data => {
       this.kidslist = data['content']
       this.kidslist = this.calculateAge(this.kidslist)
-      console.log(this.kidslist);
     })
   }
 
@@ -218,7 +211,6 @@ export class AdminKidsListComponent implements OnInit {
     this.kidsService.getAllKidsByVillageAndGroup(0, villageId, groupId).subscribe(data => {
       this.kidslist = data['content']
       this.kidslist = this.calculateAge(this.kidslist)
-      console.log(this.kidslist);
     })
   }
 
@@ -231,7 +223,6 @@ export class AdminKidsListComponent implements OnInit {
     this.kidsService.getAllKidsByAreaAndGroupAndVillage(0, areaId, groupId, villageId).subscribe(data => {
       this.kidslist = data['content']
       this.kidslist = this.calculateAge(this.kidslist)
-      console.log(data);
     })
   }
 
@@ -250,12 +241,10 @@ export class AdminKidsListComponent implements OnInit {
       let bDate = new Date(k.dob)
 
       let diffInSec = Math.abs(currentDate.getTime() - bDate.getTime())
-      console.log(diffInSec);
-
+     
       k.age = (diffInSec / (1000 * 3600 * 24) / 365) + 1
       let array: Array<string> = k.age.toString().split('.')
       k.age = Number.parseInt(array[0])
-      console.log(k.age)
 
     }
     return kidsList
@@ -280,7 +269,6 @@ export class AdminKidsListComponent implements OnInit {
       this.kLength = this.kidslist.length
       this.showSpinner = false
       this.kidslist = this.calculateAge(this.kidslist)
-      console.log(this.kidslist);
 
     });
   }
@@ -294,7 +282,6 @@ export class AdminKidsListComponent implements OnInit {
       this.kLength = this.kidslist.length
       this.showSpinner = false
       this.kidslist = this.calculateAge(this.kidslist)
-      console.log(this.kidslist);
 
     });
   }
@@ -330,8 +317,5 @@ export class AdminKidsListComponent implements OnInit {
       this.getkids(0, "all")
     }
   }
-
-
-
 
 }

@@ -25,29 +25,29 @@ export class AddParticipantsComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  showSpinner:Boolean=false
-  totalKidsPages:number
+  showSpinner: Boolean = false
+  totalKidsPages: number
   villages: Array<any>
   areas: Array<any>
   groups: Array<KidsGroup>
 
-  selectedArea:number
-  selectedVillage:number
-  selectedGroup:number
+  selectedArea: number
+  selectedVillage: number
+  selectedGroup: number
 
-  search:string=''
+  search: string = ''
 
-  filter:string;
-  showProgressbar:boolean=false
-  disabled:boolean=true
-  showMsg:boolean=null
+  filter: string;
+  showProgressbar: boolean = false
+  disabled: boolean = true
+  showMsg: boolean = null
 
   eventId: number;
   kidslist: Array<Kid> = new Array()
   activities: Array<Activity>
   kidsParticipateIds: Array<number> = []
 
-  page: number=0
+  page: number = 0
 
 
   constructor(private kidsService: KidsService, private _auth: authentication, private router: Router, private _snackBar: MatSnackBar,
@@ -72,9 +72,8 @@ export class AddParticipantsComponent implements OnInit {
   ngOnInit() {
     this.page = 0
     this.getkidsgroup()
-    // this.getActivities()
-    console.log(this.router.url)
-    this.getkids(0,"all")
+
+    this.getkids(0, "all")
     this.eventId = this.route.snapshot.params['id']
     this.getEventById(this.eventId);
   }
@@ -87,39 +86,35 @@ export class AddParticipantsComponent implements OnInit {
   }
 
   addParticipatedKids() {
-    this.disabled=true
-    this.showMsg=true
-    this.showProgressbar=true
+    this.disabled = true
+    this.showMsg = true
+    this.showProgressbar = true
     this.kidsService.addParticipants(this.kidsParticipateIds, this.eventId).subscribe(data => {
-      this.showProgressbar=false
+      this.showProgressbar = false
       this.openSnackBar()
-      this.disabled=false
-      this.showMsg=false
+      this.disabled = false
+      this.showMsg = false
       this.router.navigate(['/user/kids/event-participation'])
-      console.log(data)
+
     }, error => {
       this.handleError(error)
     })
 
   }
   selectedKid(event) {
-    if (event.target.checked) 
-    {
-      this.kidsParticipateIds.push(event.target.value)  
+    if (event.target.checked) {
+      this.kidsParticipateIds.push(event.target.value)
     }
-    else 
-    {
+    else {
       let index = this.kidsParticipateIds.indexOf(event.target.value)
       this.kidsParticipateIds.splice(index, 1)
     }
-    console.log(this.kidslist);
-    
-    if(this.kidsParticipateIds.length===0)
-    {
-      this.disabled=true
+
+    if (this.kidsParticipateIds.length === 0) {
+      this.disabled = true
     }
-    else{
-      this.disabled=false
+    else {
+      this.disabled = false
     }
   }
   getkidsgroup() {
@@ -132,18 +127,18 @@ export class AddParticipantsComponent implements OnInit {
   }
   getEventById(eventId: number) {
     this.eventService.getEventById(eventId).subscribe(data => {
-      console.log(data)
+ 
       this.activities = data.activities
     }, error => {
       this.handleError(error)
     })
   }
-  getkids(page: number,filter:string) {
+  getkids(page: number, filter: string) {
     this.page = 0
     this.filter = filter
-   this.showSpinner=true
+    this.showSpinner = true
     this.kidsService.getkidslist(page).subscribe(data => {
-      this.showSpinner=false
+      this.showSpinner = false
       this.kidslist = data['content'];
       this.totalKidsPages = data['totalPages']
 
@@ -152,97 +147,87 @@ export class AddParticipantsComponent implements OnInit {
     });
   }
 
-  getKidsByTaluka(talukaId:number,filter:string)
-  {
+  getKidsByTaluka(talukaId: number, filter: string) {
     this.page = 0
     this.filter = filter
-    this.kidsService.getkidslist(0).subscribe(data =>{
-      for(var kid of this.kidslist)
-      {
-        if(kid.village.taluka.talukaId == talukaId)
-        {
+    this.kidsService.getkidslist(0).subscribe(data => {
+      for (var kid of this.kidslist) {
+        if (kid.village.taluka.talukaId == talukaId) {
           this.kidslist.concat(kid)
+
          
-          console.log(this.kidslist);
         }
       }
     });
   }
 
-  getKidsByVillage(villageId:number,filter:string)
-  {
+  getKidsByVillage(villageId: number, filter: string) {
     this.selectedVillage = villageId
     this.page = 0
     this.filter = filter
-    this.kidsService.getAllKidsByVillage(this.page,villageId).subscribe(data=>{
+    this.kidsService.getAllKidsByVillage(this.page, villageId).subscribe(data => {
       this.kidslist = data['content']
       this.totalKidsPages = data['totalPages']
-      console.log(this.kidslist);
-      console.log(this.kidslist)
-      
-    },error=>{
+   
+
+    }, error => {
       this.handleError(error)
     })
-    console.log(this.kidsParticipateIds.indexOf(1));
     
+
   }
 
-  getKidsByArea(areaId:number,filter:string)
-  {
+  getKidsByArea(areaId: number, filter: string) {
     this.selectedArea = areaId
     this.page = 0
     this.filter = filter
-    this.kidsService.getAllKidsByArea(this.page,areaId).subscribe(data=>{
-      this.kidslist = data['content']
-      this.totalKidsPages = data['totalPages']
-      console.log(this.kidslist);
-    },error=>{
-      this.handleError(error)
-    })
-  }
-
-  getKidsByVillageAndGroup(villageId:number, groupId:number,filter:string)
-  { 
-    this.selectedVillage = villageId
-    this.selectedGroup = groupId
-    this.page = 0
-    this.filter = filter
-    this.kidsService.getAllKidsByVillageAndGroup(this.page,villageId, groupId).subscribe(data=>{
-      this.kidslist = data['content']
-      this.totalKidsPages = data['totalPages']
-      
-      console.log(this.kidslist);
-    },error=>{
-      this.handleError(error)
-    })
-  }
-
-  getKidsByAreaAndGroupAndVillage(areaId:number, groupId:number, villageId:number,filter:string)
-  {
-    this.selectedVillage = villageId
-    this.selectedGroup = groupId
-    this.selectedArea = areaId
-    this.page= 0
-    this.filter = filter
-    this.kidsService.getAllKidsByAreaAndGroupAndVillage(this.page,areaId,groupId,villageId).subscribe(data=>{
+    this.kidsService.getAllKidsByArea(this.page, areaId).subscribe(data => {
       this.kidslist = data['content']
       this.totalKidsPages = data['totalPages']
      
-      console.log(data);
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
   }
 
-  getKidsByGroup(groupId:number,filter:string)
-  {
+  getKidsByVillageAndGroup(villageId: number, groupId: number, filter: string) {
+    this.selectedVillage = villageId
     this.selectedGroup = groupId
-    this.page= 0
+    this.page = 0
     this.filter = filter
-    this.kidsService.getAllKidsByGroup(this.page,groupId).subscribe(data=>{
+    this.kidsService.getAllKidsByVillageAndGroup(this.page, villageId, groupId).subscribe(data => {
       this.kidslist = data['content']
       this.totalKidsPages = data['totalPages']
-    },error=>{
+
+    
+    }, error => {
+      this.handleError(error)
+    })
+  }
+
+  getKidsByAreaAndGroupAndVillage(areaId: number, groupId: number, villageId: number, filter: string) {
+    this.selectedVillage = villageId
+    this.selectedGroup = groupId
+    this.selectedArea = areaId
+    this.page = 0
+    this.filter = filter
+    this.kidsService.getAllKidsByAreaAndGroupAndVillage(this.page, areaId, groupId, villageId).subscribe(data => {
+      this.kidslist = data['content']
+      this.totalKidsPages = data['totalPages']
+
+    }, error => {
+      this.handleError(error)
+    })
+  }
+
+  getKidsByGroup(groupId: number, filter: string) {
+    this.selectedGroup = groupId
+    this.page = 0
+    this.filter = filter
+    this.kidsService.getAllKidsByGroup(this.page, groupId).subscribe(data => {
+      this.kidslist = data['content']
+      this.totalKidsPages = data['totalPages']
+    }, error => {
       this.handleError(error)
     })
   }
@@ -255,7 +240,7 @@ export class AddParticipantsComponent implements OnInit {
   getActivities() {
     this.eventService.getActivities().subscribe(data => {
       this.activities = data
-      console.log(this.activities);
+    
 
     }, error => {
       this.handleError(error)
@@ -264,58 +249,51 @@ export class AddParticipantsComponent implements OnInit {
 
 
   onScroll() {
-    console.log("Hello");
-    
-    if(this.page < this.totalKidsPages - 1)
-    {
+
+
+    if (this.page < this.totalKidsPages - 1) {
       this.page += 1
       this.getPageableKids(this.page);
     }
   }
   getPageableKids(page: number) {
-    if(this.filter === "all")
-    {
-      this.kidsService.getkidslist(page).subscribe(data =>{
+    if (this.filter === "all") {
+      this.kidsService.getkidslist(page).subscribe(data => {
         data['content'].forEach(kid => {
           this.kidslist.push(kid)
         });
       })
     }
-    if(this.filter === "v")
-    {
-      this.kidsService.getAllKidsByVillage(this.page,this.selectedVillage).subscribe(data=>{
+    if (this.filter === "v") {
+      this.kidsService.getAllKidsByVillage(this.page, this.selectedVillage).subscribe(data => {
         data['content'].forEach(kid => {
           this.kidslist.push(kid)
         });
       })
     }
-    if(this.filter === "g")
-    {
-      this.kidsService.getAllKidsByGroup(this.page,this.selectedGroup).subscribe(data=>{
+    if (this.filter === "g") {
+      this.kidsService.getAllKidsByGroup(this.page, this.selectedGroup).subscribe(data => {
         data['content'].forEach(kid => {
           this.kidslist.push(kid)
         });
       })
     }
-    if(this.filter === "a")
-    {
-      this.kidsService.getAllKidsByArea(this.page,this.selectedArea).subscribe(data=>{
+    if (this.filter === "a") {
+      this.kidsService.getAllKidsByArea(this.page, this.selectedArea).subscribe(data => {
         data['content'].forEach(kid => {
           this.kidslist.push(kid)
         });
       })
     }
-    if(this.filter === "vg")
-    {
-      this.kidsService.getAllKidsByVillageAndGroup(this.page,this.selectedVillage, this.selectedGroup).subscribe(data=>{
+    if (this.filter === "vg") {
+      this.kidsService.getAllKidsByVillageAndGroup(this.page, this.selectedVillage, this.selectedGroup).subscribe(data => {
         data['content'].forEach(kid => {
           this.kidslist.push(kid)
         });
       })
     }
-    if(this.filter === "vga")
-    {
-      this.kidsService.getAllKidsByAreaAndGroupAndVillage(this.page,this.selectedArea,this.selectedGroup,this.selectedVillage).subscribe(data=>{
+    if (this.filter === "vga") {
+      this.kidsService.getAllKidsByAreaAndGroupAndVillage(this.page, this.selectedArea, this.selectedGroup, this.selectedVillage).subscribe(data => {
         data['content'].forEach(kid => {
           this.kidslist.push(kid)
         });

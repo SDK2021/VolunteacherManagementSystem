@@ -43,7 +43,6 @@ export class TimeLineComponent implements OnInit {
         this.noPosts=true
       }
       
-      console.log(this.posts)
     },error=>{
       console.log(error);
         console.log(error.status);

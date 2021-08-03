@@ -107,14 +107,14 @@ export class EditProjectComponent implements OnInit {
 
   getVolunteachers() {
     this.volunteacherService.getRemainingVolunteachers(this.route.snapshot.params['id']).subscribe(data => {
-      console.log(data);
+   
       this.users = data
     })
   }
 
   getKids() {
     this.volunteacherService.getRemainingKids(this.route.snapshot.params['id']).subscribe(data => {
-      console.log(data);
+ 
       this.kids = data
     })
   }
@@ -133,7 +133,6 @@ export class EditProjectComponent implements OnInit {
         this.selectedKids.push(kid.kidId)
       }
 
-      console.log(this.project);
 
     }, error => {
       this.handleError(error)
@@ -159,7 +158,6 @@ export class EditProjectComponent implements OnInit {
       let index: number = this.selectedVolunteacher.indexOf(event.target.value)
       this.selectedVolunteacher.splice(index, 1)
     }
-    console.log(this.selectedVolunteacher)
   }
 
   selectKids(event) {
@@ -170,7 +168,6 @@ export class EditProjectComponent implements OnInit {
       let index: number = this.selectedKids.indexOf(event.target.value)
       this.selectedKids.splice(index, 1)
     }
-    console.log(this.selectedKids)
   }
 
   saveProject(form: NgForm) {
@@ -201,7 +198,6 @@ export class EditProjectComponent implements OnInit {
                 }
 
                 if (!(this.project.endingDate === this.projectEndingDate)) {
-                  console.log(this.project.endingDate);
 
                   let enddate: string = this.project.endingDate
                   let edate: string[] = enddate.split("-")
@@ -209,7 +205,7 @@ export class EditProjectComponent implements OnInit {
                   this.project.endingDate = endingdate
                 }
                 this.projectService.editProject(this.route.snapshot.params['id'], this.project, this.selectedVolunteacher, this.selectedKids).subscribe(data => {
-                  console.log(data)
+                 
 
                   this.showProgressbar = false
                   this.openEditSnackBar()
@@ -241,7 +237,6 @@ export class EditProjectComponent implements OnInit {
       }
 
       if (!(this.project.endingDate === this.projectEndingDate)) {
-        console.log(this.project.endingDate);
 
         let enddate: string = this.project.endingDate
         let edate: string[] = enddate.split("-")
@@ -249,7 +244,7 @@ export class EditProjectComponent implements OnInit {
         this.project.endingDate = endingdate
       }
       this.projectService.editProject(this.route.snapshot.params['id'], this.project, this.selectedVolunteacher, this.selectedKids).subscribe(data => {
-        console.log(data)
+        
 
         this.showProgressbar = false
         this.openEditSnackBar()

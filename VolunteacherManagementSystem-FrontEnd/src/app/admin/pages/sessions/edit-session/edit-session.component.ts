@@ -69,7 +69,6 @@ export class EditSessionComponent implements OnInit {
     this.session.project=new Project()
    
     let date: Date = new Date()
-    console.log(date)
    
     this.countries = []
     this.states = []
@@ -110,12 +109,6 @@ export class EditSessionComponent implements OnInit {
     });
   }
 
- 
-
-  onSubmit(form: NgForm) {
-    console.log(this.session);
-
-  }
 
 
 
@@ -126,7 +119,6 @@ export class EditSessionComponent implements OnInit {
       this.session.sessionDate = date[2] + "-" + date[0] +"-" + date[1]
       this.session = data
       this.sessionDate = data.sessionDate
-      console.log(data);
       this.addressService.getVillages(this.session.village.taluka.talukaId).pipe(finalize(()=>{
         this.addressService.getTalukas(this.districtSelected).pipe(finalize(()=>{
             this.addressService.getDistricts(this.stateSelected).subscribe(data=>{
@@ -154,35 +146,23 @@ export class EditSessionComponent implements OnInit {
     })
   }
 
-  showDate()
-  {
-    console.log(this.session.sessionDate);
-    
-  }
   saveSession()
   {
     this.disabled=true
     if(this.villageSelected > 0 && this.projectSelected > 0)
     {
-      console.log(this.sessionDate + " " + this.session.sessionDate+"Uprvali first");
-      
       this.showProgressbar = true
       if(!(this.sessionDate === this.session.sessionDate))
       {
-        console.log("Hello");
         
         let sessiondate: string = this.session.sessionDate
-        console.log(sessiondate +" Session date ");
         
         let sdate: string[] = sessiondate.split("-")
         let sessionDate = sdate[1] + "-" + sdate[2] + "-" + sdate[0]
         this.session.sessionDate = sessionDate
-        console.log(this.session.sessionDate +" Formated");
         
       }
       
-
-      console.log(this.villageSelected + " " + this.projectSelected);
       
       if(this.villageSelected == 0)
         this.villageSelected = this.session.village.villageId
@@ -191,12 +171,11 @@ export class EditSessionComponent implements OnInit {
         this.projectSelected = this.session.project.projectId
       this.session.startingTime = this.session.startingTime + ":00"
       this.session.endingTime = this.session.endingTime + ":00"
-      this.session.notified = false
 
       this.projectService.getProject(this.projectSelected).pipe(finalize(() => {
         this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
           this.sessionService.editSession(this.session.sessionId,this.session).subscribe(data => {
-            console.log(data)
+       
          
             setTimeout(()=>{
               this.showProgressbar = false
@@ -226,7 +205,6 @@ export class EditSessionComponent implements OnInit {
 
   selectedProject(event) {
     this.projectSelected = event.target.value;
-    console.log(event.target.value);
   }
 
   getAllCountries() {
@@ -288,7 +266,6 @@ export class EditSessionComponent implements OnInit {
 
   selectedTaluka(event) {
     this.talukaSelected = event.target.value;
-    console.log(event.target.value);
     if (event.target.value != 0) {
       this.addressService.getVillages(event.target.value).subscribe(data => {
         this.villages = data
@@ -298,6 +275,5 @@ export class EditSessionComponent implements OnInit {
 
   selectedVillage(event) {
     this.villageSelected = event.target.value;
-    console.log(event.target.value);
   }
 }

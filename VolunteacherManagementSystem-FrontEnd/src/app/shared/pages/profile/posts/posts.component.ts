@@ -45,9 +45,9 @@ export class PostsComponent implements OnInit {
   ngOnInit(): void {
 
     this.user.type=new Usertype()
-    console.log(this.router.url.split('/'));
+  
     let array:Array<string>=this.router.url.split('/')
-    console.log(array);
+    
     if(array[1]==="admin"&&array[2]==='volunteachers')
     {
       this.urlType=array[1]
@@ -90,7 +90,7 @@ export class PostsComponent implements OnInit {
     username = atob(authuser[0]);
 
     this.userService.getUserByEmail(username).subscribe(data => {
-      console.log(data)
+  
       this.user = data;
       userId = this.user.userId;
 
@@ -100,11 +100,9 @@ export class PostsComponent implements OnInit {
         this.showSpinner=false
         if (data != null) {
           this.pLength = data['content'].length
-          console.log(this.pLength);
-          
+            
         }
-       
-        console.log(this.posts);
+      
       },error=>{
         this.handleError(error)
       })
@@ -121,8 +119,7 @@ export class PostsComponent implements OnInit {
           
         }
         this.totalPostsPages = data['totalPages']
-        // this.getPosts(data)
-        console.log(this.posts);
+
       },error=>{
         this.handleError(error)
       })
@@ -142,8 +139,7 @@ export class PostsComponent implements OnInit {
   }
 
   onScroll() {
-    console.log("Hello");
-    
+
     if(this.page < this.totalPostsPages - 1)
     {
       this.page += 1
@@ -160,9 +156,8 @@ export class PostsComponent implements OnInit {
   }
 
   editPost(index:number) {
-    console.log(this.posts.filter(post=>post));
     
-    console.log(this.posts[index]["isEdit"]=!this.posts[index]["isEdit"])
+    this.posts[index]["isEdit"]=!this.posts[index]["isEdit"]
     this.post.postDescription=this.posts[index]["postDescription"]
    
   }
@@ -187,8 +182,6 @@ export class PostsComponent implements OnInit {
   {
     this.showProgressbar=true
     this.postService.deleteTimelinePost(id).subscribe(data =>{
-      console.log(data)
-      // this.fileService.delete(image)
     this.openDeleteSnackBar()
     this.getposts(this.page)
     this.showProgressbar=false
@@ -202,7 +195,7 @@ export class PostsComponent implements OnInit {
   delete(id:number,image:string)
   {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
-       console.log(data.delete)
+
       if(data.delete)
       { 
         this.deletePost(id,image)
@@ -230,10 +223,10 @@ export class PostsComponent implements OnInit {
   {
     this.showProgressbar=true
     this.profileService.savePost(postId,this.post).subscribe(data=>{
-      console.log(data);
+  
       this.showProgressbar=false
       let array:Array<string>=this.router.url.split('/')
-      console.log(array);
+   
       
         this.getposts(this.page)
      

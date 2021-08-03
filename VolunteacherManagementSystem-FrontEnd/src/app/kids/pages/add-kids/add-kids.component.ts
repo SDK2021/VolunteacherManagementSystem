@@ -148,21 +148,19 @@ export class AddKidsComponent implements OnInit {
                 this.kid.level = form.level
                 this.kid.standard = form.standard
                 this.showProgressbar=true
-                console.log(this.kid);
                 let photoUrl = this.imageURL
                 this.kid.photo = photoUrl;
                 let dob:String = this.kid.dob
                 let dobdate:String[] = dob.split("-")
                 let dateofbirth = dobdate[1] + "-" +  dobdate[2] + "-" + dobdate[0]
                 this.kid.dob = dateofbirth
-                console.log(this.kid.dob);
                 this.kidsService.getAreaById(this.areaSelected).subscribe(areadata=>{
-                  console.log(areadata)
+                
                   this.kid.area = areadata
                   this.kidsService.kidGroupById(this.groupSelected).pipe(finalize(()=>{
                     this.kidsService.villageById(areadata.village.villageId).pipe(finalize(()=>{
                       this.kidsService.addKid(this.kid).subscribe(data=>{
-                        console.log(data)
+                      
                        
                         this.showProgressbar=false
                        
@@ -292,7 +290,7 @@ export class AddKidsComponent implements OnInit {
   {
     this.talukaSelected = event.target.value;
     this.areaSelected = 0
-    console.log(event.target.value);
+   
     if(event.target.value != 0)
     {
         this.addressService.getVillages(event.target.value).subscribe(data=>{
@@ -320,7 +318,7 @@ export class AddKidsComponent implements OnInit {
   selectedVillage(event)
   {
     this.villageSelected = event.target.value;
-    console.log(event.target.value);
+ 
     if(event.target.value!=0)
     {
         this.addressService.getAreas(event.target.value).subscribe(data=>{

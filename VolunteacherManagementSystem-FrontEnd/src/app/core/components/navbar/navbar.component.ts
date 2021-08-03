@@ -68,7 +68,6 @@ export class NavbarComponent implements OnInit {
             this.user.photo=data
         })
       }  
-      console.log(this.user);
          
     },error=>{
       this.handleError(error)

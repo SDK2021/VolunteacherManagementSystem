@@ -38,7 +38,7 @@ export class authentication {
     } 
 
     return this.http.get(`${"http://localhost:9090/vms/events?page=0"}`,header).pipe(map((res)=>{
-      console.log(res);
+      
      this.successfullyLogin(username,password)
     }
     )).pipe(retry(3));

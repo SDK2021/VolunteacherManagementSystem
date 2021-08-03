@@ -140,7 +140,6 @@ export class SchoolsComponent implements OnInit {
 
   showTab2(show:boolean)
   {
-    console.log("tab2"+show)
     this.tab2=show
     this.tab1=false
     
@@ -149,7 +148,6 @@ export class SchoolsComponent implements OnInit {
   delete(id:number)
   {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data=>{
-       console.log(data.delete)
       if(data.delete)
       { 
         this.deleteSchool(id)
@@ -173,11 +171,6 @@ export class SchoolsComponent implements OnInit {
   }
 
  
-  onSubmit()
-  {
-    console.log(this.school); 
-  }
-
    
   addSchool(form)
   {
@@ -185,22 +178,15 @@ export class SchoolsComponent implements OnInit {
     this.showProgressbar=true
     this.school.type = form.type
     this.school.status = form.status
-    console.log(form.status);
-    
-    console.log(this.school)
     this.addressService.getVillageByid(this.villageSelected).pipe(finalize(()=>{
       let startdate:String = this.school.startingDate
       let sdate:string[] = startdate.split("-")
       let startingdate = sdate[1] + "-" +  sdate[2] + "-" + sdate[0]
       this.school.startingDate = startingdate
-  
-      console.log(this.school)
 
       this.schoolService.addSchool(this.school).subscribe(data=>{
-        console.log(data)
        
-        
-        setTimeout(()=>{
+       setTimeout(()=>{
           this.getAllSchools(this.page)
           this.showProgressbar=false
           this.openAddSnackBar()
@@ -219,7 +205,6 @@ export class SchoolsComponent implements OnInit {
   }
   showTab1(show:boolean)
   {
-    console.log("tab1"+show)
     this.tab1=show
   }
 
@@ -304,7 +289,6 @@ export class SchoolsComponent implements OnInit {
   selectedTaluka(event)
   {
     this.talukaSelected = event.target.value;
-    console.log(event.target.value);
     if(event.target.value > 0)
     {
           this.addressService.getVillages(event.target.value).subscribe(data=>{
@@ -348,7 +332,6 @@ export class SchoolsComponent implements OnInit {
       {
         this.noSchools=true
       }
-      console.log(this.schools);
     },error=>{
       this.handleError(error)
     })
@@ -366,8 +349,6 @@ export class SchoolsComponent implements OnInit {
     this.disabled=true
     this.showProgressbar=true
      this.schoolService.deleteSchool(id).subscribe(data=>{
-       console.log(data);  
-  
        setTimeout(() => {
         this.getAllSchools(this.page)
         this.showProgressbar=false
@@ -381,9 +362,6 @@ export class SchoolsComponent implements OnInit {
 
   nextPage()
   {
-    console.log("Hello");
-    console.log(this.totalSchoolPages);
-    
     if(this.page < this.totalSchoolPages - 1)
     {
       this.page +=1

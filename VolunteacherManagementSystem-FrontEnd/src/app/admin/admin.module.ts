@@ -35,7 +35,6 @@ import { VillagePipe } from './filters/village.pipe';
 import { SessionPipe } from './filters/session.pipe';
 import { EventPipe } from './filters/event.pipe';
 import { SchoolPipe } from './filters/school.pipe';
-import { DonationPipe } from './filters/donation.pipe';
 import { KidsPipe } from './filters/kids.pipe';
 import { FeedbackPipe } from './filters/feedback.pipe';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -85,7 +84,6 @@ import { UserPipe } from './filters/user.pipe';
     SessionPipe,
     EventPipe,
     SchoolPipe,
-    DonationPipe,
     KidsPipe,
     FeedbackPipe,
     DialogBoxComponent,

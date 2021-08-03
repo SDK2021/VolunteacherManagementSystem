@@ -68,17 +68,13 @@ export class CreateReportComponent implements OnInit {
     this.kidService.kidById(kidId).subscribe(data=>{
       this.kid = data
       this.kid=this.calculateAge(data)
-      console.log(this.kid);
-      
     },error=>{
       this.handleError(error)
     })
   }
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
     
-    console.log(this.report)
     this.createReport()
   }
 
@@ -137,12 +133,12 @@ export class CreateReportComponent implements OnInit {
      kidId = this.route.snapshot.params['id']
       this.kidService.kidById(kidId).pipe(finalize(()=>{
         this.kidService.addKidReport(this.report).subscribe(data=>{
-          console.log(data)
+          
           this.showProgressbar=false
           this.openSnackBar()
           this.router.navigate(['/user/kids/create-report/kids-list'])
         },error=>{
-          console.log(error)
+        
         })
       })).subscribe(data=>{
         this.report.kid = data
@@ -155,14 +151,11 @@ export class CreateReportComponent implements OnInit {
      
         let currentDate=new Date()
         let bDate=new Date(kid.dob)
-        
         let diffInSec= Math.abs(currentDate.getTime()-bDate.getTime())
-        console.log(diffInSec);
-        
         kid.age=(diffInSec/(1000 * 3600 * 24)/365)+1
         let array:Array<string>=kid.age.toString().split('.')
         kid.age=Number.parseInt(array[0])
-        console.log(kid.age)
+      
         
      return kid
      

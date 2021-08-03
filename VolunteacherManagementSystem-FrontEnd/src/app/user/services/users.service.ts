@@ -19,7 +19,6 @@ export class UsersService {
 
   getUserByEmail(email:string):Observable<User>
   {
-    console.log(email);
     return this._httpclient.get<User>(`${"http://localhost:9090/vms/email?email="}${email}`).pipe(take(3))
   }
 

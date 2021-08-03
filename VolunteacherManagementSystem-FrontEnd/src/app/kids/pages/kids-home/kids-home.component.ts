@@ -62,7 +62,7 @@ export class KidsHomeComponent implements OnInit {
         {
           this.noEvents=true
         }
-        console.log(this.events);
+      
 
     },error=>{
       this.handleError(error)

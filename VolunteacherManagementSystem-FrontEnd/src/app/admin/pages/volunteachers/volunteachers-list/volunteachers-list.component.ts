@@ -104,16 +104,12 @@ export class VolunteachersListComponent implements OnInit {
 
     this.showSpinner = true
     this.sharedService.getAllVolunteachers(page).pipe(finalize(() => {
-      for (let vt of this.volunteachers) {
-        this.sharedService.getStatusVolunteachers(vt.volunteacherId).subscribe(data => {
-          vt.status = data
-        })
-      }
+        this.sharedService.getStatusVolunteachers().subscribe()
+    
     })).subscribe(data => {
       this.volunteachers = data['content']
       this.totalVTPages = data['totalPages']
 
-      console.log(this.volunteachers);
       this.vLength = this.volunteachers.length
       this.showSpinner = false
 
@@ -125,7 +121,7 @@ export class VolunteachersListComponent implements OnInit {
 
   delete(id: number) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
+  
       if (data.delete) {
         this.deleteVolunteacher(id)
       }
@@ -140,8 +136,7 @@ export class VolunteachersListComponent implements OnInit {
     this.disabled = true
     this.showProgressbar = true
     this.sharedService.deleteVolunteacher(id).subscribe(data => {
-      console.log(data);
-
+   
       setTimeout(() => {
         this.getAllVoluntecahers(this.page)
         this.openSnackBar()
@@ -177,7 +172,6 @@ export class VolunteachersListComponent implements OnInit {
       data['content'].forEach(vt => {
         this.volunteachers.push(vt)
         this.showSpinner=false
-        console.log(this.volunteachers);
       });
     }, error => {
       this.handleError(error)
@@ -187,16 +181,12 @@ export class VolunteachersListComponent implements OnInit {
   getPageableVtsByProject(page: number, pId: number) {
     this.showSpinner=true
     this.sharedService.getVolunteachersByProject(page, pId).pipe(finalize(() => {
-      for (let vt of this.volunteachers) {
-        this.sharedService.getStatusVolunteachers(vt.volunteacherId).subscribe(data => {
-          vt.status = data
-        })
-      }
+    this.sharedService.getStatusVolunteachers().subscribe()
+      
     })).subscribe(data => {
       data['content'].forEach(vt => {
         this.volunteachers.push(vt)
         this.showSpinner=false
-        console.log(this.volunteachers);
       });
     }, error => {
       this.handleError(error)
@@ -206,16 +196,11 @@ export class VolunteachersListComponent implements OnInit {
   getPageableVtsByVillage(page: number, vId: number) {
     this.showSpinner=true
     this.sharedService.getVolunteachersByVillage(page, vId).pipe(finalize(() => {
-      for (let vt of this.volunteachers) {
-        this.sharedService.getStatusVolunteachers(vt.volunteacherId).subscribe(data => {
-          vt.status = data
-        })
-      }
+      this.sharedService.getStatusVolunteachers().subscribe()
     })).subscribe(data => {
       data['content'].forEach(vt => {
         this.volunteachers.push(vt)
         this.showSpinner=false
-        console.log(this.volunteachers);
 
       });
     }, error => {
@@ -226,17 +211,11 @@ export class VolunteachersListComponent implements OnInit {
   getPageableVtsByStatus(page: number, status: number) {
     this.showSpinner=true
     this.sharedService.getVolunteachersByStatus(page, status).pipe(finalize(() => {
-      for (let vt of this.volunteachers) {
-        this.sharedService.getStatusVolunteachers(vt.volunteacherId).subscribe(data => {
-          vt.status = data
-        })
-      }
+      this.sharedService.getStatusVolunteachers().subscribe()
     })).subscribe(data => {
       data['content'].forEach(vt => {
         this.volunteachers.push(vt)
         this.showSpinner=false
-        console.log(this.volunteachers);
-
       });
     }, error => {
       this.handleError(error)
@@ -246,16 +225,11 @@ export class VolunteachersListComponent implements OnInit {
   getPageableVtsByUserType(page: number, type: number) {
     this.showSpinner=true
     this.sharedService.getVolunteachersByUserType(page, type).pipe(finalize(() => {
-      for (let vt of this.volunteachers) {
-        this.sharedService.getStatusVolunteachers(vt.volunteacherId).subscribe(data => {
-          vt.status = data
-        })
-      }
+      this.sharedService.getStatusVolunteachers().subscribe()
     })).subscribe(data => {
       data['content'].forEach(vt => {
         this.volunteachers.push(vt)
         this.showSpinner=false
-        console.log(this.volunteachers);
       });
     }, error => {
       this.handleError(error)
@@ -290,16 +264,10 @@ export class VolunteachersListComponent implements OnInit {
   getVtsByProject(page: number, pId: number) {
     this.showSpinner = true
     this.sharedService.getVolunteachersByProject(page, pId).pipe(finalize(() => {
-      for (let vt of this.volunteachers) {
-        this.sharedService.getStatusVolunteachers(vt.volunteacherId).subscribe(data => {
-          vt.status = data
-        })
-      }
+      this.sharedService.getStatusVolunteachers().subscribe()
     })).subscribe(data => {
       this.volunteachers = data['content']
       this.totalVTPages = data['totalPages']
-
-      console.log(this.volunteachers);
       this.vLength = this.volunteachers.length
       this.showSpinner = false
 
@@ -312,16 +280,10 @@ export class VolunteachersListComponent implements OnInit {
   getVtsByVillage(page: number, vId: number) {
     this.showSpinner = true
     this.sharedService.getVolunteachersByVillage(page, vId).pipe(finalize(() => {
-      for (let vt of this.volunteachers) {
-        this.sharedService.getStatusVolunteachers(vt.volunteacherId).subscribe(data => {
-          vt.status = data
-        })
-      }
+      this.sharedService.getStatusVolunteachers().subscribe()
     })).subscribe(data => {
       this.volunteachers = data['content']
       this.totalVTPages = data['totalPages']
-
-      console.log(this.volunteachers);
       this.vLength = this.volunteachers.length
       this.showSpinner = false
 
@@ -334,16 +296,11 @@ export class VolunteachersListComponent implements OnInit {
   getVtsByStatus(page: number, status: number) {
     this.showSpinner = true
     this.sharedService.getVolunteachersByStatus(page, status).pipe(finalize(() => {
-      for (let vt of this.volunteachers) {
-        this.sharedService.getStatusVolunteachers(vt.volunteacherId).subscribe(data => {
-          vt.status = data
-        })
-      }
+      this.sharedService.getStatusVolunteachers().subscribe()
     })).subscribe(data => {
       this.volunteachers = data['content']
       this.totalVTPages = data['totalPages']
 
-      console.log(this.volunteachers);
       this.vLength = this.volunteachers.length
       this.showSpinner = false
 
@@ -356,16 +313,10 @@ export class VolunteachersListComponent implements OnInit {
   getVtsByUserType(page: number, type: number) {
     this.showSpinner = true
     this.sharedService.getVolunteachersByUserType(page, type).pipe(finalize(() => {
-      for (let vt of this.volunteachers) {
-        this.sharedService.getStatusVolunteachers(vt.volunteacherId).subscribe(data => {
-          vt.status = data
-        })
-      }
+      this.sharedService.getStatusVolunteachers().subscribe()
     })).subscribe(data => {
       this.volunteachers = data['content']
       this.totalVTPages = data['totalPages']
-
-      console.log(this.volunteachers);
       this.vLength = this.volunteachers.length
       this.showSpinner = false
 

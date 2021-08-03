@@ -40,9 +40,9 @@ export class VolunteachersService {
      .pipe(retry(3))
   }
 
-  getStatusVolunteachers(vid:number):Observable<number>
+  getStatusVolunteachers():Observable<String>
   {
-     return this.http.get<number>(`${"http://localhost:9090/vms/volunteacher-status?vid="}${vid}`)
+     return this.http.get<String>(`${"http://localhost:9090/vms/volunteacher-status"}`)
      .pipe(retry(3))
   }
 

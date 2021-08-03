@@ -63,7 +63,7 @@ export class EditKidComponent implements OnInit {
   edit: boolean = false
   kid: Kid = new Kid();
 
-  disabled:boolean=null
+  disabled: boolean = null
   showImageSpinner: boolean = true
   namePattern: string = "[a-zA-Z ]{3,20}"
 
@@ -141,13 +141,13 @@ export class EditKidComponent implements OnInit {
     })).subscribe(data => {
       this.kid = data
       this.kidPhoto = this.kid.photo
-      console.log(this.kid);
+
     })
   }
 
   saveKid() {
 
-    this.disabled=true
+    this.disabled = true
     if (this.croppedImage != null) {
       this.showProgressbar = true
       const file = this.uploadImageComponent.image;
@@ -167,23 +167,23 @@ export class EditKidComponent implements OnInit {
                   this.areaSelected = this.kid.area.areaId
                   this.villageSelected = this.kid.village.villageId
 
-                  console.log(this.kid);
+
                   let dob: String = this.kid.dob
                   let dobdate: String[] = dob.split("-")
                   let dateofbirth = dobdate[0] + "-" + dobdate[1] + "-" + dobdate[2]
                   this.kid.dob = dateofbirth
-                  console.log(this.kid.dob);
+
                   this.kidsService.getAreaById(this.areaSelected).subscribe(areadata => {
-                    console.log(areadata)
+
                     this.kid.area = areadata
                     this.kidsService.kidGroupById(this.groupSelected).pipe(finalize(() => {
                       this.kidsService.villageById(areadata.village.villageId).pipe(finalize(() => {
                         this.kidsService.addKid(this.kid).subscribe(data => {
-                          console.log(data)
+
 
                           this.showProgressbar = false
                           this.openEditSnackBar();
-                          this.disabled=false
+                          this.disabled = false
                           this.router.navigate(['/user/kids/edit-kids/kids-list'])
                         }, error => {
                           this.handleError(error)
@@ -215,23 +215,23 @@ export class EditKidComponent implements OnInit {
         this.areaSelected = this.kid.area.areaId
         this.villageSelected = this.kid.village.villageId
 
-        console.log(this.kid);
+
         let dob: String = this.kid.dob
         let dobdate: String[] = dob.split("-")
         let dateofbirth = dobdate[0] + "-" + dobdate[1] + "-" + dobdate[2]
         this.kid.dob = dateofbirth
-        console.log(this.kid.dob);
+
         this.kidsService.getAreaById(this.areaSelected).subscribe(areadata => {
-          console.log(areadata)
+
           this.kid.area = areadata
           this.kidsService.kidGroupById(this.groupSelected).pipe(finalize(() => {
             this.kidsService.villageById(areadata.village.villageId).pipe(finalize(() => {
               this.kidsService.addKid(this.kid).subscribe(data => {
-                console.log(data)
+
 
                 this.showProgressbar = false
                 this.openEditSnackBar();
-                this.disabled=false
+                this.disabled = false
                 this.router.navigate(['/user/kids/edit-kids/kids-list'])
               }, error => {
                 this.handleError(error)
@@ -345,7 +345,7 @@ export class EditKidComponent implements OnInit {
 
   selectedTaluka(event) {
     this.talukaSelected = event.target.value;
-    console.log(event.target.value);
+
     if (event.target.value != 0) {
       this.addressService.getVillages(event.target.value).subscribe(data => {
         this.villages = data
@@ -373,7 +373,7 @@ export class EditKidComponent implements OnInit {
 
   selectedVillage(event) {
     this.villageSelected = event.target.value;
-    console.log(event.target.value);
+
     if (event.target.value != 0) {
       this.addressService.getAreas(event.target.value).subscribe(data => {
         this.areas = data

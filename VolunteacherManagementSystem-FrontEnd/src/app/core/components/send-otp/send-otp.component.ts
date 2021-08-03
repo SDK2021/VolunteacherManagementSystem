@@ -25,9 +25,7 @@ export class SendOtpComponent implements OnInit {
       this.router.navigate(['']);
     }    
     this.email = this.getMyEmail()
-    console.log(this.email);
     
-    console.log(this.timeleft)
     this.startTimer();
   }
 
@@ -74,7 +72,6 @@ export class SendOtpComponent implements OnInit {
 
   verifyOTP(val) {
     let username: string[]
-    console.log(val.otp);
     if (localStorage.getItem("username") != null)
       username = localStorage.getItem("username").split(" ");
     this.userService.verifyOTP(val.otp, +username[0]).subscribe(data => {
@@ -105,7 +102,6 @@ export class SendOtpComponent implements OnInit {
       this.showSpinner = false
       this.isEmailSent=true
       this.startTimer();
-      console.log(data)
     }, error => {
       this.handleError(error)
     })

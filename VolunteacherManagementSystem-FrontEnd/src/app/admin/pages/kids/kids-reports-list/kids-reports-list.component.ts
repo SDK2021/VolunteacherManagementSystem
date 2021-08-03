@@ -30,10 +30,7 @@ export class KidsReportsListComponent implements OnInit {
       year-=1
       this.years.push(year)
     }
-     
-
        this.years=this.years.sort()
-    console.log(this.years);
     
     // if(today.getDate()==1 && today.getMonth()==1)
     this.kidId=this.route.snapshot.params['id']
@@ -58,7 +55,6 @@ export class KidsReportsListComponent implements OnInit {
   selectedYear(event)
   {
     this.year = event.target.value;
-    console.log(this.year);
     this.noReports=false
     this.krLength=0
     this.getAllReports(this.route.snapshot.params['id'],this.year)
@@ -80,7 +76,6 @@ export class KidsReportsListComponent implements OnInit {
         {
           this.noReports=true
         }
-        console.log(this.kidsReports);
         
     },error=>{
       this.handleError(error)

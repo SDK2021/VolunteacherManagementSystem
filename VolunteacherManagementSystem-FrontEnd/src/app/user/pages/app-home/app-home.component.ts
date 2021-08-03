@@ -84,7 +84,6 @@ export class AppHomeComponent implements OnInit {
     this.getEvents()
     this.getNewUsers()
     this.getPosts()
-    console.log(this.get_events);
     this.showSpinner = false
 
     let today: Date = new Date()
@@ -138,11 +137,11 @@ export class AppHomeComponent implements OnInit {
   getPosts() {
     this.postService.getTimelinePosts(0).subscribe(data => {
       this.posts = data['content'];
-      console.log(data)
+
       for (let i = 0; i < 7; i++) {
         this.slides.push(this.posts[i].postPhoto)
       }
-      console.log(this.slides);
+
 
     }, error => {
       this.handleError(error)
@@ -155,7 +154,7 @@ export class AppHomeComponent implements OnInit {
       if (data != null) {
         this.aLength = this.announcements.length
       }
-      console.log(this.announcements)
+
     }, error => {
       this.handleError(error)
     })
@@ -166,7 +165,7 @@ export class AppHomeComponent implements OnInit {
     this.sharedservice.getUsersByDob().subscribe(
       data => {
         this.users = data
-        console.log(this.users)
+
         if (data != null) {
           this.uLength = this.users.length
         }
@@ -181,7 +180,7 @@ export class AppHomeComponent implements OnInit {
     this.sharedservice.getEvents(0).subscribe(
       data => {
         this.events = data['content']
-        console.log(this.events)
+
         this.eLength = this.events.length
         let authUser: string[]
         let userId: number
@@ -212,45 +211,22 @@ export class AppHomeComponent implements OnInit {
     this.sharedservice.getNewUsers().subscribe(
       data => {
         this.newUsers = data
-        //console.log(this.newUsers)
+      
         if (data != null) {
           this.nLength = this.newUsers.length
         }
-        // console.log(this.newUsers)
+        
       }, error => {
         this.handleError(error)
       })
   }
 
-  // displayEvent(events: Array<Event>) {
-  //   let currentDate: Date = new Date()
-
-  //   for (let i = 0; i < events.length; i++) {
-  //     let eDate: string = events[i]["eventDate"]
-
-  //     let d: Date = new Date(eDate)
-
-  //     if (currentDate.getDate() == d.getDate()) {
-  //       this.classBlink = true
-  //     }
-  //     else {
-  //       this.classBlink = false
-  //     }
-
-  //     if (!(currentDate.getDate() > d.getDate())) {
-  //       this.displayEvents[this.count] = events[i]
-  //       this.count++;
-  //       console.log(this.displayEvents);
-
-  //     }
-  //   }
-  //       this.eLength = this.displayEvents.length
-  // }
+ 
 
   addEventVolunteacher(value) {
     this.disabled=true
     this.showProgressbar = true
-    console.log(value)
+ 
     let authuser: string[];
     let email: string;
     let users: User[] = []
@@ -260,14 +236,14 @@ export class AppHomeComponent implements OnInit {
       authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
       email = atob(authuser[0]);
       this.userService.getUserByEmail(email).pipe(finalize(() => {
-        console.log(users);
+        
 
         this.notiService.addVTParticipant(users, value).subscribe(data => {
-          console.log(data)
+          
           this.showProgressbar = false
           this.disabled=false
           setTimeout(() => {
-            console.log("Hello Krunal #TheProjectPartner");
+            
             this.getEvents()
             this.openSnackBar()
             

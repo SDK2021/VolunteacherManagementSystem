@@ -75,7 +75,6 @@ export class SetProfileComponent implements OnInit {
 
               this.userService.getUserByEmail(atob(user[0])).pipe(finalize(() => {
                 this.profileService.setProfile(this.user.photo, this.userId).subscribe(data => {
-                  console.log(data)
 
                   this.showSpinner = false
                   if (this.user.type.typeId == 1)

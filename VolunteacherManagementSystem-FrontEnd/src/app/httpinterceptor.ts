@@ -14,7 +14,7 @@ export class httpinterceptor implements HttpInterceptor {
         {
           let token = localStorage.getItem(this._auth.LOCAL_STORAGE_ATTRIBUTE_USERNAME)
           let string = token.split(" ");
-          console.log(req.url)
+        //   console.log(req.url)
           req = req.clone({
             setHeaders: 
             {

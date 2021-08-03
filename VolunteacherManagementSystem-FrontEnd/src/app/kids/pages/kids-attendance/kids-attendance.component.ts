@@ -59,8 +59,7 @@ export class KidsAttendanceComponent implements OnInit {
     this.sessionService.sessionById(this.route.snapshot.params['id']).subscribe(data=>{
       this.defaultVillage=data.village.villageId
     })
-    console.log(this.defaultVillage);
-    
+   
   }
 
   handleError(error) {
@@ -76,8 +75,7 @@ export class KidsAttendanceComponent implements OnInit {
   }
 
   onScroll() {
-    console.log("Hello");
-
+ 
     if (this.page < this.totalKidsPages - 1) {
       this.page += 1
       this.getPageableKids(this.page);
@@ -95,17 +93,6 @@ export class KidsAttendanceComponent implements OnInit {
   }
 
   getkids() {
-    // this.page = 0
-    // this.filter = filter
-    // this.showSpinner=true
-    // this.kidsService.getkidslist(page).subscribe(data =>{
-    //   this.kidslist=data['content'];
-    //   this.totalKidsPages = data['totalPages']
-    //   this.showSpinner=false 
-    // },error=>{
-    //   this.handleError(error)
-    // });
-    // console.log("Hello")
     this.kidslist = []
   }
 
@@ -117,7 +104,7 @@ export class KidsAttendanceComponent implements OnInit {
       let index = this.presentkids.indexOf(event.target.value)
       this.presentkids.splice(index, 1)
     }
-    console.log(this.presentkids)
+ 
     if (this.presentkids.length == 0) {
       this.disabled = true
     }
@@ -133,11 +120,11 @@ export class KidsAttendanceComponent implements OnInit {
     this.showProgressbar = true
     this.attendance = new Attendance();
     let sessionId = this.route.snapshot.params['id'];
-    console.log(sessionId)
+  
     this.kidsService.sessionById(sessionId).pipe(finalize(() => {
       this.kidsService.kidGroupById(this.groupSelected).pipe(finalize(() => {
         this.kidsService.addKidsAttendance(this.attendance, this.presentkids).subscribe(data => {
-          console.log(data)
+     
           this.showProgressbar = false
           this.openSnackBar()
           this.disabled=false
@@ -156,43 +143,27 @@ export class KidsAttendanceComponent implements OnInit {
   }
 
   getKidsByTaluka(talukaId: number) {
-    // this.kidsService.getkidslist(0).subscribe(data =>{
-    //   for(var kid of this.kidslist)
-    //   {
-    //     if(kid.area.village.taluka.talukaId == talukaId)
-    //     {
-    //       this.kidslist.concat(kid)
-    //     }
-    //   }
-    // });
+   
     this.kidslist = []
   }
 
   getKidsByVillage(villageId: number) {
-    // this.kidsService.getAllKidsByVillage(0,villageId).subscribe(data=>{
-    //   this.kidslist = data['content']
-    // })
+   
     this.kidslist = []
   }
 
   getKidsByArea(areaId: number) {
-    // this.kidsService.getAllKidsByArea(0,areaId).subscribe(data=>{
-    //   this.kidslist = data['content']
-    // })
+    
     this.kidslist = []
   }
 
   getKidsByGroup(groupId: number) {
-    // this.kidsService.getAllKidsByGroup(groupId).subscribe(data=>{
-    //   this.kidslist = data
-    // })
+    
     this.kidslist = []
   }
 
   getKidsByVillageAndGroup(villageId: number, groupId: number) {
-    // this.kidsService.getAllKidsByVillageAndGroup(0,villageId, groupId).subscribe(data=>{
-    //   this.kidslist = data['content']
-    // })
+   
     this.kidslist = []
   }
 
@@ -206,7 +177,7 @@ export class KidsAttendanceComponent implements OnInit {
       this.kidslist = data['content']
       this.kidslist=this.calculateAge(this.kidslist)
       this.totalKidsPages = data['totalPages']
-      console.log(data);
+     
     }, error => {
       this.handleError(error)
     })
@@ -225,7 +196,7 @@ export class KidsAttendanceComponent implements OnInit {
     }, error => {
       this.handleError(error)
     });
-    console.log(this.groups)
+
   }
 
   trackGroupsById(index, g: KidsGroup) {
@@ -240,13 +211,11 @@ export class KidsAttendanceComponent implements OnInit {
         let bDate=new Date(k.dob)
         
         let diffInSec= Math.abs(currentDate.getTime()-bDate.getTime())
-        console.log(diffInSec);
-        
+       
         k.age=(diffInSec/(1000 * 3600 * 24)/365)+1
         let array:Array<string>=k.age.toString().split('.')
         k.age=Number.parseInt(array[0])
-        console.log(k.age)
-        
+       
       }
       return kidsList
      

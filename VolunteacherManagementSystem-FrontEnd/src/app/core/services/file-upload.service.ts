@@ -33,12 +33,10 @@ export class FileUploadService {
           // this.imageUrl=downloadUrl
           file.name = file.file.name
           this.saveFile(file)
-          console.log(file.url);
           this.imageUrl.next(downloadUrl)
         })
       })
     ).subscribe()
-    console.log(uploadTask.percentageChanges());
     return uploadTask.percentageChanges();
   }
 

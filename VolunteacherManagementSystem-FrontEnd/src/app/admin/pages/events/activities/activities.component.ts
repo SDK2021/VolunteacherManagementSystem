@@ -84,14 +84,12 @@ export class ActivitiesComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.activity);
     this.show()
   }
 
   getAllActivities() {
     this.eventService.getActivities().subscribe(data => {
       this.activities = data
-      console.log(this.activities);
 
     }, error => {
       this.handleError(error)
@@ -102,7 +100,6 @@ export class ActivitiesComponent implements OnInit {
     this.disabled = true
     this.showProgressbar = true
     this.eventService.addActivity(this.activity).subscribe(data => {
-      console.log(data)
 
       this.show()
       form.reset()
@@ -125,7 +122,6 @@ export class ActivitiesComponent implements OnInit {
     this.disabled = true
     this.showProgressbar = true
     this.eventService.deleteActivity(id).subscribe(data => {
-      console.log(data);
 
       setTimeout(() => {
         this.getAllActivities()
@@ -140,7 +136,6 @@ export class ActivitiesComponent implements OnInit {
 
   delete(id: number) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
       if (data.delete) {
         this.deleteActivity(id)
       }
@@ -151,14 +146,12 @@ export class ActivitiesComponent implements OnInit {
     this.isEdit = true
     this.eventService.getActivityById(id).subscribe(data => {
       this.activity = data
-      console.log(data)
     })
   }
 
   saveActivity() {
     this.disabled = true
     this.eventService.updateActivity(this.activity.activityId, this.activity).subscribe(data => {
-      console.log(data);
       this.disabled = false
       this.isEdit = false
     }, error => {

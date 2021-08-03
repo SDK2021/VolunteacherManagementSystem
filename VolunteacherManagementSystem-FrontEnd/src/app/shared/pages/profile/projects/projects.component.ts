@@ -27,9 +27,8 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.router.url.split('/'));
+    this.router.url.split('/');
     let array: Array<string> = this.router.url.split('/')
-    console.log(array);
     if (array[1] === "admin" && array[2] === 'volunteachers') {
       this.getVolunteachersProjects(this.route.snapshot.params['id'])
     }
@@ -54,7 +53,6 @@ export class ProjectsComponent implements OnInit {
     let username: string;
     let authuser: string[];
     let userId: number;
-    //  this.projects = data
     authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");
     username = atob(authuser[0]);
 
@@ -62,7 +60,6 @@ export class ProjectsComponent implements OnInit {
       this.user = data;
       userId = this.user.userId;
       this.profileService.getAllProjectNumberByUser(userId).subscribe(projectnum => {
-        console.log(data)
         this.showSpinner = false
         for (var num of projectnum) {
           this.profileService.getProjectById(num).pipe(finalize(() => {

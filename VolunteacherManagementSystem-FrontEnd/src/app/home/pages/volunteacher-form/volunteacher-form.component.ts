@@ -38,7 +38,7 @@ export class VolunteacherFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.route.snapshot.queryParamMap.get('requestId'));
+    // console.log(this.route.snapshot.queryParamMap.get('requestId'));
     this.getApplicantRequest()
     this.usertypes = ["volunteacher","local volunteacher"];
     
@@ -48,7 +48,6 @@ export class VolunteacherFormComponent implements OnInit {
 
   selectedUserType(event)
   {
-    console.log(event.target.value);
     
     if(event.target.value > 0)
     {
@@ -152,7 +151,7 @@ export class VolunteacherFormComponent implements OnInit {
   addUser()
   {
     this.showProgressbar=true
-    console.log(this.v);
+ 
       let sessiondate: string = this.v.user.dob
       let dob: string[] = sessiondate.split("-")
       let dateofbirth = dob[1] + "-" + dob[2] + "-" + dob[0]
@@ -166,9 +165,9 @@ export class VolunteacherFormComponent implements OnInit {
       usertype.typeId = 2
       usertype.type = "VOLUNTEACHER"
       this.v.user.type = usertype
-      console.log(this.v);
+   
       this.volunteacherService.addVolunteacher(this.v).subscribe(data=>{
-        console.log(data);
+     
         this.showProgressbar=false
         setTimeout(() => {
           this.router.navigate(['/login'])
@@ -190,9 +189,9 @@ export class VolunteacherFormComponent implements OnInit {
         usertype.typeId = 3
         usertype.type = "LOCAL VOLUNTEACHER"
         this.v.user.type = usertype
-        console.log(this.v);
+       
         this.volunteacherService.addVolunteacher(this.v).subscribe(data=>{
-          console.log(data); 
+        
           this.showProgressbar=false
           setTimeout(() => {
             this.router.navigate(['/login'])

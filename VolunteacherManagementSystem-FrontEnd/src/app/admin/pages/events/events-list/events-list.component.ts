@@ -121,7 +121,6 @@ export class EventsListComponent implements OnInit {
       if (this.totalEventsPages == 1) {
         this.nextDisabled = true
       }
-      console.log(this.events);
       this.showSpinner = false
       if (data != null) {
         this.eLength = this.events.length
@@ -144,7 +143,6 @@ export class EventsListComponent implements OnInit {
     this.disabled = true
     this.showProgressbar = true
     this.eventService.deleteEvent(id).subscribe(data => {
-      console.log(data);
       this.fileService.delete(image)
 
       setTimeout(() => {
@@ -160,7 +158,6 @@ export class EventsListComponent implements OnInit {
 
   delete(id: number, image: string) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
       if (data.delete) {
         this.deleteEvent(id, image)
       }
@@ -179,8 +176,6 @@ export class EventsListComponent implements OnInit {
   }
 
   nextPage() {
-    console.log("Hello");
-    console.log(this.totalEventsPages);
 
     if (this.page < this.totalEventsPages - 1) {
       this.page += 1
@@ -286,7 +281,6 @@ export class EventsListComponent implements OnInit {
       if (this.totalEventsPages == 1) {
         this.nextDisabled = true
       }
-      console.log(this.events);
       this.showSpinner = false
       if (data != null) {
         this.eLength = this.events.length
@@ -309,7 +303,6 @@ export class EventsListComponent implements OnInit {
       if (this.totalEventsPages == 1) {
         this.nextDisabled = true
       }
-      console.log(this.events);
       this.showSpinner = false
       if (data != null) {
         this.eLength = this.events.length
@@ -332,7 +325,6 @@ export class EventsListComponent implements OnInit {
       if (this.totalEventsPages == 1) {
         this.nextDisabled = true
       }
-      console.log(this.events);
       this.showSpinner = false
       if (data != null) {
         this.eLength = this.events.length

@@ -8,40 +8,33 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 
 @Injectable({
-  providedIn:'root'
+  providedIn: 'root'
 })
 export class DialogBoxComponent implements OnInit {
 
-  yes:boolean=false
-  no:boolean=false
+  yes: boolean = false
+  no: boolean = false
 
 
-  constructor( private dialogRef: MatDialogRef<DialogBoxComponent>) { }
+  constructor(private dialogRef: MatDialogRef<DialogBoxComponent>) { }
 
   ngOnInit(): void {
   }
 
-  yesClick()
-  {
-      this.yes=true
-      this.no=false
-      console.log("dialog" + this.yes);
-      this.dialogRef.close({delete:this.yes});
-     
+  yesClick() {
+    this.yes = true
+    this.no = false
+    this.dialogRef.close({ delete: this.yes });
+
   }
 
-  noClick()
-  {
-    this.no=false
-    this.yes=false
-    this.dialogRef.close({delete:this.no});
+  noClick() {
+    this.no = false
+    this.yes = false
+    this.dialogRef.close({ delete: this.no });
   }
 
 
-  ngOnDestroy()
-  {
-  
-      console.log("Bye  Bye");
-      
+  ngOnDestroy() {
   }
 }

@@ -42,14 +42,6 @@ export class KidsListComponent implements OnInit {
   kidslist: Array<Kid>=new Array()
   constructor(private kidsService:KidsService,private _auth:authentication,private router:Router) {
     
-    // let currentDate=new Date()
-    // let bDate=new Date("03-17-2001")
-    
-    // let diffInSec= Math.abs(currentDate.getTime()-bDate.getTime())
-    // console.log(diffInSec);
-    
-    // let age=(diffInSec/(1000 * 3600 * 24)/365)+1
-    // console.log(age)
   }
 
   
@@ -60,7 +52,7 @@ export class KidsListComponent implements OnInit {
     this.getkids(this.page,"all")
 
     let array=this.router.url.split('/')
-    //console.log(array);
+    
 
     if(array[3]==="edit-kids")
     {
@@ -89,7 +81,7 @@ export class KidsListComponent implements OnInit {
       this.redirectToPart1="/user/kids/kids-list/"
       this.redirectToPart2="/kids-report"
     }
-    //this.getkids()
+ 
   }
 
   
@@ -109,7 +101,7 @@ export class KidsListComponent implements OnInit {
     }
   }
   onScroll() {
-    console.log("Hello");
+  
     
     if(this.page < this.totalKidsPages - 1)
     {
@@ -178,7 +170,7 @@ export class KidsListComponent implements OnInit {
       this.totalKidsPages = data['totalPages']
       this.showSpinner=false
       this.kidslist=this.calculateAge(this.kidslist)
-      console.log(this.kidslist);
+  
       
     },error=>{
       this.handleError(error)
@@ -196,7 +188,7 @@ export class KidsListComponent implements OnInit {
         {
           this.kidslist.concat(kid)
           this.kidslist=this.calculateAge(this.kidslist)
-          console.log(this.kidslist);
+       
         }
       }
     });
@@ -211,8 +203,7 @@ export class KidsListComponent implements OnInit {
       this.kidslist = data['content']
       this.totalKidsPages = data['totalPages']
       this.kidslist=this.calculateAge(this.kidslist)
-      console.log(this.kidslist);
-      console.log(this.kidslist)
+  
       
     },error=>{
       this.handleError(error)
@@ -228,7 +219,7 @@ export class KidsListComponent implements OnInit {
       this.kidslist = data['content']
       this.totalKidsPages = data['totalPages']
       this.kidslist=this.calculateAge(this.kidslist)
-      console.log(this.kidslist);
+
     },error=>{
       this.handleError(error)
     })
@@ -244,7 +235,7 @@ export class KidsListComponent implements OnInit {
       this.kidslist = data['content']
       this.totalKidsPages = data['totalPages']
       this.kidslist=this.calculateAge(this.kidslist)
-      console.log(this.kidslist);
+     
     },error=>{
       this.handleError(error)
     })
@@ -261,7 +252,7 @@ export class KidsListComponent implements OnInit {
       this.kidslist = data['content']
       this.totalKidsPages = data['totalPages']
       this.kidslist=this.calculateAge(this.kidslist)
-      console.log(data);
+
     },error=>{
       this.handleError(error)
     })
@@ -288,12 +279,12 @@ export class KidsListComponent implements OnInit {
         let bDate=new Date(k.dob)
         
         let diffInSec= Math.abs(currentDate.getTime()-bDate.getTime())
-        console.log(diffInSec);
+      
         
         k.age=(diffInSec/(1000 * 3600 * 24)/365)+1
         let array:Array<string>=k.age.toString().split('.')
         k.age=Number.parseInt(array[0])
-        console.log(k.age)
+      
         
       }
       return kidsList
@@ -302,10 +293,10 @@ export class KidsListComponent implements OnInit {
 
   getUserType():string
   {
-      //console.log(this.router.url);
+     
       let array:Array<string>=new Array()
       array=this.router.url.split('/')
-      //console.log(array[1]);
+     
       return array[1]
       
   }

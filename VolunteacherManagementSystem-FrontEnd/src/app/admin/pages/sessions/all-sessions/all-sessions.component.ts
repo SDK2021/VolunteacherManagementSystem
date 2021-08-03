@@ -123,7 +123,6 @@ export class AllSessionsComponent implements OnInit {
       if (this.sLength == 0) {
         this.noSessions = true
       }
-      console.log(this.sessions);
 
     }, error => {
       this.handleError(error)
@@ -134,7 +133,6 @@ export class AllSessionsComponent implements OnInit {
     this.disabled = true
     this.showProgressbar = true
     this.sessionService.deleteSession(id).subscribe(data => {
-      console.log(data);
       setTimeout(() => {
         this.getAllSessions(this.page)
         this.showProgressbar = false
@@ -148,7 +146,6 @@ export class AllSessionsComponent implements OnInit {
 
   delete(id: number) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
       if (data.delete) {
         this.deleteSession(id)
       }
@@ -165,8 +162,6 @@ export class AllSessionsComponent implements OnInit {
   }
 
   nextPage() {
-    console.log("Hello");
-    console.log(this.totalSessionsPages);
 
     if (this.page < this.totalSessionsPages - 1) {
       this.page += 1
@@ -282,7 +277,6 @@ export class AllSessionsComponent implements OnInit {
       if (this.sLength == 0) {
         this.noSessions = true
       }
-      console.log(this.sessions);
 
     }, error => {
       this.handleError(error)
@@ -306,7 +300,6 @@ export class AllSessionsComponent implements OnInit {
       if (this.sLength == 0) {
         this.noSessions = true
       }
-      console.log(this.sessions);
 
     }, error => {
       this.handleError(error)
@@ -330,7 +323,6 @@ export class AllSessionsComponent implements OnInit {
       if (this.sLength == 0) {
         this.noSessions = true
       }
-      console.log(this.sessions);
 
     }, error => {
       this.handleError(error)

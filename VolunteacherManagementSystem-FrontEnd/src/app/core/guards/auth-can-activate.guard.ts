@@ -18,7 +18,6 @@ export class AuthCanActivateGuard implements CanActivate {
     
       if(this.authService.isUserLogin())
       {
-          console.log("Helllo");
           
         let authuser: string[];
         authuser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(" ");

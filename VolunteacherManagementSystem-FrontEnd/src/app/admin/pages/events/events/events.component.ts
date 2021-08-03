@@ -94,7 +94,6 @@ export class EventsComponent implements OnInit {
 
 
     let date: Date = new Date()
-    console.log(date)
 
     this.month = this.monthNames[date.getMonth()]
     //console.log("current"+ this.month)
@@ -132,11 +131,9 @@ export class EventsComponent implements OnInit {
 
 
   showTab1(show: boolean) {
-    console.log("tab1" + show)
     this.tab1 = show
   }
   showTab2(show: boolean) {
-    console.log("tab2" + show)
 
     this.tab2 = show
     this.tab1 = false
@@ -169,16 +166,12 @@ export class EventsComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    console.log(this.event);
-
-  }
+  
 
 
   getAllActivities() {
     this.eventService.getActivities().subscribe(data => {
       this.activities = data
-      console.log(this.activities);
 
     }, error => {
       this.handleError(error)
@@ -201,8 +194,6 @@ export class EventsComponent implements OnInit {
       if (this.eLength == 0) {
         this.noEvents = true
       }
-      console.log(this.events);
-      console.log(this.eLength);
 
 
     }, error => {
@@ -228,9 +219,6 @@ export class EventsComponent implements OnInit {
 
             if (this.imageURL != null && this.isEventCreated == false) {
               if (this.villageSelected > 0 && this.projectSelected > 0) {
-
-                console.log(this.event)
-                console.log(this.selectedActivities)
                 this.event.photo = this.imageURL
                 let eventdate: string = this.event.eventDate
                 let sdate: string[] = eventdate.split("-")
@@ -244,7 +232,7 @@ export class EventsComponent implements OnInit {
                 this.projectService.getProject(this.projectSelected).pipe(finalize(() => {
                   this.addressService.getVillageByid(this.villageSelected).pipe(finalize(() => {
                     this.eventService.addEvent(this.event, this.selectedActivities).subscribe(data => {
-                      console.log(data)
+                 
                       form.reset()
                       //localStorage.removeItem("imageURL")
 
@@ -294,7 +282,6 @@ export class EventsComponent implements OnInit {
   selectedProject(event) {
     if (event.target.value > 0) {
       this.projectSelected = event.target.value;
-      console.log(event.target.value);
     }
   }
 
@@ -388,14 +375,12 @@ export class EventsComponent implements OnInit {
 
   selectedVillage(event) {
     this.villageSelected = event.target.value;
-    console.log(event.target.value);
   }
 
   notifyEvent(eventId, value) {
     this.disabled = true
     this.showProgressbar = true
     this.notification = new Notification()
-    console.log(value.target.value)
     let authUser: string[] = []
     this.notification = new Notification()
     if (value.target.value == 1) {
@@ -415,8 +400,6 @@ export class EventsComponent implements OnInit {
       authUser = localStorage.getItem(this.authService.LOCAL_STORAGE_ATTRIBUTE_USERNAME).split(' ')
       this.userService.getUserByEmail(atob(authUser[0])).pipe(finalize(() => {
         this.notiService.addNotification(this.notification).subscribe(data => {
-          console.log(data)
-
 
           this.router.navigate['admin/events']
           setTimeout(() => {
@@ -439,7 +422,6 @@ export class EventsComponent implements OnInit {
   deleteEvent(id: number, image: string) {
     this.showProgressbar = true
     this.eventService.deleteEvent(id).subscribe(data => {
-      console.log(data);
       this.fileService.delete(image)
 
       setTimeout(() => {
@@ -454,7 +436,6 @@ export class EventsComponent implements OnInit {
 
   delete(id: number, image: string) {
     this.dialog.open(DialogBoxComponent).afterClosed().subscribe(data => {
-      console.log(data.delete)
       if (data.delete) {
         this.deleteEvent(id, image)
       }
