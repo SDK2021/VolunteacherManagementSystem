@@ -40,7 +40,7 @@ export class VolunteachersListComponent implements OnInit {
 
   projectSelected: number = null
   villageSelected: number = null
-  statusSelected: number = 0
+  statusSelected: number = 1
   typeSelected: number = 2
 
   volunteachers: Array<Volunteacher> = new Array()
@@ -375,7 +375,7 @@ export class VolunteachersListComponent implements OnInit {
       this.showTypes = false
       this.showStatus = true
       let today = new Date()
-      this.getVtsByStatus(0, 0)
+      this.getVtsByStatus(0, 1)
     }
     else if (event.target.value === '4') {
       this.filter = 4

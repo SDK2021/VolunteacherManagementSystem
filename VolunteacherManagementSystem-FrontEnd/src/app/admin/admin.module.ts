@@ -56,6 +56,7 @@ import { EditVillageComponent } from './pages/core/edit-village/edit-village.com
 import { EditSessionComponent } from './pages/sessions/edit-session/edit-session.component';
 import { AdminKidsListComponent } from './pages/kids/admin-kids-list/admin-kids-list.component';
 import { UserPipe } from './filters/user.pipe';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { UserPipe } from './filters/user.pipe';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    NgxPrintModule
   ],
   exports:[
     KidsPipe

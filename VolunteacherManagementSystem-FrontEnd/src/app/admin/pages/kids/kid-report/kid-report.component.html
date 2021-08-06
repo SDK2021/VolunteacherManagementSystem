@@ -10,8 +10,9 @@
 
             <div class="container-fluid">
                 <div class="card">
+                    <input type="button" (click)="printDiv('printableArea')" value="print a div!" />
                     <!-- Card body -->
-                    <div class="card-body">
+                    <div class="card-body" id="printableArea">
                             <div class="avtar rounded-circle">
                                 <img src="{{kidReport.kid.photo}}"
                                 class="rounded-circle img-center img-fluid shadow shadow-lg--hover"
@@ -67,7 +68,7 @@
 
                         <br>
                         <div class="row">
-                            <div class=" col-xl-6 col-12">
+                            <div class=" col-xl-6 col-12 mb-5">
                                 <div class="card shadow">
                                     <div class="card-header bg-transparent">
                                         <div class="row align-items-center">
@@ -87,7 +88,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class=" col-xl-6 col-12">
+                            <div class=" col-xl-6 col-12 ">
                                 <div class="card shadow">
                                     <div class="card-header bg-transparent">
                                         <div class="row align-items-center">

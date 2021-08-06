@@ -19,29 +19,29 @@ export class KidReportComponent implements OnInit {
   public clicked: boolean = true;
   public clicked1: boolean = false;
   showkidsReportComparision: boolean = true
-  
-  kidReport:Kidsreport=new Kidsreport()
 
-  showSpinner:boolean=false
+  kidReport: Kidsreport = new Kidsreport()
 
-  personalityChart:any
+  showSpinner: boolean = false
 
-  kidReports:Array<Kidsreport>=new Array()
+  personalityChart: any
+
+  kidReports: Array<Kidsreport> = new Array()
 
 
-  constructor(private route:ActivatedRoute,private kidsService:KidsService,private router:Router) {}
+  constructor(private route: ActivatedRoute, private kidsService: KidsService, private router: Router) { }
 
-  
+
 
   ngOnInit(): void {
 
-   
-    
-    
+
+
+
     this.getAllKidsReport()
 
-    this.kidReport.kid=new Kid()
-    this.kidReport.kid.area=new Area()
+    this.kidReport.kid = new Kid()
+    this.kidReport.kid.area = new Area()
     this.datasets = [
       [0, 20, 10, 30, 15, 40, 20, 60, 60],
       [0, 20, 5, 25, 10, 30, 15, 40, 40]
@@ -49,7 +49,7 @@ export class KidReportComponent implements OnInit {
     this.data = this.datasets[0];
 
 
-  
+
 
     parseOptions(Chart, chartOptions());
 
@@ -58,30 +58,27 @@ export class KidReportComponent implements OnInit {
 
     parseOptions(Chart, chartOptions());
 
-    
+
     var chartSales = document.getElementById('chart-sales');
 
     // this.salesChart = new Chart(chartSales, {
-		// 	type: 'line',
-		// 	options: chartExample1.options,
-		// 	data: chartExample1.data
-		// });
+    // 	type: 'line',
+    // 	options: chartExample1.options,
+    // 	data: chartExample1.data
+    // });
 
     this.getKidReportById(this.route.snapshot.params['rid'])
   }
 
 
-  handleError(error)
-  {
+  handleError(error) {
     console.log(error);
     console.log(error.status);
-    
-    if(error.status===500)
-    {
+
+    if (error.status === 500) {
       this.router.navigate(['internal-server-error'])
     }
-    else
-    {
+    else {
       this.router.navigate(['error-page'])
     }
   }
@@ -93,11 +90,11 @@ export class KidReportComponent implements OnInit {
   }
 
   getKidReportById(id: number) {
-    this.showSpinner=true
-    this.kidsService.kidReportById(id).subscribe(data=>{
+    this.showSpinner = true
+    this.kidsService.kidReportById(id).subscribe(data => {
       this.kidReport = data
-      this.showSpinner=false
-      this.kidReport.kid=this.calculateAge(this.kidReport.kid)
+      this.showSpinner = false
+      this.kidReport.kid = this.calculateAge(this.kidReport.kid)
       var chartPie = document.getElementById('chart-pie');
       this.personalityChart = new Chart(chartPie, {
         type: 'pie',
@@ -162,29 +159,28 @@ export class KidReportComponent implements OnInit {
           ]
         }
       })
-    
 
-      
-    },error=>{
+
+
+    }, error => {
       this.handleError(error)
     })
   }
 
-  calculateAge(kid:Kid):Kid
-  {
-     
-        let currentDate=new Date()
-        let bDate=new Date(kid.dob)
-        
-        let diffInSec= Math.abs(currentDate.getTime()-bDate.getTime())
-        
-        kid.age=(diffInSec/(1000 * 3600 * 24)/365)+1
-        let array:Array<string>=kid.age.toString().split('.')
-        kid.age=Number.parseInt(array[0])
-     
-        
-     return kid
-     
+  calculateAge(kid: Kid): Kid {
+
+    let currentDate = new Date()
+    let bDate = new Date(kid.dob)
+
+    let diffInSec = Math.abs(currentDate.getTime() - bDate.getTime())
+
+    kid.age = (diffInSec / (1000 * 3600 * 24) / 365) + 1
+    let array: Array<string> = kid.age.toString().split('.')
+    kid.age = Number.parseInt(array[0])
+
+
+    return kid
+
   }
   getAllKidsReport() {
     this.kidsService.getKidReport(this.route.snapshot.params['id']).subscribe(data => {
@@ -192,8 +188,8 @@ export class KidReportComponent implements OnInit {
 
       var chartProgress = document.getElementById('chart-sales')
       if (this.kidReports.length >= 3) {
-        
-         this.showkidsReportComparision = true
+
+        this.showkidsReportComparision = true
 
         let totalReport1: number = ((this.kidReports[0].abhivyakti + this.kidReports[0].artCraft + this.kidReports[0].discipline + this.kidReports[0].english + this.kidReports[0].games
           + this.kidReports[0].goshthi + this.kidReports[0].gujarati + this.kidReports[0].science + this.kidReports[0].maths + this.kidReports[0].prayer + this.kidReports[0].sports + this.kidReports[0].volunteaching) * 100) / 120
@@ -204,9 +200,9 @@ export class KidReportComponent implements OnInit {
         let totalReport3: number = ((this.kidReports[2].abhivyakti + this.kidReports[2].artCraft + this.kidReports[2].discipline + this.kidReports[2].english + this.kidReports[2].games
           + this.kidReports[2].goshthi + this.kidReports[2].gujarati + this.kidReports[2].science + this.kidReports[2].maths + this.kidReports[2].prayer + this.kidReports[2].sports + this.kidReports[2].volunteaching) * 100) / 120
 
-  
-       
-        
+
+
+
 
         let progressChart = new Chart(chartProgress, {
           type: 'line',
@@ -231,19 +227,37 @@ export class KidReportComponent implements OnInit {
             labels: ['Report1', 'Report2', 'Report3'],
             datasets: [{
               label: 'Performance',
-               data: [Math.round(totalReport1), Math.round(totalReport2), Math.round(totalReport3)]
+              data: [Math.round(totalReport1), Math.round(totalReport2), Math.round(totalReport3)]
               //data: [25,25,25]
             }]
           }
         })
       }
-      else
-      {
+      else {
         this.showkidsReportComparision = false
       }
-    },error=>{
+    }, error => {
       this.handleError(error)
     })
 
+  }
+
+  printDiv(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var canvas = document.getElementById("chart-sales");
+    var context = canvas[0].getContext("2d");
+
+    var img   = context.toDataURL("image/png");
+
+    var originalContents = document.body.innerHTML;
+
+    
+
+    document.body.innerHTML = printContents;
+    document.write('<img src="'+img+'"/>');
+
+    window.print();
+    
+    document.body.innerHTML = originalContents;
   }
 }

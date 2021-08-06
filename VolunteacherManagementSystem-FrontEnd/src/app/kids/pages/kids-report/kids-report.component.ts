@@ -28,8 +28,8 @@ export class KidsReportComponent implements OnInit {
   kidReports: Kidsreport[] = new Array()
   showkidsReportComparision: boolean = true
 
-  
-  isKidReport:boolean = false
+
+  isKidReport: boolean = false
 
   constructor(private kidsService: KidsService, private router: Router, private kidService: KidsService, private route: ActivatedRoute) { }
 
@@ -48,24 +48,22 @@ export class KidsReportComponent implements OnInit {
   personalityChart: any
 
   getKidReportByKid(id: number) {
-    
+
     this.showSpinner = true
     this.kidsService.getLatestKidReport(id).subscribe(data => {
       this.kidReport = data
-     
-      
-      if(this.kidReport == null)
-      {
-        this.isKidReport = true;  
+
+
+      if (this.kidReport == null) {
+        this.isKidReport = true;
       }
-      else
-      {
+      else {
         this.getAllKidsReport()
         this.kidReport.kid = this.calculateAge(this.kidReport.kid)
       }
 
       this.showSpinner = false
-    
+
 
     }, error => {
       this.handleError(error)
@@ -77,10 +75,10 @@ export class KidsReportComponent implements OnInit {
     this.kidReport.kid = new Kid()
     this.kidReport.kid.area = new Area()
     this.getKidReportByKid(this.route.snapshot.params['id'])
-    
-    
 
-    
+
+
+
     this.n = 25
 
     this.datasets = [
@@ -95,7 +93,7 @@ export class KidsReportComponent implements OnInit {
     parseOptions(Chart, chartOptions());
 
 
-    
+
 
     var chartPie = document.getElementById('chart-pie');
 
@@ -109,7 +107,7 @@ export class KidsReportComponent implements OnInit {
   getAllKidsReport() {
     this.kidService.getKidReport(this.route.snapshot.params['id']).subscribe(data => {
       this.kidReports = data
-      
+
 
       var chartPie = document.getElementById('chart-pie');
       this.personalityChart = new Chart(chartPie, {
@@ -177,8 +175,8 @@ export class KidsReportComponent implements OnInit {
       })
       var chartProgress = document.getElementById('chart-progress')
       if (this.kidReports.length >= 3) {
-   
-        
+
+
         this.showkidsReportComparision = true
 
         let totalReport1: number = ((this.kidReports[0].abhivyakti + this.kidReports[0].artCraft + this.kidReports[0].discipline + this.kidReports[0].english + this.kidReports[0].games
@@ -190,9 +188,9 @@ export class KidsReportComponent implements OnInit {
         let totalReport3: number = ((this.kidReports[2].abhivyakti + this.kidReports[2].artCraft + this.kidReports[2].discipline + this.kidReports[2].english + this.kidReports[2].games
           + this.kidReports[2].goshthi + this.kidReports[2].gujarati + this.kidReports[2].science + this.kidReports[2].maths + this.kidReports[2].prayer + this.kidReports[2].sports + this.kidReports[2].volunteaching) * 100) / 120
 
-        
-       
-        
+
+
+
 
         let progressChart = new Chart(chartProgress, {
           type: 'line',
@@ -217,14 +215,13 @@ export class KidsReportComponent implements OnInit {
             labels: ['Report1', 'Report2', 'Report3'],
             datasets: [{
               label: 'Performance',
-               data: [Math.round(totalReport1), Math.round(totalReport2), Math.round(totalReport3)]
+              data: [Math.round(totalReport1), Math.round(totalReport2), Math.round(totalReport3)]
               //data: [25,25,25]
             }]
           }
         })
       }
-      else
-      {
+      else {
         this.showkidsReportComparision = false
       }
     })
@@ -242,15 +239,25 @@ export class KidsReportComponent implements OnInit {
     let bDate = new Date(kid.dob)
 
     let diffInSec = Math.abs(currentDate.getTime() - bDate.getTime())
- 
+
 
     kid.age = (diffInSec / (1000 * 3600 * 24) / 365) + 1
     let array: Array<string> = kid.age.toString().split('.')
     kid.age = Number.parseInt(array[0])
- 
+
 
     return kid
 
   }
+  
+  printDiv(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
 
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+  }
 }
